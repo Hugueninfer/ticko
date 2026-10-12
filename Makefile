@@ -1,6 +1,7 @@
 .DEFAULT_GOAL := help
 COMPOSE := docker compose
 DEV := $(COMPOSE) --profile tools run --rm dev
+WEB_PORT = $(or $(shell grep -s '^WEB_PORT=' .env | cut -d= -f2),8080)
 
 .PHONY: help env up down logs demo test coverage lint fix stan docs audit gitleaks ci
 
@@ -10,10 +11,10 @@ help: ## Show available targets
 env: ## Create .env with generated secrets (once)
 	@./scripts/make-env.sh
 
-up: env ## Build and start the whole stack (http://localhost:8080)
+up: env ## Build and start the whole stack (http://localhost:$WEB_PORT, default 8080)
 	$(COMPOSE) up -d --build --wait
-	@echo "API:  http://localhost:8080/api/v1"
-	@echo "Docs: http://localhost:8080/docs"
+	@echo "API:  http://localhost:$(WEB_PORT)/api/v1"
+	@echo "Docs: http://localhost:$(WEB_PORT)/docs"
 
 down: ## Stop the stack
 	$(COMPOSE) down
