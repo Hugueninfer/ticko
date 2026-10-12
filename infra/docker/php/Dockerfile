@@ -22,7 +22,7 @@ ARG GID=1000
 # Pinned extension installer (mlocati/docker-php-extension-installer 2.12.0)
 ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/download/2.12.0/install-php-extensions /usr/local/bin/
 
-RUN install-php-extensions bcmath gd intl opcache pcntl pdo_pgsql redis zip \
+RUN install-php-extensions bcmath exif gd intl opcache pcntl pdo_pgsql redis zip \
     && apk add --no-cache fcgi tini \
     && addgroup -g "${GID}" ticko \
     && adduser -D -u "${UID}" -G ticko -h /home/ticko ticko \
@@ -55,8 +55,8 @@ FROM dev AS vendor
 COPY --chown=ticko:ticko apps/api/composer.json apps/api/composer.lock ./
 RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist --no-interaction --no-progress
 COPY --chown=ticko:ticko apps/api/ ./
-RUN composer dump-autoload --no-dev --classmap-authoritative --no-interaction \
-    && rm -rf tests .env .env.* storage/logs/* bootstrap/cache/*.php
+RUN rm -rf tests .env .env.* storage/logs/* bootstrap/cache/*.php \
+    && composer dump-autoload --no-dev --classmap-authoritative --no-interaction
 
 # ---------------------------------------------------------------------------
 FROM base AS prod
