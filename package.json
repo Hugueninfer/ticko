@@ -1,0 +1,12 @@
+{
+  "name": "ticko",
+  "private": true,
+  "description": "Ticko — AI-assisted multi-tenant helpdesk (monorepo)",
+  "packageManager": "pnpm@10.34.6",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "api-client:generate": "pnpm --filter @ticko/api-client generate"
+  }
+}
