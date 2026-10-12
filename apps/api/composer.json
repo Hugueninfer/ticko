@@ -1,12 +1,15 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "ticko/api",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
-    "license": "MIT",
+    "description": "Ticko helpdesk API",
+    "keywords": [
+        "helpdesk",
+        "api"
+    ],
+    "license": "proprietary",
     "require": {
-        "php": "^8.3",
+        "php": "^8.4",
         "intervention/image": "^4.3",
         "laravel/framework": "^13.17",
         "laravel/horizon": "^5.50",
@@ -37,21 +40,9 @@
         }
     },
     "scripts": {
-        "setup": [
-            "composer install",
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "@php artisan key:generate",
-            "@php artisan migrate --force",
-            "npm install --ignore-scripts",
-            "npm run build"
-        ],
-        "dev": [
-            "Composer\\Config::disableProcessTimeout",
-            "@php artisan dev"
-        ],
         "test": [
             "@php artisan config:clear --ansi @no_additional_args",
-            "@php artisan test"
+            "@php vendor/bin/pest"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
@@ -63,13 +54,26 @@
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
-        "post-create-project-cmd": [
-            "@php artisan key:generate --ansi",
-            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
-            "@php artisan migrate --graceful --ansi"
-        ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ],
+        "test:coverage": [
+            "@php artisan config:clear --ansi @no_additional_args",
+            "@php vendor/bin/pest --coverage --min=80 --coverage-clover=build/coverage/clover.xml"
+        ],
+        "lint": [
+            "@php vendor/bin/pint --test"
+        ],
+        "fix": [
+            "@php vendor/bin/pint"
+        ],
+        "stan": [
+            "@php vendor/bin/phpstan analyse --memory-limit=1G --no-progress"
+        ],
+        "docs": [
+            "@putenv DB_DATABASE=ticko_testing",
+            "@php artisan migrate:fresh --force --no-interaction",
+            "@php artisan scribe:generate --no-interaction --force"
         ]
     },
     "extra": {
@@ -84,6 +88,9 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
+        },
+        "audit": {
+            "abandoned": "fail"
         }
     },
     "minimum-stability": "stable",
