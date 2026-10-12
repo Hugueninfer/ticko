@@ -1,0 +1,29 @@
+# Secrets — never commit real environment files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+!**/fixtures/**/*.key
+
+# Dependencies
+node_modules/
+apps/api/vendor/
+
+# Build / runtime output
+dist/
+build/
+coverage/
+.phpunit.cache/
+.phpunit.result.cache
+apps/api/storage/*.key
+apps/api/public/hot
+apps/api/public/storage
+apps/api/public/vendor/
+
+# Tooling
+.idea/
+.vscode/
+.DS_Store
+*.log
+.pnpm-store/
