@@ -55,7 +55,8 @@ FROM dev AS vendor
 COPY --chown=ticko:ticko apps/api/composer.json apps/api/composer.lock ./
 RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist --no-interaction --no-progress
 COPY --chown=ticko:ticko apps/api/ ./
-RUN rm -rf tests .env .env.* storage/logs/* bootstrap/cache/*.php \
+# Dev-only files (tests, Scribe config) are not shipped.
+RUN rm -rf tests .env .env.* storage/logs/* bootstrap/cache/*.php config/scribe.php \
     && composer dump-autoload --no-dev --classmap-authoritative --no-interaction
 
 # ---------------------------------------------------------------------------
@@ -80,7 +81,12 @@ FROM ${CADDY_IMAGE} AS web
 COPY infra/docker/caddy/Caddyfile /etc/caddy/Caddyfile
 COPY --from=vendor /var/www/html/public /var/www/html/public
 
-RUN addgroup -S caddy && adduser -S -G caddy caddy \
+# Port 8080 needs no privileges: drop the binary's file capability so it can
+# run with all capabilities removed and no-new-privileges.
+RUN apk add --no-cache libcap \
+    && setcap -r /usr/bin/caddy \
+    && apk del libcap \
+    && addgroup -S caddy && adduser -S -G caddy caddy \
     && chown -R caddy:caddy /data /config
 USER caddy
 

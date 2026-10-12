@@ -40,6 +40,11 @@ services:
         condition: service_healthy
     ports:
       - "${WEB_BIND:-127.0.0.1}:${WEB_PORT:-8080}:8080"
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:8080/up"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
     networks: [edge]
     read_only: true
     tmpfs:
