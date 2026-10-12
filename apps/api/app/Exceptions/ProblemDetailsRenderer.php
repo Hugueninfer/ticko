@@ -114,6 +114,6 @@ final class ProblemDetailsRenderer
             ...$extensions,
         ];
 
-        return new JsonResponse($body, $status, [...$headers, 'Content-Type' => self::CONTENT_TYPE]);
+        return new JsonResponse($body, $status, [...$headers, 'Content-Type' => self::CONTENT_TYPE], JSON_UNESCAPED_SLASHES);
     }
 }
