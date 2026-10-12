@@ -1,0 +1,82 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Requests\Tickets;
+
+use App\Actions\Tickets\ListTickets;
+use App\Enums\TicketPriority;
+use App\Enums\TicketStatus;
+use App\Models\Ticket;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+final class IndexTicketsRequest extends FormRequest
+{
+    /**
+     * Authorized before validation, so validation errors never leak data to callers without access.
+     */
+    public function authorize(): bool
+    {
+        return $this->user()?->can('viewAny', Ticket::class) ?? false;
+    }
+
+    /**
+     * @return array<string, list<mixed>>
+     */
+    public function rules(): array
+    {
+        $sorts = collect(ListTickets::SORTABLE)->flatMap(fn (string $c): array => [$c, '-'.$c])->all();
+
+        return [
+            'status' => ['sometimes', Rule::enum(TicketStatus::class)],
+            'priority' => ['sometimes', Rule::enum(TicketPriority::class)],
+            'category_id' => ['sometimes', 'ulid'],
+            'assignee_id' => ['sometimes', 'ulid'],
+            'requester_id' => ['sometimes', 'ulid'],
+            'unassigned' => ['sometimes', 'boolean'],
+            'q' => ['sometimes', 'string', 'max:100'],
+            'sort' => ['sometimes', Rule::in($sorts)],
+            'per_page' => ['sometimes', 'integer', 'min:1', 'max:100'],
+            'page' => ['sometimes', 'integer', 'min:1'],
+        ];
+    }
+
+    /**
+     * @return array{status?: string, priority?: string, category_id?: string, assignee_id?: string, requester_id?: string, unassigned?: bool, q?: string, sort?: string, per_page?: int}
+     */
+    public function filters(): array
+    {
+        /** @var array{status?: string, priority?: string, category_id?: string, assignee_id?: string, requester_id?: string, q?: string, sort?: string} $filters */
+        $filters = $this->safe()->except(['unassigned', 'per_page', 'page']);
+
+        if ($this->has('unassigned')) {
+            $filters['unassigned'] = $this->boolean('unassigned');
+        }
+
+        if ($this->has('per_page')) {
+            $filters['per_page'] = $this->integer('per_page');
+        }
+
+        return $filters;
+    }
+
+    /**
+     * @return array<string, array<string, string>>
+     */
+    public function queryParameters(): array
+    {
+        return [
+            'status' => ['description' => 'Filter by status.', 'example' => 'open'],
+            'priority' => ['description' => 'Filter by priority.', 'example' => 'high'],
+            'category_id' => ['description' => 'Filter by category ULID.', 'example' => ''],
+            'assignee_id' => ['description' => 'Filter by assignee ULID.', 'example' => ''],
+            'requester_id' => ['description' => 'Filter by requester ULID (staff only).', 'example' => ''],
+            'unassigned' => ['description' => 'Only tickets without an assignee.', 'example' => ''],
+            'q' => ['description' => 'Search subject and description.', 'example' => 'printer'],
+            'sort' => ['description' => 'Sort field; prefix with - for descending.', 'example' => '-created_at'],
+            'per_page' => ['description' => 'Page size (1-100).', 'example' => '25'],
+            'page' => ['description' => 'Page number.', 'example' => '1'],
+        ];
+    }
+}
