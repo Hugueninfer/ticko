@@ -35,6 +35,7 @@ final class IndexTicketsRequest extends FormRequest
             'assignee_id' => ['sometimes', 'ulid'],
             'requester_id' => ['sometimes', 'ulid'],
             'unassigned' => ['sometimes', 'boolean'],
+            'overdue' => ['sometimes', 'boolean'],
             'q' => ['sometimes', 'string', 'max:100'],
             'sort' => ['sometimes', Rule::in($sorts)],
             'per_page' => ['sometimes', 'integer', 'min:1', 'max:100'],
@@ -43,15 +44,19 @@ final class IndexTicketsRequest extends FormRequest
     }
 
     /**
-     * @return array{status?: string, priority?: string, category_id?: string, assignee_id?: string, requester_id?: string, unassigned?: bool, q?: string, sort?: string, per_page?: int}
+     * @return array{status?: string, priority?: string, category_id?: string, assignee_id?: string, requester_id?: string, unassigned?: bool, overdue?: bool, q?: string, sort?: string, per_page?: int}
      */
     public function filters(): array
     {
         /** @var array{status?: string, priority?: string, category_id?: string, assignee_id?: string, requester_id?: string, q?: string, sort?: string} $filters */
-        $filters = $this->safe()->except(['unassigned', 'per_page', 'page']);
+        $filters = $this->safe()->except(['unassigned', 'overdue', 'per_page', 'page']);
 
         if ($this->has('unassigned')) {
             $filters['unassigned'] = $this->boolean('unassigned');
+        }
+
+        if ($this->has('overdue')) {
+            $filters['overdue'] = $this->boolean('overdue');
         }
 
         if ($this->has('per_page')) {
@@ -73,6 +78,7 @@ final class IndexTicketsRequest extends FormRequest
             'assignee_id' => ['description' => 'Filter by assignee ULID.', 'example' => ''],
             'requester_id' => ['description' => 'Filter by requester ULID (staff only).', 'example' => ''],
             'unassigned' => ['description' => 'Only tickets without an assignee.', 'example' => ''],
+            'overdue' => ['description' => 'Only unresolved tickets with a missed SLA deadline.', 'example' => ''],
             'q' => ['description' => 'Search subject and description.', 'example' => 'printer'],
             'sort' => ['description' => 'Sort field; prefix with - for descending.', 'example' => '-created_at'],
             'per_page' => ['description' => 'Page size (1-100).', 'example' => '25'],

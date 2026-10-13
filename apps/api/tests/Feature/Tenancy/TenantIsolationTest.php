@@ -93,6 +93,7 @@ it('never lists other tenants\' rows', function (string $uri, int $expected): vo
 })->with([
     'tickets' => ['/api/v1/tickets', 0],
     'tickets filtered by a foreign requester' => ['/api/v1/tickets?requester_id={requester}', 0],
+    'overdue tickets' => ['/api/v1/tickets?overdue=1', 0],
     'categories' => ['/api/v1/categories', 0],
     'team (only the caller)' => ['/api/v1/team', 1],
 ]);

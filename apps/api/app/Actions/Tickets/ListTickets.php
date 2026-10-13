@@ -12,10 +12,10 @@ use Illuminate\Database\Eloquent\Builder;
 
 final readonly class ListTickets
 {
-    public const array SORTABLE = ['created_at', 'updated_at', 'priority', 'status'];
+    public const array SORTABLE = ['created_at', 'updated_at', 'priority', 'status', 'first_response_due_at', 'resolution_due_at'];
 
     /**
-     * @param  array{status?: string, priority?: string, category_id?: string, assignee_id?: string, requester_id?: string, unassigned?: bool, q?: string, sort?: string, per_page?: int}  $filters
+     * @param  array{status?: string, priority?: string, category_id?: string, assignee_id?: string, requester_id?: string, unassigned?: bool, overdue?: bool, q?: string, sort?: string, per_page?: int}  $filters
      * @return LengthAwarePaginator<int, Ticket>
      */
     public function handle(User $viewer, array $filters): LengthAwarePaginator
@@ -37,6 +37,10 @@ final readonly class ListTickets
 
         if (($filters['unassigned'] ?? false) === true) {
             $query->whereNull('assignee_id');
+        }
+
+        if (($filters['overdue'] ?? false) === true) {
+            $query->overdue();
         }
 
         if (isset($filters['q']) && $filters['q'] !== '') {

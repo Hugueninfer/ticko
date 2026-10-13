@@ -22,6 +22,10 @@ final readonly class PostTicketMessage
 
             // A public staff reply waits on the customer; a customer reply reopens the ticket.
             if (! $internal) {
+                if ($author->isStaff()) {
+                    $ticket->first_response_at ??= $message->created_at;
+                }
+
                 $ticket->status = $author->isStaff() ? TicketStatus::Pending : TicketStatus::Open;
                 $ticket->resolved_at = null;
                 $ticket->save();

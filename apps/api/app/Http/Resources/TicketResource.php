@@ -29,6 +29,12 @@ final class TicketResource extends JsonResource
             'assignee' => UserSummaryResource::make($this->whenLoaded('assignee')),
             'resolved_at' => $this->resolved_at?->toIso8601String(),
             'closed_at' => $this->closed_at?->toIso8601String(),
+            'sla' => [
+                'first_response_at' => $this->first_response_at?->toIso8601String(),
+                'first_response_due_at' => $this->first_response_due_at?->toIso8601String(),
+                'resolution_due_at' => $this->resolution_due_at?->toIso8601String(),
+                'is_overdue' => $this->isOverdue(),
+            ],
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
         ];

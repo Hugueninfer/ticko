@@ -27,7 +27,7 @@ final class CategoryController extends Controller
     {
         Gate::authorize('viewAny', Category::class);
 
-        return CategoryResource::collection(Category::query()->orderBy('name')->get());
+        return CategoryResource::collection(Category::query()->withCount('tickets')->orderBy('name')->get());
     }
 
     /**

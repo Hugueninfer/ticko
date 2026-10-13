@@ -14,6 +14,14 @@ return [
     'attachments_max_kb' => (int) env('TICKO_ATTACHMENTS_MAX_KB', 5120),
     'attachment_url_ttl_minutes' => (int) env('TICKO_ATTACHMENT_URL_TTL_MINUTES', 5),
 
+    // Default SLA targets per priority, in minutes; categories may override them.
+    'sla' => [
+        'urgent' => ['first_response_minutes' => 15, 'resolution_minutes' => 4 * 60],
+        'high' => ['first_response_minutes' => 60, 'resolution_minutes' => 8 * 60],
+        'normal' => ['first_response_minutes' => 4 * 60, 'resolution_minutes' => 24 * 60],
+        'low' => ['first_response_minutes' => 8 * 60, 'resolution_minutes' => 72 * 60],
+    ],
+
     // Rate limits (requests per minute).
     'rate_limits' => [
         'auth' => (int) env('TICKO_RATE_LIMIT_AUTH', 5),

@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 final readonly class SaveCategory
 {
     /**
-     * @param  array{name?: string, description?: string|null}  $data
+     * @param  array{name?: string, description?: string|null, sla_targets?: array<string, array{first_response_minutes: int, resolution_minutes: int}>|null}  $data
      */
     public function handle(Category $category, array $data): Category
     {
