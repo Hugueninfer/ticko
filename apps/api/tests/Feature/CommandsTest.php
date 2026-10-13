@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Enums\Role;
 use App\Models\Category;
 use App\Models\Tenant;
+use App\Models\Ticket;
 use App\Models\User;
 
 it('creates a tenant with a first admin', function (): void {
@@ -33,7 +34,11 @@ it('seeds a demo tenant once, with random passwords', function (): void {
 
     $tenant = Tenant::where('slug', 'acme')->firstOrFail();
     $this->inTenant($tenant, function (): void {
-        expect(User::count())->toBe(3)->and(Category::count())->toBe(2);
+        expect(User::count())->toBe(3)
+            ->and(Category::count())->toBe(4)
+            ->and(Ticket::count())->toBe(8)
+            ->and(Ticket::whereNotNull('first_response_at')->count())->toBe(2)
+            ->and(Ticket::overdue()->count())->toBeGreaterThan(0);
     });
 });
 

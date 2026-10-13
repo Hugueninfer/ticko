@@ -33,6 +33,13 @@ return [
     'docs_enabled' => (bool) env('TICKO_DOCS_ENABLED', env('APP_ENV', 'production') !== 'production'),
     'openapi_path' => resource_path('openapi/openapi.json'),
 
+    // One-click demo sign-in as the seeded agent/admin of the demo tenant (see `php artisan ticko:demo`).
+    // Never available in production, whatever this flag says.
+    'demo' => [
+        'enabled' => (bool) env('TICKO_DEMO_LOGIN', false),
+        'tenant' => env('TICKO_DEMO_TENANT', 'acme'),
+    ],
+
     // E-mails of admins allowed into the Horizon dashboard outside the local environment.
     'horizon_admins' => array_values(array_filter(explode(',', (string) env('TICKO_HORIZON_ADMINS', '')))),
 ];

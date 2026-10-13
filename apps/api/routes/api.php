@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\Api\V1\AttachmentController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CategoryController;
+use App\Http\Controllers\Api\V1\DemoLoginController;
 use App\Http\Controllers\Api\V1\MetricsController;
 use App\Http\Controllers\Api\V1\TeamController;
 use App\Http\Controllers\Api\V1\TicketController;
@@ -20,6 +21,8 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::middleware('throttle:auth')->group(function (): void {
         Route::post('auth/login', [AuthController::class, 'login'])->name('auth.login');
         Route::post('auth/tokens', [AuthController::class, 'issueToken'])->name('auth.tokens.store');
+        Route::get('auth/demo', [DemoLoginController::class, 'show'])->name('auth.demo.show');
+        Route::post('auth/demo', [DemoLoginController::class, 'store'])->name('auth.demo.store');
     });
 
     Route::get('attachments/{attachment}/content', [AttachmentController::class, 'content'])
