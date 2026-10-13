@@ -55,7 +55,7 @@ function VolumeChart({ data }: { data: Metrics['volume_by_day'] }) {
       <div className="flex h-48 items-end gap-1" role="list" aria-label={t('dashboard.volume')}>
         {data.map((day, index) => {
           const label = t('dashboard.dayCount', {
-            date: formatDate(day.date, locale, { day: '2-digit', month: 'short' }),
+            date: formatDate(`${day.date}T00:00:00`, locale, { day: '2-digit', month: 'short' }),
             count: day.count,
           });
 

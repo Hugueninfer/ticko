@@ -76,6 +76,8 @@ export default defineConfig(
     rules: {
       '@typescript-eslint/no-non-null-assertion': 'off',
       '@typescript-eslint/unbound-method': 'off',
+      // Tests assert that nothing is stored in sessionStorage.
+      'no-restricted-properties': 'off',
       'react-refresh/only-export-components': 'off',
     },
   },

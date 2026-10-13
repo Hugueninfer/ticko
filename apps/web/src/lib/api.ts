@@ -1,9 +1,14 @@
-import { createTickoClient, ensureCsrfCookie, type TickoClient } from '@ticko/api-client';
+import { createTickoClient, ensureCsrfCookie as fetchCsrfCookie, type TickoClient } from '@ticko/api-client';
+
+/** fetch is looked up per call so tests can replace it. */
+const fetchImpl: typeof globalThis.fetch = (input, init) => globalThis.fetch(input, init);
 
 /**
- * The browser client: same origin, session cookie, CSRF header. No token is
- * ever read from or written to browser storage.
+ * The browser client: the page's own origin, session cookie, CSRF header.
+ * No token is ever read from or written to browser storage.
  */
-export const api: TickoClient = createTickoClient();
+export const api: TickoClient = createTickoClient({ baseUrl: window.location.origin, fetch: fetchImpl });
 
-export { ensureCsrfCookie };
+export function ensureCsrfCookie(): Promise<void> {
+  return fetchCsrfCookie({ baseUrl: window.location.origin, fetch: fetchImpl });
+}
