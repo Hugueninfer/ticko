@@ -1,14 +1,28 @@
+import { lazy, Suspense, type ComponentType } from 'react';
 import { createBrowserRouter, Navigate, type RouteObject } from 'react-router';
 
 import { RedirectIfSignedIn, RequireRole, RequireStaff } from '@/auth/guards';
 import { AppShell } from '@/components/layout/AppShell';
 import { NotFoundPage } from '@/components/layout/NotFoundPage';
+import { FullPageSpinner } from '@/components/layout/States';
 import { LoginPage } from '@/features/auth/LoginPage';
-import { CategoriesPage } from '@/features/categories/CategoriesPage';
-import { DashboardPage } from '@/features/dashboard/DashboardPage';
-import { TeamPage } from '@/features/team/TeamPage';
 import { QueuePage } from '@/features/tickets/QueuePage';
 import { TicketDetailPage } from '@/features/tickets/TicketDetailPage';
+
+// Admin screens are loaded on demand, outside the agents' main bundle.
+const DashboardPage = lazy(() => import('@/features/dashboard/DashboardPage').then((m) => ({ default: m.DashboardPage })));
+const TeamPage = lazy(() => import('@/features/team/TeamPage').then((m) => ({ default: m.TeamPage })));
+const CategoriesPage = lazy(() => import('@/features/categories/CategoriesPage').then((m) => ({ default: m.CategoriesPage })));
+
+function adminPage(Page: ComponentType) {
+  return (
+    <RequireRole role="admin">
+      <Suspense fallback={<FullPageSpinner />}>
+        <Page />
+      </Suspense>
+    </RequireRole>
+  );
+}
 
 export const routes: RouteObject[] = [
   {
@@ -29,30 +43,9 @@ export const routes: RouteObject[] = [
       { index: true, element: <Navigate to="/tickets" replace /> },
       { path: 'tickets', element: <QueuePage /> },
       { path: 'tickets/:id', element: <TicketDetailPage /> },
-      {
-        path: 'dashboard',
-        element: (
-          <RequireRole role="admin">
-            <DashboardPage />
-          </RequireRole>
-        ),
-      },
-      {
-        path: 'team',
-        element: (
-          <RequireRole role="admin">
-            <TeamPage />
-          </RequireRole>
-        ),
-      },
-      {
-        path: 'categories',
-        element: (
-          <RequireRole role="admin">
-            <CategoriesPage />
-          </RequireRole>
-        ),
-      },
+      { path: 'dashboard', element: adminPage(DashboardPage) },
+      { path: 'team', element: adminPage(TeamPage) },
+      { path: 'categories', element: adminPage(CategoriesPage) },
       { path: '*', element: <NotFoundPage /> },
     ],
   },

@@ -63,8 +63,13 @@ export default defineConfig(
       'jsx-a11y/aria-role': ['error', { ignoreNonDOM: true }],
       'no-eval': 'error',
       'no-implied-eval': 'error',
-      'react-refresh/only-export-components': ['error', { allowExportNames: ['routes', 'createRouter'] }],
+      'react-refresh/only-export-components': 'error',
     },
+  },
+  {
+    // The route table is configuration, not a component module.
+    files: ['apps/web/src/router.tsx'],
+    rules: { 'react-refresh/only-export-components': 'off' },
   },
   {
     // Generic primitives: callers pass the label target and heading content.
