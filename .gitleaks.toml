@@ -1,0 +1,18 @@
+# gitleaks configuration: the default rule set plus a narrow allowlist for
+# values that are intentionally public test fixtures.
+title = "ticko gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Public, non-secret fixtures"
+paths = [
+  # Lockfiles contain integrity hashes, not secrets.
+  '''(^|/)pnpm-lock\.yaml$''',
+  '''(^|/)composer\.lock$''',
+]
+regexes = [
+  # Test-only APP_KEY in phpunit.xml ("testing-key-not-a-secret-0000000").
+  '''base64:dGVzdGluZy1rZXktbm90LWEtc2VjcmV0LTAwMDAwMDA=''',
+]

@@ -1,0 +1,3110 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Ticko API",
+        "description": "Multi-tenant helpdesk API (v1).",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Attachments",
+            "description": "Images attached to tickets. Files are stored privately and served through short-lived signed URLs."
+        },
+        {
+            "name": "Authentication",
+            "description": "Session (SPA) and token (mobile) authentication. Send the tenant slug in the X-Tenant header to log in."
+        },
+        {
+            "name": "Categories",
+            "description": "Everyone in the tenant can list categories; only admins manage them."
+        },
+        {
+            "name": "Team",
+            "description": "Members of the tenant. Staff can list them; only admins create or change them."
+        },
+        {
+            "name": "Ticket messages",
+            "description": "Conversation on a ticket. Internal notes are only visible to staff."
+        },
+        {
+            "name": "Tickets",
+            "description": "Customers see and manage only their own tickets; agents and admins see every ticket of the tenant."
+        }
+    ],
+    "paths": {
+        "/api/v1/attachments/{attachment_id}/content": {
+            "get": {
+                "summary": "Download attachment content",
+                "operationId": "downloadAttachmentContent",
+                "description": "Only reachable through the signed `url` returned by the other attachment\nendpoints; the signature carries the authorization and expires quickly.",
+                "parameters": [],
+                "responses": [],
+                "tags": [
+                    "Attachments"
+                ],
+                "security": []
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "attachment_id",
+                    "description": "The ID of the attachment.",
+                    "example": "architecto",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        "/api/v1/tickets/{ticket_id}/attachments": {
+            "get": {
+                "summary": "List attachments of a ticket",
+                "operationId": "listAttachmentsOfATicket",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": [
+                                            {
+                                                "id": "01m4rnbzdxkbvbxz57wggkpcxj",
+                                                "ticket_id": "01m4rnbzdvxnmetam2dpjhmkra",
+                                                "original_name": "screenshot.png",
+                                                "mime_type": "image/png",
+                                                "size": 1024,
+                                                "width": 10,
+                                                "height": 10,
+                                                "url": "http://localhost:8080/api/v1/attachments/01m4rnbzdxkbvbxz57wggkpcxj/content?expires=1791829381&tenant=01m4rnbz4yymcc77cpfttyjjw8&signature=7f9459b9e7fb24c0d00ffb64851c48104531db7edcebf02bdaba3bef15fea0eb",
+                                                "url_expires_in": 300,
+                                                "created_at": "2026-10-12T18:18:01+00:00"
+                                            },
+                                            {
+                                                "id": "01m4rnbze0xvbcd2px7bdf0g7r",
+                                                "ticket_id": "01m4rnbzdzv92xf4c04txvppj6",
+                                                "original_name": "screenshot.png",
+                                                "mime_type": "image/png",
+                                                "size": 1024,
+                                                "width": 10,
+                                                "height": 10,
+                                                "url": "http://localhost:8080/api/v1/attachments/01m4rnbze0xvbcd2px7bdf0g7r/content?expires=1791829381&tenant=01m4rnbz4yymcc77cpfttyjjw8&signature=66ac2cecb29c26c797ec7aea887c1dac09b2ad9e1663c5056736c6ae0c6cf03b",
+                                                "url_expires_in": 300,
+                                                "created_at": "2026-10-12T18:18:01+00:00"
+                                            }
+                                        ]
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "example": [
+                                                {
+                                                    "id": "01m4rnbzdxkbvbxz57wggkpcxj",
+                                                    "ticket_id": "01m4rnbzdvxnmetam2dpjhmkra",
+                                                    "original_name": "screenshot.png",
+                                                    "mime_type": "image/png",
+                                                    "size": 1024,
+                                                    "width": 10,
+                                                    "height": 10,
+                                                    "url": "http://localhost:8080/api/v1/attachments/01m4rnbzdxkbvbxz57wggkpcxj/content?expires=1791829381&tenant=01m4rnbz4yymcc77cpfttyjjw8&signature=7f9459b9e7fb24c0d00ffb64851c48104531db7edcebf02bdaba3bef15fea0eb",
+                                                    "url_expires_in": 300,
+                                                    "created_at": "2026-10-12T18:18:01+00:00"
+                                                },
+                                                {
+                                                    "id": "01m4rnbze0xvbcd2px7bdf0g7r",
+                                                    "ticket_id": "01m4rnbzdzv92xf4c04txvppj6",
+                                                    "original_name": "screenshot.png",
+                                                    "mime_type": "image/png",
+                                                    "size": 1024,
+                                                    "width": 10,
+                                                    "height": 10,
+                                                    "url": "http://localhost:8080/api/v1/attachments/01m4rnbze0xvbcd2px7bdf0g7r/content?expires=1791829381&tenant=01m4rnbz4yymcc77cpfttyjjw8&signature=66ac2cecb29c26c797ec7aea887c1dac09b2ad9e1663c5056736c6ae0c6cf03b",
+                                                    "url_expires_in": 300,
+                                                    "created_at": "2026-10-12T18:18:01+00:00"
+                                                }
+                                            ],
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "01m4rnbzdxkbvbxz57wggkpcxj"
+                                                    },
+                                                    "ticket_id": {
+                                                        "type": "string",
+                                                        "example": "01m4rnbzdvxnmetam2dpjhmkra"
+                                                    },
+                                                    "original_name": {
+                                                        "type": "string",
+                                                        "example": "screenshot.png"
+                                                    },
+                                                    "mime_type": {
+                                                        "type": "string",
+                                                        "example": "image/png"
+                                                    },
+                                                    "size": {
+                                                        "type": "integer",
+                                                        "example": 1024
+                                                    },
+                                                    "width": {
+                                                        "type": "integer",
+                                                        "example": 10
+                                                    },
+                                                    "height": {
+                                                        "type": "integer",
+                                                        "example": 10
+                                                    },
+                                                    "url": {
+                                                        "type": "string",
+                                                        "example": "http://localhost:8080/api/v1/attachments/01m4rnbzdxkbvbxz57wggkpcxj/content?expires=1791829381&tenant=01m4rnbz4yymcc77cpfttyjjw8&signature=7f9459b9e7fb24c0d00ffb64851c48104531db7edcebf02bdaba3bef15fea0eb"
+                                                    },
+                                                    "url_expires_in": {
+                                                        "type": "integer",
+                                                        "example": 300
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "example": "2026-10-12T18:18:01+00:00"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Attachments"
+                ],
+                "security": []
+            },
+            "post": {
+                "summary": "Upload an image",
+                "operationId": "uploadAnImage",
+                "description": "The image type is detected from its content; the image is re-encoded,\nwhich removes EXIF metadata such as GPS position.",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": "01m4rnbzeark093qzrwbd1m94h",
+                                            "ticket_id": "01m4rnbze9nd40cvq8cmz3266j",
+                                            "original_name": "screenshot.png",
+                                            "mime_type": "image/png",
+                                            "size": 1024,
+                                            "width": 10,
+                                            "height": 10,
+                                            "url": "http://localhost:8080/api/v1/attachments/01m4rnbzeark093qzrwbd1m94h/content?expires=1791829381&tenant=01m4rnbz4yymcc77cpfttyjjw8&signature=7c619649653db906d6de976b12cae830e548ec9151b44c9058cf55abb133199c",
+                                            "url_expires_in": 300,
+                                            "created_at": "2026-10-12T18:18:01+00:00"
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "01m4rnbzeark093qzrwbd1m94h"
+                                                },
+                                                "ticket_id": {
+                                                    "type": "string",
+                                                    "example": "01m4rnbze9nd40cvq8cmz3266j"
+                                                },
+                                                "original_name": {
+                                                    "type": "string",
+                                                    "example": "screenshot.png"
+                                                },
+                                                "mime_type": {
+                                                    "type": "string",
+                                                    "example": "image/png"
+                                                },
+                                                "size": {
+                                                    "type": "integer",
+                                                    "example": 1024
+                                                },
+                                                "width": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "height": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "url": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8080/api/v1/attachments/01m4rnbzeark093qzrwbd1m94h/content?expires=1791829381&tenant=01m4rnbz4yymcc77cpfttyjjw8&signature=7c619649653db906d6de976b12cae830e548ec9151b44c9058cf55abb133199c"
+                                                },
+                                                "url_expires_in": {
+                                                    "type": "integer",
+                                                    "example": 300
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2026-10-12T18:18:01+00:00"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Attachments"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary",
+                                        "description": "JPEG, PNG or WebP image (max 5 MB). Metadata is stripped. Must be a file. Must not be greater than 5120 kilobytes."
+                                    }
+                                },
+                                "required": [
+                                    "file"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": []
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "ticket_id",
+                    "description": "The ID of the ticket.",
+                    "example": "architecto",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        "/api/v1/attachments/{id}": {
+            "get": {
+                "summary": "Show an attachment",
+                "operationId": "showAnAttachment",
+                "description": "Returns metadata with a fresh signed download URL.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": "01m4rnbzefy9c0r5shey2mrpeg",
+                                            "ticket_id": "01m4rnbzeet1ak54cb7qd6rdy7",
+                                            "original_name": "screenshot.png",
+                                            "mime_type": "image/png",
+                                            "size": 1024,
+                                            "width": 10,
+                                            "height": 10,
+                                            "url": "http://localhost:8080/api/v1/attachments/01m4rnbzefy9c0r5shey2mrpeg/content?expires=1791829381&tenant=01m4rnbz4yymcc77cpfttyjjw8&signature=e3f5b41112d5c0fc2f3eb18110e106fbd3c3326fd70a196ddacb184e27e4b3eb",
+                                            "url_expires_in": 300,
+                                            "created_at": "2026-10-12T18:18:01+00:00"
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "01m4rnbzefy9c0r5shey2mrpeg"
+                                                },
+                                                "ticket_id": {
+                                                    "type": "string",
+                                                    "example": "01m4rnbzeet1ak54cb7qd6rdy7"
+                                                },
+                                                "original_name": {
+                                                    "type": "string",
+                                                    "example": "screenshot.png"
+                                                },
+                                                "mime_type": {
+                                                    "type": "string",
+                                                    "example": "image/png"
+                                                },
+                                                "size": {
+                                                    "type": "integer",
+                                                    "example": 1024
+                                                },
+                                                "width": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "height": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "url": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8080/api/v1/attachments/01m4rnbzefy9c0r5shey2mrpeg/content?expires=1791829381&tenant=01m4rnbz4yymcc77cpfttyjjw8&signature=e3f5b41112d5c0fc2f3eb18110e106fbd3c3326fd70a196ddacb184e27e4b3eb"
+                                                },
+                                                "url_expires_in": {
+                                                    "type": "integer",
+                                                    "example": 300
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2026-10-12T18:18:01+00:00"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Attachments"
+                ],
+                "security": []
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "description": "The ID of the attachment.",
+                    "example": "architecto",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        "/api/v1/auth/login": {
+            "post": {
+                "summary": "Log in (SPA session)",
+                "operationId": "logInSPASession",
+                "description": "Starts a cookie-based session for the first-party web app. Call\n`GET /sanctum/csrf-cookie` first and send the `X-XSRF-TOKEN` header.",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Tenant",
+                        "description": "",
+                        "example": "acme",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": [],
+                "tags": [
+                    "Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Account e-mail. Must be a valid email address. Must not be greater than 254 characters.",
+                                        "example": "agent@acme.test"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Account password. Must not be greater than 255 characters.",
+                                        "example": "correct-horse-battery-staple"
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/v1/auth/tokens": {
+            "post": {
+                "summary": "Issue an API token (mobile)",
+                "operationId": "issueAnAPITokenmobile",
+                "description": "Returns a bearer token bound to the user's tenant. Tokens expire and\nare revoked when the user is deactivated or changes role.",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Tenant",
+                        "description": "",
+                        "example": "acme",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "token": "01J...|plain-text-token",
+                                        "token_type": "Bearer",
+                                        "expires_in": 2592000
+                                    },
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "01J...|plain-text-token"
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "Bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": 2592000
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Account e-mail. Must be a valid email address. Must not be greater than 254 characters.",
+                                        "example": "agent@acme.test"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Account password. Must not be greater than 255 characters.",
+                                        "example": "correct-horse-battery-staple"
+                                    },
+                                    "device_name": {
+                                        "type": "string",
+                                        "description": "Label for the token, e.g. the phone model. Must not be greater than 100 characters.",
+                                        "example": "Pixel 9"
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "password",
+                                    "device_name"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/v1/auth/logout": {
+            "post": {
+                "summary": "Log out (SPA session)",
+                "operationId": "logOutSPASession",
+                "description": "",
+                "parameters": [],
+                "responses": [],
+                "tags": [
+                    "Authentication"
+                ],
+                "security": []
+            }
+        },
+        "/api/v1/auth/tokens/current": {
+            "delete": {
+                "summary": "Revoke the current API token",
+                "operationId": "revokeTheCurrentAPIToken",
+                "description": "",
+                "parameters": [],
+                "responses": [],
+                "tags": [
+                    "Authentication"
+                ],
+                "security": []
+            }
+        },
+        "/api/v1/auth/me": {
+            "get": {
+                "summary": "Current user",
+                "operationId": "currentUser",
+                "description": "",
+                "parameters": [],
+                "responses": [],
+                "tags": [
+                    "Authentication"
+                ],
+                "security": []
+            }
+        },
+        "/api/v1/auth/password": {
+            "put": {
+                "summary": "Change password",
+                "operationId": "changePassword",
+                "description": "Revokes every API token of the user except the one making the request.",
+                "parameters": [],
+                "responses": [],
+                "tags": [
+                    "Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "current_password": {
+                                        "type": "string",
+                                        "description": "The current password.",
+                                        "example": "correct-horse-battery-staple"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "New password (min 12 chars, not found in known breaches).",
+                                        "example": "a-new-long-unique-passphrase"
+                                    }
+                                },
+                                "required": [
+                                    "current_password",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/v1/categories": {
+            "get": {
+                "summary": "List categories",
+                "operationId": "listCategories",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": [
+                                            {
+                                                "id": "01m4rnbzekt3j4hr84angp6tab",
+                                                "name": "Repudiandae Laboriosam",
+                                                "slug": "repudiandae-laboriosam",
+                                                "description": "Alias tenetur ratione nemo voluptate accusamus ut et."
+                                            },
+                                            {
+                                                "id": "01m4rnbzem968yvwzyterf63m1",
+                                                "name": "Rerum Ex",
+                                                "slug": "rerum-ex",
+                                                "description": "Assumenda et tenetur ab reiciendis quia."
+                                            }
+                                        ]
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "example": [
+                                                {
+                                                    "id": "01m4rnbzekt3j4hr84angp6tab",
+                                                    "name": "Repudiandae Laboriosam",
+                                                    "slug": "repudiandae-laboriosam",
+                                                    "description": "Alias tenetur ratione nemo voluptate accusamus ut et."
+                                                },
+                                                {
+                                                    "id": "01m4rnbzem968yvwzyterf63m1",
+                                                    "name": "Rerum Ex",
+                                                    "slug": "rerum-ex",
+                                                    "description": "Assumenda et tenetur ab reiciendis quia."
+                                                }
+                                            ],
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "01m4rnbzekt3j4hr84angp6tab"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Repudiandae Laboriosam"
+                                                    },
+                                                    "slug": {
+                                                        "type": "string",
+                                                        "example": "repudiandae-laboriosam"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "Alias tenetur ratione nemo voluptate accusamus ut et."
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Categories"
+                ],
+                "security": []
+            },
+            "post": {
+                "summary": "Create a category",
+                "operationId": "createACategory",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": "01m4rnbzerwtv709jn7krcb6z3",
+                                            "name": "Architecto Eius",
+                                            "slug": "architecto-eius",
+                                            "description": "Animi quos velit et fugiat."
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "01m4rnbzerwtv709jn7krcb6z3"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Architecto Eius"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "example": "architecto-eius"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Animi quos velit et fugiat."
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Categories"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Category name, unique per tenant. Must be at least 2 characters. Must not be greater than 80 characters.",
+                                        "example": "Hardware"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "Optional description. Must not be greater than 500 characters.",
+                                        "example": "Printers, laptops and peripherals",
+                                        "nullable": true
+                                    }
+                                },
+                                "required": [
+                                    "name"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/v1/categories/{id}": {
+            "get": {
+                "summary": "Show a category",
+                "operationId": "showACategory",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": "01m4rnbzevqssrjdb85w1kex6f",
+                                            "name": "Eius Et",
+                                            "slug": "eius-et",
+                                            "description": "Quos velit et fugiat sunt nihil accusantium harum."
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "01m4rnbzevqssrjdb85w1kex6f"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Eius Et"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "example": "eius-et"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Quos velit et fugiat sunt nihil accusantium harum."
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Categories"
+                ],
+                "security": []
+            },
+            "put": {
+                "summary": "Update a category",
+                "operationId": "updateACategory",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": "01m4rnbzezf3z07mkcgk2en4nq",
+                                            "name": "Et Animi",
+                                            "slug": "et-animi",
+                                            "description": "Velit et fugiat sunt nihil accusantium."
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "01m4rnbzezf3z07mkcgk2en4nq"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Et Animi"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "example": "et-animi"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Velit et fugiat sunt nihil accusantium."
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Categories"
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Category name, unique per tenant. Must be at least 2 characters. Must not be greater than 80 characters.",
+                                        "example": "Hardware"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "Optional description. Must not be greater than 500 characters.",
+                                        "example": "Printers, laptops and peripherals",
+                                        "nullable": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            },
+            "delete": {
+                "summary": "Delete a category",
+                "operationId": "deleteACategory",
+                "description": "Tickets in the category are kept and become uncategorized.",
+                "parameters": [],
+                "responses": [],
+                "tags": [
+                    "Categories"
+                ],
+                "security": []
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "description": "The ID of the category.",
+                    "example": "architecto",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        "/api/v1/team": {
+            "get": {
+                "summary": "List members",
+                "operationId": "listMembers",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "role",
+                        "description": "Filter by role: customer, agent or admin.",
+                        "example": "agent",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Filter by role: customer, agent or admin.",
+                            "example": "agent"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": [
+                                            {
+                                                "id": "01m4rnbzf9vywnjxkxkzqfcnhh",
+                                                "name": "Ms. Elisabeth Okuneva",
+                                                "email": "gulgowski.asia@example.com",
+                                                "role": "customer",
+                                                "is_active": true,
+                                                "created_at": "2026-10-12T18:18:01+00:00"
+                                            },
+                                            {
+                                                "id": "01m4rnbzfbr9hnkwrdypkm06c7",
+                                                "name": "Jermaine Tillman",
+                                                "email": "mya96@example.com",
+                                                "role": "customer",
+                                                "is_active": true,
+                                                "created_at": "2026-10-12T18:18:01+00:00"
+                                            }
+                                        ],
+                                        "links": {
+                                            "first": "/?page=1",
+                                            "last": "/?page=1",
+                                            "prev": null,
+                                            "next": null
+                                        },
+                                        "meta": {
+                                            "current_page": 1,
+                                            "from": 1,
+                                            "last_page": 1,
+                                            "links": [
+                                                {
+                                                    "url": null,
+                                                    "label": "&laquo; Previous",
+                                                    "page": null,
+                                                    "active": false
+                                                },
+                                                {
+                                                    "url": "/?page=1",
+                                                    "label": "1",
+                                                    "page": 1,
+                                                    "active": true
+                                                },
+                                                {
+                                                    "url": null,
+                                                    "label": "Next &raquo;",
+                                                    "page": null,
+                                                    "active": false
+                                                }
+                                            ],
+                                            "path": "/",
+                                            "per_page": 50,
+                                            "to": 2,
+                                            "total": 2
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "example": [
+                                                {
+                                                    "id": "01m4rnbzf9vywnjxkxkzqfcnhh",
+                                                    "name": "Ms. Elisabeth Okuneva",
+                                                    "email": "gulgowski.asia@example.com",
+                                                    "role": "customer",
+                                                    "is_active": true,
+                                                    "created_at": "2026-10-12T18:18:01+00:00"
+                                                },
+                                                {
+                                                    "id": "01m4rnbzfbr9hnkwrdypkm06c7",
+                                                    "name": "Jermaine Tillman",
+                                                    "email": "mya96@example.com",
+                                                    "role": "customer",
+                                                    "is_active": true,
+                                                    "created_at": "2026-10-12T18:18:01+00:00"
+                                                }
+                                            ],
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "01m4rnbzf9vywnjxkxkzqfcnhh"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Ms. Elisabeth Okuneva"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "gulgowski.asia@example.com"
+                                                    },
+                                                    "role": {
+                                                        "type": "string",
+                                                        "example": "customer"
+                                                    },
+                                                    "is_active": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "example": "2026-10-12T18:18:01+00:00"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "links": {
+                                            "type": "object",
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "/?page=1"
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "/?page=1"
+                                                },
+                                                "prev": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                }
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "example": [
+                                                        {
+                                                            "url": null,
+                                                            "label": "&laquo; Previous",
+                                                            "page": null,
+                                                            "active": false
+                                                        },
+                                                        {
+                                                            "url": "/?page=1",
+                                                            "label": "1",
+                                                            "page": 1,
+                                                            "active": true
+                                                        },
+                                                        {
+                                                            "url": null,
+                                                            "label": "Next &raquo;",
+                                                            "page": null,
+                                                            "active": false
+                                                        }
+                                                    ],
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "label": {
+                                                                "type": "string",
+                                                                "example": "&laquo; Previous"
+                                                            },
+                                                            "page": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "/"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 50
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Team"
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "role": {
+                                        "type": "string",
+                                        "description": "",
+                                        "example": "customer",
+                                        "enum": [
+                                            "customer",
+                                            "agent",
+                                            "admin"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            },
+            "post": {
+                "summary": "Add a member",
+                "operationId": "addAMember",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": "01m4rnbzfftj1cm5fatg2mqvsv",
+                                            "name": "Ms. Audra Crooks II",
+                                            "email": "idickens@example.org",
+                                            "role": "customer",
+                                            "is_active": true,
+                                            "created_at": "2026-10-12T18:18:01+00:00"
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "01m4rnbzfftj1cm5fatg2mqvsv"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Ms. Audra Crooks II"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "idickens@example.org"
+                                                },
+                                                "role": {
+                                                    "type": "string",
+                                                    "example": "customer"
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2026-10-12T18:18:01+00:00"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Team"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Full name. Must not be greater than 120 characters.",
+                                        "example": "Ana Souza"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "E-mail, unique within the tenant. Must be a valid email address. Must not be greater than 254 characters.",
+                                        "example": "ana@acme.test"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Initial password (min 12 chars, not found in known breaches).",
+                                        "example": "a-long-unique-passphrase"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "description": "customer, agent or admin.",
+                                        "example": "agent",
+                                        "enum": [
+                                            "customer",
+                                            "agent",
+                                            "admin"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "role"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/v1/team/{member_id}": {
+            "get": {
+                "summary": "Show a member",
+                "operationId": "showAMember",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": "01m4rnbzfj3badp5ackay0r99f",
+                                            "name": "Ms. Elisabeth Okuneva",
+                                            "email": "aschuster@example.com",
+                                            "role": "customer",
+                                            "is_active": true,
+                                            "created_at": "2026-10-12T18:18:01+00:00"
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "01m4rnbzfj3badp5ackay0r99f"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Ms. Elisabeth Okuneva"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "aschuster@example.com"
+                                                },
+                                                "role": {
+                                                    "type": "string",
+                                                    "example": "customer"
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2026-10-12T18:18:01+00:00"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Team"
+                ],
+                "security": []
+            },
+            "patch": {
+                "summary": "Update a member",
+                "operationId": "updateAMember",
+                "description": "Admins cannot change their own role or deactivate themselves.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": "01m4rnbzfp2c8ykzkf423gr10y",
+                                            "name": "Ms. Audra Crooks II",
+                                            "email": "gilbert32@example.com",
+                                            "role": "customer",
+                                            "is_active": true,
+                                            "created_at": "2026-10-12T18:18:01+00:00"
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "01m4rnbzfp2c8ykzkf423gr10y"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Ms. Audra Crooks II"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "gilbert32@example.com"
+                                                },
+                                                "role": {
+                                                    "type": "string",
+                                                    "example": "customer"
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2026-10-12T18:18:01+00:00"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Team"
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Full name. Must not be greater than 120 characters.",
+                                        "example": "Ana Souza"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "description": "customer, agent or admin.",
+                                        "example": "admin",
+                                        "enum": [
+                                            "customer",
+                                            "agent",
+                                            "admin"
+                                        ]
+                                    },
+                                    "is_active": {
+                                        "type": "boolean",
+                                        "description": "Deactivated users cannot sign in; their tokens are revoked.",
+                                        "example": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "member_id",
+                    "description": "The ID of the member.",
+                    "example": "architecto",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        "/api/v1/tickets/{ticket_id}/messages": {
+            "get": {
+                "summary": "List messages",
+                "operationId": "listMessages",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": [
+                                            {
+                                                "id": "01m4rnbzddaypnf4s80d9qr7k9",
+                                                "ticket_id": "01m4rnbzdc0gjedgfastamcqn8",
+                                                "body": "Animi quos velit et fugiat. Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci.",
+                                                "is_internal": false,
+                                                "author": {
+                                                    "id": "01m4rnbzdc0gjedgfastamcqn9",
+                                                    "name": "Mr. Madisen Schaden",
+                                                    "role": "customer"
+                                                },
+                                                "created_at": "2026-10-12T18:18:01+00:00"
+                                            },
+                                            {
+                                                "id": "01m4rnbzdh6ez80a5ph7977e7p",
+                                                "ticket_id": "01m4rnbzdg2vca7n8wqpfwgzf9",
+                                                "body": "Neque blanditiis odio veritatis excepturi doloribus delectus. Qui repudiandae laboriosam est alias.",
+                                                "is_internal": false,
+                                                "author": {
+                                                    "id": "01m4rnbzdh6ez80a5ph7977e7n",
+                                                    "name": "Lucie Bauch MD",
+                                                    "role": "customer"
+                                                },
+                                                "created_at": "2026-10-12T18:18:01+00:00"
+                                            }
+                                        ],
+                                        "links": {
+                                            "first": "/?page=1",
+                                            "last": "/?page=1",
+                                            "prev": null,
+                                            "next": null
+                                        },
+                                        "meta": {
+                                            "current_page": 1,
+                                            "from": 1,
+                                            "last_page": 1,
+                                            "links": [
+                                                {
+                                                    "url": null,
+                                                    "label": "&laquo; Previous",
+                                                    "page": null,
+                                                    "active": false
+                                                },
+                                                {
+                                                    "url": "/?page=1",
+                                                    "label": "1",
+                                                    "page": 1,
+                                                    "active": true
+                                                },
+                                                {
+                                                    "url": null,
+                                                    "label": "Next &raquo;",
+                                                    "page": null,
+                                                    "active": false
+                                                }
+                                            ],
+                                            "path": "/",
+                                            "per_page": 50,
+                                            "to": 2,
+                                            "total": 2
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "example": [
+                                                {
+                                                    "id": "01m4rnbzddaypnf4s80d9qr7k9",
+                                                    "ticket_id": "01m4rnbzdc0gjedgfastamcqn8",
+                                                    "body": "Animi quos velit et fugiat. Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci.",
+                                                    "is_internal": false,
+                                                    "author": {
+                                                        "id": "01m4rnbzdc0gjedgfastamcqn9",
+                                                        "name": "Mr. Madisen Schaden",
+                                                        "role": "customer"
+                                                    },
+                                                    "created_at": "2026-10-12T18:18:01+00:00"
+                                                },
+                                                {
+                                                    "id": "01m4rnbzdh6ez80a5ph7977e7p",
+                                                    "ticket_id": "01m4rnbzdg2vca7n8wqpfwgzf9",
+                                                    "body": "Neque blanditiis odio veritatis excepturi doloribus delectus. Qui repudiandae laboriosam est alias.",
+                                                    "is_internal": false,
+                                                    "author": {
+                                                        "id": "01m4rnbzdh6ez80a5ph7977e7n",
+                                                        "name": "Lucie Bauch MD",
+                                                        "role": "customer"
+                                                    },
+                                                    "created_at": "2026-10-12T18:18:01+00:00"
+                                                }
+                                            ],
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "01m4rnbzddaypnf4s80d9qr7k9"
+                                                    },
+                                                    "ticket_id": {
+                                                        "type": "string",
+                                                        "example": "01m4rnbzdc0gjedgfastamcqn8"
+                                                    },
+                                                    "body": {
+                                                        "type": "string",
+                                                        "example": "Animi quos velit et fugiat. Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci."
+                                                    },
+                                                    "is_internal": {
+                                                        "type": "boolean",
+                                                        "example": false
+                                                    },
+                                                    "author": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string",
+                                                                "example": "01m4rnbzdc0gjedgfastamcqn9"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Mr. Madisen Schaden"
+                                                            },
+                                                            "role": {
+                                                                "type": "string",
+                                                                "example": "customer"
+                                                            }
+                                                        }
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "example": "2026-10-12T18:18:01+00:00"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "links": {
+                                            "type": "object",
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "/?page=1"
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "/?page=1"
+                                                },
+                                                "prev": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                }
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "example": [
+                                                        {
+                                                            "url": null,
+                                                            "label": "&laquo; Previous",
+                                                            "page": null,
+                                                            "active": false
+                                                        },
+                                                        {
+                                                            "url": "/?page=1",
+                                                            "label": "1",
+                                                            "page": 1,
+                                                            "active": true
+                                                        },
+                                                        {
+                                                            "url": null,
+                                                            "label": "Next &raquo;",
+                                                            "page": null,
+                                                            "active": false
+                                                        }
+                                                    ],
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "label": {
+                                                                "type": "string",
+                                                                "example": "&laquo; Previous"
+                                                            },
+                                                            "page": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "/"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 50
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Ticket messages"
+                ],
+                "security": []
+            },
+            "post": {
+                "summary": "Post a message",
+                "operationId": "postAMessage",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": "01m4rnbzdqkhcyw1qm7nnvqd92",
+                                            "ticket_id": "01m4rnbzdpb06f9bq1y4n0hg3s",
+                                            "body": "Et animi quos velit et fugiat. Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci.",
+                                            "is_internal": false,
+                                            "author": {
+                                                "id": "01m4rnbzdqkhcyw1qm7nnvqd91",
+                                                "name": "Colt Balistreri",
+                                                "role": "customer"
+                                            },
+                                            "created_at": "2026-10-12T18:18:01+00:00"
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "01m4rnbzdqkhcyw1qm7nnvqd92"
+                                                },
+                                                "ticket_id": {
+                                                    "type": "string",
+                                                    "example": "01m4rnbzdpb06f9bq1y4n0hg3s"
+                                                },
+                                                "body": {
+                                                    "type": "string",
+                                                    "example": "Et animi quos velit et fugiat. Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci."
+                                                },
+                                                "is_internal": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "author": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "01m4rnbzdqkhcyw1qm7nnvqd91"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Colt Balistreri"
+                                                        },
+                                                        "role": {
+                                                            "type": "string",
+                                                            "example": "customer"
+                                                        }
+                                                    }
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2026-10-12T18:18:01+00:00"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Ticket messages"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "body": {
+                                        "type": "string",
+                                        "description": "Message text. Must not be greater than 20000 characters.",
+                                        "example": "Could you try restarting it?"
+                                    },
+                                    "is_internal": {
+                                        "type": "boolean",
+                                        "description": "Internal note visible to staff only.",
+                                        "example": false
+                                    }
+                                },
+                                "required": [
+                                    "body"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": []
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "ticket_id",
+                    "description": "The ID of the ticket.",
+                    "example": "architecto",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        "/api/v1/tickets": {
+            "get": {
+                "summary": "List tickets",
+                "operationId": "listTickets",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "status",
+                        "description": "Filter by status.",
+                        "example": "open",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Filter by status.",
+                            "example": "open",
+                            "enum": [
+                                "open",
+                                "pending",
+                                "resolved",
+                                "closed"
+                            ]
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "priority",
+                        "description": "Filter by priority.",
+                        "example": "high",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Filter by priority.",
+                            "example": "high",
+                            "enum": [
+                                "low",
+                                "normal",
+                                "high",
+                                "urgent"
+                            ]
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "category_id",
+                        "description": "Filter by category ULID.",
+                        "example": "",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Filter by category ULID.",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "assignee_id",
+                        "description": "Filter by assignee ULID.",
+                        "example": "",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Filter by assignee ULID.",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "requester_id",
+                        "description": "Filter by requester ULID (staff only).",
+                        "example": "",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Filter by requester ULID (staff only).",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "unassigned",
+                        "description": "Only tickets without an assignee.",
+                        "example": false,
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "description": "Only tickets without an assignee.",
+                            "example": false
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "q",
+                        "description": "Search subject and description. Must not be greater than 100 characters.",
+                        "example": "printer",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Search subject and description. Must not be greater than 100 characters.",
+                            "example": "printer"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "description": "Sort field; prefix with - for descending.",
+                        "example": "-created_at",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Sort field; prefix with - for descending.",
+                            "example": "-created_at",
+                            "enum": [
+                                "created_at",
+                                "-created_at",
+                                "updated_at",
+                                "-updated_at",
+                                "priority",
+                                "-priority",
+                                "status",
+                                "-status"
+                            ]
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "per_page",
+                        "description": "Page size (1-100). Must be at least 1. Must not be greater than 100.",
+                        "example": 25,
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "description": "Page size (1-100). Must be at least 1. Must not be greater than 100.",
+                            "example": 25
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Page number. Must be at least 1.",
+                        "example": 1,
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "description": "Page number. Must be at least 1.",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": [
+                                            {
+                                                "id": "01m4rnbzbr8rys1c2tq7fndh3t",
+                                                "subject": "Eius et animi quos velit et.",
+                                                "description": "Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.",
+                                                "status": "open",
+                                                "priority": "urgent",
+                                                "category": {
+                                                    "id": "01m4rnbzbqy8gqb2znnrnfbdyv",
+                                                    "name": "Voluptatem Laboriosam",
+                                                    "slug": "voluptatem-laboriosam",
+                                                    "description": "Quis adipisci molestias fugit deleniti distinctio eum."
+                                                },
+                                                "requester": {
+                                                    "id": "01m4rnbzbn5p6yh8k5zg36kt9g",
+                                                    "name": "Mina Bauch",
+                                                    "role": "customer"
+                                                },
+                                                "assignee": {
+                                                    "id": "01m4rnbzbpnf6zt4ny1b83fqez",
+                                                    "name": "Donny Leffler",
+                                                    "role": "customer"
+                                                },
+                                                "resolved_at": null,
+                                                "closed_at": null,
+                                                "created_at": "2026-10-12T18:18:01+00:00",
+                                                "updated_at": "2026-10-12T18:18:01+00:00"
+                                            },
+                                            {
+                                                "id": "01m4rnbzc2n11x3dntvrj8efb0",
+                                                "subject": "Id aut libero aliquam veniam.",
+                                                "description": "Mollitia deleniti nemo odit quia officia. Dignissimos neque blanditiis odio.",
+                                                "status": "open",
+                                                "priority": "normal",
+                                                "category": {
+                                                    "id": "01m4rnbzc1hcyjy5xg9082xbh7",
+                                                    "name": "Recusandae Modi",
+                                                    "slug": "recusandae-modi",
+                                                    "description": "Ex repellendus assumenda et tenetur ab reiciendis."
+                                                },
+                                                "requester": {
+                                                    "id": "01m4rnbzbzztz5y8bpncw4h6wm",
+                                                    "name": "Emanuel Emmerich",
+                                                    "role": "customer"
+                                                },
+                                                "assignee": {
+                                                    "id": "01m4rnbzc0fxdffc71t10dshe5",
+                                                    "name": "Jacques Howe",
+                                                    "role": "customer"
+                                                },
+                                                "resolved_at": null,
+                                                "closed_at": null,
+                                                "created_at": "2026-10-12T18:18:01+00:00",
+                                                "updated_at": "2026-10-12T18:18:01+00:00"
+                                            }
+                                        ],
+                                        "links": {
+                                            "first": "/?page=1",
+                                            "last": "/?page=1",
+                                            "prev": null,
+                                            "next": null
+                                        },
+                                        "meta": {
+                                            "current_page": 1,
+                                            "from": 1,
+                                            "last_page": 1,
+                                            "links": [
+                                                {
+                                                    "url": null,
+                                                    "label": "&laquo; Previous",
+                                                    "page": null,
+                                                    "active": false
+                                                },
+                                                {
+                                                    "url": "/?page=1",
+                                                    "label": "1",
+                                                    "page": 1,
+                                                    "active": true
+                                                },
+                                                {
+                                                    "url": null,
+                                                    "label": "Next &raquo;",
+                                                    "page": null,
+                                                    "active": false
+                                                }
+                                            ],
+                                            "path": "/",
+                                            "per_page": 25,
+                                            "to": 2,
+                                            "total": 2
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "example": [
+                                                {
+                                                    "id": "01m4rnbzbr8rys1c2tq7fndh3t",
+                                                    "subject": "Eius et animi quos velit et.",
+                                                    "description": "Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.",
+                                                    "status": "open",
+                                                    "priority": "urgent",
+                                                    "category": {
+                                                        "id": "01m4rnbzbqy8gqb2znnrnfbdyv",
+                                                        "name": "Voluptatem Laboriosam",
+                                                        "slug": "voluptatem-laboriosam",
+                                                        "description": "Quis adipisci molestias fugit deleniti distinctio eum."
+                                                    },
+                                                    "requester": {
+                                                        "id": "01m4rnbzbn5p6yh8k5zg36kt9g",
+                                                        "name": "Mina Bauch",
+                                                        "role": "customer"
+                                                    },
+                                                    "assignee": {
+                                                        "id": "01m4rnbzbpnf6zt4ny1b83fqez",
+                                                        "name": "Donny Leffler",
+                                                        "role": "customer"
+                                                    },
+                                                    "resolved_at": null,
+                                                    "closed_at": null,
+                                                    "created_at": "2026-10-12T18:18:01+00:00",
+                                                    "updated_at": "2026-10-12T18:18:01+00:00"
+                                                },
+                                                {
+                                                    "id": "01m4rnbzc2n11x3dntvrj8efb0",
+                                                    "subject": "Id aut libero aliquam veniam.",
+                                                    "description": "Mollitia deleniti nemo odit quia officia. Dignissimos neque blanditiis odio.",
+                                                    "status": "open",
+                                                    "priority": "normal",
+                                                    "category": {
+                                                        "id": "01m4rnbzc1hcyjy5xg9082xbh7",
+                                                        "name": "Recusandae Modi",
+                                                        "slug": "recusandae-modi",
+                                                        "description": "Ex repellendus assumenda et tenetur ab reiciendis."
+                                                    },
+                                                    "requester": {
+                                                        "id": "01m4rnbzbzztz5y8bpncw4h6wm",
+                                                        "name": "Emanuel Emmerich",
+                                                        "role": "customer"
+                                                    },
+                                                    "assignee": {
+                                                        "id": "01m4rnbzc0fxdffc71t10dshe5",
+                                                        "name": "Jacques Howe",
+                                                        "role": "customer"
+                                                    },
+                                                    "resolved_at": null,
+                                                    "closed_at": null,
+                                                    "created_at": "2026-10-12T18:18:01+00:00",
+                                                    "updated_at": "2026-10-12T18:18:01+00:00"
+                                                }
+                                            ],
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "01m4rnbzbr8rys1c2tq7fndh3t"
+                                                    },
+                                                    "subject": {
+                                                        "type": "string",
+                                                        "example": "Eius et animi quos velit et."
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure."
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "open"
+                                                    },
+                                                    "priority": {
+                                                        "type": "string",
+                                                        "example": "urgent"
+                                                    },
+                                                    "category": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string",
+                                                                "example": "01m4rnbzbqy8gqb2znnrnfbdyv"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Voluptatem Laboriosam"
+                                                            },
+                                                            "slug": {
+                                                                "type": "string",
+                                                                "example": "voluptatem-laboriosam"
+                                                            },
+                                                            "description": {
+                                                                "type": "string",
+                                                                "example": "Quis adipisci molestias fugit deleniti distinctio eum."
+                                                            }
+                                                        }
+                                                    },
+                                                    "requester": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string",
+                                                                "example": "01m4rnbzbn5p6yh8k5zg36kt9g"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Mina Bauch"
+                                                            },
+                                                            "role": {
+                                                                "type": "string",
+                                                                "example": "customer"
+                                                            }
+                                                        }
+                                                    },
+                                                    "assignee": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string",
+                                                                "example": "01m4rnbzbpnf6zt4ny1b83fqez"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Donny Leffler"
+                                                            },
+                                                            "role": {
+                                                                "type": "string",
+                                                                "example": "customer"
+                                                            }
+                                                        }
+                                                    },
+                                                    "resolved_at": {
+                                                        "type": "string",
+                                                        "example": null,
+                                                        "nullable": true
+                                                    },
+                                                    "closed_at": {
+                                                        "type": "string",
+                                                        "example": null,
+                                                        "nullable": true
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "example": "2026-10-12T18:18:01+00:00"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "example": "2026-10-12T18:18:01+00:00"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "links": {
+                                            "type": "object",
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "/?page=1"
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "/?page=1"
+                                                },
+                                                "prev": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                }
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "example": [
+                                                        {
+                                                            "url": null,
+                                                            "label": "&laquo; Previous",
+                                                            "page": null,
+                                                            "active": false
+                                                        },
+                                                        {
+                                                            "url": "/?page=1",
+                                                            "label": "1",
+                                                            "page": 1,
+                                                            "active": true
+                                                        },
+                                                        {
+                                                            "url": null,
+                                                            "label": "Next &raquo;",
+                                                            "page": null,
+                                                            "active": false
+                                                        }
+                                                    ],
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "label": {
+                                                                "type": "string",
+                                                                "example": "&laquo; Previous"
+                                                            },
+                                                            "page": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "/"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 25
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Tickets"
+                ],
+                "security": []
+            },
+            "post": {
+                "summary": "Open a ticket",
+                "operationId": "openATicket",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": "01m4rnbzchvvdgdk6j9192en2j",
+                                            "subject": "Eius et animi quos velit et.",
+                                            "description": "Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.",
+                                            "status": "open",
+                                            "priority": "urgent",
+                                            "category": {
+                                                "id": "01m4rnbzchvvdgdk6j9192en2h",
+                                                "name": "Quis Adipisci",
+                                                "slug": "quis-adipisci",
+                                                "description": "Fugit deleniti distinctio eum doloremque id aut libero."
+                                            },
+                                            "requester": {
+                                                "id": "01m4rnbzcfczgw8tgh1yrrsjr2",
+                                                "name": "Mina Bauch",
+                                                "role": "customer"
+                                            },
+                                            "assignee": {
+                                                "id": "01m4rnbzcgn3c1j0y2qtmhg18m",
+                                                "name": "Domingo Leuschke",
+                                                "role": "customer"
+                                            },
+                                            "resolved_at": null,
+                                            "closed_at": null,
+                                            "created_at": "2026-10-12T18:18:01+00:00",
+                                            "updated_at": "2026-10-12T18:18:01+00:00"
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "01m4rnbzchvvdgdk6j9192en2j"
+                                                },
+                                                "subject": {
+                                                    "type": "string",
+                                                    "example": "Eius et animi quos velit et."
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure."
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "open"
+                                                },
+                                                "priority": {
+                                                    "type": "string",
+                                                    "example": "urgent"
+                                                },
+                                                "category": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "01m4rnbzchvvdgdk6j9192en2h"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Quis Adipisci"
+                                                        },
+                                                        "slug": {
+                                                            "type": "string",
+                                                            "example": "quis-adipisci"
+                                                        },
+                                                        "description": {
+                                                            "type": "string",
+                                                            "example": "Fugit deleniti distinctio eum doloremque id aut libero."
+                                                        }
+                                                    }
+                                                },
+                                                "requester": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "01m4rnbzcfczgw8tgh1yrrsjr2"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Mina Bauch"
+                                                        },
+                                                        "role": {
+                                                            "type": "string",
+                                                            "example": "customer"
+                                                        }
+                                                    }
+                                                },
+                                                "assignee": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "01m4rnbzcgn3c1j0y2qtmhg18m"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Domingo Leuschke"
+                                                        },
+                                                        "role": {
+                                                            "type": "string",
+                                                            "example": "customer"
+                                                        }
+                                                    }
+                                                },
+                                                "resolved_at": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "closed_at": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2026-10-12T18:18:01+00:00"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "2026-10-12T18:18:01+00:00"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Tickets"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "subject": {
+                                        "type": "string",
+                                        "description": "Short summary. Must be at least 3 characters. Must not be greater than 200 characters.",
+                                        "example": "Printer on 3rd floor is jammed"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "Full description of the problem. Must not be greater than 20000 characters.",
+                                        "example": "It shows error E-42 since this morning."
+                                    },
+                                    "priority": {
+                                        "type": "string",
+                                        "description": "low, normal, high or urgent.",
+                                        "example": "normal",
+                                        "enum": [
+                                            "low",
+                                            "normal",
+                                            "high",
+                                            "urgent"
+                                        ]
+                                    },
+                                    "category_id": {
+                                        "type": "string",
+                                        "description": "Category ULID of the same tenant. Must match an existing stored value.",
+                                        "example": null,
+                                        "nullable": true
+                                    }
+                                },
+                                "required": [
+                                    "subject",
+                                    "description"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/v1/tickets/{id}": {
+            "get": {
+                "summary": "Show a ticket",
+                "operationId": "showATicket",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": "01m4rnbzcqet7qgak2m0x5q45t",
+                                            "subject": "Et animi quos velit et fugiat.",
+                                            "description": "Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.",
+                                            "status": "open",
+                                            "priority": "normal",
+                                            "category": {
+                                                "id": "01m4rnbzcqet7qgak2m0x5q45s",
+                                                "name": "Molestias Fugit",
+                                                "slug": "molestias-fugit",
+                                                "description": "Distinctio eum doloremque id aut libero aliquam veniam corporis."
+                                            },
+                                            "requester": {
+                                                "id": "01m4rnbzcpjmkt26892kggt0sw",
+                                                "name": "Mr. Carey Smitham",
+                                                "role": "customer"
+                                            },
+                                            "assignee": {
+                                                "id": "01m4rnbzcpjmkt26892kggt0sx",
+                                                "name": "Matilda Feeney",
+                                                "role": "customer"
+                                            },
+                                            "resolved_at": null,
+                                            "closed_at": null,
+                                            "created_at": "2026-10-12T18:18:01+00:00",
+                                            "updated_at": "2026-10-12T18:18:01+00:00"
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "01m4rnbzcqet7qgak2m0x5q45t"
+                                                },
+                                                "subject": {
+                                                    "type": "string",
+                                                    "example": "Et animi quos velit et fugiat."
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum."
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "open"
+                                                },
+                                                "priority": {
+                                                    "type": "string",
+                                                    "example": "normal"
+                                                },
+                                                "category": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "01m4rnbzcqet7qgak2m0x5q45s"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Molestias Fugit"
+                                                        },
+                                                        "slug": {
+                                                            "type": "string",
+                                                            "example": "molestias-fugit"
+                                                        },
+                                                        "description": {
+                                                            "type": "string",
+                                                            "example": "Distinctio eum doloremque id aut libero aliquam veniam corporis."
+                                                        }
+                                                    }
+                                                },
+                                                "requester": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "01m4rnbzcpjmkt26892kggt0sw"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Mr. Carey Smitham"
+                                                        },
+                                                        "role": {
+                                                            "type": "string",
+                                                            "example": "customer"
+                                                        }
+                                                    }
+                                                },
+                                                "assignee": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "01m4rnbzcpjmkt26892kggt0sx"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Matilda Feeney"
+                                                        },
+                                                        "role": {
+                                                            "type": "string",
+                                                            "example": "customer"
+                                                        }
+                                                    }
+                                                },
+                                                "resolved_at": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "closed_at": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2026-10-12T18:18:01+00:00"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "2026-10-12T18:18:01+00:00"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Tickets"
+                ],
+                "security": []
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "description": "The ID of the ticket.",
+                    "example": "architecto",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        "/api/v1/tickets/{ticket_id}/status": {
+            "patch": {
+                "summary": "Change ticket status",
+                "operationId": "changeTicketStatus",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": "01m4rnbzcxcpvfn2p5bh10ptq8",
+                                            "subject": "Et animi quos velit et fugiat.",
+                                            "description": "Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.",
+                                            "status": "open",
+                                            "priority": "normal",
+                                            "category": {
+                                                "id": "01m4rnbzcxcpvfn2p5bh10ptq7",
+                                                "name": "Eum Doloremque",
+                                                "slug": "eum-doloremque",
+                                                "description": "Aut libero aliquam veniam corporis."
+                                            },
+                                            "requester": {
+                                                "id": "01m4rnbzcwe3yhwa1pwhcbcs7q",
+                                                "name": "Mr. Carey Smitham",
+                                                "role": "customer"
+                                            },
+                                            "assignee": {
+                                                "id": "01m4rnbzcxcpvfn2p5bh10ptq6",
+                                                "name": "Janick Schultz DDS",
+                                                "role": "customer"
+                                            },
+                                            "resolved_at": null,
+                                            "closed_at": null,
+                                            "created_at": "2026-10-12T18:18:01+00:00",
+                                            "updated_at": "2026-10-12T18:18:01+00:00"
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "01m4rnbzcxcpvfn2p5bh10ptq8"
+                                                },
+                                                "subject": {
+                                                    "type": "string",
+                                                    "example": "Et animi quos velit et fugiat."
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum."
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "open"
+                                                },
+                                                "priority": {
+                                                    "type": "string",
+                                                    "example": "normal"
+                                                },
+                                                "category": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "01m4rnbzcxcpvfn2p5bh10ptq7"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Eum Doloremque"
+                                                        },
+                                                        "slug": {
+                                                            "type": "string",
+                                                            "example": "eum-doloremque"
+                                                        },
+                                                        "description": {
+                                                            "type": "string",
+                                                            "example": "Aut libero aliquam veniam corporis."
+                                                        }
+                                                    }
+                                                },
+                                                "requester": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "01m4rnbzcwe3yhwa1pwhcbcs7q"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Mr. Carey Smitham"
+                                                        },
+                                                        "role": {
+                                                            "type": "string",
+                                                            "example": "customer"
+                                                        }
+                                                    }
+                                                },
+                                                "assignee": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "01m4rnbzcxcpvfn2p5bh10ptq6"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Janick Schultz DDS"
+                                                        },
+                                                        "role": {
+                                                            "type": "string",
+                                                            "example": "customer"
+                                                        }
+                                                    }
+                                                },
+                                                "resolved_at": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "closed_at": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2026-10-12T18:18:01+00:00"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "2026-10-12T18:18:01+00:00"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Tickets"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "description": "open, pending, resolved or closed. Customers may only use open or closed.",
+                                        "example": "resolved",
+                                        "enum": [
+                                            "open",
+                                            "pending",
+                                            "resolved",
+                                            "closed"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "status"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": []
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "ticket_id",
+                    "description": "The ID of the ticket.",
+                    "example": "architecto",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        "/api/v1/tickets/{ticket_id}/assignee": {
+            "patch": {
+                "summary": "Assign a ticket",
+                "operationId": "assignATicket",
+                "description": "Staff only. Pass `null` to unassign.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": "01m4rnbzd5jhj77syg9ayhq60h",
+                                            "subject": "Et animi quos velit et fugiat.",
+                                            "description": "Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.",
+                                            "status": "open",
+                                            "priority": "normal",
+                                            "category": {
+                                                "id": "01m4rnbzd4e0k9z24ykavptm4y",
+                                                "name": "Aliquam Veniam",
+                                                "slug": "aliquam-veniam",
+                                                "description": "Dolorem mollitia deleniti nemo."
+                                            },
+                                            "requester": {
+                                                "id": "01m4rnbzd3h0zwyh2qttvkw3jn",
+                                                "name": "Mr. Carey Smitham",
+                                                "role": "customer"
+                                            },
+                                            "assignee": {
+                                                "id": "01m4rnbzd4e0k9z24ykavptm4x",
+                                                "name": "Prof. Annabelle Kshlerin",
+                                                "role": "customer"
+                                            },
+                                            "resolved_at": null,
+                                            "closed_at": null,
+                                            "created_at": "2026-10-12T18:18:01+00:00",
+                                            "updated_at": "2026-10-12T18:18:01+00:00"
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "01m4rnbzd5jhj77syg9ayhq60h"
+                                                },
+                                                "subject": {
+                                                    "type": "string",
+                                                    "example": "Et animi quos velit et fugiat."
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum."
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "open"
+                                                },
+                                                "priority": {
+                                                    "type": "string",
+                                                    "example": "normal"
+                                                },
+                                                "category": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "01m4rnbzd4e0k9z24ykavptm4y"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Aliquam Veniam"
+                                                        },
+                                                        "slug": {
+                                                            "type": "string",
+                                                            "example": "aliquam-veniam"
+                                                        },
+                                                        "description": {
+                                                            "type": "string",
+                                                            "example": "Dolorem mollitia deleniti nemo."
+                                                        }
+                                                    }
+                                                },
+                                                "requester": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "01m4rnbzd3h0zwyh2qttvkw3jn"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Mr. Carey Smitham"
+                                                        },
+                                                        "role": {
+                                                            "type": "string",
+                                                            "example": "customer"
+                                                        }
+                                                    }
+                                                },
+                                                "assignee": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "01m4rnbzd4e0k9z24ykavptm4x"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Prof. Annabelle Kshlerin"
+                                                        },
+                                                        "role": {
+                                                            "type": "string",
+                                                            "example": "customer"
+                                                        }
+                                                    }
+                                                },
+                                                "resolved_at": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "closed_at": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2026-10-12T18:18:01+00:00"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "2026-10-12T18:18:01+00:00"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Tickets"
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "assignee_id": {
+                                        "type": "string",
+                                        "description": "ULID of an active agent/admin, or null to unassign.",
+                                        "example": null,
+                                        "nullable": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "ticket_id",
+                    "description": "The ID of the ticket.",
+                    "example": "architecto",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ]
+        }
+    }
+}
