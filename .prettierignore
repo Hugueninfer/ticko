@@ -1,0 +1,14 @@
+apps/api
+apps/mobile
+services
+pnpm-lock.yaml
+**/dist
+**/coverage
+**/playwright-report
+**/test-results
+packages/api-client/src/schema.d.ts
+*.md
+*.yml
+*.yaml
+infra
+.github

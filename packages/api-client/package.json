@@ -8,9 +8,18 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "generate": "openapi-typescript ../../apps/api/resources/openapi/openapi.json -o src/schema.d.ts"
+    "generate": "openapi-typescript ../../apps/api/resources/openapi/openapi.json -o src/schema.d.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "openapi-fetch": "0.17.0"
   },
   "devDependencies": {
-    "openapi-typescript": "7.13.0"
+    "@vitest/coverage-v8": "5.0.4",
+    "openapi-typescript": "7.13.0",
+    "typescript": "6.0.3",
+    "vitest": "5.0.4"
   }
 }
