@@ -10,6 +10,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -26,6 +27,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property Carbon|null $email_verified_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property-read Tenant $tenant
  */
 class User extends Authenticatable
 {
@@ -46,6 +48,14 @@ class User extends Authenticatable
 
     /** @var array<string, mixed> */
     protected $attributes = ['is_active' => true];
+
+    /**
+     * @return HasMany<Ticket, $this>
+     */
+    public function assignedTickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class, 'assignee_id');
+    }
 
     public function isStaff(): bool
     {

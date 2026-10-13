@@ -6,12 +6,14 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Actions\Team\CreateTeamMember;
 use App\Actions\Team\UpdateTeamMember;
+use App\Enums\TicketStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Team\IndexTeamRequest;
 use App\Http\Requests\Team\StoreTeamMemberRequest;
 use App\Http\Requests\Team\UpdateTeamMemberRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Gate;
 use Knuckles\Scribe\Attributes\Group;
@@ -29,10 +31,14 @@ final class TeamController extends Controller
         Gate::authorize('viewAny', User::class);
 
         $role = $request->role();
+        $search = $request->search();
         $members = User::query()
-            ->when($role !== null, fn ($q) => $q->where('role', $role))
+            ->withCount(['assignedTickets as open_tickets_count' => fn (Builder $q) => $q->whereIn('status', [TicketStatus::Open, TicketStatus::Pending])])
+            ->when($role !== null, fn (Builder $q) => $q->where('role', $role))
+            ->when($search !== null, fn (Builder $q) => $q->where(fn (Builder $q) => $q->whereLike('name', (string) $search)->orWhereLike('email', (string) $search)))
             ->orderBy('name')
-            ->paginate(50);
+            ->paginate(50)
+            ->withQueryString();
 
         return UserResource::collection($members);
     }

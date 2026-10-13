@@ -47,7 +47,7 @@ final class AuthController extends Controller
         $request->session()->regenerate();
         $request->session()->put(ResolveTenant::SESSION_KEY, $user->tenant_id);
 
-        return UserResource::make($user);
+        return UserResource::make($user->load('tenant'));
     }
 
     /**
@@ -107,7 +107,7 @@ final class AuthController extends Controller
     #[SelfService]
     public function me(Request $request): UserResource
     {
-        return UserResource::make($this->currentUser($request));
+        return UserResource::make($this->currentUser($request)->load('tenant'));
     }
 
     /**
