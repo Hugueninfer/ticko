@@ -63,8 +63,8 @@ it('looks absent when disabled, in production, or without a demo tenant', functi
     'missing tenant' => [fn () => config(['ticko.demo.tenant' => 'nope'])],
 ]);
 
-it('is rate limited like the other sign-in endpoints', function (): void {
-    config(['ticko.rate_limits.auth' => 2]);
+it('is rate limited per client, separately from credential sign-in', function (): void {
+    config(['ticko.rate_limits.demo' => 2, 'ticko.rate_limits.auth' => 1]);
 
     $this->withHeaders($this->spa)->postJson('/api/v1/auth/demo', ['role' => 'root'])->assertUnprocessable();
     $this->withHeaders($this->spa)->postJson('/api/v1/auth/demo', ['role' => 'root'])->assertUnprocessable();

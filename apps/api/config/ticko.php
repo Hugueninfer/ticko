@@ -27,6 +27,7 @@ return [
         'auth' => (int) env('TICKO_RATE_LIMIT_AUTH', 5),
         'api' => (int) env('TICKO_RATE_LIMIT_API', 120),
         'uploads' => (int) env('TICKO_RATE_LIMIT_UPLOADS', 20),
+        'demo' => (int) env('TICKO_RATE_LIMIT_DEMO', 30),
     ],
 
     // API documentation (Swagger UI at /docs). Disabled in production unless enabled explicitly.

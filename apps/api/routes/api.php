@@ -21,6 +21,10 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::middleware('throttle:auth')->group(function (): void {
         Route::post('auth/login', [AuthController::class, 'login'])->name('auth.login');
         Route::post('auth/tokens', [AuthController::class, 'issueToken'])->name('auth.tokens.store');
+    });
+
+    // Demo sign-in has no credentials to brute-force; it is limited per client only.
+    Route::middleware('throttle:demo')->group(function (): void {
         Route::get('auth/demo', [DemoLoginController::class, 'show'])->name('auth.demo.show');
         Route::post('auth/demo', [DemoLoginController::class, 'store'])->name('auth.demo.store');
     });
