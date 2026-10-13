@@ -6,6 +6,7 @@ use App\Enums\Role;
 use App\Models\PersonalAccessToken;
 use App\Models\Tenant;
 use Database\Factories\UserFactory;
+use Illuminate\Support\Str;
 
 beforeEach(function (): void {
     $this->tenant = Tenant::factory()->create(['slug' => 'acme']);
@@ -86,6 +87,13 @@ it('treats tokens of deactivated users as unauthenticated', function (): void {
     $this->inTenant($this->tenant, fn () => $this->user->forceFill(['is_active' => false])->save());
 
     $this->getJson('/api/v1/auth/me')->assertUnauthorized();
+});
+
+it('rejects deactivated users before route model binding, so ids cannot be probed', function (): void {
+    $this->actingAsUser($this->user);
+    $this->inTenant($this->tenant, fn () => $this->user->forceFill(['is_active' => false])->save());
+
+    $this->getJson('/api/v1/tickets/'.Str::ulid())->assertUnauthorized();
 });
 
 it('rejects expired tokens', function (): void {

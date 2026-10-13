@@ -11,6 +11,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Routing\Middleware\ValidateSignature;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -28,9 +29,11 @@ return Application::configure(basePath: dirname(__DIR__))
         // Row-Level Security hides every row until it is set.
         $middleware->api(append: [ResolveTenant::class]);
         $middleware->web(append: [ResolveTenant::class]);
-        // Priority order: session -> ResolveTenant -> signature -> auth -> route model binding.
+        // Priority order: session -> ResolveTenant -> signature -> auth -> active -> route model binding.
         $middleware->prependToPriorityList(before: AuthenticatesRequests::class, prepend: ResolveTenant::class);
         $middleware->prependToPriorityList(before: AuthenticatesRequests::class, prepend: ValidateSignature::class);
+        // Deactivated users get 401 before any model lookup, so 404s cannot reveal which ids exist.
+        $middleware->prependToPriorityList(before: SubstituteBindings::class, prepend: EnsureUserIsActive::class);
 
         $middleware->alias([
             'active' => EnsureUserIsActive::class,
