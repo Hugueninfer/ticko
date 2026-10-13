@@ -13,7 +13,12 @@ apps/api/storage/framework/sessions/*
 apps/api/storage/framework/views/*
 apps/api/storage/app/private/*
 apps/api/bootstrap/cache/*.php
-apps/web
-apps/mobile
+apps/web/dist
+apps/web/coverage
+apps/web/test-results
+apps/web/playwright-report
+apps/mobile/*
+!apps/mobile/package.json
 services
-packages
+packages/*/coverage
+packages/api-client/src/schema.d.ts
