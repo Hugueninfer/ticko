@@ -3,15 +3,16 @@
 [![CI](https://github.com/Hugueninfer/ticko/actions/workflows/ci.yml/badge.svg)](https://github.com/Hugueninfer/ticko/actions/workflows/ci.yml)
 ![Cobertura](https://raw.githubusercontent.com/Hugueninfer/ticko/badges/coverage.svg)
 
-Helpdesk multi-tenant com IA. Este repositório é um monorepo; a **fase 1** entrega a API,
-a infraestrutura e os controles de qualidade. Web, mobile e o classificador de IA ainda são
-esqueletos.
+Helpdesk multi-tenant com IA. Este repositório é um monorepo: a **fase 1** entregou a API,
+a infraestrutura e os controles de qualidade; a **fase 2** traz o app web do atendente e do
+admin e o cliente tipado da API. Mobile e o classificador de IA ainda são esqueletos.
 
 > 🇺🇸 English version: [README.md](README.md) (referência completa de arquitetura e endpoints)
 
 ## Subir tudo com um comando
 
-Requisitos: Docker com Compose v2 e `make`. Não precisa de PHP, Composer nem Node na máquina.
+Requisitos: Docker com Compose v2 e `make`. Para subir a stack não precisa de PHP, Composer nem
+Node na máquina (Node 22 só é necessário para desenvolver o web fora do Docker).
 
 ```bash
 make up
@@ -22,6 +23,7 @@ as migrations e sobe tudo:
 
 | URL | O quê |
 | --- | --- |
+| http://localhost:8080 | O app web (atendentes e admins) |
 | http://localhost:8080/docs | Swagger UI da API (OpenAPI 3) |
 | http://localhost:8080/docs/openapi.json | Documento OpenAPI |
 | http://localhost:8080/api/v1 | A API |
@@ -29,12 +31,15 @@ as migrations e sobe tudo:
 
 Porta 8080 ocupada? Ajuste `WEB_PORT` (e `APP_URL`) no `.env`.
 
-Tenant de demonstração (`acme`) com um usuário por papel; as senhas são aleatórias e
-aparecem uma única vez:
+Tenant de demonstração (`acme`, "Loja Aurora") com um usuário por papel, categorias e
+tickets; as senhas são aleatórias e aparecem uma única vez:
 
 ```bash
 make demo
 ```
+
+Com `TICKO_DEMO_LOGIN=true` (padrão no `.env.example`; nunca vale em produção) a tela de login
+mostra os atalhos **Atendente** e **Admin** para entrar na demo com um clique.
 
 Tenant real: `docker compose exec api php artisan ticko:tenant:create <slug> "<Nome>" --admin-email=<email>`.
 
@@ -49,16 +54,19 @@ Tenant real: `docker compose exec api php artisan ticko:tenant:create <slug> "<N
 | `make audit` | `composer audit` |
 | `make gitleaks` | Procura segredos no histórico do git |
 | `make docs` | Regera `apps/api/resources/openapi/openapi.json` com o Scribe |
-| `make ci` | Tudo o que a CI roda |
+| `make ci` | Tudo o que a CI roda para a API |
+| `make web-dev` | App web com hot reload em http://localhost:5173 (Node 22 + corepack) |
+| `make web-test` | ESLint, Prettier, `tsc` e Vitest com cobertura (web + cliente da API) |
+| `make e2e` | Playwright contra a stack rodando (antes: `make up && make demo`) |
 
 ## Estrutura
 
 ```
 apps/api/            API Laravel 13 (PHP 8.4)              ← fase 1
-apps/web/            SPA web                                (esqueleto)
+apps/web/            App web: React + Vite                  ← fase 2
 apps/mobile/         App mobile                             (esqueleto)
 services/classifier/ Classificador de tickets com IA        (esqueleto)
-packages/api-client/ Tipos TypeScript gerados do OpenAPI
+packages/api-client/ Cliente tipado gerado do OpenAPI (web + mobile)
 infra/               Dockerfile, Caddy, init do Postgres
 ```
 
@@ -76,6 +84,19 @@ infra/               Dockerfile, Caddy, init do Postgres
   Chaves estrangeiras compostas impedem relacionar registros de tenants diferentes.
 - **Origem do tenant:** token bearer → sessão (definida no login) → URL assinada →
   cabeçalho `X-Tenant` (slug, usado no login). A fonte mais forte sempre vence.
+- **App web:** React 19 + TypeScript estrito + Vite, TanStack Query, React Router, Tailwind
+  com componentes no estilo shadcn/ui, React Hook Form + Zod e react-i18next (**pt-BR por
+  padrão**, inglês). Temas claro e escuro com os tokens do design: teal para ações humanas,
+  violeta só para o que vem da IA. Telas: login, fila (Meus / Não atribuídos / Todos /
+  Atrasados, filtros, busca, paginação), detalhe do ticket (cliente, conversa com notas
+  internas e imagens, painel da IA como "em breve"), equipe, categorias e SLA, e dashboard.
+- **Mesma origem:** no Docker o Caddy serve o app em `/` e manda `/api`, `/sanctum`, `/docs`,
+  `/horizon` e `/up` para o Laravel; no `make web-dev` o Vite faz proxy dessas rotas. Login por
+  cookie de sessão do Sanctum com CSRF; nenhum token fica no navegador e não existe CORS com
+  credenciais.
+- **SLA:** cada ticket recebe prazos de 1ª resposta e de resolução ao ser aberto (metas da
+  categoria ou padrão por prioridade em `config/ticko.php`, em horário corrido). `?overdue=1`
+  lista os atrasados; `GET /api/v1/metrics` (só admin) alimenta o dashboard.
 
 ### Papéis
 
@@ -95,8 +116,13 @@ infra/               Dockerfile, Caddy, init do Postgres
   dimensões, URL assinada expirada/adulterada).
 - Teste de arquitetura que falha se uma action de controller da API não chamar `authorize()`.
 - Larastan no nível `max`, Pint, gitleaks.
-- CI no GitHub Actions: lint, Larastan, testes + cobertura, `composer audit`, gitleaks e build
-  das imagens; permissões mínimas e actions fixadas por SHA.
+- Web: ESLint (type-checked, hooks, acessibilidade), Prettier, `tsc` estrito, Vitest + Testing
+  Library (cobertura mínima de 80%) e Playwright contra a stack Docker (login, fila, responder e
+  nota interna, páginas de admin, categorias, equipe), que também falha com qualquer violação
+  de CSP.
+- CI no GitHub Actions: lint, Larastan, testes + cobertura, `composer audit`, gitleaks, build
+  das imagens, lint/tipos/testes/build/`pnpm audit` do web e os testes E2E; permissões mínimas
+  e actions fixadas por SHA.
 
 ## Segurança
 
@@ -112,6 +138,10 @@ Detalhes em [README.md#security](README.md#security) e como reportar falhas em
 - Upload: tipo detectado pelo conteúdo, re-encode (remove EXIF/GPS), nome aleatório, disco
   privado, URL assinada de 5 minutos.
 - Erros no formato RFC 7807, sem detalhes internos fora do modo debug.
+- App web com CSP estrita (só scripts, estilos, fontes, imagens e requisições da própria
+  origem; nada inline; sem iframe), cookie de sessão httpOnly, conteúdo de usuário sempre
+  renderizado como texto (o lint proíbe `dangerouslySetInnerHTML`), nenhum segredo em
+  variáveis `VITE_*`; o controle por papel no front é só navegação, quem autoriza é a API.
 - Containers não-root, somente leitura, sem capabilities; nada de segredos no repositório
   (chaves de IA só no `.env` local).
 
