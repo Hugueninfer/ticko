@@ -15,6 +15,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Knuckles\Scribe\Attributes\Group;
 use Knuckles\Scribe\Attributes\Response as ScribeResponse;
+use Knuckles\Scribe\Attributes\ResponseFromApiResource;
 use Knuckles\Scribe\Attributes\Unauthenticated;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -46,6 +47,7 @@ final class DemoLoginController extends Controller
      * the regular session login.
      */
     #[Unauthenticated]
+    #[ResponseFromApiResource(UserResource::class, User::class, with: ['tenant'])]
     public function store(DemoLoginRequest $request, TenantContext $tenants): UserResource
     {
         $tenant = $this->demoTenant();

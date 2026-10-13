@@ -22,7 +22,7 @@ final class CategoryController extends Controller
     /**
      * List categories
      */
-    #[ResponseFromApiResource(CategoryResource::class, Category::class, collection: true)]
+    #[ResponseFromApiResource(CategoryResource::class, Category::class, collection: true, withCount: ['tickets'])]
     public function index(): AnonymousResourceCollection
     {
         Gate::authorize('viewAny', Category::class);

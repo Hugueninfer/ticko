@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\Role;
+use App\Enums\TicketStatus;
 use App\Models\Concerns\BelongsToTenant;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -55,6 +56,16 @@ class User extends Authenticatable
     public function assignedTickets(): HasMany
     {
         return $this->hasMany(Ticket::class, 'assignee_id');
+    }
+
+    /**
+     * Open or pending tickets assigned to the user.
+     *
+     * @return HasMany<Ticket, $this>
+     */
+    public function openTickets(): HasMany
+    {
+        return $this->assignedTickets()->whereIn('status', [TicketStatus::Open, TicketStatus::Pending]);
     }
 
     public function isStaff(): bool

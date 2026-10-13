@@ -13,6 +13,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\TokenRequest;
 use App\Http\Requests\Auth\UpdatePasswordRequest;
 use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Knuckles\Scribe\Attributes\Group;
 use Knuckles\Scribe\Attributes\Header;
 use Knuckles\Scribe\Attributes\Response as ScribeResponse;
+use Knuckles\Scribe\Attributes\ResponseFromApiResource;
 use Knuckles\Scribe\Attributes\Unauthenticated;
 use Laravel\Sanctum\PersonalAccessToken;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -35,6 +37,7 @@ final class AuthController extends Controller
      */
     #[Unauthenticated]
     #[Header(ResolveTenant::HEADER, 'acme')]
+    #[ResponseFromApiResource(UserResource::class, User::class, with: ['tenant'])]
     public function login(LoginRequest $request, AuthenticateUser $authenticate): UserResource
     {
         if (! $request->hasSession()) {
@@ -105,6 +108,7 @@ final class AuthController extends Controller
      * Current user
      */
     #[SelfService]
+    #[ResponseFromApiResource(UserResource::class, User::class, with: ['tenant'])]
     public function me(Request $request): UserResource
     {
         return UserResource::make($this->currentUser($request)->load('tenant'));

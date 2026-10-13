@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Actions\Team\CreateTeamMember;
 use App\Actions\Team\UpdateTeamMember;
-use App\Enums\TicketStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Team\IndexTeamRequest;
 use App\Http\Requests\Team\StoreTeamMemberRequest;
@@ -25,7 +24,7 @@ final class TeamController extends Controller
     /**
      * List members
      */
-    #[ResponseFromApiResource(UserResource::class, User::class, collection: true, paginate: 50)]
+    #[ResponseFromApiResource(UserResource::class, User::class, collection: true, paginate: 50, withCount: ['openTickets'])]
     public function index(IndexTeamRequest $request): AnonymousResourceCollection
     {
         Gate::authorize('viewAny', User::class);
@@ -33,7 +32,7 @@ final class TeamController extends Controller
         $role = $request->role();
         $search = $request->search();
         $members = User::query()
-            ->withCount(['assignedTickets as open_tickets_count' => fn (Builder $q) => $q->whereIn('status', [TicketStatus::Open, TicketStatus::Pending])])
+            ->withCount('openTickets')
             ->when($role !== null, fn (Builder $q) => $q->where('role', $role))
             ->when($search !== null, fn (Builder $q) => $q->where(fn (Builder $q) => $q->whereLike('name', (string) $search)->orWhereLike('email', (string) $search)))
             ->orderBy('name')

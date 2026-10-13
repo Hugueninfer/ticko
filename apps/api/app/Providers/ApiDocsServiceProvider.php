@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\Tenant;
+use App\Support\OpenApi\RequiredResponseFields;
 use App\Support\Tenancy\TenantContext;
 use Illuminate\Support\ServiceProvider;
 use Knuckles\Scribe\Scribe;
@@ -15,7 +16,8 @@ use Symfony\Component\Yaml\Yaml;
  *
  * Example responses are built from factories inside a rolled-back
  * transaction; they need a tenant context because RLS applies to them too.
- * The generated OpenAPI document is exported as JSON to a versioned file.
+ * The generated OpenAPI document is exported as JSON to a versioned file,
+ * with every response field required unless a resource marks it optional.
  */
 final class ApiDocsServiceProvider extends ServiceProvider
 {
@@ -35,7 +37,9 @@ final class ApiDocsServiceProvider extends ServiceProvider
                 return;
             }
 
+            /** @var array<string, mixed> $spec */
             $spec = Yaml::parseFile($paths['openapi']);
+            $spec = RequiredResponseFields::fromResources()->apply($spec);
             $json = json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
 
             file_put_contents(config()->string('ticko.openapi_path'), $json.PHP_EOL);

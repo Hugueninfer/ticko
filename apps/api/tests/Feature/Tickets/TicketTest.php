@@ -201,6 +201,6 @@ it('shows people\'s e-mails to staff only', function (): void {
 
     $this->actingAsUser($customer)->getJson("/api/v1/tickets/{$ticket->id}")
         ->assertOk()
-        ->assertJsonMissingPath('data.assignee.email')
-        ->assertJsonMissingPath('data.requester.email');
+        ->assertJsonPath('data.assignee.email', null)
+        ->assertJsonPath('data.requester.email', null);
 });

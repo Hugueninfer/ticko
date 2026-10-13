@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Support\Sla\SlaTarget;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Knuckles\Scribe\Attributes\ResponseField;
 
 /**
  * @mixin Category
@@ -17,6 +18,8 @@ final class CategoryResource extends JsonResource
     /**
      * @return array<string, mixed>
      */
+    #[ResponseField('description', 'string', nullable: true)]
+    #[ResponseField('tickets_count', 'integer', 'Sent by the category listing.', required: false)]
     public function toArray(Request $request): array
     {
         return [
