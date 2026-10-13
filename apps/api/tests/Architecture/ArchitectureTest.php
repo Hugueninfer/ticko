@@ -92,6 +92,6 @@ it('authorizes every API controller action', function (): void {
             $reflection->getEndLine() - $reflection->getStartLine() + 1,
         ));
 
-        expect($source)->toMatch('/\$this->authorize\(|Gate::authorize\(/', "{$label} never calls authorize()");
+        expect($source)->toMatch('/Gate::authorize\(/', "{$label} never calls Gate::authorize()");
     }
 });

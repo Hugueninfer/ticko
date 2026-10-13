@@ -12,6 +12,7 @@ use App\Models\Ticket;
 use App\Models\TicketMessage;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Gate;
 use Knuckles\Scribe\Attributes\Group;
 use Knuckles\Scribe\Attributes\ResponseFromApiResource;
 
@@ -24,7 +25,7 @@ final class TicketMessageController extends Controller
     #[ResponseFromApiResource(TicketMessageResource::class, TicketMessage::class, collection: true, paginate: 50, with: ['author'])]
     public function index(Request $request, Ticket $ticket): AnonymousResourceCollection
     {
-        $this->authorize('view', $ticket);
+        Gate::authorize('view', $ticket);
 
         $messages = $ticket->messages()
             ->with('author')
@@ -43,7 +44,7 @@ final class TicketMessageController extends Controller
     public function store(StoreTicketMessageRequest $request, Ticket $ticket, PostTicketMessage $post): TicketMessageResource
     {
         $internal = $request->boolean('is_internal');
-        $this->authorize($internal ? 'addInternalNote' : 'reply', $ticket);
+        Gate::authorize($internal ? 'addInternalNote' : 'reply', $ticket);
 
         $message = $post->handle($this->currentUser($request), $ticket, $request->string('body')->toString(), $internal);
 

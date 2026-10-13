@@ -16,6 +16,7 @@ use App\Http\Requests\Tickets\StoreTicketRequest;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Gate;
 use Knuckles\Scribe\Attributes\Group;
 use Knuckles\Scribe\Attributes\ResponseFromApiResource;
 
@@ -28,7 +29,7 @@ final class TicketController extends Controller
     #[ResponseFromApiResource(TicketResource::class, Ticket::class, collection: true, paginate: 25, with: ['requester', 'assignee', 'category'])]
     public function index(IndexTicketsRequest $request, ListTickets $list): AnonymousResourceCollection
     {
-        $this->authorize('viewAny', Ticket::class);
+        Gate::authorize('viewAny', Ticket::class);
 
         return TicketResource::collection($list->handle($this->currentUser($request), $request->filters()));
     }
@@ -39,7 +40,7 @@ final class TicketController extends Controller
     #[ResponseFromApiResource(TicketResource::class, Ticket::class, 201, with: ['requester', 'assignee', 'category'])]
     public function store(StoreTicketRequest $request, CreateTicket $create): TicketResource
     {
-        $this->authorize('create', Ticket::class);
+        Gate::authorize('create', Ticket::class);
 
         /** @var array{subject: string, description: string, priority?: string, category_id?: string|null} $data */
         $data = $request->validated();
@@ -54,7 +55,7 @@ final class TicketController extends Controller
     #[ResponseFromApiResource(TicketResource::class, Ticket::class, with: ['requester', 'assignee', 'category'])]
     public function show(Ticket $ticket): TicketResource
     {
-        $this->authorize('view', $ticket);
+        Gate::authorize('view', $ticket);
 
         return TicketResource::make($ticket->load(['requester', 'assignee', 'category']));
     }
@@ -65,7 +66,7 @@ final class TicketController extends Controller
     #[ResponseFromApiResource(TicketResource::class, Ticket::class, with: ['requester', 'assignee', 'category'])]
     public function updateStatus(ChangeTicketStatusRequest $request, Ticket $ticket, ChangeTicketStatus $change): TicketResource
     {
-        $this->authorize('changeStatus', $ticket);
+        Gate::authorize('changeStatus', $ticket);
 
         $ticket = $change->handle($this->currentUser($request), $ticket, $request->status());
 
@@ -80,7 +81,7 @@ final class TicketController extends Controller
     #[ResponseFromApiResource(TicketResource::class, Ticket::class, with: ['requester', 'assignee', 'category'])]
     public function assign(AssignTicketRequest $request, Ticket $ticket, AssignTicket $assign): TicketResource
     {
-        $this->authorize('assign', $ticket);
+        Gate::authorize('assign', $ticket);
 
         $ticket = $assign->handle($ticket, $request->assignee());
 

@@ -13,6 +13,7 @@ use App\Http\Requests\Team\UpdateTeamMemberRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Gate;
 use Knuckles\Scribe\Attributes\Group;
 use Knuckles\Scribe\Attributes\ResponseFromApiResource;
 
@@ -25,7 +26,7 @@ final class TeamController extends Controller
     #[ResponseFromApiResource(UserResource::class, User::class, collection: true, paginate: 50)]
     public function index(IndexTeamRequest $request): AnonymousResourceCollection
     {
-        $this->authorize('viewAny', User::class);
+        Gate::authorize('viewAny', User::class);
 
         $role = $request->role();
         $members = User::query()
@@ -42,7 +43,7 @@ final class TeamController extends Controller
     #[ResponseFromApiResource(UserResource::class, User::class, 201)]
     public function store(StoreTeamMemberRequest $request, CreateTeamMember $create): UserResource
     {
-        $this->authorize('create', User::class);
+        Gate::authorize('create', User::class);
 
         return UserResource::make($create->handle($request->payload()));
     }
@@ -53,7 +54,7 @@ final class TeamController extends Controller
     #[ResponseFromApiResource(UserResource::class, User::class)]
     public function show(User $member): UserResource
     {
-        $this->authorize('view', $member);
+        Gate::authorize('view', $member);
 
         return UserResource::make($member);
     }
@@ -66,7 +67,7 @@ final class TeamController extends Controller
     #[ResponseFromApiResource(UserResource::class, User::class)]
     public function update(UpdateTeamMemberRequest $request, User $member, UpdateTeamMember $update): UserResource
     {
-        $this->authorize('update', $member);
+        Gate::authorize('update', $member);
 
         return UserResource::make($update->handle($member, $request->payload()));
     }

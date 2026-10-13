@@ -11,6 +11,7 @@ use App\Http\Resources\AttachmentResource;
 use App\Models\Attachment;
 use App\Models\Ticket;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Knuckles\Scribe\Attributes\Group;
 use Knuckles\Scribe\Attributes\ResponseFromApiResource;
@@ -26,7 +27,7 @@ final class AttachmentController extends Controller
     #[ResponseFromApiResource(AttachmentResource::class, Attachment::class, collection: true)]
     public function index(Ticket $ticket): AnonymousResourceCollection
     {
-        $this->authorize('view', $ticket);
+        Gate::authorize('view', $ticket);
 
         return AttachmentResource::collection($ticket->attachments()->latest()->get());
     }
@@ -40,7 +41,7 @@ final class AttachmentController extends Controller
     #[ResponseFromApiResource(AttachmentResource::class, Attachment::class, 201)]
     public function store(StoreAttachmentRequest $request, Ticket $ticket, StoreTicketAttachment $store): AttachmentResource
     {
-        $this->authorize('reply', $ticket);
+        Gate::authorize('reply', $ticket);
 
         return AttachmentResource::make($store->handle($this->currentUser($request), $ticket, $request->uploadedImage()));
     }
@@ -53,7 +54,7 @@ final class AttachmentController extends Controller
     #[ResponseFromApiResource(AttachmentResource::class, Attachment::class)]
     public function show(Attachment $attachment): AttachmentResource
     {
-        $this->authorize('view', $attachment);
+        Gate::authorize('view', $attachment);
 
         return AttachmentResource::make($attachment);
     }
