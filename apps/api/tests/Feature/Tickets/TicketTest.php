@@ -189,3 +189,18 @@ it('forbids customers from assigning tickets', function (): void {
         ->assertForbidden()
         ->assertHeader('Content-Type', 'application/problem+json');
 });
+
+it('shows people\'s e-mails to staff only', function (): void {
+    $customer = $this->userIn($this->tenant, Role::Customer);
+    $agent = $this->userIn($this->tenant, Role::Agent);
+    $ticket = $this->inTenant($this->tenant, fn () => Ticket::factory()->create(['requester_id' => $customer->id, 'assignee_id' => $agent->id]));
+
+    $this->actingAsUser($agent)->getJson("/api/v1/tickets/{$ticket->id}")
+        ->assertOk()
+        ->assertJsonPath('data.requester.email', $customer->email);
+
+    $this->actingAsUser($customer)->getJson("/api/v1/tickets/{$ticket->id}")
+        ->assertOk()
+        ->assertJsonMissingPath('data.assignee.email')
+        ->assertJsonMissingPath('data.requester.email');
+});
