@@ -12,6 +12,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -42,6 +43,9 @@ class AppServiceProvider extends ServiceProvider
         Password::defaults(fn (): Password => Password::min(12)->max(255)->uncompromised());
 
         Route::model('member', User::class);
+
+        // Dashboard figures cover the whole tenant, so only admins see them.
+        Gate::define('viewMetrics', fn (User $user): bool => $user->isAdmin());
 
         $this->configureRateLimiting();
     }

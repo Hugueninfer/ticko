@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\Api\V1\AttachmentController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CategoryController;
+use App\Http\Controllers\Api\V1\MetricsController;
 use App\Http\Controllers\Api\V1\TeamController;
 use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Controllers\Api\V1\TicketMessageController;
@@ -47,6 +48,8 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
         Route::get('attachments/{attachment}', [AttachmentController::class, 'show'])->name('attachments.show');
 
         Route::apiResource('categories', CategoryController::class);
+
+        Route::get('metrics', [MetricsController::class, 'show'])->name('metrics.show');
 
         Route::get('team', [TeamController::class, 'index'])->name('team.index');
         Route::post('team', [TeamController::class, 'store'])->name('team.store');
