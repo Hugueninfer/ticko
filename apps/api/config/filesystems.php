@@ -35,7 +35,9 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            'serve' => true,
+            // Attachments are only served through the signed, tenant-aware API route;
+            // 'serve' would add GET/PUT /storage/{path} routes on this private disk.
+            'serve' => false,
             'throw' => false,
             'report' => false,
         ],

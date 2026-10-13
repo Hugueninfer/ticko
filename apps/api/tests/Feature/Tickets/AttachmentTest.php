@@ -8,6 +8,7 @@ use App\Models\Attachment;
 use App\Models\Tenant;
 use App\Models\Ticket;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Tests\Support\Images;
 
@@ -130,4 +131,14 @@ it('serves content only through a valid, unexpired signed URL', function (): voi
 
     $this->travel(config('ticko.attachment_url_ttl_minutes') + 1)->minutes();
     $this->get($url)->assertForbidden();
+});
+
+it('does not expose the private disk through framework storage routes', function (): void {
+    expect(Route::has('storage.local'))->toBeFalse()
+        ->and(Route::has('storage.local.upload'))->toBeFalse();
+
+    Storage::disk('local')->put('tenants/x/secret.png', 'data');
+
+    $this->get('/storage/tenants/x/secret.png')->assertNotFound();
+    $this->put('/storage/tenants/x/secret.png', ['file' => 'data'])->assertNotFound();
 });
