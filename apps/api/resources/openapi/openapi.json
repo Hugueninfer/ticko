@@ -24,8 +24,20 @@
             "description": "Everyone in the tenant can list categories; only admins manage them."
         },
         {
+            "name": "Endpoints",
+            "description": ""
+        },
+        {
             "name": "Metrics",
             "description": "Dashboard figures for admins, always limited to the current tenant."
+        },
+        {
+            "name": "Push notifications",
+            "description": "Devices that receive push notifications (mobile app, bearer tokens only)."
+        },
+        {
+            "name": "Realtime",
+            "description": "WebSocket (Pusher protocol, Laravel Reverb) on the API origin under /app. Subscribe to private channels after authorizing them with POST /api/broadcasting/auth."
         },
         {
             "name": "Team",
@@ -82,28 +94,28 @@
                                     "example": {
                                         "data": [
                                             {
-                                                "id": "01m4tacy4fs6zaf7wn02bqvaz6",
-                                                "ticket_id": "01m4tacy4eyyzjd812bzfeewey",
+                                                "id": "01m5040fyavtv1m16kv4s1ga64",
+                                                "ticket_id": "01m5040fy8b4a8c1fj08anvh24",
                                                 "original_name": "screenshot.png",
                                                 "mime_type": "image/png",
                                                 "size": 1024,
                                                 "width": 10,
                                                 "height": 10,
-                                                "url": "http://localhost:8090/api/v1/attachments/01m4tacy4fs6zaf7wn02bqvaz6/content?expires=1791884987&tenant=01m4tacxvv4jdr9sqzz548a3t3&signature=d720a64ebd462236e1a63bad73775075d4f32a32bd9e8746e846bd641cece3aa",
+                                                "url": "http://localhost:8090/api/v1/attachments/01m5040fyavtv1m16kv4s1ga64/content?expires=1792079614&tenant=01m5040fkc5grhbxvkzntyxbak&signature=51b1fb8d118bb9a3dcbf0c4a09e1069754815da7150fdd4ede8e087b987afc5e",
                                                 "url_expires_in": 300,
-                                                "created_at": "2026-10-13T09:44:47+00:00"
+                                                "created_at": "2026-10-15T15:48:34+00:00"
                                             },
                                             {
-                                                "id": "01m4tacy4j0v9r92p0tbe4fz2t",
-                                                "ticket_id": "01m4tacy4hdjv1w1y2g1w8vspd",
+                                                "id": "01m5040fyg3vftn4mrjbxhe76v",
+                                                "ticket_id": "01m5040fyey351f798m1c4t9wf",
                                                 "original_name": "screenshot.png",
                                                 "mime_type": "image/png",
                                                 "size": 1024,
                                                 "width": 10,
                                                 "height": 10,
-                                                "url": "http://localhost:8090/api/v1/attachments/01m4tacy4j0v9r92p0tbe4fz2t/content?expires=1791884987&tenant=01m4tacxvv4jdr9sqzz548a3t3&signature=5f4b7c5345fd4234b2ffb09fc104dac796211d71efe771cb0556d24342558938",
+                                                "url": "http://localhost:8090/api/v1/attachments/01m5040fyg3vftn4mrjbxhe76v/content?expires=1792079614&tenant=01m5040fkc5grhbxvkzntyxbak&signature=3646b17bc181226510f0778e99141b3d4c0ff89e1f2ebb0dc93d69623700ee3b",
                                                 "url_expires_in": 300,
-                                                "created_at": "2026-10-13T09:44:47+00:00"
+                                                "created_at": "2026-10-15T15:48:34+00:00"
                                             }
                                         ]
                                     },
@@ -112,28 +124,28 @@
                                             "type": "array",
                                             "example": [
                                                 {
-                                                    "id": "01m4tacy4fs6zaf7wn02bqvaz6",
-                                                    "ticket_id": "01m4tacy4eyyzjd812bzfeewey",
+                                                    "id": "01m5040fyavtv1m16kv4s1ga64",
+                                                    "ticket_id": "01m5040fy8b4a8c1fj08anvh24",
                                                     "original_name": "screenshot.png",
                                                     "mime_type": "image/png",
                                                     "size": 1024,
                                                     "width": 10,
                                                     "height": 10,
-                                                    "url": "http://localhost:8090/api/v1/attachments/01m4tacy4fs6zaf7wn02bqvaz6/content?expires=1791884987&tenant=01m4tacxvv4jdr9sqzz548a3t3&signature=d720a64ebd462236e1a63bad73775075d4f32a32bd9e8746e846bd641cece3aa",
+                                                    "url": "http://localhost:8090/api/v1/attachments/01m5040fyavtv1m16kv4s1ga64/content?expires=1792079614&tenant=01m5040fkc5grhbxvkzntyxbak&signature=51b1fb8d118bb9a3dcbf0c4a09e1069754815da7150fdd4ede8e087b987afc5e",
                                                     "url_expires_in": 300,
-                                                    "created_at": "2026-10-13T09:44:47+00:00"
+                                                    "created_at": "2026-10-15T15:48:34+00:00"
                                                 },
                                                 {
-                                                    "id": "01m4tacy4j0v9r92p0tbe4fz2t",
-                                                    "ticket_id": "01m4tacy4hdjv1w1y2g1w8vspd",
+                                                    "id": "01m5040fyg3vftn4mrjbxhe76v",
+                                                    "ticket_id": "01m5040fyey351f798m1c4t9wf",
                                                     "original_name": "screenshot.png",
                                                     "mime_type": "image/png",
                                                     "size": 1024,
                                                     "width": 10,
                                                     "height": 10,
-                                                    "url": "http://localhost:8090/api/v1/attachments/01m4tacy4j0v9r92p0tbe4fz2t/content?expires=1791884987&tenant=01m4tacxvv4jdr9sqzz548a3t3&signature=5f4b7c5345fd4234b2ffb09fc104dac796211d71efe771cb0556d24342558938",
+                                                    "url": "http://localhost:8090/api/v1/attachments/01m5040fyg3vftn4mrjbxhe76v/content?expires=1792079614&tenant=01m5040fkc5grhbxvkzntyxbak&signature=3646b17bc181226510f0778e99141b3d4c0ff89e1f2ebb0dc93d69623700ee3b",
                                                     "url_expires_in": 300,
-                                                    "created_at": "2026-10-13T09:44:47+00:00"
+                                                    "created_at": "2026-10-15T15:48:34+00:00"
                                                 }
                                             ],
                                             "items": {
@@ -141,11 +153,11 @@
                                                 "properties": {
                                                     "id": {
                                                         "type": "string",
-                                                        "example": "01m4tacy4fs6zaf7wn02bqvaz6"
+                                                        "example": "01m5040fyavtv1m16kv4s1ga64"
                                                     },
                                                     "ticket_id": {
                                                         "type": "string",
-                                                        "example": "01m4tacy4eyyzjd812bzfeewey"
+                                                        "example": "01m5040fy8b4a8c1fj08anvh24"
                                                     },
                                                     "original_name": {
                                                         "type": "string",
@@ -169,7 +181,7 @@
                                                     },
                                                     "url": {
                                                         "type": "string",
-                                                        "example": "http://localhost:8090/api/v1/attachments/01m4tacy4fs6zaf7wn02bqvaz6/content?expires=1791884987&tenant=01m4tacxvv4jdr9sqzz548a3t3&signature=d720a64ebd462236e1a63bad73775075d4f32a32bd9e8746e846bd641cece3aa"
+                                                        "example": "http://localhost:8090/api/v1/attachments/01m5040fyavtv1m16kv4s1ga64/content?expires=1792079614&tenant=01m5040fkc5grhbxvkzntyxbak&signature=51b1fb8d118bb9a3dcbf0c4a09e1069754815da7150fdd4ede8e087b987afc5e"
                                                     },
                                                     "url_expires_in": {
                                                         "type": "integer",
@@ -177,7 +189,7 @@
                                                     },
                                                     "created_at": {
                                                         "type": "string",
-                                                        "example": "2026-10-13T09:44:47+00:00"
+                                                        "example": "2026-10-15T15:48:34+00:00"
                                                     }
                                                 },
                                                 "required": [
@@ -222,16 +234,16 @@
                                     "type": "object",
                                     "example": {
                                         "data": {
-                                            "id": "01m4tacy4x689s0rz18zgvqmx0",
-                                            "ticket_id": "01m4tacy4vrtct27kaa98m1k5k",
+                                            "id": "01m5040fyxtmwx6j1ra3c5tyh5",
+                                            "ticket_id": "01m5040fyvwv7tf7m5tntxka8x",
                                             "original_name": "screenshot.png",
                                             "mime_type": "image/png",
                                             "size": 1024,
                                             "width": 10,
                                             "height": 10,
-                                            "url": "http://localhost:8090/api/v1/attachments/01m4tacy4x689s0rz18zgvqmx0/content?expires=1791884987&tenant=01m4tacxvv4jdr9sqzz548a3t3&signature=2dc0d7816d7b4570c0f65d58d786c4a084ca07006206ae5c1f1ea9668ce0a5b3",
+                                            "url": "http://localhost:8090/api/v1/attachments/01m5040fyxtmwx6j1ra3c5tyh5/content?expires=1792079614&tenant=01m5040fkc5grhbxvkzntyxbak&signature=c19c6206d3c87e0f60905b5e47d42137e983d290350cb16b839b98bf2b281d06",
                                             "url_expires_in": 300,
-                                            "created_at": "2026-10-13T09:44:47+00:00"
+                                            "created_at": "2026-10-15T15:48:34+00:00"
                                         }
                                     },
                                     "properties": {
@@ -240,11 +252,11 @@
                                             "properties": {
                                                 "id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy4x689s0rz18zgvqmx0"
+                                                    "example": "01m5040fyxtmwx6j1ra3c5tyh5"
                                                 },
                                                 "ticket_id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy4vrtct27kaa98m1k5k"
+                                                    "example": "01m5040fyvwv7tf7m5tntxka8x"
                                                 },
                                                 "original_name": {
                                                     "type": "string",
@@ -268,7 +280,7 @@
                                                 },
                                                 "url": {
                                                     "type": "string",
-                                                    "example": "http://localhost:8090/api/v1/attachments/01m4tacy4x689s0rz18zgvqmx0/content?expires=1791884987&tenant=01m4tacxvv4jdr9sqzz548a3t3&signature=2dc0d7816d7b4570c0f65d58d786c4a084ca07006206ae5c1f1ea9668ce0a5b3"
+                                                    "example": "http://localhost:8090/api/v1/attachments/01m5040fyxtmwx6j1ra3c5tyh5/content?expires=1792079614&tenant=01m5040fkc5grhbxvkzntyxbak&signature=c19c6206d3c87e0f60905b5e47d42137e983d290350cb16b839b98bf2b281d06"
                                                 },
                                                 "url_expires_in": {
                                                     "type": "integer",
@@ -276,7 +288,7 @@
                                                 },
                                                 "created_at": {
                                                     "type": "string",
-                                                    "example": "2026-10-13T09:44:47+00:00"
+                                                    "example": "2026-10-15T15:48:34+00:00"
                                                 }
                                             },
                                             "required": [
@@ -354,16 +366,16 @@
                                     "type": "object",
                                     "example": {
                                         "data": {
-                                            "id": "01m4tacy53qgzy6vg005pp5gv4",
-                                            "ticket_id": "01m4tacy52r3zwfeq5jjstk1f3",
+                                            "id": "01m5040fz5z36rpa9ze3a9k2jt",
+                                            "ticket_id": "01m5040fz33j1mt23kdtcwfkz1",
                                             "original_name": "screenshot.png",
                                             "mime_type": "image/png",
                                             "size": 1024,
                                             "width": 10,
                                             "height": 10,
-                                            "url": "http://localhost:8090/api/v1/attachments/01m4tacy53qgzy6vg005pp5gv4/content?expires=1791884987&tenant=01m4tacxvv4jdr9sqzz548a3t3&signature=c6bf2f953b17469da3a240ebde6ed4c72c1c05a48191a74bfca9fa4d48a9d3c9",
+                                            "url": "http://localhost:8090/api/v1/attachments/01m5040fz5z36rpa9ze3a9k2jt/content?expires=1792079614&tenant=01m5040fkc5grhbxvkzntyxbak&signature=415d41eebefb67c0716222e85a10f2f31f4db674f56415c5a9ebe14014f095f0",
                                             "url_expires_in": 300,
-                                            "created_at": "2026-10-13T09:44:47+00:00"
+                                            "created_at": "2026-10-15T15:48:34+00:00"
                                         }
                                     },
                                     "properties": {
@@ -372,11 +384,11 @@
                                             "properties": {
                                                 "id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy53qgzy6vg005pp5gv4"
+                                                    "example": "01m5040fz5z36rpa9ze3a9k2jt"
                                                 },
                                                 "ticket_id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy52r3zwfeq5jjstk1f3"
+                                                    "example": "01m5040fz33j1mt23kdtcwfkz1"
                                                 },
                                                 "original_name": {
                                                     "type": "string",
@@ -400,7 +412,7 @@
                                                 },
                                                 "url": {
                                                     "type": "string",
-                                                    "example": "http://localhost:8090/api/v1/attachments/01m4tacy53qgzy6vg005pp5gv4/content?expires=1791884987&tenant=01m4tacxvv4jdr9sqzz548a3t3&signature=c6bf2f953b17469da3a240ebde6ed4c72c1c05a48191a74bfca9fa4d48a9d3c9"
+                                                    "example": "http://localhost:8090/api/v1/attachments/01m5040fz5z36rpa9ze3a9k2jt/content?expires=1792079614&tenant=01m5040fkc5grhbxvkzntyxbak&signature=415d41eebefb67c0716222e85a10f2f31f4db674f56415c5a9ebe14014f095f0"
                                                 },
                                                 "url_expires_in": {
                                                     "type": "integer",
@@ -408,7 +420,7 @@
                                                 },
                                                 "created_at": {
                                                     "type": "string",
-                                                    "example": "2026-10-13T09:44:47+00:00"
+                                                    "example": "2026-10-15T15:48:34+00:00"
                                                 }
                                             },
                                             "required": [
@@ -476,17 +488,21 @@
                                     "type": "object",
                                     "example": {
                                         "data": {
-                                            "id": "01m4tacy0r62tcv2m2aq7gqm47",
+                                            "id": "01m5040fs74zypxqn60g8tvs92",
                                             "name": "Ms. Audra Crooks II",
                                             "email": "gulgowski.asia@example.com",
                                             "role": "customer",
                                             "is_active": true,
                                             "tenant": {
-                                                "id": "01m4tacxvv4jdr9sqzz548a3t3",
+                                                "id": "01m5040fkc5grhbxvkzntyxbak",
                                                 "name": "Example Inc.",
                                                 "slug": "docs-example"
                                             },
-                                            "created_at": "2026-10-13T09:44:47+00:00"
+                                            "notification_preferences": {
+                                                "push_replies": true,
+                                                "push_status_changes": true
+                                            },
+                                            "created_at": "2026-10-15T15:48:34+00:00"
                                         }
                                     },
                                     "properties": {
@@ -495,7 +511,7 @@
                                             "properties": {
                                                 "id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy0r62tcv2m2aq7gqm47"
+                                                    "example": "01m5040fs74zypxqn60g8tvs92"
                                                 },
                                                 "name": {
                                                     "type": "string",
@@ -523,7 +539,7 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "string",
-                                                            "example": "01m4tacxvv4jdr9sqzz548a3t3"
+                                                            "example": "01m5040fkc5grhbxvkzntyxbak"
                                                         },
                                                         "name": {
                                                             "type": "string",
@@ -541,9 +557,26 @@
                                                         "slug"
                                                     ]
                                                 },
+                                                "notification_preferences": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "push_replies": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        },
+                                                        "push_status_changes": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "push_replies",
+                                                        "push_status_changes"
+                                                    ]
+                                                },
                                                 "created_at": {
                                                     "type": "string",
-                                                    "example": "2026-10-13T09:44:47+00:00"
+                                                    "example": "2026-10-15T15:48:34+00:00"
                                                 }
                                             },
                                             "required": [
@@ -552,6 +585,7 @@
                                                 "email",
                                                 "role",
                                                 "is_active",
+                                                "notification_preferences",
                                                 "created_at"
                                             ]
                                         }
@@ -759,17 +793,21 @@
                                     "type": "object",
                                     "example": {
                                         "data": {
-                                            "id": "01m4tacy1408kwydcc0ps3nwpd",
+                                            "id": "01m5040fsvtg3wt9mr2yvmccwf",
                                             "name": "Ms. Audra Crooks II",
                                             "email": "idickens@example.org",
                                             "role": "customer",
                                             "is_active": true,
                                             "tenant": {
-                                                "id": "01m4tacxvv4jdr9sqzz548a3t3",
+                                                "id": "01m5040fkc5grhbxvkzntyxbak",
                                                 "name": "Example Inc.",
                                                 "slug": "docs-example"
                                             },
-                                            "created_at": "2026-10-13T09:44:47+00:00"
+                                            "notification_preferences": {
+                                                "push_replies": true,
+                                                "push_status_changes": true
+                                            },
+                                            "created_at": "2026-10-15T15:48:34+00:00"
                                         }
                                     },
                                     "properties": {
@@ -778,7 +816,7 @@
                                             "properties": {
                                                 "id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy1408kwydcc0ps3nwpd"
+                                                    "example": "01m5040fsvtg3wt9mr2yvmccwf"
                                                 },
                                                 "name": {
                                                     "type": "string",
@@ -806,7 +844,7 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "string",
-                                                            "example": "01m4tacxvv4jdr9sqzz548a3t3"
+                                                            "example": "01m5040fkc5grhbxvkzntyxbak"
                                                         },
                                                         "name": {
                                                             "type": "string",
@@ -824,9 +862,26 @@
                                                         "slug"
                                                     ]
                                                 },
+                                                "notification_preferences": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "push_replies": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        },
+                                                        "push_status_changes": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "push_replies",
+                                                        "push_status_changes"
+                                                    ]
+                                                },
                                                 "created_at": {
                                                     "type": "string",
-                                                    "example": "2026-10-13T09:44:47+00:00"
+                                                    "example": "2026-10-15T15:48:34+00:00"
                                                 }
                                             },
                                             "required": [
@@ -835,6 +890,7 @@
                                                 "email",
                                                 "role",
                                                 "is_active",
+                                                "notification_preferences",
                                                 "created_at"
                                             ]
                                         }
@@ -919,17 +975,21 @@
                                     "type": "object",
                                     "example": {
                                         "data": {
-                                            "id": "01m4tacy1d6ggsqz03jgaz68t5",
+                                            "id": "01m5040ft6ve6snzgfnvqx1j3m",
                                             "name": "Ms. Elisabeth Okuneva",
                                             "email": "aschuster@example.com",
                                             "role": "customer",
                                             "is_active": true,
                                             "tenant": {
-                                                "id": "01m4tacxvv4jdr9sqzz548a3t3",
+                                                "id": "01m5040fkc5grhbxvkzntyxbak",
                                                 "name": "Example Inc.",
                                                 "slug": "docs-example"
                                             },
-                                            "created_at": "2026-10-13T09:44:47+00:00"
+                                            "notification_preferences": {
+                                                "push_replies": true,
+                                                "push_status_changes": true
+                                            },
+                                            "created_at": "2026-10-15T15:48:34+00:00"
                                         }
                                     },
                                     "properties": {
@@ -938,7 +998,7 @@
                                             "properties": {
                                                 "id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy1d6ggsqz03jgaz68t5"
+                                                    "example": "01m5040ft6ve6snzgfnvqx1j3m"
                                                 },
                                                 "name": {
                                                     "type": "string",
@@ -966,7 +1026,7 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "string",
-                                                            "example": "01m4tacxvv4jdr9sqzz548a3t3"
+                                                            "example": "01m5040fkc5grhbxvkzntyxbak"
                                                         },
                                                         "name": {
                                                             "type": "string",
@@ -984,9 +1044,26 @@
                                                         "slug"
                                                     ]
                                                 },
+                                                "notification_preferences": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "push_replies": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        },
+                                                        "push_status_changes": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "push_replies",
+                                                        "push_status_changes"
+                                                    ]
+                                                },
                                                 "created_at": {
                                                     "type": "string",
-                                                    "example": "2026-10-13T09:44:47+00:00"
+                                                    "example": "2026-10-15T15:48:34+00:00"
                                                 }
                                             },
                                             "required": [
@@ -995,6 +1072,7 @@
                                                 "email",
                                                 "role",
                                                 "is_active",
+                                                "notification_preferences",
                                                 "created_at"
                                             ]
                                         }
@@ -1052,6 +1130,163 @@
                 "security": []
             }
         },
+        "/api/v1/auth/notification-preferences": {
+            "put": {
+                "summary": "Update notification preferences",
+                "operationId": "updateNotificationPreferences",
+                "description": "Chooses which events send a push notification to the user's devices.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "id": "01m5040ftdqznvx45wana62trz",
+                                            "name": "Leda Price",
+                                            "email": "theo.hauck@example.com",
+                                            "role": "customer",
+                                            "is_active": true,
+                                            "tenant": {
+                                                "id": "01m5040fkc5grhbxvkzntyxbak",
+                                                "name": "Example Inc.",
+                                                "slug": "docs-example"
+                                            },
+                                            "notification_preferences": {
+                                                "push_replies": true,
+                                                "push_status_changes": true
+                                            },
+                                            "created_at": "2026-10-15T15:48:34+00:00"
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "01m5040ftdqznvx45wana62trz"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Leda Price"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "theo.hauck@example.com"
+                                                },
+                                                "role": {
+                                                    "type": "string",
+                                                    "example": "customer",
+                                                    "enum": [
+                                                        "customer",
+                                                        "agent",
+                                                        "admin"
+                                                    ]
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "tenant": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "01m5040fkc5grhbxvkzntyxbak"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Example Inc."
+                                                        },
+                                                        "slug": {
+                                                            "type": "string",
+                                                            "example": "docs-example"
+                                                        }
+                                                    },
+                                                    "description": "Sent by the sign-in endpoints and /auth/me.",
+                                                    "required": [
+                                                        "id",
+                                                        "name",
+                                                        "slug"
+                                                    ]
+                                                },
+                                                "notification_preferences": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "push_replies": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        },
+                                                        "push_status_changes": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "push_replies",
+                                                        "push_status_changes"
+                                                    ]
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2026-10-15T15:48:34+00:00"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "name",
+                                                "email",
+                                                "role",
+                                                "is_active",
+                                                "notification_preferences",
+                                                "created_at"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "push_replies": {
+                                        "type": "boolean",
+                                        "description": "Push when the team replies to one of your tickets.",
+                                        "example": true
+                                    },
+                                    "push_status_changes": {
+                                        "type": "boolean",
+                                        "description": "Push when the status of one of your tickets changes.",
+                                        "example": false
+                                    }
+                                },
+                                "required": [
+                                    "push_replies",
+                                    "push_status_changes"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
         "/api/v1/categories": {
             "get": {
                 "summary": "List categories",
@@ -1068,10 +1303,10 @@
                                     "example": {
                                         "data": [
                                             {
-                                                "id": "01m4tacy58bk59smkzxhk1k2b7",
-                                                "name": "Repudiandae Laboriosam",
-                                                "slug": "repudiandae-laboriosam",
-                                                "description": "Alias tenetur ratione nemo voluptate accusamus ut et.",
+                                                "id": "01m5040fze591n7qb40p5e4dr6",
+                                                "name": "Nostrum Deleniti",
+                                                "slug": "nostrum-deleniti",
+                                                "description": "Tenetur autem voluptas velit accusamus placeat.",
                                                 "sla_targets": {
                                                     "low": {
                                                         "first_response_minutes": 480,
@@ -1097,10 +1332,10 @@
                                                 "tickets_count": 1
                                             },
                                             {
-                                                "id": "01m4tacy5cpqdwrj9ffa37pq7k",
-                                                "name": "Et Error",
-                                                "slug": "et-error",
-                                                "description": "Recusandae et ipsam dolorem et ut dicta vitae.",
+                                                "id": "01m5040fzmmf2eej872jxqb5gs",
+                                                "name": "Corporis Omnis",
+                                                "slug": "corporis-omnis",
+                                                "description": "Modi distinctio soluta sit quaerat reprehenderit.",
                                                 "sla_targets": {
                                                     "low": {
                                                         "first_response_minutes": 480,
@@ -1132,10 +1367,10 @@
                                             "type": "array",
                                             "example": [
                                                 {
-                                                    "id": "01m4tacy58bk59smkzxhk1k2b7",
-                                                    "name": "Repudiandae Laboriosam",
-                                                    "slug": "repudiandae-laboriosam",
-                                                    "description": "Alias tenetur ratione nemo voluptate accusamus ut et.",
+                                                    "id": "01m5040fze591n7qb40p5e4dr6",
+                                                    "name": "Nostrum Deleniti",
+                                                    "slug": "nostrum-deleniti",
+                                                    "description": "Tenetur autem voluptas velit accusamus placeat.",
                                                     "sla_targets": {
                                                         "low": {
                                                             "first_response_minutes": 480,
@@ -1161,10 +1396,10 @@
                                                     "tickets_count": 1
                                                 },
                                                 {
-                                                    "id": "01m4tacy5cpqdwrj9ffa37pq7k",
-                                                    "name": "Et Error",
-                                                    "slug": "et-error",
-                                                    "description": "Recusandae et ipsam dolorem et ut dicta vitae.",
+                                                    "id": "01m5040fzmmf2eej872jxqb5gs",
+                                                    "name": "Corporis Omnis",
+                                                    "slug": "corporis-omnis",
+                                                    "description": "Modi distinctio soluta sit quaerat reprehenderit.",
                                                     "sla_targets": {
                                                         "low": {
                                                             "first_response_minutes": 480,
@@ -1195,19 +1430,19 @@
                                                 "properties": {
                                                     "id": {
                                                         "type": "string",
-                                                        "example": "01m4tacy58bk59smkzxhk1k2b7"
+                                                        "example": "01m5040fze591n7qb40p5e4dr6"
                                                     },
                                                     "name": {
                                                         "type": "string",
-                                                        "example": "Repudiandae Laboriosam"
+                                                        "example": "Nostrum Deleniti"
                                                     },
                                                     "slug": {
                                                         "type": "string",
-                                                        "example": "repudiandae-laboriosam"
+                                                        "example": "nostrum-deleniti"
                                                     },
                                                     "description": {
                                                         "type": "string",
-                                                        "example": "Alias tenetur ratione nemo voluptate accusamus ut et.",
+                                                        "example": "Tenetur autem voluptas velit accusamus placeat.",
                                                         "nullable": true
                                                     },
                                                     "sla_targets": {
@@ -1352,10 +1587,10 @@
                                     "type": "object",
                                     "example": {
                                         "data": {
-                                            "id": "01m4tacy5s2qjqm5v5emmbenpw",
-                                            "name": "Fugiat Sunt",
-                                            "slug": "fugiat-sunt",
-                                            "description": "Accusantium harum mollitia modi deserunt aut ab.",
+                                            "id": "01m5040g00qqtvhrrnhbee34z5",
+                                            "name": "Et Fugiat",
+                                            "slug": "et-fugiat",
+                                            "description": "Nihil accusantium harum mollitia modi deserunt.",
                                             "sla_targets": {
                                                 "low": {
                                                     "first_response_minutes": 480,
@@ -1386,19 +1621,19 @@
                                             "properties": {
                                                 "id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy5s2qjqm5v5emmbenpw"
+                                                    "example": "01m5040g00qqtvhrrnhbee34z5"
                                                 },
                                                 "name": {
                                                     "type": "string",
-                                                    "example": "Fugiat Sunt"
+                                                    "example": "Et Fugiat"
                                                 },
                                                 "slug": {
                                                     "type": "string",
-                                                    "example": "fugiat-sunt"
+                                                    "example": "et-fugiat"
                                                 },
                                                 "description": {
                                                     "type": "string",
-                                                    "example": "Accusantium harum mollitia modi deserunt aut ab.",
+                                                    "example": "Nihil accusantium harum mollitia modi deserunt.",
                                                     "nullable": true
                                                 },
                                                 "sla_targets": {
@@ -1649,7 +1884,7 @@
                                     "type": "object",
                                     "example": {
                                         "data": {
-                                            "id": "01m4tacy5yypk2bapjsq0bc3hy",
+                                            "id": "01m5040g0531q68fg39czkp888",
                                             "name": "Eius Et",
                                             "slug": "eius-et",
                                             "description": "Quos velit et fugiat sunt nihil accusantium harum.",
@@ -1683,7 +1918,7 @@
                                             "properties": {
                                                 "id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy5yypk2bapjsq0bc3hy"
+                                                    "example": "01m5040g0531q68fg39czkp888"
                                                 },
                                                 "name": {
                                                     "type": "string",
@@ -1834,10 +2069,10 @@
                                     "type": "object",
                                     "example": {
                                         "data": {
-                                            "id": "01m4tacy65dte60rx5xpkp26j6",
-                                            "name": "Sunt Nihil",
-                                            "slug": "sunt-nihil",
-                                            "description": "Harum mollitia modi deserunt aut ab provident perspiciatis quo.",
+                                            "id": "01m5040g0g028ppjs7r4d0c92b",
+                                            "name": "Fugiat Sunt",
+                                            "slug": "fugiat-sunt",
+                                            "description": "Accusantium harum mollitia modi deserunt aut ab.",
                                             "sla_targets": {
                                                 "low": {
                                                     "first_response_minutes": 480,
@@ -1868,19 +2103,19 @@
                                             "properties": {
                                                 "id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy65dte60rx5xpkp26j6"
+                                                    "example": "01m5040g0g028ppjs7r4d0c92b"
                                                 },
                                                 "name": {
                                                     "type": "string",
-                                                    "example": "Sunt Nihil"
+                                                    "example": "Fugiat Sunt"
                                                 },
                                                 "slug": {
                                                     "type": "string",
-                                                    "example": "sunt-nihil"
+                                                    "example": "fugiat-sunt"
                                                 },
                                                 "description": {
                                                     "type": "string",
-                                                    "example": "Harum mollitia modi deserunt aut ab provident perspiciatis quo.",
+                                                    "example": "Accusantium harum mollitia modi deserunt aut ab.",
                                                     "nullable": true
                                                 },
                                                 "sla_targets": {
@@ -2136,6 +2371,19 @@
                 }
             ]
         },
+        "/api/broadcasting/auth": {
+            "get": {
+                "summary": "Authenticate the request for channel access.",
+                "operationId": "authenticateTheRequestForChannelAccess",
+                "description": "",
+                "parameters": [],
+                "responses": [],
+                "tags": [
+                    "Endpoints"
+                ],
+                "security": []
+            }
+        },
         "/api/v1/metrics": {
             "get": {
                 "summary": "Dashboard metrics",
@@ -2371,6 +2619,124 @@
                 "security": []
             }
         },
+        "/api/v1/push-devices": {
+            "post": {
+                "summary": "Register this device",
+                "operationId": "registerThisDevice",
+                "description": "Saves the Expo push token of the phone using the current API token.\nRevoking the API token (signing out) unregisters the device too.",
+                "parameters": [],
+                "responses": [],
+                "tags": [
+                    "Push notifications"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "description": "Expo push token of the device. Must match the regex /^Expo(nent)?PushToken\\[[A-Za-z0-9_\\-]{1,200}\\]$/. Must not be greater than 255 characters.",
+                                        "example": "ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]"
+                                    },
+                                    "platform": {
+                                        "type": "string",
+                                        "description": "android or ios.",
+                                        "example": "android",
+                                        "enum": [
+                                            "android",
+                                            "ios"
+                                        ]
+                                    },
+                                    "locale": {
+                                        "type": "string",
+                                        "description": "Language of the notifications: pt-BR or en.",
+                                        "example": "pt-BR",
+                                        "enum": [
+                                            "pt-BR",
+                                            "en"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "token",
+                                    "platform",
+                                    "locale"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/v1/push-devices/current": {
+            "delete": {
+                "summary": "Unregister this device",
+                "operationId": "unregisterThisDevice",
+                "description": "Stops push notifications to the phone using the current API token.",
+                "parameters": [],
+                "responses": [],
+                "tags": [
+                    "Push notifications"
+                ],
+                "security": []
+            }
+        },
+        "/api/v1/realtime": {
+            "get": {
+                "summary": "Realtime settings",
+                "operationId": "realtimeSettings",
+                "description": "Public app key of the WebSocket server, so clients need no build-time\nconfiguration. The key is not a secret; channel access is authorized\nper subscription.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "data": {
+                                            "enabled": true,
+                                            "key": "ticko-app-key"
+                                        }
+                                    },
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "enabled": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "key": {
+                                                    "type": "string",
+                                                    "example": "ticko-app-key"
+                                                }
+                                            },
+                                            "required": [
+                                                "enabled",
+                                                "key"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Realtime"
+                ],
+                "security": []
+            }
+        },
         "/api/v1/team": {
             "get": {
                 "summary": "List members",
@@ -2429,22 +2795,30 @@
                                     "example": {
                                         "data": [
                                             {
-                                                "id": "01m4tacy6eyk90x62be85h65kc",
+                                                "id": "01m5040g10qkz02htja8cn02mp",
                                                 "name": "Ms. Audra Crooks II",
                                                 "email": "gilbert32@example.com",
                                                 "role": "customer",
                                                 "is_active": true,
+                                                "notification_preferences": {
+                                                    "push_replies": true,
+                                                    "push_status_changes": true
+                                                },
                                                 "open_tickets_count": 1,
-                                                "created_at": "2026-10-13T09:44:47+00:00"
+                                                "created_at": "2026-10-15T15:48:34+00:00"
                                             },
                                             {
-                                                "id": "01m4tacy6hxj8ksk3jv9dyrwnw",
+                                                "id": "01m5040g161rsj7nhme9epzqfd",
                                                 "name": "Emanuel Emmerich",
                                                 "email": "little.art@example.net",
                                                 "role": "customer",
                                                 "is_active": true,
+                                                "notification_preferences": {
+                                                    "push_replies": true,
+                                                    "push_status_changes": true
+                                                },
                                                 "open_tickets_count": 1,
-                                                "created_at": "2026-10-13T09:44:47+00:00"
+                                                "created_at": "2026-10-15T15:48:34+00:00"
                                             }
                                         ],
                                         "links": {
@@ -2488,22 +2862,30 @@
                                             "type": "array",
                                             "example": [
                                                 {
-                                                    "id": "01m4tacy6eyk90x62be85h65kc",
+                                                    "id": "01m5040g10qkz02htja8cn02mp",
                                                     "name": "Ms. Audra Crooks II",
                                                     "email": "gilbert32@example.com",
                                                     "role": "customer",
                                                     "is_active": true,
+                                                    "notification_preferences": {
+                                                        "push_replies": true,
+                                                        "push_status_changes": true
+                                                    },
                                                     "open_tickets_count": 1,
-                                                    "created_at": "2026-10-13T09:44:47+00:00"
+                                                    "created_at": "2026-10-15T15:48:34+00:00"
                                                 },
                                                 {
-                                                    "id": "01m4tacy6hxj8ksk3jv9dyrwnw",
+                                                    "id": "01m5040g161rsj7nhme9epzqfd",
                                                     "name": "Emanuel Emmerich",
                                                     "email": "little.art@example.net",
                                                     "role": "customer",
                                                     "is_active": true,
+                                                    "notification_preferences": {
+                                                        "push_replies": true,
+                                                        "push_status_changes": true
+                                                    },
                                                     "open_tickets_count": 1,
-                                                    "created_at": "2026-10-13T09:44:47+00:00"
+                                                    "created_at": "2026-10-15T15:48:34+00:00"
                                                 }
                                             ],
                                             "items": {
@@ -2511,7 +2893,7 @@
                                                 "properties": {
                                                     "id": {
                                                         "type": "string",
-                                                        "example": "01m4tacy6eyk90x62be85h65kc"
+                                                        "example": "01m5040g10qkz02htja8cn02mp"
                                                     },
                                                     "name": {
                                                         "type": "string",
@@ -2534,6 +2916,23 @@
                                                         "type": "boolean",
                                                         "example": true
                                                     },
+                                                    "notification_preferences": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "push_replies": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            },
+                                                            "push_status_changes": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "push_replies",
+                                                            "push_status_changes"
+                                                        ]
+                                                    },
                                                     "open_tickets_count": {
                                                         "type": "integer",
                                                         "example": 1,
@@ -2541,7 +2940,7 @@
                                                     },
                                                     "created_at": {
                                                         "type": "string",
-                                                        "example": "2026-10-13T09:44:47+00:00"
+                                                        "example": "2026-10-15T15:48:34+00:00"
                                                     }
                                                 },
                                                 "required": [
@@ -2550,6 +2949,7 @@
                                                     "email",
                                                     "role",
                                                     "is_active",
+                                                    "notification_preferences",
                                                     "created_at"
                                                 ]
                                             }
@@ -2708,12 +3108,16 @@
                                     "type": "object",
                                     "example": {
                                         "data": {
-                                            "id": "01m4tacy6p2trxr8eb48zhxfdv",
+                                            "id": "01m5040g1dm82f0kkhr87zf2np",
                                             "name": "Ms. Audra Crooks II",
                                             "email": "hirthe.theo@example.com",
                                             "role": "customer",
                                             "is_active": true,
-                                            "created_at": "2026-10-13T09:44:47+00:00"
+                                            "notification_preferences": {
+                                                "push_replies": true,
+                                                "push_status_changes": true
+                                            },
+                                            "created_at": "2026-10-15T15:48:34+00:00"
                                         }
                                     },
                                     "properties": {
@@ -2722,7 +3126,7 @@
                                             "properties": {
                                                 "id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy6p2trxr8eb48zhxfdv"
+                                                    "example": "01m5040g1dm82f0kkhr87zf2np"
                                                 },
                                                 "name": {
                                                     "type": "string",
@@ -2745,9 +3149,26 @@
                                                     "type": "boolean",
                                                     "example": true
                                                 },
+                                                "notification_preferences": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "push_replies": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        },
+                                                        "push_status_changes": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "push_replies",
+                                                        "push_status_changes"
+                                                    ]
+                                                },
                                                 "created_at": {
                                                     "type": "string",
-                                                    "example": "2026-10-13T09:44:47+00:00"
+                                                    "example": "2026-10-15T15:48:34+00:00"
                                                 }
                                             },
                                             "required": [
@@ -2756,6 +3177,7 @@
                                                 "email",
                                                 "role",
                                                 "is_active",
+                                                "notification_preferences",
                                                 "created_at"
                                             ]
                                         }
@@ -2832,12 +3254,16 @@
                                     "type": "object",
                                     "example": {
                                         "data": {
-                                            "id": "01m4tacy6tr3mmwsqkmftdg57p",
+                                            "id": "01m5040g1meq7337613nnzcpny",
                                             "name": "Ms. Elisabeth Okuneva",
                                             "email": "leo34@example.net",
                                             "role": "customer",
                                             "is_active": true,
-                                            "created_at": "2026-10-13T09:44:47+00:00"
+                                            "notification_preferences": {
+                                                "push_replies": true,
+                                                "push_status_changes": true
+                                            },
+                                            "created_at": "2026-10-15T15:48:34+00:00"
                                         }
                                     },
                                     "properties": {
@@ -2846,7 +3272,7 @@
                                             "properties": {
                                                 "id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy6tr3mmwsqkmftdg57p"
+                                                    "example": "01m5040g1meq7337613nnzcpny"
                                                 },
                                                 "name": {
                                                     "type": "string",
@@ -2869,9 +3295,26 @@
                                                     "type": "boolean",
                                                     "example": true
                                                 },
+                                                "notification_preferences": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "push_replies": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        },
+                                                        "push_status_changes": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "push_replies",
+                                                        "push_status_changes"
+                                                    ]
+                                                },
                                                 "created_at": {
                                                     "type": "string",
-                                                    "example": "2026-10-13T09:44:47+00:00"
+                                                    "example": "2026-10-15T15:48:34+00:00"
                                                 }
                                             },
                                             "required": [
@@ -2880,6 +3323,7 @@
                                                 "email",
                                                 "role",
                                                 "is_active",
+                                                "notification_preferences",
                                                 "created_at"
                                             ]
                                         }
@@ -2911,12 +3355,16 @@
                                     "type": "object",
                                     "example": {
                                         "data": {
-                                            "id": "01m4tacy6z5mx64vy5w5dzkka8",
+                                            "id": "01m5040g1v451ycbswtk6teyea",
                                             "name": "Ms. Audra Crooks II",
                                             "email": "pfritsch@example.com",
                                             "role": "customer",
                                             "is_active": true,
-                                            "created_at": "2026-10-13T09:44:47+00:00"
+                                            "notification_preferences": {
+                                                "push_replies": true,
+                                                "push_status_changes": true
+                                            },
+                                            "created_at": "2026-10-15T15:48:35+00:00"
                                         }
                                     },
                                     "properties": {
@@ -2925,7 +3373,7 @@
                                             "properties": {
                                                 "id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy6z5mx64vy5w5dzkka8"
+                                                    "example": "01m5040g1v451ycbswtk6teyea"
                                                 },
                                                 "name": {
                                                     "type": "string",
@@ -2948,9 +3396,26 @@
                                                     "type": "boolean",
                                                     "example": true
                                                 },
+                                                "notification_preferences": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "push_replies": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        },
+                                                        "push_status_changes": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "push_replies",
+                                                        "push_status_changes"
+                                                    ]
+                                                },
                                                 "created_at": {
                                                     "type": "string",
-                                                    "example": "2026-10-13T09:44:47+00:00"
+                                                    "example": "2026-10-15T15:48:35+00:00"
                                                 }
                                             },
                                             "required": [
@@ -2959,6 +3424,7 @@
                                                 "email",
                                                 "role",
                                                 "is_active",
+                                                "notification_preferences",
                                                 "created_at"
                                             ]
                                         }
@@ -3037,30 +3503,30 @@
                                     "example": {
                                         "data": [
                                             {
-                                                "id": "01m4tacy3ywms0nx7050vpzqcw",
-                                                "ticket_id": "01m4tacy3wsy13tg8abw0c9qzx",
+                                                "id": "01m5040fxjrr4jjke7dtbfv7tv",
+                                                "ticket_id": "01m5040fxgbyn0qt44dbead803",
                                                 "body": "Animi quos velit et fugiat. Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci.",
                                                 "is_internal": false,
                                                 "author": {
-                                                    "id": "01m4tacy3x4v27ha5jjs0dpyrg",
+                                                    "id": "01m5040fxhwv086fj0v45t1gcg",
                                                     "name": "Mr. Madisen Schaden",
                                                     "role": "customer",
                                                     "email": null
                                                 },
-                                                "created_at": "2026-10-13T09:44:47+00:00"
+                                                "created_at": "2026-10-15T15:48:34+00:00"
                                             },
                                             {
-                                                "id": "01m4tacy4297g3n2d30r2kqv76",
-                                                "ticket_id": "01m4tacy41jyfyymypgw4yzaqj",
+                                                "id": "01m5040fxt70bv64dz7djg0xjx",
+                                                "ticket_id": "01m5040fxr6bxdhbar96vdqthw",
                                                 "body": "Neque blanditiis odio veritatis excepturi doloribus delectus. Qui repudiandae laboriosam est alias.",
                                                 "is_internal": false,
                                                 "author": {
-                                                    "id": "01m4tacy41jyfyymypgw4yzaqk",
+                                                    "id": "01m5040fxste1p6abc4rfjme3p",
                                                     "name": "Lucie Bauch MD",
                                                     "role": "customer",
                                                     "email": null
                                                 },
-                                                "created_at": "2026-10-13T09:44:47+00:00"
+                                                "created_at": "2026-10-15T15:48:34+00:00"
                                             }
                                         ],
                                         "links": {
@@ -3104,30 +3570,30 @@
                                             "type": "array",
                                             "example": [
                                                 {
-                                                    "id": "01m4tacy3ywms0nx7050vpzqcw",
-                                                    "ticket_id": "01m4tacy3wsy13tg8abw0c9qzx",
+                                                    "id": "01m5040fxjrr4jjke7dtbfv7tv",
+                                                    "ticket_id": "01m5040fxgbyn0qt44dbead803",
                                                     "body": "Animi quos velit et fugiat. Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci.",
                                                     "is_internal": false,
                                                     "author": {
-                                                        "id": "01m4tacy3x4v27ha5jjs0dpyrg",
+                                                        "id": "01m5040fxhwv086fj0v45t1gcg",
                                                         "name": "Mr. Madisen Schaden",
                                                         "role": "customer",
                                                         "email": null
                                                     },
-                                                    "created_at": "2026-10-13T09:44:47+00:00"
+                                                    "created_at": "2026-10-15T15:48:34+00:00"
                                                 },
                                                 {
-                                                    "id": "01m4tacy4297g3n2d30r2kqv76",
-                                                    "ticket_id": "01m4tacy41jyfyymypgw4yzaqj",
+                                                    "id": "01m5040fxt70bv64dz7djg0xjx",
+                                                    "ticket_id": "01m5040fxr6bxdhbar96vdqthw",
                                                     "body": "Neque blanditiis odio veritatis excepturi doloribus delectus. Qui repudiandae laboriosam est alias.",
                                                     "is_internal": false,
                                                     "author": {
-                                                        "id": "01m4tacy41jyfyymypgw4yzaqk",
+                                                        "id": "01m5040fxste1p6abc4rfjme3p",
                                                         "name": "Lucie Bauch MD",
                                                         "role": "customer",
                                                         "email": null
                                                     },
-                                                    "created_at": "2026-10-13T09:44:47+00:00"
+                                                    "created_at": "2026-10-15T15:48:34+00:00"
                                                 }
                                             ],
                                             "items": {
@@ -3135,11 +3601,11 @@
                                                 "properties": {
                                                     "id": {
                                                         "type": "string",
-                                                        "example": "01m4tacy3ywms0nx7050vpzqcw"
+                                                        "example": "01m5040fxjrr4jjke7dtbfv7tv"
                                                     },
                                                     "ticket_id": {
                                                         "type": "string",
-                                                        "example": "01m4tacy3wsy13tg8abw0c9qzx"
+                                                        "example": "01m5040fxgbyn0qt44dbead803"
                                                     },
                                                     "body": {
                                                         "type": "string",
@@ -3154,7 +3620,7 @@
                                                         "properties": {
                                                             "id": {
                                                                 "type": "string",
-                                                                "example": "01m4tacy3x4v27ha5jjs0dpyrg"
+                                                                "example": "01m5040fxhwv086fj0v45t1gcg"
                                                             },
                                                             "name": {
                                                                 "type": "string",
@@ -3185,7 +3651,7 @@
                                                     },
                                                     "created_at": {
                                                         "type": "string",
-                                                        "example": "2026-10-13T09:44:47+00:00"
+                                                        "example": "2026-10-15T15:48:34+00:00"
                                                     }
                                                 },
                                                 "required": [
@@ -3352,17 +3818,17 @@
                                     "type": "object",
                                     "example": {
                                         "data": {
-                                            "id": "01m4tacy49v7wvjrqx0bd8bejt",
-                                            "ticket_id": "01m4tacy48a6zj9sanb9gn20v0",
+                                            "id": "01m5040fy2gh4zdxfwthc7sb8b",
+                                            "ticket_id": "01m5040fy1rvhppn0n0jb8qt7s",
                                             "body": "Et animi quos velit et fugiat. Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci.",
                                             "is_internal": false,
                                             "author": {
-                                                "id": "01m4tacy49v7wvjrqx0bd8bejs",
+                                                "id": "01m5040fy2gh4zdxfwthc7sb8a",
                                                 "name": "Colt Balistreri",
                                                 "role": "customer",
                                                 "email": null
                                             },
-                                            "created_at": "2026-10-13T09:44:47+00:00"
+                                            "created_at": "2026-10-15T15:48:34+00:00"
                                         }
                                     },
                                     "properties": {
@@ -3371,11 +3837,11 @@
                                             "properties": {
                                                 "id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy49v7wvjrqx0bd8bejt"
+                                                    "example": "01m5040fy2gh4zdxfwthc7sb8b"
                                                 },
                                                 "ticket_id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy48a6zj9sanb9gn20v0"
+                                                    "example": "01m5040fy1rvhppn0n0jb8qt7s"
                                                 },
                                                 "body": {
                                                     "type": "string",
@@ -3390,7 +3856,7 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "string",
-                                                            "example": "01m4tacy49v7wvjrqx0bd8bejs"
+                                                            "example": "01m5040fy2gh4zdxfwthc7sb8a"
                                                         },
                                                         "name": {
                                                             "type": "string",
@@ -3421,7 +3887,7 @@
                                                 },
                                                 "created_at": {
                                                     "type": "string",
-                                                    "example": "2026-10-13T09:44:47+00:00"
+                                                    "example": "2026-10-15T15:48:34+00:00"
                                                 }
                                             },
                                             "required": [
@@ -3660,13 +4126,13 @@
                                     "example": {
                                         "data": [
                                             {
-                                                "id": "01m4tacy21tyh5a2n6q5cn5472",
+                                                "id": "01m5040fvb5ngjmef79abs4ygh",
                                                 "subject": "Eius et animi quos velit et.",
                                                 "description": "Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.",
                                                 "status": "open",
                                                 "priority": "urgent",
                                                 "category": {
-                                                    "id": "01m4tacy209z4ygsnv747nsnbf",
+                                                    "id": "01m5040fv9azb16ebs4e141mjb",
                                                     "name": "Voluptatem Laboriosam",
                                                     "slug": "voluptatem-laboriosam",
                                                     "description": "Quis adipisci molestias fugit deleniti distinctio eum.",
@@ -3694,13 +4160,13 @@
                                                     }
                                                 },
                                                 "requester": {
-                                                    "id": "01m4tacy1y42wg3jgqx5ak9bth",
+                                                    "id": "01m5040fv6qyyjkt62s9bmxe4g",
                                                     "name": "Mina Bauch",
                                                     "role": "customer",
                                                     "email": null
                                                 },
                                                 "assignee": {
-                                                    "id": "01m4tacy1zsng3xwxrtntpxvny",
+                                                    "id": "01m5040fv8s25nhyc3229gtwrr",
                                                     "name": "Donny Leffler",
                                                     "role": "customer",
                                                     "email": null
@@ -3709,21 +4175,21 @@
                                                 "closed_at": null,
                                                 "sla": {
                                                     "first_response_at": null,
-                                                    "first_response_due_at": "2026-10-13T09:59:47+00:00",
-                                                    "resolution_due_at": "2026-10-13T13:44:47+00:00",
+                                                    "first_response_due_at": "2026-10-15T16:03:34+00:00",
+                                                    "resolution_due_at": "2026-10-15T19:48:34+00:00",
                                                     "is_overdue": false
                                                 },
-                                                "created_at": "2026-10-13T09:44:47+00:00",
-                                                "updated_at": "2026-10-13T09:44:47+00:00"
+                                                "created_at": "2026-10-15T15:48:34+00:00",
+                                                "updated_at": "2026-10-15T15:48:34+00:00"
                                             },
                                             {
-                                                "id": "01m4tacy28dt6y2nnc90cn9n2f",
+                                                "id": "01m5040fvparq9knzs3b140g0c",
                                                 "subject": "Id aut libero aliquam veniam.",
                                                 "description": "Mollitia deleniti nemo odit quia officia. Dignissimos neque blanditiis odio.",
                                                 "status": "open",
                                                 "priority": "normal",
                                                 "category": {
-                                                    "id": "01m4tacy28dt6y2nnc90cn9n2e",
+                                                    "id": "01m5040fvngvgjtmqa07m4nep0",
                                                     "name": "Recusandae Modi",
                                                     "slug": "recusandae-modi",
                                                     "description": "Ex repellendus assumenda et tenetur ab reiciendis.",
@@ -3751,13 +4217,13 @@
                                                     }
                                                 },
                                                 "requester": {
-                                                    "id": "01m4tacy27zejfc6dcjspp359c",
+                                                    "id": "01m5040fvkg9jc9pw2d9y635ws",
                                                     "name": "Emanuel Emmerich",
                                                     "role": "customer",
                                                     "email": null
                                                 },
                                                 "assignee": {
-                                                    "id": "01m4tacy28dt6y2nnc90cn9n2d",
+                                                    "id": "01m5040fvmrj1f4x6qmcjybkxr",
                                                     "name": "Jacques Howe",
                                                     "role": "customer",
                                                     "email": null
@@ -3766,12 +4232,12 @@
                                                 "closed_at": null,
                                                 "sla": {
                                                     "first_response_at": null,
-                                                    "first_response_due_at": "2026-10-13T13:44:47+00:00",
-                                                    "resolution_due_at": "2026-10-14T09:44:47+00:00",
+                                                    "first_response_due_at": "2026-10-15T19:48:34+00:00",
+                                                    "resolution_due_at": "2026-10-16T15:48:34+00:00",
                                                     "is_overdue": false
                                                 },
-                                                "created_at": "2026-10-13T09:44:47+00:00",
-                                                "updated_at": "2026-10-13T09:44:47+00:00"
+                                                "created_at": "2026-10-15T15:48:34+00:00",
+                                                "updated_at": "2026-10-15T15:48:34+00:00"
                                             }
                                         ],
                                         "links": {
@@ -3815,13 +4281,13 @@
                                             "type": "array",
                                             "example": [
                                                 {
-                                                    "id": "01m4tacy21tyh5a2n6q5cn5472",
+                                                    "id": "01m5040fvb5ngjmef79abs4ygh",
                                                     "subject": "Eius et animi quos velit et.",
                                                     "description": "Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.",
                                                     "status": "open",
                                                     "priority": "urgent",
                                                     "category": {
-                                                        "id": "01m4tacy209z4ygsnv747nsnbf",
+                                                        "id": "01m5040fv9azb16ebs4e141mjb",
                                                         "name": "Voluptatem Laboriosam",
                                                         "slug": "voluptatem-laboriosam",
                                                         "description": "Quis adipisci molestias fugit deleniti distinctio eum.",
@@ -3849,13 +4315,13 @@
                                                         }
                                                     },
                                                     "requester": {
-                                                        "id": "01m4tacy1y42wg3jgqx5ak9bth",
+                                                        "id": "01m5040fv6qyyjkt62s9bmxe4g",
                                                         "name": "Mina Bauch",
                                                         "role": "customer",
                                                         "email": null
                                                     },
                                                     "assignee": {
-                                                        "id": "01m4tacy1zsng3xwxrtntpxvny",
+                                                        "id": "01m5040fv8s25nhyc3229gtwrr",
                                                         "name": "Donny Leffler",
                                                         "role": "customer",
                                                         "email": null
@@ -3864,21 +4330,21 @@
                                                     "closed_at": null,
                                                     "sla": {
                                                         "first_response_at": null,
-                                                        "first_response_due_at": "2026-10-13T09:59:47+00:00",
-                                                        "resolution_due_at": "2026-10-13T13:44:47+00:00",
+                                                        "first_response_due_at": "2026-10-15T16:03:34+00:00",
+                                                        "resolution_due_at": "2026-10-15T19:48:34+00:00",
                                                         "is_overdue": false
                                                     },
-                                                    "created_at": "2026-10-13T09:44:47+00:00",
-                                                    "updated_at": "2026-10-13T09:44:47+00:00"
+                                                    "created_at": "2026-10-15T15:48:34+00:00",
+                                                    "updated_at": "2026-10-15T15:48:34+00:00"
                                                 },
                                                 {
-                                                    "id": "01m4tacy28dt6y2nnc90cn9n2f",
+                                                    "id": "01m5040fvparq9knzs3b140g0c",
                                                     "subject": "Id aut libero aliquam veniam.",
                                                     "description": "Mollitia deleniti nemo odit quia officia. Dignissimos neque blanditiis odio.",
                                                     "status": "open",
                                                     "priority": "normal",
                                                     "category": {
-                                                        "id": "01m4tacy28dt6y2nnc90cn9n2e",
+                                                        "id": "01m5040fvngvgjtmqa07m4nep0",
                                                         "name": "Recusandae Modi",
                                                         "slug": "recusandae-modi",
                                                         "description": "Ex repellendus assumenda et tenetur ab reiciendis.",
@@ -3906,13 +4372,13 @@
                                                         }
                                                     },
                                                     "requester": {
-                                                        "id": "01m4tacy27zejfc6dcjspp359c",
+                                                        "id": "01m5040fvkg9jc9pw2d9y635ws",
                                                         "name": "Emanuel Emmerich",
                                                         "role": "customer",
                                                         "email": null
                                                     },
                                                     "assignee": {
-                                                        "id": "01m4tacy28dt6y2nnc90cn9n2d",
+                                                        "id": "01m5040fvmrj1f4x6qmcjybkxr",
                                                         "name": "Jacques Howe",
                                                         "role": "customer",
                                                         "email": null
@@ -3921,12 +4387,12 @@
                                                     "closed_at": null,
                                                     "sla": {
                                                         "first_response_at": null,
-                                                        "first_response_due_at": "2026-10-13T13:44:47+00:00",
-                                                        "resolution_due_at": "2026-10-14T09:44:47+00:00",
+                                                        "first_response_due_at": "2026-10-15T19:48:34+00:00",
+                                                        "resolution_due_at": "2026-10-16T15:48:34+00:00",
                                                         "is_overdue": false
                                                     },
-                                                    "created_at": "2026-10-13T09:44:47+00:00",
-                                                    "updated_at": "2026-10-13T09:44:47+00:00"
+                                                    "created_at": "2026-10-15T15:48:34+00:00",
+                                                    "updated_at": "2026-10-15T15:48:34+00:00"
                                                 }
                                             ],
                                             "items": {
@@ -3934,7 +4400,7 @@
                                                 "properties": {
                                                     "id": {
                                                         "type": "string",
-                                                        "example": "01m4tacy21tyh5a2n6q5cn5472"
+                                                        "example": "01m5040fvb5ngjmef79abs4ygh"
                                                     },
                                                     "subject": {
                                                         "type": "string",
@@ -3969,7 +4435,7 @@
                                                         "properties": {
                                                             "id": {
                                                                 "type": "string",
-                                                                "example": "01m4tacy209z4ygsnv747nsnbf"
+                                                                "example": "01m5040fv9azb16ebs4e141mjb"
                                                             },
                                                             "name": {
                                                                 "type": "string",
@@ -4098,7 +4564,7 @@
                                                         "properties": {
                                                             "id": {
                                                                 "type": "string",
-                                                                "example": "01m4tacy1y42wg3jgqx5ak9bth"
+                                                                "example": "01m5040fv6qyyjkt62s9bmxe4g"
                                                             },
                                                             "name": {
                                                                 "type": "string",
@@ -4132,7 +4598,7 @@
                                                         "properties": {
                                                             "id": {
                                                                 "type": "string",
-                                                                "example": "01m4tacy1zsng3xwxrtntpxvny"
+                                                                "example": "01m5040fv8s25nhyc3229gtwrr"
                                                             },
                                                             "name": {
                                                                 "type": "string",
@@ -4182,12 +4648,12 @@
                                                             },
                                                             "first_response_due_at": {
                                                                 "type": "string",
-                                                                "example": "2026-10-13T09:59:47+00:00",
+                                                                "example": "2026-10-15T16:03:34+00:00",
                                                                 "nullable": true
                                                             },
                                                             "resolution_due_at": {
                                                                 "type": "string",
-                                                                "example": "2026-10-13T13:44:47+00:00",
+                                                                "example": "2026-10-15T19:48:34+00:00",
                                                                 "nullable": true
                                                             },
                                                             "is_overdue": {
@@ -4204,11 +4670,11 @@
                                                     },
                                                     "created_at": {
                                                         "type": "string",
-                                                        "example": "2026-10-13T09:44:47+00:00"
+                                                        "example": "2026-10-15T15:48:34+00:00"
                                                     },
                                                     "updated_at": {
                                                         "type": "string",
-                                                        "example": "2026-10-13T09:44:47+00:00"
+                                                        "example": "2026-10-15T15:48:34+00:00"
                                                     }
                                                 },
                                                 "required": [
@@ -4382,13 +4848,13 @@
                                     "type": "object",
                                     "example": {
                                         "data": {
-                                            "id": "01m4tacy2p93b36cxb0khyc0mt",
+                                            "id": "01m5040fw71x9h5stjyzmggwrq",
                                             "subject": "Eius et animi quos velit et.",
                                             "description": "Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.",
                                             "status": "open",
                                             "priority": "urgent",
                                             "category": {
-                                                "id": "01m4tacy2p93b36cxb0khyc0ms",
+                                                "id": "01m5040fw6g5j8sdspwx6e7q3q",
                                                 "name": "Quis Adipisci",
                                                 "slug": "quis-adipisci",
                                                 "description": "Fugit deleniti distinctio eum doloremque id aut libero.",
@@ -4416,13 +4882,13 @@
                                                 }
                                             },
                                             "requester": {
-                                                "id": "01m4tacy2n5w8qa29zhzsffkjf",
+                                                "id": "01m5040fw43btk8aptw6yyqtvm",
                                                 "name": "Mina Bauch",
                                                 "role": "customer",
                                                 "email": null
                                             },
                                             "assignee": {
-                                                "id": "01m4tacy2n5w8qa29zhzsffkjg",
+                                                "id": "01m5040fw59nvksgh6qg36aghv",
                                                 "name": "Domingo Leuschke",
                                                 "role": "customer",
                                                 "email": null
@@ -4431,12 +4897,12 @@
                                             "closed_at": null,
                                             "sla": {
                                                 "first_response_at": null,
-                                                "first_response_due_at": "2026-10-13T09:59:47+00:00",
-                                                "resolution_due_at": "2026-10-13T13:44:47+00:00",
+                                                "first_response_due_at": "2026-10-15T16:03:34+00:00",
+                                                "resolution_due_at": "2026-10-15T19:48:34+00:00",
                                                 "is_overdue": false
                                             },
-                                            "created_at": "2026-10-13T09:44:47+00:00",
-                                            "updated_at": "2026-10-13T09:44:47+00:00"
+                                            "created_at": "2026-10-15T15:48:34+00:00",
+                                            "updated_at": "2026-10-15T15:48:34+00:00"
                                         }
                                     },
                                     "properties": {
@@ -4445,7 +4911,7 @@
                                             "properties": {
                                                 "id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy2p93b36cxb0khyc0mt"
+                                                    "example": "01m5040fw71x9h5stjyzmggwrq"
                                                 },
                                                 "subject": {
                                                     "type": "string",
@@ -4480,7 +4946,7 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "string",
-                                                            "example": "01m4tacy2p93b36cxb0khyc0ms"
+                                                            "example": "01m5040fw6g5j8sdspwx6e7q3q"
                                                         },
                                                         "name": {
                                                             "type": "string",
@@ -4609,7 +5075,7 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "string",
-                                                            "example": "01m4tacy2n5w8qa29zhzsffkjf"
+                                                            "example": "01m5040fw43btk8aptw6yyqtvm"
                                                         },
                                                         "name": {
                                                             "type": "string",
@@ -4643,7 +5109,7 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "string",
-                                                            "example": "01m4tacy2n5w8qa29zhzsffkjg"
+                                                            "example": "01m5040fw59nvksgh6qg36aghv"
                                                         },
                                                         "name": {
                                                             "type": "string",
@@ -4693,12 +5159,12 @@
                                                         },
                                                         "first_response_due_at": {
                                                             "type": "string",
-                                                            "example": "2026-10-13T09:59:47+00:00",
+                                                            "example": "2026-10-15T16:03:34+00:00",
                                                             "nullable": true
                                                         },
                                                         "resolution_due_at": {
                                                             "type": "string",
-                                                            "example": "2026-10-13T13:44:47+00:00",
+                                                            "example": "2026-10-15T19:48:34+00:00",
                                                             "nullable": true
                                                         },
                                                         "is_overdue": {
@@ -4715,11 +5181,11 @@
                                                 },
                                                 "created_at": {
                                                     "type": "string",
-                                                    "example": "2026-10-13T09:44:47+00:00"
+                                                    "example": "2026-10-15T15:48:34+00:00"
                                                 },
                                                 "updated_at": {
                                                     "type": "string",
-                                                    "example": "2026-10-13T09:44:47+00:00"
+                                                    "example": "2026-10-15T15:48:34+00:00"
                                                 }
                                             },
                                             "required": [
@@ -4811,13 +5277,13 @@
                                     "type": "object",
                                     "example": {
                                         "data": {
-                                            "id": "01m4tacy2zf85gby7r7771xsjg",
+                                            "id": "01m5040fwhgjfc8b0zbvm3cy99",
                                             "subject": "Et animi quos velit et fugiat.",
                                             "description": "Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.",
                                             "status": "open",
                                             "priority": "normal",
                                             "category": {
-                                                "id": "01m4tacy2zf85gby7r7771xsjf",
+                                                "id": "01m5040fwhgjfc8b0zbvm3cy98",
                                                 "name": "Molestias Fugit",
                                                 "slug": "molestias-fugit",
                                                 "description": "Distinctio eum doloremque id aut libero aliquam veniam corporis.",
@@ -4845,13 +5311,13 @@
                                                 }
                                             },
                                             "requester": {
-                                                "id": "01m4tacy2xktdgf3xzyx170fv7",
+                                                "id": "01m5040fwga0h5xrn71d7t2kvw",
                                                 "name": "Mr. Carey Smitham",
                                                 "role": "customer",
                                                 "email": null
                                             },
                                             "assignee": {
-                                                "id": "01m4tacy2yaxnbt2ypven77g8z",
+                                                "id": "01m5040fwhgjfc8b0zbvm3cy97",
                                                 "name": "Matilda Feeney",
                                                 "role": "customer",
                                                 "email": null
@@ -4860,12 +5326,12 @@
                                             "closed_at": null,
                                             "sla": {
                                                 "first_response_at": null,
-                                                "first_response_due_at": "2026-10-13T13:44:47+00:00",
-                                                "resolution_due_at": "2026-10-14T09:44:47+00:00",
+                                                "first_response_due_at": "2026-10-15T19:48:34+00:00",
+                                                "resolution_due_at": "2026-10-16T15:48:34+00:00",
                                                 "is_overdue": false
                                             },
-                                            "created_at": "2026-10-13T09:44:47+00:00",
-                                            "updated_at": "2026-10-13T09:44:47+00:00"
+                                            "created_at": "2026-10-15T15:48:34+00:00",
+                                            "updated_at": "2026-10-15T15:48:34+00:00"
                                         }
                                     },
                                     "properties": {
@@ -4874,7 +5340,7 @@
                                             "properties": {
                                                 "id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy2zf85gby7r7771xsjg"
+                                                    "example": "01m5040fwhgjfc8b0zbvm3cy99"
                                                 },
                                                 "subject": {
                                                     "type": "string",
@@ -4909,7 +5375,7 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "string",
-                                                            "example": "01m4tacy2zf85gby7r7771xsjf"
+                                                            "example": "01m5040fwhgjfc8b0zbvm3cy98"
                                                         },
                                                         "name": {
                                                             "type": "string",
@@ -5038,7 +5504,7 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "string",
-                                                            "example": "01m4tacy2xktdgf3xzyx170fv7"
+                                                            "example": "01m5040fwga0h5xrn71d7t2kvw"
                                                         },
                                                         "name": {
                                                             "type": "string",
@@ -5072,7 +5538,7 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "string",
-                                                            "example": "01m4tacy2yaxnbt2ypven77g8z"
+                                                            "example": "01m5040fwhgjfc8b0zbvm3cy97"
                                                         },
                                                         "name": {
                                                             "type": "string",
@@ -5122,12 +5588,12 @@
                                                         },
                                                         "first_response_due_at": {
                                                             "type": "string",
-                                                            "example": "2026-10-13T13:44:47+00:00",
+                                                            "example": "2026-10-15T19:48:34+00:00",
                                                             "nullable": true
                                                         },
                                                         "resolution_due_at": {
                                                             "type": "string",
-                                                            "example": "2026-10-14T09:44:47+00:00",
+                                                            "example": "2026-10-16T15:48:34+00:00",
                                                             "nullable": true
                                                         },
                                                         "is_overdue": {
@@ -5144,11 +5610,11 @@
                                                 },
                                                 "created_at": {
                                                     "type": "string",
-                                                    "example": "2026-10-13T09:44:47+00:00"
+                                                    "example": "2026-10-15T15:48:34+00:00"
                                                 },
                                                 "updated_at": {
                                                     "type": "string",
-                                                    "example": "2026-10-13T09:44:47+00:00"
+                                                    "example": "2026-10-15T15:48:34+00:00"
                                                 }
                                             },
                                             "required": [
@@ -5209,13 +5675,13 @@
                                     "type": "object",
                                     "example": {
                                         "data": {
-                                            "id": "01m4tacy37vten3t5egamqdbtq",
+                                            "id": "01m5040fwx65k3a3hea6sq2a8t",
                                             "subject": "Et animi quos velit et fugiat.",
                                             "description": "Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.",
                                             "status": "open",
                                             "priority": "normal",
                                             "category": {
-                                                "id": "01m4tacy36vrhwsk02cdcc4n8x",
+                                                "id": "01m5040fwwa05w05yw4vvvkv7k",
                                                 "name": "Eum Doloremque",
                                                 "slug": "eum-doloremque",
                                                 "description": "Aut libero aliquam veniam corporis.",
@@ -5243,13 +5709,13 @@
                                                 }
                                             },
                                             "requester": {
-                                                "id": "01m4tacy35v8etb0zh0dpfrs8e",
+                                                "id": "01m5040fwtahnhyta801942gm6",
                                                 "name": "Mr. Carey Smitham",
                                                 "role": "customer",
                                                 "email": null
                                             },
                                             "assignee": {
-                                                "id": "01m4tacy36vrhwsk02cdcc4n8w",
+                                                "id": "01m5040fwv394fe4g57a8mf7qa",
                                                 "name": "Janick Schultz DDS",
                                                 "role": "customer",
                                                 "email": null
@@ -5258,12 +5724,12 @@
                                             "closed_at": null,
                                             "sla": {
                                                 "first_response_at": null,
-                                                "first_response_due_at": "2026-10-13T13:44:47+00:00",
-                                                "resolution_due_at": "2026-10-14T09:44:47+00:00",
+                                                "first_response_due_at": "2026-10-15T19:48:34+00:00",
+                                                "resolution_due_at": "2026-10-16T15:48:34+00:00",
                                                 "is_overdue": false
                                             },
-                                            "created_at": "2026-10-13T09:44:47+00:00",
-                                            "updated_at": "2026-10-13T09:44:47+00:00"
+                                            "created_at": "2026-10-15T15:48:34+00:00",
+                                            "updated_at": "2026-10-15T15:48:34+00:00"
                                         }
                                     },
                                     "properties": {
@@ -5272,7 +5738,7 @@
                                             "properties": {
                                                 "id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy37vten3t5egamqdbtq"
+                                                    "example": "01m5040fwx65k3a3hea6sq2a8t"
                                                 },
                                                 "subject": {
                                                     "type": "string",
@@ -5307,7 +5773,7 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "string",
-                                                            "example": "01m4tacy36vrhwsk02cdcc4n8x"
+                                                            "example": "01m5040fwwa05w05yw4vvvkv7k"
                                                         },
                                                         "name": {
                                                             "type": "string",
@@ -5436,7 +5902,7 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "string",
-                                                            "example": "01m4tacy35v8etb0zh0dpfrs8e"
+                                                            "example": "01m5040fwtahnhyta801942gm6"
                                                         },
                                                         "name": {
                                                             "type": "string",
@@ -5470,7 +5936,7 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "string",
-                                                            "example": "01m4tacy36vrhwsk02cdcc4n8w"
+                                                            "example": "01m5040fwv394fe4g57a8mf7qa"
                                                         },
                                                         "name": {
                                                             "type": "string",
@@ -5520,12 +5986,12 @@
                                                         },
                                                         "first_response_due_at": {
                                                             "type": "string",
-                                                            "example": "2026-10-13T13:44:47+00:00",
+                                                            "example": "2026-10-15T19:48:34+00:00",
                                                             "nullable": true
                                                         },
                                                         "resolution_due_at": {
                                                             "type": "string",
-                                                            "example": "2026-10-14T09:44:47+00:00",
+                                                            "example": "2026-10-16T15:48:34+00:00",
                                                             "nullable": true
                                                         },
                                                         "is_overdue": {
@@ -5542,11 +6008,11 @@
                                                 },
                                                 "created_at": {
                                                     "type": "string",
-                                                    "example": "2026-10-13T09:44:47+00:00"
+                                                    "example": "2026-10-15T15:48:34+00:00"
                                                 },
                                                 "updated_at": {
                                                     "type": "string",
-                                                    "example": "2026-10-13T09:44:47+00:00"
+                                                    "example": "2026-10-15T15:48:34+00:00"
                                                 }
                                             },
                                             "required": [
@@ -5633,13 +6099,13 @@
                                     "type": "object",
                                     "example": {
                                         "data": {
-                                            "id": "01m4tacy3kqxen8r2hg74dfkw4",
+                                            "id": "01m5040fx7wzjjdxan0492790d",
                                             "subject": "Et animi quos velit et fugiat.",
                                             "description": "Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.",
                                             "status": "open",
                                             "priority": "normal",
                                             "category": {
-                                                "id": "01m4tacy3jne7tt61pzxk6w6va",
+                                                "id": "01m5040fx67nerys8hqt3a706s",
                                                 "name": "Aliquam Veniam",
                                                 "slug": "aliquam-veniam",
                                                 "description": "Dolorem mollitia deleniti nemo.",
@@ -5667,13 +6133,13 @@
                                                 }
                                             },
                                             "requester": {
-                                                "id": "01m4tacy3gbt7mhnmw0kdt58hg",
+                                                "id": "01m5040fx5seph7vx2a9drtyw1",
                                                 "name": "Mr. Carey Smitham",
                                                 "role": "customer",
                                                 "email": null
                                             },
                                             "assignee": {
-                                                "id": "01m4tacy3hfh2aszjh4y7ts840",
+                                                "id": "01m5040fx67nerys8hqt3a706r",
                                                 "name": "Prof. Annabelle Kshlerin",
                                                 "role": "customer",
                                                 "email": null
@@ -5682,12 +6148,12 @@
                                             "closed_at": null,
                                             "sla": {
                                                 "first_response_at": null,
-                                                "first_response_due_at": "2026-10-13T13:44:47+00:00",
-                                                "resolution_due_at": "2026-10-14T09:44:47+00:00",
+                                                "first_response_due_at": "2026-10-15T19:48:34+00:00",
+                                                "resolution_due_at": "2026-10-16T15:48:34+00:00",
                                                 "is_overdue": false
                                             },
-                                            "created_at": "2026-10-13T09:44:47+00:00",
-                                            "updated_at": "2026-10-13T09:44:47+00:00"
+                                            "created_at": "2026-10-15T15:48:34+00:00",
+                                            "updated_at": "2026-10-15T15:48:34+00:00"
                                         }
                                     },
                                     "properties": {
@@ -5696,7 +6162,7 @@
                                             "properties": {
                                                 "id": {
                                                     "type": "string",
-                                                    "example": "01m4tacy3kqxen8r2hg74dfkw4"
+                                                    "example": "01m5040fx7wzjjdxan0492790d"
                                                 },
                                                 "subject": {
                                                     "type": "string",
@@ -5731,7 +6197,7 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "string",
-                                                            "example": "01m4tacy3jne7tt61pzxk6w6va"
+                                                            "example": "01m5040fx67nerys8hqt3a706s"
                                                         },
                                                         "name": {
                                                             "type": "string",
@@ -5860,7 +6326,7 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "string",
-                                                            "example": "01m4tacy3gbt7mhnmw0kdt58hg"
+                                                            "example": "01m5040fx5seph7vx2a9drtyw1"
                                                         },
                                                         "name": {
                                                             "type": "string",
@@ -5894,7 +6360,7 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "string",
-                                                            "example": "01m4tacy3hfh2aszjh4y7ts840"
+                                                            "example": "01m5040fx67nerys8hqt3a706r"
                                                         },
                                                         "name": {
                                                             "type": "string",
@@ -5944,12 +6410,12 @@
                                                         },
                                                         "first_response_due_at": {
                                                             "type": "string",
-                                                            "example": "2026-10-13T13:44:47+00:00",
+                                                            "example": "2026-10-15T19:48:34+00:00",
                                                             "nullable": true
                                                         },
                                                         "resolution_due_at": {
                                                             "type": "string",
-                                                            "example": "2026-10-14T09:44:47+00:00",
+                                                            "example": "2026-10-16T15:48:34+00:00",
                                                             "nullable": true
                                                         },
                                                         "is_overdue": {
@@ -5966,11 +6432,11 @@
                                                 },
                                                 "created_at": {
                                                     "type": "string",
-                                                    "example": "2026-10-13T09:44:47+00:00"
+                                                    "example": "2026-10-15T15:48:34+00:00"
                                                 },
                                                 "updated_at": {
                                                     "type": "string",
-                                                    "example": "2026-10-13T09:44:47+00:00"
+                                                    "example": "2026-10-15T15:48:34+00:00"
                                                 }
                                             },
                                             "required": [

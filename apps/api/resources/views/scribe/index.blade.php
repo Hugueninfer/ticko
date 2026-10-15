@@ -114,6 +114,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="authentication-PUTapi-v1-auth-password">
                                 <a href="#authentication-PUTapi-v1-auth-password">Change password</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="authentication-PUTapi-v1-auth-notification-preferences">
+                                <a href="#authentication-PUTapi-v1-auth-notification-preferences">Update notification preferences</a>
+                            </li>
                                                                         </ul>
                             </ul>
                     <ul id="tocify-header-categories" class="tocify-header">
@@ -138,6 +141,16 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-endpoints" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="endpoints">
+                    <a href="#endpoints">Endpoints</a>
+                </li>
+                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-broadcasting-auth">
+                                <a href="#endpoints-GETapi-broadcasting-auth">Authenticate the request for channel access.</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-metrics" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="metrics">
                     <a href="#metrics">Metrics</a>
@@ -145,6 +158,29 @@
                                     <ul id="tocify-subheader-metrics" class="tocify-subheader">
                                                     <li class="tocify-item level-2" data-unique="metrics-GETapi-v1-metrics">
                                 <a href="#metrics-GETapi-v1-metrics">Dashboard metrics</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-push-notifications" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="push-notifications">
+                    <a href="#push-notifications">Push notifications</a>
+                </li>
+                                    <ul id="tocify-subheader-push-notifications" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="push-notifications-POSTapi-v1-push-devices">
+                                <a href="#push-notifications-POSTapi-v1-push-devices">Register this device</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="push-notifications-DELETEapi-v1-push-devices-current">
+                                <a href="#push-notifications-DELETEapi-v1-push-devices-current">Unregister this device</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-realtime" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="realtime">
+                    <a href="#realtime">Realtime</a>
+                </li>
+                                    <ul id="tocify-subheader-realtime" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="realtime-GETapi-v1-realtime">
+                                <a href="#realtime-GETapi-v1-realtime">Realtime settings</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -210,7 +246,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: October 13, 2026</li>
+        <li>Last updated: October 15, 2026</li>
     </ul>
 </div>
 
@@ -406,28 +442,28 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m4tacy4fs6zaf7wn02bqvaz6&quot;,
-            &quot;ticket_id&quot;: &quot;01m4tacy4eyyzjd812bzfeewey&quot;,
+            &quot;id&quot;: &quot;01m5040fyavtv1m16kv4s1ga64&quot;,
+            &quot;ticket_id&quot;: &quot;01m5040fy8b4a8c1fj08anvh24&quot;,
             &quot;original_name&quot;: &quot;screenshot.png&quot;,
             &quot;mime_type&quot;: &quot;image/png&quot;,
             &quot;size&quot;: 1024,
             &quot;width&quot;: 10,
             &quot;height&quot;: 10,
-            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m4tacy4fs6zaf7wn02bqvaz6/content?expires=1791884987&amp;tenant=01m4tacxvv4jdr9sqzz548a3t3&amp;signature=d720a64ebd462236e1a63bad73775075d4f32a32bd9e8746e846bd641cece3aa&quot;,
+            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m5040fyavtv1m16kv4s1ga64/content?expires=1792079614&amp;tenant=01m5040fkc5grhbxvkzntyxbak&amp;signature=51b1fb8d118bb9a3dcbf0c4a09e1069754815da7150fdd4ede8e087b987afc5e&quot;,
             &quot;url_expires_in&quot;: 300,
-            &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m4tacy4j0v9r92p0tbe4fz2t&quot;,
-            &quot;ticket_id&quot;: &quot;01m4tacy4hdjv1w1y2g1w8vspd&quot;,
+            &quot;id&quot;: &quot;01m5040fyg3vftn4mrjbxhe76v&quot;,
+            &quot;ticket_id&quot;: &quot;01m5040fyey351f798m1c4t9wf&quot;,
             &quot;original_name&quot;: &quot;screenshot.png&quot;,
             &quot;mime_type&quot;: &quot;image/png&quot;,
             &quot;size&quot;: 1024,
             &quot;width&quot;: 10,
             &quot;height&quot;: 10,
-            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m4tacy4j0v9r92p0tbe4fz2t/content?expires=1791884987&amp;tenant=01m4tacxvv4jdr9sqzz548a3t3&amp;signature=5f4b7c5345fd4234b2ffb09fc104dac796211d71efe771cb0556d24342558938&quot;,
+            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m5040fyg3vftn4mrjbxhe76v/content?expires=1792079614&amp;tenant=01m5040fkc5grhbxvkzntyxbak&amp;signature=3646b17bc181226510f0778e99141b3d4c0ff89e1f2ebb0dc93d69623700ee3b&quot;,
             &quot;url_expires_in&quot;: 300,
-            &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
         }
     ]
 }</code>
@@ -536,7 +572,7 @@ which removes EXIF metadata such as GPS position.</p>
     "http://localhost:8090/api/v1/tickets/architecto/attachments" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpbt3utdo8j5fh3KgLEgE" </code></pre></div>
+    --form "file=@/tmp/phphmk8rgvpoenb6CJBhLa" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -568,16 +604,16 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4tacy4x689s0rz18zgvqmx0&quot;,
-        &quot;ticket_id&quot;: &quot;01m4tacy4vrtct27kaa98m1k5k&quot;,
+        &quot;id&quot;: &quot;01m5040fyxtmwx6j1ra3c5tyh5&quot;,
+        &quot;ticket_id&quot;: &quot;01m5040fyvwv7tf7m5tntxka8x&quot;,
         &quot;original_name&quot;: &quot;screenshot.png&quot;,
         &quot;mime_type&quot;: &quot;image/png&quot;,
         &quot;size&quot;: 1024,
         &quot;width&quot;: 10,
         &quot;height&quot;: 10,
-        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m4tacy4x689s0rz18zgvqmx0/content?expires=1791884987&amp;tenant=01m4tacxvv4jdr9sqzz548a3t3&amp;signature=2dc0d7816d7b4570c0f65d58d786c4a084ca07006206ae5c1f1ea9668ce0a5b3&quot;,
+        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m5040fyxtmwx6j1ra3c5tyh5/content?expires=1792079614&amp;tenant=01m5040fkc5grhbxvkzntyxbak&amp;signature=c19c6206d3c87e0f60905b5e47d42137e983d290350cb16b839b98bf2b281d06&quot;,
         &quot;url_expires_in&quot;: 300,
-        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
     }
 }</code>
  </pre>
@@ -677,7 +713,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>JPEG, PNG or WebP image (max 5 MB). Metadata is stripped. Must be a file. Must not be greater than 5120 kilobytes. Example: <code>/tmp/phpbt3utdo8j5fh3KgLEgE</code></p>
+<p>JPEG, PNG or WebP image (max 5 MB). Metadata is stripped. Must be a file. Must not be greater than 5120 kilobytes. Example: <code>/tmp/phphmk8rgvpoenb6CJBhLa</code></p>
         </div>
         </form>
 
@@ -725,16 +761,16 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4tacy53qgzy6vg005pp5gv4&quot;,
-        &quot;ticket_id&quot;: &quot;01m4tacy52r3zwfeq5jjstk1f3&quot;,
+        &quot;id&quot;: &quot;01m5040fz5z36rpa9ze3a9k2jt&quot;,
+        &quot;ticket_id&quot;: &quot;01m5040fz33j1mt23kdtcwfkz1&quot;,
         &quot;original_name&quot;: &quot;screenshot.png&quot;,
         &quot;mime_type&quot;: &quot;image/png&quot;,
         &quot;size&quot;: 1024,
         &quot;width&quot;: 10,
         &quot;height&quot;: 10,
-        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m4tacy53qgzy6vg005pp5gv4/content?expires=1791884987&amp;tenant=01m4tacxvv4jdr9sqzz548a3t3&amp;signature=c6bf2f953b17469da3a240ebde6ed4c72c1c05a48191a74bfca9fa4d48a9d3c9&quot;,
+        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m5040fz5z36rpa9ze3a9k2jt/content?expires=1792079614&amp;tenant=01m5040fkc5grhbxvkzntyxbak&amp;signature=415d41eebefb67c0716222e85a10f2f31f4db674f56415c5a9ebe14014f095f0&quot;,
         &quot;url_expires_in&quot;: 300,
-        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
     }
 }</code>
  </pre>
@@ -886,17 +922,21 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4tacy0r62tcv2m2aq7gqm47&quot;,
+        &quot;id&quot;: &quot;01m5040fs74zypxqn60g8tvs92&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
         &quot;email&quot;: &quot;gulgowski.asia@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
         &quot;tenant&quot;: {
-            &quot;id&quot;: &quot;01m4tacxvv4jdr9sqzz548a3t3&quot;,
+            &quot;id&quot;: &quot;01m5040fkc5grhbxvkzntyxbak&quot;,
             &quot;name&quot;: &quot;Example Inc.&quot;,
             &quot;slug&quot;: &quot;docs-example&quot;
         },
-        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+        &quot;notification_preferences&quot;: {
+            &quot;push_replies&quot;: true,
+            &quot;push_status_changes&quot;: true
+        },
+        &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
     }
 }</code>
  </pre>
@@ -1416,17 +1456,21 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4tacy1408kwydcc0ps3nwpd&quot;,
+        &quot;id&quot;: &quot;01m5040fsvtg3wt9mr2yvmccwf&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
         &quot;email&quot;: &quot;idickens@example.org&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
         &quot;tenant&quot;: {
-            &quot;id&quot;: &quot;01m4tacxvv4jdr9sqzz548a3t3&quot;,
+            &quot;id&quot;: &quot;01m5040fkc5grhbxvkzntyxbak&quot;,
             &quot;name&quot;: &quot;Example Inc.&quot;,
             &quot;slug&quot;: &quot;docs-example&quot;
         },
-        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+        &quot;notification_preferences&quot;: {
+            &quot;push_replies&quot;: true,
+            &quot;push_status_changes&quot;: true
+        },
+        &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
     }
 }</code>
  </pre>
@@ -1825,17 +1869,21 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4tacy1d6ggsqz03jgaz68t5&quot;,
+        &quot;id&quot;: &quot;01m5040ft6ve6snzgfnvqx1j3m&quot;,
         &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
         &quot;email&quot;: &quot;aschuster@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
         &quot;tenant&quot;: {
-            &quot;id&quot;: &quot;01m4tacxvv4jdr9sqzz548a3t3&quot;,
+            &quot;id&quot;: &quot;01m5040fkc5grhbxvkzntyxbak&quot;,
             &quot;name&quot;: &quot;Example Inc.&quot;,
             &quot;slug&quot;: &quot;docs-example&quot;
         },
-        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+        &quot;notification_preferences&quot;: {
+            &quot;push_replies&quot;: true,
+            &quot;push_status_changes&quot;: true
+        },
+        &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
     }
 }</code>
  </pre>
@@ -2099,7 +2147,238 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                <h1 id="categories">Categories</h1>
+                    <h2 id="authentication-PUTapi-v1-auth-notification-preferences">Update notification preferences</h2>
+
+<p>
+</p>
+
+<p>Chooses which events send a push notification to the user's devices.</p>
+
+<span id="example-requests-PUTapi-v1-auth-notification-preferences">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PUT \
+    "http://localhost:8090/api/v1/auth/notification-preferences" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"push_replies\": true,
+    \"push_status_changes\": false
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/auth/notification-preferences"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "push_replies": true,
+    "push_status_changes": false
+};
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PUTapi-v1-auth-notification-preferences">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;01m5040ftdqznvx45wana62trz&quot;,
+        &quot;name&quot;: &quot;Leda Price&quot;,
+        &quot;email&quot;: &quot;theo.hauck@example.com&quot;,
+        &quot;role&quot;: &quot;customer&quot;,
+        &quot;is_active&quot;: true,
+        &quot;tenant&quot;: {
+            &quot;id&quot;: &quot;01m5040fkc5grhbxvkzntyxbak&quot;,
+            &quot;name&quot;: &quot;Example Inc.&quot;,
+            &quot;slug&quot;: &quot;docs-example&quot;
+        },
+        &quot;notification_preferences&quot;: {
+            &quot;push_replies&quot;: true,
+            &quot;push_status_changes&quot;: true
+        },
+        &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PUTapi-v1-auth-notification-preferences" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PUTapi-v1-auth-notification-preferences"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PUTapi-v1-auth-notification-preferences"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PUTapi-v1-auth-notification-preferences" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTapi-v1-auth-notification-preferences">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PUTapi-v1-auth-notification-preferences" data-method="PUT"
+      data-path="api/v1/auth/notification-preferences"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PUTapi-v1-auth-notification-preferences', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PUTapi-v1-auth-notification-preferences"
+                    onclick="tryItOut('PUTapi-v1-auth-notification-preferences');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PUTapi-v1-auth-notification-preferences"
+                    onclick="cancelTryOut('PUTapi-v1-auth-notification-preferences');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PUTapi-v1-auth-notification-preferences"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>api/v1/auth/notification-preferences</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PUTapi-v1-auth-notification-preferences"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PUTapi-v1-auth-notification-preferences"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>push_replies</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <label data-endpoint="PUTapi-v1-auth-notification-preferences" style="display: none">
+            <input type="radio" name="push_replies"
+                   value="true"
+                   data-endpoint="PUTapi-v1-auth-notification-preferences"
+                   data-component="body"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="PUTapi-v1-auth-notification-preferences" style="display: none">
+            <input type="radio" name="push_replies"
+                   value="false"
+                   data-endpoint="PUTapi-v1-auth-notification-preferences"
+                   data-component="body"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Push when the team replies to one of your tickets. Example: <code>true</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>push_status_changes</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <label data-endpoint="PUTapi-v1-auth-notification-preferences" style="display: none">
+            <input type="radio" name="push_status_changes"
+                   value="true"
+                   data-endpoint="PUTapi-v1-auth-notification-preferences"
+                   data-component="body"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="PUTapi-v1-auth-notification-preferences" style="display: none">
+            <input type="radio" name="push_status_changes"
+                   value="false"
+                   data-endpoint="PUTapi-v1-auth-notification-preferences"
+                   data-component="body"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Push when the status of one of your tickets changes. Example: <code>false</code></p>
+        </div>
+        </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>tenant</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Sent by the sign-in endpoints and /auth/me.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>open_tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Open tickets assigned to the member (team listing only).</p>
+                    </div>
+                                    </details>
+        </div>
+                    <h1 id="categories">Categories</h1>
 
     <p>Everyone in the tenant can list categories; only admins manage them.</p>
 
@@ -2148,10 +2427,10 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m4tacy58bk59smkzxhk1k2b7&quot;,
-            &quot;name&quot;: &quot;Repudiandae Laboriosam&quot;,
-            &quot;slug&quot;: &quot;repudiandae-laboriosam&quot;,
-            &quot;description&quot;: &quot;Alias tenetur ratione nemo voluptate accusamus ut et.&quot;,
+            &quot;id&quot;: &quot;01m5040fze591n7qb40p5e4dr6&quot;,
+            &quot;name&quot;: &quot;Nostrum Deleniti&quot;,
+            &quot;slug&quot;: &quot;nostrum-deleniti&quot;,
+            &quot;description&quot;: &quot;Tenetur autem voluptas velit accusamus placeat.&quot;,
             &quot;sla_targets&quot;: {
                 &quot;low&quot;: {
                     &quot;first_response_minutes&quot;: 480,
@@ -2177,10 +2456,10 @@ fetch(url, {
             &quot;tickets_count&quot;: 1
         },
         {
-            &quot;id&quot;: &quot;01m4tacy5cpqdwrj9ffa37pq7k&quot;,
-            &quot;name&quot;: &quot;Et Error&quot;,
-            &quot;slug&quot;: &quot;et-error&quot;,
-            &quot;description&quot;: &quot;Recusandae et ipsam dolorem et ut dicta vitae.&quot;,
+            &quot;id&quot;: &quot;01m5040fzmmf2eej872jxqb5gs&quot;,
+            &quot;name&quot;: &quot;Corporis Omnis&quot;,
+            &quot;slug&quot;: &quot;corporis-omnis&quot;,
+            &quot;description&quot;: &quot;Modi distinctio soluta sit quaerat reprehenderit.&quot;,
             &quot;sla_targets&quot;: {
                 &quot;low&quot;: {
                     &quot;first_response_minutes&quot;: 480,
@@ -2402,10 +2681,10 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4tacy5s2qjqm5v5emmbenpw&quot;,
-        &quot;name&quot;: &quot;Fugiat Sunt&quot;,
-        &quot;slug&quot;: &quot;fugiat-sunt&quot;,
-        &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab.&quot;,
+        &quot;id&quot;: &quot;01m5040g00qqtvhrrnhbee34z5&quot;,
+        &quot;name&quot;: &quot;Et Fugiat&quot;,
+        &quot;slug&quot;: &quot;et-fugiat&quot;,
+        &quot;description&quot;: &quot;Nihil accusantium harum mollitia modi deserunt.&quot;,
         &quot;sla_targets&quot;: {
             &quot;low&quot;: {
                 &quot;first_response_minutes&quot;: 480,
@@ -2760,7 +3039,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4tacy5yypk2bapjsq0bc3hy&quot;,
+        &quot;id&quot;: &quot;01m5040g0531q68fg39czkp888&quot;,
         &quot;name&quot;: &quot;Eius Et&quot;,
         &quot;slug&quot;: &quot;eius-et&quot;,
         &quot;description&quot;: &quot;Quos velit et fugiat sunt nihil accusantium harum.&quot;,
@@ -2996,10 +3275,10 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4tacy65dte60rx5xpkp26j6&quot;,
-        &quot;name&quot;: &quot;Sunt Nihil&quot;,
-        &quot;slug&quot;: &quot;sunt-nihil&quot;,
-        &quot;description&quot;: &quot;Harum mollitia modi deserunt aut ab provident perspiciatis quo.&quot;,
+        &quot;id&quot;: &quot;01m5040g0g028ppjs7r4d0c92b&quot;,
+        &quot;name&quot;: &quot;Fugiat Sunt&quot;,
+        &quot;slug&quot;: &quot;fugiat-sunt&quot;,
+        &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab.&quot;,
         &quot;sla_targets&quot;: {
             &quot;low&quot;: {
                 &quot;first_response_minutes&quot;: 480,
@@ -3451,6 +3730,125 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
+                <h1 id="endpoints">Endpoints</h1>
+
+    
+
+                                <h2 id="endpoints-GETapi-broadcasting-auth">Authenticate the request for channel access.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-broadcasting-auth">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8090/api/broadcasting/auth" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/broadcasting/auth"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-broadcasting-auth">
+    </span>
+<span id="execution-results-GETapi-broadcasting-auth" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-broadcasting-auth"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-broadcasting-auth"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-broadcasting-auth" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-broadcasting-auth">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-broadcasting-auth" data-method="GET"
+      data-path="api/broadcasting/auth"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-broadcasting-auth', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-broadcasting-auth"
+                    onclick="tryItOut('GETapi-broadcasting-auth');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-broadcasting-auth"
+                    onclick="cancelTryOut('GETapi-broadcasting-auth');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-broadcasting-auth"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/broadcasting/auth</code></b>
+        </p>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/broadcasting/auth</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-broadcasting-auth"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-broadcasting-auth"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
                 <h1 id="metrics">Metrics</h1>
 
     <p>Dashboard figures for admins, always limited to the current tenant.</p>
@@ -3737,7 +4135,416 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
                                         </details>
         </div>
-                    <h1 id="team">Team</h1>
+                    <h1 id="push-notifications">Push notifications</h1>
+
+    <p>Devices that receive push notifications (mobile app, bearer tokens only).</p>
+
+                                <h2 id="push-notifications-POSTapi-v1-push-devices">Register this device</h2>
+
+<p>
+</p>
+
+<p>Saves the Expo push token of the phone using the current API token.
+Revoking the API token (signing out) unregisters the device too.</p>
+
+<span id="example-requests-POSTapi-v1-push-devices">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8090/api/v1/push-devices" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"token\": \"ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]\",
+    \"platform\": \"android\",
+    \"locale\": \"pt-BR\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/push-devices"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "token": "ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]",
+    "platform": "android",
+    "locale": "pt-BR"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-push-devices">
+</span>
+<span id="execution-results-POSTapi-v1-push-devices" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-push-devices"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-push-devices"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-push-devices" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-push-devices">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-push-devices" data-method="POST"
+      data-path="api/v1/push-devices"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-push-devices', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-push-devices"
+                    onclick="tryItOut('POSTapi-v1-push-devices');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-push-devices"
+                    onclick="cancelTryOut('POSTapi-v1-push-devices');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-push-devices"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/push-devices</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-push-devices"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-push-devices"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>token</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="token"                data-endpoint="POSTapi-v1-push-devices"
+               value="ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]"
+               data-component="body">
+    <br>
+<p>Expo push token of the device. Must match the regex /^Expo(nent)?PushToken[[A-Za-z0-9_-]{1,200}]$/. Must not be greater than 255 characters. Example: <code>ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>platform</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="platform"                data-endpoint="POSTapi-v1-push-devices"
+               value="android"
+               data-component="body">
+    <br>
+<p>android or ios. Example: <code>android</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>android</code></li> <li><code>ios</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>locale</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="locale"                data-endpoint="POSTapi-v1-push-devices"
+               value="pt-BR"
+               data-component="body">
+    <br>
+<p>Language of the notifications: pt-BR or en. Example: <code>pt-BR</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>pt-BR</code></li> <li><code>en</code></li></ul>
+        </div>
+        </form>
+
+                    <h2 id="push-notifications-DELETEapi-v1-push-devices-current">Unregister this device</h2>
+
+<p>
+</p>
+
+<p>Stops push notifications to the phone using the current API token.</p>
+
+<span id="example-requests-DELETEapi-v1-push-devices-current">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost:8090/api/v1/push-devices/current" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/push-devices/current"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-v1-push-devices-current">
+</span>
+<span id="execution-results-DELETEapi-v1-push-devices-current" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-v1-push-devices-current"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-v1-push-devices-current"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-v1-push-devices-current" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-v1-push-devices-current">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-v1-push-devices-current" data-method="DELETE"
+      data-path="api/v1/push-devices/current"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-v1-push-devices-current', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-v1-push-devices-current"
+                    onclick="tryItOut('DELETEapi-v1-push-devices-current');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-v1-push-devices-current"
+                    onclick="cancelTryOut('DELETEapi-v1-push-devices-current');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-v1-push-devices-current"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/v1/push-devices/current</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-v1-push-devices-current"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-v1-push-devices-current"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                <h1 id="realtime">Realtime</h1>
+
+    <p>WebSocket (Pusher protocol, Laravel Reverb) on the API origin under /app. Subscribe to private channels after authorizing them with POST /api/broadcasting/auth.</p>
+
+                                <h2 id="realtime-GETapi-v1-realtime">Realtime settings</h2>
+
+<p>
+</p>
+
+<p>Public app key of the WebSocket server, so clients need no build-time
+configuration. The key is not a secret; channel access is authorized
+per subscription.</p>
+
+<span id="example-requests-GETapi-v1-realtime">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8090/api/v1/realtime" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/realtime"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-realtime">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;enabled&quot;: true,
+        &quot;key&quot;: &quot;ticko-app-key&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-realtime" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-realtime"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-realtime"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-realtime" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-realtime">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-realtime" data-method="GET"
+      data-path="api/v1/realtime"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-realtime', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-realtime"
+                    onclick="tryItOut('GETapi-v1-realtime');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-realtime"
+                    onclick="cancelTryOut('GETapi-v1-realtime');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-realtime"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/realtime</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-realtime"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-realtime"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                <h1 id="team">Team</h1>
 
     <p>Members of the tenant. Staff can list them; only admins create or change them.</p>
 
@@ -3794,22 +4601,30 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m4tacy6eyk90x62be85h65kc&quot;,
+            &quot;id&quot;: &quot;01m5040g10qkz02htja8cn02mp&quot;,
             &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
             &quot;email&quot;: &quot;gilbert32@example.com&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;is_active&quot;: true,
+            &quot;notification_preferences&quot;: {
+                &quot;push_replies&quot;: true,
+                &quot;push_status_changes&quot;: true
+            },
             &quot;open_tickets_count&quot;: 1,
-            &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m4tacy6hxj8ksk3jv9dyrwnw&quot;,
+            &quot;id&quot;: &quot;01m5040g161rsj7nhme9epzqfd&quot;,
             &quot;name&quot;: &quot;Emanuel Emmerich&quot;,
             &quot;email&quot;: &quot;little.art@example.net&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;is_active&quot;: true,
+            &quot;notification_preferences&quot;: {
+                &quot;push_replies&quot;: true,
+                &quot;push_status_changes&quot;: true
+            },
             &quot;open_tickets_count&quot;: 1,
-            &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
         }
     ],
     &quot;links&quot;: {
@@ -4060,12 +4875,16 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4tacy6p2trxr8eb48zhxfdv&quot;,
+        &quot;id&quot;: &quot;01m5040g1dm82f0kkhr87zf2np&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
         &quot;email&quot;: &quot;hirthe.theo@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
-        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+        &quot;notification_preferences&quot;: {
+            &quot;push_replies&quot;: true,
+            &quot;push_status_changes&quot;: true
+        },
+        &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
     }
 }</code>
  </pre>
@@ -4278,12 +5097,16 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4tacy6tr3mmwsqkmftdg57p&quot;,
+        &quot;id&quot;: &quot;01m5040g1meq7337613nnzcpny&quot;,
         &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
         &quot;email&quot;: &quot;leo34@example.net&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
-        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+        &quot;notification_preferences&quot;: {
+            &quot;push_replies&quot;: true,
+            &quot;push_status_changes&quot;: true
+        },
+        &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
     }
 }</code>
  </pre>
@@ -4470,12 +5293,16 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4tacy6z5mx64vy5w5dzkka8&quot;,
+        &quot;id&quot;: &quot;01m5040g1v451ycbswtk6teyea&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
         &quot;email&quot;: &quot;pfritsch@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
-        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+        &quot;notification_preferences&quot;: {
+            &quot;push_replies&quot;: true,
+            &quot;push_status_changes&quot;: true
+        },
+        &quot;created_at&quot;: &quot;2026-10-15T15:48:35+00:00&quot;
     }
 }</code>
  </pre>
@@ -4704,30 +5531,30 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m4tacy3ywms0nx7050vpzqcw&quot;,
-            &quot;ticket_id&quot;: &quot;01m4tacy3wsy13tg8abw0c9qzx&quot;,
+            &quot;id&quot;: &quot;01m5040fxjrr4jjke7dtbfv7tv&quot;,
+            &quot;ticket_id&quot;: &quot;01m5040fxgbyn0qt44dbead803&quot;,
             &quot;body&quot;: &quot;Animi quos velit et fugiat. Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci.&quot;,
             &quot;is_internal&quot;: false,
             &quot;author&quot;: {
-                &quot;id&quot;: &quot;01m4tacy3x4v27ha5jjs0dpyrg&quot;,
+                &quot;id&quot;: &quot;01m5040fxhwv086fj0v45t1gcg&quot;,
                 &quot;name&quot;: &quot;Mr. Madisen Schaden&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
             },
-            &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m4tacy4297g3n2d30r2kqv76&quot;,
-            &quot;ticket_id&quot;: &quot;01m4tacy41jyfyymypgw4yzaqj&quot;,
+            &quot;id&quot;: &quot;01m5040fxt70bv64dz7djg0xjx&quot;,
+            &quot;ticket_id&quot;: &quot;01m5040fxr6bxdhbar96vdqthw&quot;,
             &quot;body&quot;: &quot;Neque blanditiis odio veritatis excepturi doloribus delectus. Qui repudiandae laboriosam est alias.&quot;,
             &quot;is_internal&quot;: false,
             &quot;author&quot;: {
-                &quot;id&quot;: &quot;01m4tacy41jyfyymypgw4yzaqk&quot;,
+                &quot;id&quot;: &quot;01m5040fxste1p6abc4rfjme3p&quot;,
                 &quot;name&quot;: &quot;Lucie Bauch MD&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
             },
-            &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
         }
     ],
     &quot;links&quot;: {
@@ -4952,17 +5779,17 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4tacy49v7wvjrqx0bd8bejt&quot;,
-        &quot;ticket_id&quot;: &quot;01m4tacy48a6zj9sanb9gn20v0&quot;,
+        &quot;id&quot;: &quot;01m5040fy2gh4zdxfwthc7sb8b&quot;,
+        &quot;ticket_id&quot;: &quot;01m5040fy1rvhppn0n0jb8qt7s&quot;,
         &quot;body&quot;: &quot;Et animi quos velit et fugiat. Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci.&quot;,
         &quot;is_internal&quot;: false,
         &quot;author&quot;: {
-            &quot;id&quot;: &quot;01m4tacy49v7wvjrqx0bd8bejs&quot;,
+            &quot;id&quot;: &quot;01m5040fy2gh4zdxfwthc7sb8a&quot;,
             &quot;name&quot;: &quot;Colt Balistreri&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
         },
-        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
     }
 }</code>
  </pre>
@@ -5197,13 +6024,13 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m4tacy21tyh5a2n6q5cn5472&quot;,
+            &quot;id&quot;: &quot;01m5040fvb5ngjmef79abs4ygh&quot;,
             &quot;subject&quot;: &quot;Eius et animi quos velit et.&quot;,
             &quot;description&quot;: &quot;Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.&quot;,
             &quot;status&quot;: &quot;open&quot;,
             &quot;priority&quot;: &quot;urgent&quot;,
             &quot;category&quot;: {
-                &quot;id&quot;: &quot;01m4tacy209z4ygsnv747nsnbf&quot;,
+                &quot;id&quot;: &quot;01m5040fv9azb16ebs4e141mjb&quot;,
                 &quot;name&quot;: &quot;Voluptatem Laboriosam&quot;,
                 &quot;slug&quot;: &quot;voluptatem-laboriosam&quot;,
                 &quot;description&quot;: &quot;Quis adipisci molestias fugit deleniti distinctio eum.&quot;,
@@ -5231,13 +6058,13 @@ fetch(url, {
                 }
             },
             &quot;requester&quot;: {
-                &quot;id&quot;: &quot;01m4tacy1y42wg3jgqx5ak9bth&quot;,
+                &quot;id&quot;: &quot;01m5040fv6qyyjkt62s9bmxe4g&quot;,
                 &quot;name&quot;: &quot;Mina Bauch&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
             },
             &quot;assignee&quot;: {
-                &quot;id&quot;: &quot;01m4tacy1zsng3xwxrtntpxvny&quot;,
+                &quot;id&quot;: &quot;01m5040fv8s25nhyc3229gtwrr&quot;,
                 &quot;name&quot;: &quot;Donny Leffler&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
@@ -5246,21 +6073,21 @@ fetch(url, {
             &quot;closed_at&quot;: null,
             &quot;sla&quot;: {
                 &quot;first_response_at&quot;: null,
-                &quot;first_response_due_at&quot;: &quot;2026-10-13T09:59:47+00:00&quot;,
-                &quot;resolution_due_at&quot;: &quot;2026-10-13T13:44:47+00:00&quot;,
+                &quot;first_response_due_at&quot;: &quot;2026-10-15T16:03:34+00:00&quot;,
+                &quot;resolution_due_at&quot;: &quot;2026-10-15T19:48:34+00:00&quot;,
                 &quot;is_overdue&quot;: false
             },
-            &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;,
-            &quot;updated_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;,
+            &quot;updated_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m4tacy28dt6y2nnc90cn9n2f&quot;,
+            &quot;id&quot;: &quot;01m5040fvparq9knzs3b140g0c&quot;,
             &quot;subject&quot;: &quot;Id aut libero aliquam veniam.&quot;,
             &quot;description&quot;: &quot;Mollitia deleniti nemo odit quia officia. Dignissimos neque blanditiis odio.&quot;,
             &quot;status&quot;: &quot;open&quot;,
             &quot;priority&quot;: &quot;normal&quot;,
             &quot;category&quot;: {
-                &quot;id&quot;: &quot;01m4tacy28dt6y2nnc90cn9n2e&quot;,
+                &quot;id&quot;: &quot;01m5040fvngvgjtmqa07m4nep0&quot;,
                 &quot;name&quot;: &quot;Recusandae Modi&quot;,
                 &quot;slug&quot;: &quot;recusandae-modi&quot;,
                 &quot;description&quot;: &quot;Ex repellendus assumenda et tenetur ab reiciendis.&quot;,
@@ -5288,13 +6115,13 @@ fetch(url, {
                 }
             },
             &quot;requester&quot;: {
-                &quot;id&quot;: &quot;01m4tacy27zejfc6dcjspp359c&quot;,
+                &quot;id&quot;: &quot;01m5040fvkg9jc9pw2d9y635ws&quot;,
                 &quot;name&quot;: &quot;Emanuel Emmerich&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
             },
             &quot;assignee&quot;: {
-                &quot;id&quot;: &quot;01m4tacy28dt6y2nnc90cn9n2d&quot;,
+                &quot;id&quot;: &quot;01m5040fvmrj1f4x6qmcjybkxr&quot;,
                 &quot;name&quot;: &quot;Jacques Howe&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
@@ -5303,12 +6130,12 @@ fetch(url, {
             &quot;closed_at&quot;: null,
             &quot;sla&quot;: {
                 &quot;first_response_at&quot;: null,
-                &quot;first_response_due_at&quot;: &quot;2026-10-13T13:44:47+00:00&quot;,
-                &quot;resolution_due_at&quot;: &quot;2026-10-14T09:44:47+00:00&quot;,
+                &quot;first_response_due_at&quot;: &quot;2026-10-15T19:48:34+00:00&quot;,
+                &quot;resolution_due_at&quot;: &quot;2026-10-16T15:48:34+00:00&quot;,
                 &quot;is_overdue&quot;: false
             },
-            &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;,
-            &quot;updated_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;,
+            &quot;updated_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
         }
     ],
     &quot;links&quot;: {
@@ -5811,13 +6638,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4tacy2p93b36cxb0khyc0mt&quot;,
+        &quot;id&quot;: &quot;01m5040fw71x9h5stjyzmggwrq&quot;,
         &quot;subject&quot;: &quot;Eius et animi quos velit et.&quot;,
         &quot;description&quot;: &quot;Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;urgent&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m4tacy2p93b36cxb0khyc0ms&quot;,
+            &quot;id&quot;: &quot;01m5040fw6g5j8sdspwx6e7q3q&quot;,
             &quot;name&quot;: &quot;Quis Adipisci&quot;,
             &quot;slug&quot;: &quot;quis-adipisci&quot;,
             &quot;description&quot;: &quot;Fugit deleniti distinctio eum doloremque id aut libero.&quot;,
@@ -5845,13 +6672,13 @@ fetch(url, {
             }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m4tacy2n5w8qa29zhzsffkjf&quot;,
+            &quot;id&quot;: &quot;01m5040fw43btk8aptw6yyqtvm&quot;,
             &quot;name&quot;: &quot;Mina Bauch&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m4tacy2n5w8qa29zhzsffkjg&quot;,
+            &quot;id&quot;: &quot;01m5040fw59nvksgh6qg36aghv&quot;,
             &quot;name&quot;: &quot;Domingo Leuschke&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
@@ -5860,12 +6687,12 @@ fetch(url, {
         &quot;closed_at&quot;: null,
         &quot;sla&quot;: {
             &quot;first_response_at&quot;: null,
-            &quot;first_response_due_at&quot;: &quot;2026-10-13T09:59:47+00:00&quot;,
-            &quot;resolution_due_at&quot;: &quot;2026-10-13T13:44:47+00:00&quot;,
+            &quot;first_response_due_at&quot;: &quot;2026-10-15T16:03:34+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-15T19:48:34+00:00&quot;,
             &quot;is_overdue&quot;: false
         },
-        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
     }
 }</code>
  </pre>
@@ -6212,13 +7039,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4tacy2zf85gby7r7771xsjg&quot;,
+        &quot;id&quot;: &quot;01m5040fwhgjfc8b0zbvm3cy99&quot;,
         &quot;subject&quot;: &quot;Et animi quos velit et fugiat.&quot;,
         &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;normal&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m4tacy2zf85gby7r7771xsjf&quot;,
+            &quot;id&quot;: &quot;01m5040fwhgjfc8b0zbvm3cy98&quot;,
             &quot;name&quot;: &quot;Molestias Fugit&quot;,
             &quot;slug&quot;: &quot;molestias-fugit&quot;,
             &quot;description&quot;: &quot;Distinctio eum doloremque id aut libero aliquam veniam corporis.&quot;,
@@ -6246,13 +7073,13 @@ fetch(url, {
             }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m4tacy2xktdgf3xzyx170fv7&quot;,
+            &quot;id&quot;: &quot;01m5040fwga0h5xrn71d7t2kvw&quot;,
             &quot;name&quot;: &quot;Mr. Carey Smitham&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m4tacy2yaxnbt2ypven77g8z&quot;,
+            &quot;id&quot;: &quot;01m5040fwhgjfc8b0zbvm3cy97&quot;,
             &quot;name&quot;: &quot;Matilda Feeney&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
@@ -6261,12 +7088,12 @@ fetch(url, {
         &quot;closed_at&quot;: null,
         &quot;sla&quot;: {
             &quot;first_response_at&quot;: null,
-            &quot;first_response_due_at&quot;: &quot;2026-10-13T13:44:47+00:00&quot;,
-            &quot;resolution_due_at&quot;: &quot;2026-10-14T09:44:47+00:00&quot;,
+            &quot;first_response_due_at&quot;: &quot;2026-10-15T19:48:34+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-16T15:48:34+00:00&quot;,
             &quot;is_overdue&quot;: false
         },
-        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
     }
 }</code>
  </pre>
@@ -6583,13 +7410,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4tacy37vten3t5egamqdbtq&quot;,
+        &quot;id&quot;: &quot;01m5040fwx65k3a3hea6sq2a8t&quot;,
         &quot;subject&quot;: &quot;Et animi quos velit et fugiat.&quot;,
         &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;normal&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m4tacy36vrhwsk02cdcc4n8x&quot;,
+            &quot;id&quot;: &quot;01m5040fwwa05w05yw4vvvkv7k&quot;,
             &quot;name&quot;: &quot;Eum Doloremque&quot;,
             &quot;slug&quot;: &quot;eum-doloremque&quot;,
             &quot;description&quot;: &quot;Aut libero aliquam veniam corporis.&quot;,
@@ -6617,13 +7444,13 @@ fetch(url, {
             }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m4tacy35v8etb0zh0dpfrs8e&quot;,
+            &quot;id&quot;: &quot;01m5040fwtahnhyta801942gm6&quot;,
             &quot;name&quot;: &quot;Mr. Carey Smitham&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m4tacy36vrhwsk02cdcc4n8w&quot;,
+            &quot;id&quot;: &quot;01m5040fwv394fe4g57a8mf7qa&quot;,
             &quot;name&quot;: &quot;Janick Schultz DDS&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
@@ -6632,12 +7459,12 @@ fetch(url, {
         &quot;closed_at&quot;: null,
         &quot;sla&quot;: {
             &quot;first_response_at&quot;: null,
-            &quot;first_response_due_at&quot;: &quot;2026-10-13T13:44:47+00:00&quot;,
-            &quot;resolution_due_at&quot;: &quot;2026-10-14T09:44:47+00:00&quot;,
+            &quot;first_response_due_at&quot;: &quot;2026-10-15T19:48:34+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-16T15:48:34+00:00&quot;,
             &quot;is_overdue&quot;: false
         },
-        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
     }
 }</code>
  </pre>
@@ -6962,13 +7789,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4tacy3kqxen8r2hg74dfkw4&quot;,
+        &quot;id&quot;: &quot;01m5040fx7wzjjdxan0492790d&quot;,
         &quot;subject&quot;: &quot;Et animi quos velit et fugiat.&quot;,
         &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;normal&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m4tacy3jne7tt61pzxk6w6va&quot;,
+            &quot;id&quot;: &quot;01m5040fx67nerys8hqt3a706s&quot;,
             &quot;name&quot;: &quot;Aliquam Veniam&quot;,
             &quot;slug&quot;: &quot;aliquam-veniam&quot;,
             &quot;description&quot;: &quot;Dolorem mollitia deleniti nemo.&quot;,
@@ -6996,13 +7823,13 @@ fetch(url, {
             }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m4tacy3gbt7mhnmw0kdt58hg&quot;,
+            &quot;id&quot;: &quot;01m5040fx5seph7vx2a9drtyw1&quot;,
             &quot;name&quot;: &quot;Mr. Carey Smitham&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m4tacy3hfh2aszjh4y7ts840&quot;,
+            &quot;id&quot;: &quot;01m5040fx67nerys8hqt3a706r&quot;,
             &quot;name&quot;: &quot;Prof. Annabelle Kshlerin&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
@@ -7011,12 +7838,12 @@ fetch(url, {
         &quot;closed_at&quot;: null,
         &quot;sla&quot;: {
             &quot;first_response_at&quot;: null,
-            &quot;first_response_due_at&quot;: &quot;2026-10-13T13:44:47+00:00&quot;,
-            &quot;resolution_due_at&quot;: &quot;2026-10-14T09:44:47+00:00&quot;,
+            &quot;first_response_due_at&quot;: &quot;2026-10-15T19:48:34+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-16T15:48:34+00:00&quot;,
             &quot;is_overdue&quot;: false
         },
-        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T15:48:34+00:00&quot;
     }
 }</code>
  </pre>

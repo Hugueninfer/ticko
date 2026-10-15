@@ -70,6 +70,14 @@ class Ticket extends Model
     ];
 
     /**
+     * Short reference shown to people ("#4F2K9Z"): the last 6 characters of the ULID.
+     */
+    public function reference(): string
+    {
+        return '#'.mb_strtoupper(mb_substr($this->id, -6));
+    }
+
+    /**
      * Whether a pending SLA deadline has already passed.
      */
     public function isOverdue(): bool

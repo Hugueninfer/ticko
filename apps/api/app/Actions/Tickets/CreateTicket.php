@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Tickets;
 
 use App\Enums\TicketStatus;
+use App\Events\TicketCreated;
 use App\Models\Ticket;
 use App\Models\User;
 
@@ -19,6 +20,8 @@ final readonly class CreateTicket
         $ticket->requester_id = $requester->id;
         $ticket->status = TicketStatus::Open;
         $ticket->save();
+
+        TicketCreated::dispatch($ticket->tenant_id, $ticket->id);
 
         return $ticket;
     }
