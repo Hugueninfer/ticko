@@ -26,7 +26,7 @@
             </style>
 
     <script>
-        var tryItOutBaseUrl = "http://localhost:8080";
+        var tryItOutBaseUrl = "http://localhost:8090";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -96,6 +96,12 @@
                                                                                 <li class="tocify-item level-2" data-unique="authentication-POSTapi-v1-auth-tokens">
                                 <a href="#authentication-POSTapi-v1-auth-tokens">Issue an API token (mobile)</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="authentication-GETapi-v1-auth-demo">
+                                <a href="#authentication-GETapi-v1-auth-demo">Demo sign-in availability</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="authentication-POSTapi-v1-auth-demo">
+                                <a href="#authentication-POSTapi-v1-auth-demo">Sign in as a demo user (SPA session)</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="authentication-POSTapi-v1-auth-logout">
                                 <a href="#authentication-POSTapi-v1-auth-logout">Log out (SPA session)</a>
                             </li>
@@ -129,6 +135,16 @@
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="categories-DELETEapi-v1-categories--id-">
                                 <a href="#categories-DELETEapi-v1-categories--id-">Delete a category</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-metrics" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="metrics">
+                    <a href="#metrics">Metrics</a>
+                </li>
+                                    <ul id="tocify-subheader-metrics" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="metrics-GETapi-v1-metrics">
+                                <a href="#metrics-GETapi-v1-metrics">Dashboard metrics</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -194,7 +210,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: October 12, 2026</li>
+        <li>Last updated: October 13, 2026</li>
     </ul>
 </div>
 
@@ -204,7 +220,7 @@
         <h1 id="introduction">Introduction</h1>
 <p>Multi-tenant helpdesk API (v1).</p>
 <aside>
-    <strong>Base URL</strong>: <code>http://localhost:8080</code>
+    <strong>Base URL</strong>: <code>http://localhost:8090</code>
 </aside>
 <pre><code>Ticko is a multi-tenant helpdesk. Every request is scoped to one tenant:
 
@@ -234,14 +250,14 @@ endpoints; the signature carries the authorization and expires quickly.</p>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8080/api/v1/attachments/architecto/content" \
+    --get "http://localhost:8090/api/v1/attachments/architecto/content" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/attachments/architecto/content"
+    "http://localhost:8090/api/v1/attachments/architecto/content"
 );
 
 const headers = {
@@ -358,14 +374,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8080/api/v1/tickets/architecto/attachments" \
+    --get "http://localhost:8090/api/v1/tickets/architecto/attachments" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/tickets/architecto/attachments"
+    "http://localhost:8090/api/v1/tickets/architecto/attachments"
 );
 
 const headers = {
@@ -390,28 +406,28 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m4rnbzdxkbvbxz57wggkpcxj&quot;,
-            &quot;ticket_id&quot;: &quot;01m4rnbzdvxnmetam2dpjhmkra&quot;,
+            &quot;id&quot;: &quot;01m4tacy4fs6zaf7wn02bqvaz6&quot;,
+            &quot;ticket_id&quot;: &quot;01m4tacy4eyyzjd812bzfeewey&quot;,
             &quot;original_name&quot;: &quot;screenshot.png&quot;,
             &quot;mime_type&quot;: &quot;image/png&quot;,
             &quot;size&quot;: 1024,
             &quot;width&quot;: 10,
             &quot;height&quot;: 10,
-            &quot;url&quot;: &quot;http://localhost:8080/api/v1/attachments/01m4rnbzdxkbvbxz57wggkpcxj/content?expires=1791829381&amp;tenant=01m4rnbz4yymcc77cpfttyjjw8&amp;signature=7f9459b9e7fb24c0d00ffb64851c48104531db7edcebf02bdaba3bef15fea0eb&quot;,
+            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m4tacy4fs6zaf7wn02bqvaz6/content?expires=1791884987&amp;tenant=01m4tacxvv4jdr9sqzz548a3t3&amp;signature=d720a64ebd462236e1a63bad73775075d4f32a32bd9e8746e846bd641cece3aa&quot;,
             &quot;url_expires_in&quot;: 300,
-            &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m4rnbze0xvbcd2px7bdf0g7r&quot;,
-            &quot;ticket_id&quot;: &quot;01m4rnbzdzv92xf4c04txvppj6&quot;,
+            &quot;id&quot;: &quot;01m4tacy4j0v9r92p0tbe4fz2t&quot;,
+            &quot;ticket_id&quot;: &quot;01m4tacy4hdjv1w1y2g1w8vspd&quot;,
             &quot;original_name&quot;: &quot;screenshot.png&quot;,
             &quot;mime_type&quot;: &quot;image/png&quot;,
             &quot;size&quot;: 1024,
             &quot;width&quot;: 10,
             &quot;height&quot;: 10,
-            &quot;url&quot;: &quot;http://localhost:8080/api/v1/attachments/01m4rnbze0xvbcd2px7bdf0g7r/content?expires=1791829381&amp;tenant=01m4rnbz4yymcc77cpfttyjjw8&amp;signature=66ac2cecb29c26c797ec7aea887c1dac09b2ad9e1663c5056736c6ae0c6cf03b&quot;,
+            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m4tacy4j0v9r92p0tbe4fz2t/content?expires=1791884987&amp;tenant=01m4tacxvv4jdr9sqzz548a3t3&amp;signature=5f4b7c5345fd4234b2ffb09fc104dac796211d71efe771cb0556d24342558938&quot;,
             &quot;url_expires_in&quot;: 300,
-            &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
         }
     ]
 }</code>
@@ -517,15 +533,15 @@ which removes EXIF metadata such as GPS position.</p>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8080/api/v1/tickets/architecto/attachments" \
+    "http://localhost:8090/api/v1/tickets/architecto/attachments" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpcr15cneus9b11mINpcF" </code></pre></div>
+    --form "file=@/tmp/phpbt3utdo8j5fh3KgLEgE" </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/tickets/architecto/attachments"
+    "http://localhost:8090/api/v1/tickets/architecto/attachments"
 );
 
 const headers = {
@@ -552,16 +568,16 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4rnbzeark093qzrwbd1m94h&quot;,
-        &quot;ticket_id&quot;: &quot;01m4rnbze9nd40cvq8cmz3266j&quot;,
+        &quot;id&quot;: &quot;01m4tacy4x689s0rz18zgvqmx0&quot;,
+        &quot;ticket_id&quot;: &quot;01m4tacy4vrtct27kaa98m1k5k&quot;,
         &quot;original_name&quot;: &quot;screenshot.png&quot;,
         &quot;mime_type&quot;: &quot;image/png&quot;,
         &quot;size&quot;: 1024,
         &quot;width&quot;: 10,
         &quot;height&quot;: 10,
-        &quot;url&quot;: &quot;http://localhost:8080/api/v1/attachments/01m4rnbzeark093qzrwbd1m94h/content?expires=1791829381&amp;tenant=01m4rnbz4yymcc77cpfttyjjw8&amp;signature=7c619649653db906d6de976b12cae830e548ec9151b44c9058cf55abb133199c&quot;,
+        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m4tacy4x689s0rz18zgvqmx0/content?expires=1791884987&amp;tenant=01m4tacxvv4jdr9sqzz548a3t3&amp;signature=2dc0d7816d7b4570c0f65d58d786c4a084ca07006206ae5c1f1ea9668ce0a5b3&quot;,
         &quot;url_expires_in&quot;: 300,
-        &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
     }
 }</code>
  </pre>
@@ -661,7 +677,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>JPEG, PNG or WebP image (max 5 MB). Metadata is stripped. Must be a file. Must not be greater than 5120 kilobytes. Example: <code>/tmp/phpcr15cneus9b11mINpcF</code></p>
+<p>JPEG, PNG or WebP image (max 5 MB). Metadata is stripped. Must be a file. Must not be greater than 5120 kilobytes. Example: <code>/tmp/phpbt3utdo8j5fh3KgLEgE</code></p>
         </div>
         </form>
 
@@ -678,14 +694,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8080/api/v1/attachments/architecto" \
+    --get "http://localhost:8090/api/v1/attachments/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/attachments/architecto"
+    "http://localhost:8090/api/v1/attachments/architecto"
 );
 
 const headers = {
@@ -709,16 +725,16 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4rnbzefy9c0r5shey2mrpeg&quot;,
-        &quot;ticket_id&quot;: &quot;01m4rnbzeet1ak54cb7qd6rdy7&quot;,
+        &quot;id&quot;: &quot;01m4tacy53qgzy6vg005pp5gv4&quot;,
+        &quot;ticket_id&quot;: &quot;01m4tacy52r3zwfeq5jjstk1f3&quot;,
         &quot;original_name&quot;: &quot;screenshot.png&quot;,
         &quot;mime_type&quot;: &quot;image/png&quot;,
         &quot;size&quot;: 1024,
         &quot;width&quot;: 10,
         &quot;height&quot;: 10,
-        &quot;url&quot;: &quot;http://localhost:8080/api/v1/attachments/01m4rnbzefy9c0r5shey2mrpeg/content?expires=1791829381&amp;tenant=01m4rnbz4yymcc77cpfttyjjw8&amp;signature=e3f5b41112d5c0fc2f3eb18110e106fbd3c3326fd70a196ddacb184e27e4b3eb&quot;,
+        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m4tacy53qgzy6vg005pp5gv4/content?expires=1791884987&amp;tenant=01m4tacxvv4jdr9sqzz548a3t3&amp;signature=c6bf2f953b17469da3a240ebde6ed4c72c1c05a48191a74bfca9fa4d48a9d3c9&quot;,
         &quot;url_expires_in&quot;: 300,
-        &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
     }
 }</code>
  </pre>
@@ -827,7 +843,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8080/api/v1/auth/login" \
+    "http://localhost:8090/api/v1/auth/login" \
     --header "X-Tenant: acme" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -840,7 +856,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/auth/login"
+    "http://localhost:8090/api/v1/auth/login"
 );
 
 const headers = {
@@ -863,7 +879,28 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-v1-auth-login">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;01m4tacy0r62tcv2m2aq7gqm47&quot;,
+        &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
+        &quot;email&quot;: &quot;gulgowski.asia@example.com&quot;,
+        &quot;role&quot;: &quot;customer&quot;,
+        &quot;is_active&quot;: true,
+        &quot;tenant&quot;: {
+            &quot;id&quot;: &quot;01m4tacxvv4jdr9sqzz548a3t3&quot;,
+            &quot;name&quot;: &quot;Example Inc.&quot;,
+            &quot;slug&quot;: &quot;docs-example&quot;
+        },
+        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+    }
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-v1-auth-login" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-v1-auth-login"></span>:
@@ -974,7 +1011,47 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                    <h2 id="authentication-POSTapi-v1-auth-tokens">Issue an API token (mobile)</h2>
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>tenant</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Sent by the sign-in endpoints and /auth/me.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>open_tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Open tickets assigned to the member (team listing only).</p>
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="authentication-POSTapi-v1-auth-tokens">Issue an API token (mobile)</h2>
 
 <p>
 </p>
@@ -988,7 +1065,7 @@ are revoked when the user is deactivated or changes role.</p>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8080/api/v1/auth/tokens" \
+    "http://localhost:8090/api/v1/auth/tokens" \
     --header "X-Tenant: acme" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -1002,7 +1079,7 @@ are revoked when the user is deactivated or changes role.</p>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/auth/tokens"
+    "http://localhost:8090/api/v1/auth/tokens"
 );
 
 const headers = {
@@ -1160,7 +1237,329 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                    <h2 id="authentication-POSTapi-v1-auth-logout">Log out (SPA session)</h2>
+                    <h2 id="authentication-GETapi-v1-auth-demo">Demo sign-in availability</h2>
+
+<p>
+</p>
+
+<p>Lets the web app decide whether to show the demo shortcuts.</p>
+
+<span id="example-requests-GETapi-v1-auth-demo">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8090/api/v1/auth/demo" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/auth/demo"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-auth-demo">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;tenant&quot;: &quot;acme&quot;,
+        &quot;roles&quot;: [
+            &quot;agent&quot;,
+            &quot;admin&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-auth-demo" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-auth-demo"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-auth-demo"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-auth-demo" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-auth-demo">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-auth-demo" data-method="GET"
+      data-path="api/v1/auth/demo"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-auth-demo', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-auth-demo"
+                    onclick="tryItOut('GETapi-v1-auth-demo');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-auth-demo"
+                    onclick="cancelTryOut('GETapi-v1-auth-demo');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-auth-demo"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/auth/demo</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-auth-demo"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-auth-demo"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="authentication-POSTapi-v1-auth-demo">Sign in as a demo user (SPA session)</h2>
+
+<p>
+</p>
+
+<p>Starts a session as the demo tenant's agent or admin. Same CSRF flow as
+the regular session login.</p>
+
+<span id="example-requests-POSTapi-v1-auth-demo">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8090/api/v1/auth/demo" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"role\": \"agent\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/auth/demo"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "role": "agent"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-auth-demo">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;01m4tacy1408kwydcc0ps3nwpd&quot;,
+        &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
+        &quot;email&quot;: &quot;idickens@example.org&quot;,
+        &quot;role&quot;: &quot;customer&quot;,
+        &quot;is_active&quot;: true,
+        &quot;tenant&quot;: {
+            &quot;id&quot;: &quot;01m4tacxvv4jdr9sqzz548a3t3&quot;,
+            &quot;name&quot;: &quot;Example Inc.&quot;,
+            &quot;slug&quot;: &quot;docs-example&quot;
+        },
+        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-auth-demo" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-auth-demo"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-auth-demo"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-auth-demo" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-auth-demo">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-auth-demo" data-method="POST"
+      data-path="api/v1/auth/demo"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-auth-demo', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-auth-demo"
+                    onclick="tryItOut('POSTapi-v1-auth-demo');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-auth-demo"
+                    onclick="cancelTryOut('POSTapi-v1-auth-demo');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-auth-demo"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/auth/demo</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-auth-demo"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-auth-demo"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="role"                data-endpoint="POSTapi-v1-auth-demo"
+               value="agent"
+               data-component="body">
+    <br>
+<p>agent or admin. Example: <code>agent</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+        </div>
+        </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>tenant</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Sent by the sign-in endpoints and /auth/me.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>open_tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Open tickets assigned to the member (team listing only).</p>
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="authentication-POSTapi-v1-auth-logout">Log out (SPA session)</h2>
 
 <p>
 </p>
@@ -1173,14 +1572,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8080/api/v1/auth/logout" \
+    "http://localhost:8090/api/v1/auth/logout" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/auth/logout"
+    "http://localhost:8090/api/v1/auth/logout"
 );
 
 const headers = {
@@ -1284,14 +1683,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost:8080/api/v1/auth/tokens/current" \
+    "http://localhost:8090/api/v1/auth/tokens/current" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/auth/tokens/current"
+    "http://localhost:8090/api/v1/auth/tokens/current"
 );
 
 const headers = {
@@ -1395,14 +1794,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8080/api/v1/auth/me" \
+    --get "http://localhost:8090/api/v1/auth/me" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/auth/me"
+    "http://localhost:8090/api/v1/auth/me"
 );
 
 const headers = {
@@ -1419,6 +1818,27 @@ fetch(url, {
 </span>
 
 <span id="example-responses-GETapi-v1-auth-me">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;01m4tacy1d6ggsqz03jgaz68t5&quot;,
+        &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
+        &quot;email&quot;: &quot;aschuster@example.com&quot;,
+        &quot;role&quot;: &quot;customer&quot;,
+        &quot;is_active&quot;: true,
+        &quot;tenant&quot;: {
+            &quot;id&quot;: &quot;01m4tacxvv4jdr9sqzz548a3t3&quot;,
+            &quot;name&quot;: &quot;Example Inc.&quot;,
+            &quot;slug&quot;: &quot;docs-example&quot;
+        },
+        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
+    }
+}</code>
+ </pre>
     </span>
 <span id="execution-results-GETapi-v1-auth-me" hidden>
     <blockquote>Received response<span
@@ -1493,7 +1913,47 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                    <h2 id="authentication-PUTapi-v1-auth-password">Change password</h2>
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>tenant</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Sent by the sign-in endpoints and /auth/me.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>open_tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Open tickets assigned to the member (team listing only).</p>
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="authentication-PUTapi-v1-auth-password">Change password</h2>
 
 <p>
 </p>
@@ -1506,7 +1966,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8080/api/v1/auth/password" \
+    "http://localhost:8090/api/v1/auth/password" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -1518,7 +1978,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/auth/password"
+    "http://localhost:8090/api/v1/auth/password"
 );
 
 const headers = {
@@ -1656,14 +2116,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8080/api/v1/categories" \
+    --get "http://localhost:8090/api/v1/categories" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/categories"
+    "http://localhost:8090/api/v1/categories"
 );
 
 const headers = {
@@ -1688,16 +2148,62 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m4rnbzekt3j4hr84angp6tab&quot;,
+            &quot;id&quot;: &quot;01m4tacy58bk59smkzxhk1k2b7&quot;,
             &quot;name&quot;: &quot;Repudiandae Laboriosam&quot;,
             &quot;slug&quot;: &quot;repudiandae-laboriosam&quot;,
-            &quot;description&quot;: &quot;Alias tenetur ratione nemo voluptate accusamus ut et.&quot;
+            &quot;description&quot;: &quot;Alias tenetur ratione nemo voluptate accusamus ut et.&quot;,
+            &quot;sla_targets&quot;: {
+                &quot;low&quot;: {
+                    &quot;first_response_minutes&quot;: 480,
+                    &quot;resolution_minutes&quot;: 4320,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;normal&quot;: {
+                    &quot;first_response_minutes&quot;: 240,
+                    &quot;resolution_minutes&quot;: 1440,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;high&quot;: {
+                    &quot;first_response_minutes&quot;: 60,
+                    &quot;resolution_minutes&quot;: 480,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;urgent&quot;: {
+                    &quot;first_response_minutes&quot;: 15,
+                    &quot;resolution_minutes&quot;: 240,
+                    &quot;is_custom&quot;: false
+                }
+            },
+            &quot;tickets_count&quot;: 1
         },
         {
-            &quot;id&quot;: &quot;01m4rnbzem968yvwzyterf63m1&quot;,
-            &quot;name&quot;: &quot;Rerum Ex&quot;,
-            &quot;slug&quot;: &quot;rerum-ex&quot;,
-            &quot;description&quot;: &quot;Assumenda et tenetur ab reiciendis quia.&quot;
+            &quot;id&quot;: &quot;01m4tacy5cpqdwrj9ffa37pq7k&quot;,
+            &quot;name&quot;: &quot;Et Error&quot;,
+            &quot;slug&quot;: &quot;et-error&quot;,
+            &quot;description&quot;: &quot;Recusandae et ipsam dolorem et ut dicta vitae.&quot;,
+            &quot;sla_targets&quot;: {
+                &quot;low&quot;: {
+                    &quot;first_response_minutes&quot;: 480,
+                    &quot;resolution_minutes&quot;: 4320,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;normal&quot;: {
+                    &quot;first_response_minutes&quot;: 240,
+                    &quot;resolution_minutes&quot;: 1440,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;high&quot;: {
+                    &quot;first_response_minutes&quot;: 60,
+                    &quot;resolution_minutes&quot;: 480,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;urgent&quot;: {
+                    &quot;first_response_minutes&quot;: 15,
+                    &quot;resolution_minutes&quot;: 240,
+                    &quot;is_custom&quot;: false
+                }
+            },
+            &quot;tickets_count&quot;: 1
         }
     ]
 }</code>
@@ -1776,7 +2282,37 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                    <h2 id="categories-POSTapi-v1-categories">Create a category</h2>
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Sent by the category listing.</p>
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="categories-POSTapi-v1-categories">Create a category</h2>
 
 <p>
 </p>
@@ -1789,19 +2325,37 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8080/api/v1/categories" \
+    "http://localhost:8090/api/v1/categories" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"name\": \"Hardware\",
-    \"description\": \"Printers, laptops and peripherals\"
+    \"description\": \"Printers, laptops and peripherals\",
+    \"sla_targets\": {
+        \"urgent\": {
+            \"first_response_minutes\": 15,
+            \"resolution_minutes\": 240
+        },
+        \"low\": {
+            \"first_response_minutes\": 1,
+            \"resolution_minutes\": 22
+        },
+        \"normal\": {
+            \"first_response_minutes\": 7,
+            \"resolution_minutes\": 16
+        },
+        \"high\": {
+            \"first_response_minutes\": 17,
+            \"resolution_minutes\": 15
+        }
+    }
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/categories"
+    "http://localhost:8090/api/v1/categories"
 );
 
 const headers = {
@@ -1811,7 +2365,25 @@ const headers = {
 
 let body = {
     "name": "Hardware",
-    "description": "Printers, laptops and peripherals"
+    "description": "Printers, laptops and peripherals",
+    "sla_targets": {
+        "urgent": {
+            "first_response_minutes": 15,
+            "resolution_minutes": 240
+        },
+        "low": {
+            "first_response_minutes": 1,
+            "resolution_minutes": 22
+        },
+        "normal": {
+            "first_response_minutes": 7,
+            "resolution_minutes": 16
+        },
+        "high": {
+            "first_response_minutes": 17,
+            "resolution_minutes": 15
+        }
+    }
 };
 
 fetch(url, {
@@ -1830,10 +2402,32 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4rnbzerwtv709jn7krcb6z3&quot;,
-        &quot;name&quot;: &quot;Architecto Eius&quot;,
-        &quot;slug&quot;: &quot;architecto-eius&quot;,
-        &quot;description&quot;: &quot;Animi quos velit et fugiat.&quot;
+        &quot;id&quot;: &quot;01m4tacy5s2qjqm5v5emmbenpw&quot;,
+        &quot;name&quot;: &quot;Fugiat Sunt&quot;,
+        &quot;slug&quot;: &quot;fugiat-sunt&quot;,
+        &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab.&quot;,
+        &quot;sla_targets&quot;: {
+            &quot;low&quot;: {
+                &quot;first_response_minutes&quot;: 480,
+                &quot;resolution_minutes&quot;: 4320,
+                &quot;is_custom&quot;: false
+            },
+            &quot;normal&quot;: {
+                &quot;first_response_minutes&quot;: 240,
+                &quot;resolution_minutes&quot;: 1440,
+                &quot;is_custom&quot;: false
+            },
+            &quot;high&quot;: {
+                &quot;first_response_minutes&quot;: 60,
+                &quot;resolution_minutes&quot;: 480,
+                &quot;is_custom&quot;: false
+            },
+            &quot;urgent&quot;: {
+                &quot;first_response_minutes&quot;: 15,
+                &quot;resolution_minutes&quot;: 240,
+                &quot;is_custom&quot;: false
+            }
+        }
     }
 }</code>
  </pre>
@@ -1934,9 +2528,195 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Optional description. Must not be greater than 500 characters. Example: <code>Printers, laptops and peripherals</code></p>
         </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sla_targets</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+<br>
+<p>SLA overrides keyed by priority (urgent, high, normal, low), each with first_response_minutes and resolution_minutes. Null resets to the defaults.</p>
+            </summary>
+                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>low</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_minutes</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sla_targets.low.first_response_minutes"                data-endpoint="POSTapi-v1-categories"
+               value="1"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sla_targets.low</code> is present. Must be at least 1. Must not be greater than 43200. Example: <code>1</code></p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolution_minutes</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sla_targets.low.resolution_minutes"                data-endpoint="POSTapi-v1-categories"
+               value="22"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sla_targets.low</code> is present. Must not be greater than 43200. Example: <code>22</code></p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>normal</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_minutes</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sla_targets.normal.first_response_minutes"                data-endpoint="POSTapi-v1-categories"
+               value="7"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sla_targets.normal</code> is present. Must be at least 1. Must not be greater than 43200. Example: <code>7</code></p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolution_minutes</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sla_targets.normal.resolution_minutes"                data-endpoint="POSTapi-v1-categories"
+               value="16"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sla_targets.normal</code> is present. Must not be greater than 43200. Example: <code>16</code></p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>high</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_minutes</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sla_targets.high.first_response_minutes"                data-endpoint="POSTapi-v1-categories"
+               value="17"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sla_targets.high</code> is present. Must be at least 1. Must not be greater than 43200. Example: <code>17</code></p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolution_minutes</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sla_targets.high.resolution_minutes"                data-endpoint="POSTapi-v1-categories"
+               value="15"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sla_targets.high</code> is present. Must not be greater than 43200. Example: <code>15</code></p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>urgent</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_minutes</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sla_targets.urgent.first_response_minutes"                data-endpoint="POSTapi-v1-categories"
+               value="15"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sla_targets.urgent</code> is present. Must be at least 1. Must not be greater than 43200. Example: <code>15</code></p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolution_minutes</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sla_targets.urgent.resolution_minutes"                data-endpoint="POSTapi-v1-categories"
+               value="240"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sla_targets.urgent</code> is present. Must not be greater than 43200. Example: <code>240</code></p>
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
         </form>
 
-                    <h2 id="categories-GETapi-v1-categories--id-">Show a category</h2>
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Sent by the category listing.</p>
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="categories-GETapi-v1-categories--id-">Show a category</h2>
 
 <p>
 </p>
@@ -1949,14 +2729,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8080/api/v1/categories/architecto" \
+    --get "http://localhost:8090/api/v1/categories/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/categories/architecto"
+    "http://localhost:8090/api/v1/categories/architecto"
 );
 
 const headers = {
@@ -1980,10 +2760,32 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4rnbzevqssrjdb85w1kex6f&quot;,
+        &quot;id&quot;: &quot;01m4tacy5yypk2bapjsq0bc3hy&quot;,
         &quot;name&quot;: &quot;Eius Et&quot;,
         &quot;slug&quot;: &quot;eius-et&quot;,
-        &quot;description&quot;: &quot;Quos velit et fugiat sunt nihil accusantium harum.&quot;
+        &quot;description&quot;: &quot;Quos velit et fugiat sunt nihil accusantium harum.&quot;,
+        &quot;sla_targets&quot;: {
+            &quot;low&quot;: {
+                &quot;first_response_minutes&quot;: 480,
+                &quot;resolution_minutes&quot;: 4320,
+                &quot;is_custom&quot;: false
+            },
+            &quot;normal&quot;: {
+                &quot;first_response_minutes&quot;: 240,
+                &quot;resolution_minutes&quot;: 1440,
+                &quot;is_custom&quot;: false
+            },
+            &quot;high&quot;: {
+                &quot;first_response_minutes&quot;: 60,
+                &quot;resolution_minutes&quot;: 480,
+                &quot;is_custom&quot;: false
+            },
+            &quot;urgent&quot;: {
+                &quot;first_response_minutes&quot;: 15,
+                &quot;resolution_minutes&quot;: 240,
+                &quot;is_custom&quot;: false
+            }
+        }
     }
 }</code>
  </pre>
@@ -2074,7 +2876,37 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
-                    <h2 id="categories-PUTapi-v1-categories--id-">Update a category</h2>
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Sent by the category listing.</p>
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="categories-PUTapi-v1-categories--id-">Update a category</h2>
 
 <p>
 </p>
@@ -2087,19 +2919,37 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8080/api/v1/categories/architecto" \
+    "http://localhost:8090/api/v1/categories/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"name\": \"Hardware\",
-    \"description\": \"Printers, laptops and peripherals\"
+    \"description\": \"Printers, laptops and peripherals\",
+    \"sla_targets\": {
+        \"urgent\": {
+            \"first_response_minutes\": 15,
+            \"resolution_minutes\": 240
+        },
+        \"low\": {
+            \"first_response_minutes\": 1,
+            \"resolution_minutes\": 22
+        },
+        \"normal\": {
+            \"first_response_minutes\": 7,
+            \"resolution_minutes\": 16
+        },
+        \"high\": {
+            \"first_response_minutes\": 17,
+            \"resolution_minutes\": 15
+        }
+    }
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/categories/architecto"
+    "http://localhost:8090/api/v1/categories/architecto"
 );
 
 const headers = {
@@ -2109,7 +2959,25 @@ const headers = {
 
 let body = {
     "name": "Hardware",
-    "description": "Printers, laptops and peripherals"
+    "description": "Printers, laptops and peripherals",
+    "sla_targets": {
+        "urgent": {
+            "first_response_minutes": 15,
+            "resolution_minutes": 240
+        },
+        "low": {
+            "first_response_minutes": 1,
+            "resolution_minutes": 22
+        },
+        "normal": {
+            "first_response_minutes": 7,
+            "resolution_minutes": 16
+        },
+        "high": {
+            "first_response_minutes": 17,
+            "resolution_minutes": 15
+        }
+    }
 };
 
 fetch(url, {
@@ -2128,10 +2996,32 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4rnbzezf3z07mkcgk2en4nq&quot;,
-        &quot;name&quot;: &quot;Et Animi&quot;,
-        &quot;slug&quot;: &quot;et-animi&quot;,
-        &quot;description&quot;: &quot;Velit et fugiat sunt nihil accusantium.&quot;
+        &quot;id&quot;: &quot;01m4tacy65dte60rx5xpkp26j6&quot;,
+        &quot;name&quot;: &quot;Sunt Nihil&quot;,
+        &quot;slug&quot;: &quot;sunt-nihil&quot;,
+        &quot;description&quot;: &quot;Harum mollitia modi deserunt aut ab provident perspiciatis quo.&quot;,
+        &quot;sla_targets&quot;: {
+            &quot;low&quot;: {
+                &quot;first_response_minutes&quot;: 480,
+                &quot;resolution_minutes&quot;: 4320,
+                &quot;is_custom&quot;: false
+            },
+            &quot;normal&quot;: {
+                &quot;first_response_minutes&quot;: 240,
+                &quot;resolution_minutes&quot;: 1440,
+                &quot;is_custom&quot;: false
+            },
+            &quot;high&quot;: {
+                &quot;first_response_minutes&quot;: 60,
+                &quot;resolution_minutes&quot;: 480,
+                &quot;is_custom&quot;: false
+            },
+            &quot;urgent&quot;: {
+                &quot;first_response_minutes&quot;: 15,
+                &quot;resolution_minutes&quot;: 240,
+                &quot;is_custom&quot;: false
+            }
+        }
     }
 }</code>
  </pre>
@@ -2249,9 +3139,195 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Optional description. Must not be greater than 500 characters. Example: <code>Printers, laptops and peripherals</code></p>
         </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sla_targets</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+<br>
+<p>SLA overrides keyed by priority (urgent, high, normal, low), each with first_response_minutes and resolution_minutes. Null resets to the defaults.</p>
+            </summary>
+                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>low</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_minutes</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sla_targets.low.first_response_minutes"                data-endpoint="PUTapi-v1-categories--id-"
+               value="1"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sla_targets.low</code> is present. Must be at least 1. Must not be greater than 43200. Example: <code>1</code></p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolution_minutes</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sla_targets.low.resolution_minutes"                data-endpoint="PUTapi-v1-categories--id-"
+               value="22"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sla_targets.low</code> is present. Must not be greater than 43200. Example: <code>22</code></p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>normal</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_minutes</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sla_targets.normal.first_response_minutes"                data-endpoint="PUTapi-v1-categories--id-"
+               value="7"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sla_targets.normal</code> is present. Must be at least 1. Must not be greater than 43200. Example: <code>7</code></p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolution_minutes</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sla_targets.normal.resolution_minutes"                data-endpoint="PUTapi-v1-categories--id-"
+               value="16"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sla_targets.normal</code> is present. Must not be greater than 43200. Example: <code>16</code></p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>high</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_minutes</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sla_targets.high.first_response_minutes"                data-endpoint="PUTapi-v1-categories--id-"
+               value="17"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sla_targets.high</code> is present. Must be at least 1. Must not be greater than 43200. Example: <code>17</code></p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolution_minutes</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sla_targets.high.resolution_minutes"                data-endpoint="PUTapi-v1-categories--id-"
+               value="15"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sla_targets.high</code> is present. Must not be greater than 43200. Example: <code>15</code></p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>urgent</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_minutes</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sla_targets.urgent.first_response_minutes"                data-endpoint="PUTapi-v1-categories--id-"
+               value="15"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sla_targets.urgent</code> is present. Must be at least 1. Must not be greater than 43200. Example: <code>15</code></p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolution_minutes</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sla_targets.urgent.resolution_minutes"                data-endpoint="PUTapi-v1-categories--id-"
+               value="240"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sla_targets.urgent</code> is present. Must not be greater than 43200. Example: <code>240</code></p>
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
         </form>
 
-                    <h2 id="categories-DELETEapi-v1-categories--id-">Delete a category</h2>
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Sent by the category listing.</p>
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="categories-DELETEapi-v1-categories--id-">Delete a category</h2>
 
 <p>
 </p>
@@ -2264,14 +3340,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost:8080/api/v1/categories/architecto" \
+    "http://localhost:8090/api/v1/categories/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/categories/architecto"
+    "http://localhost:8090/api/v1/categories/architecto"
 );
 
 const headers = {
@@ -2375,7 +3451,293 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
-                <h1 id="team">Team</h1>
+                <h1 id="metrics">Metrics</h1>
+
+    <p>Dashboard figures for admins, always limited to the current tenant.</p>
+
+                                <h2 id="metrics-GETapi-v1-metrics">Dashboard metrics</h2>
+
+<p>
+</p>
+
+<p>Ticket volume, median time to first staff reply and first-response SLA
+compliance for the period, each compared with the preceding period of
+the same length.</p>
+
+<span id="example-requests-GETapi-v1-metrics">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8090/api/v1/metrics?from=2026-09-13&amp;to=2026-10-12" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/metrics"
+);
+
+const params = {
+    "from": "2026-09-13",
+    "to": "2026-10-12",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-metrics">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;period&quot;: {
+            &quot;from&quot;: &quot;2026-09-13&quot;,
+            &quot;to&quot;: &quot;2026-10-12&quot;
+        },
+        &quot;tickets_received&quot;: {
+            &quot;value&quot;: 1412,
+            &quot;previous&quot;: 1307
+        },
+        &quot;first_response_median_minutes&quot;: {
+            &quot;value&quot;: 14.5,
+            &quot;previous&quot;: 20.5
+        },
+        &quot;sla_first_response_percent&quot;: {
+            &quot;value&quot;: 93.4,
+            &quot;previous&quot;: 91.3
+        },
+        &quot;volume_by_day&quot;: [
+            {
+                &quot;date&quot;: &quot;2026-10-12&quot;,
+                &quot;count&quot;: 42
+            }
+        ],
+        &quot;by_category&quot;: [
+            {
+                &quot;category_id&quot;: &quot;01JABCDEF0123456789ABCDEFG&quot;,
+                &quot;name&quot;: &quot;Hardware&quot;,
+                &quot;count&quot;: 486
+            }
+        ]
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-metrics" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-metrics"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-metrics"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-metrics" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-metrics">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-metrics" data-method="GET"
+      data-path="api/v1/metrics"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-metrics', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-metrics"
+                    onclick="tryItOut('GETapi-v1-metrics');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-metrics"
+                    onclick="cancelTryOut('GETapi-v1-metrics');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-metrics"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/metrics</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-metrics"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-metrics"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>from</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="from"                data-endpoint="GETapi-v1-metrics"
+               value="2026-09-13"
+               data-component="query">
+    <br>
+<p>First day (Y-m-d). Defaults to 30 days before <code>to</code>; at most one year before it. Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-09-13</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>to</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="to"                data-endpoint="GETapi-v1-metrics"
+               value="2026-10-12"
+               data-component="query">
+    <br>
+<p>Last day (Y-m-d), not in the future. Defaults to today. Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>from</code>. Must be a date before or equal to <code>today</code>. Example: <code>2026-10-12</code></p>
+            </div>
+                </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>first_response_median_minutes</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>value</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Null when no ticket was answered.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>previous</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sla_first_response_percent</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>value</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Null when no deadline is settled yet.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>previous</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>by_category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>category_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Null for tickets without a category.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                    <h1 id="team">Team</h1>
 
     <p>Members of the tenant. Staff can list them; only admins create or change them.</p>
 
@@ -2392,22 +3754,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8080/api/v1/team?role=agent" \
+    --get "http://localhost:8090/api/v1/team?role=agent&amp;q=ana&amp;page=1" \
     --header "Content-Type: application/json" \
-    --header "Accept: application/json" \
-    --data "{
-    \"role\": \"customer\"
-}"
-</code></pre></div>
+    --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/team"
+    "http://localhost:8090/api/v1/team"
 );
 
 const params = {
     "role": "agent",
+    "q": "ana",
+    "page": "1",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -2417,14 +3777,10 @@ const headers = {
     "Accept": "application/json",
 };
 
-let body = {
-    "role": "customer"
-};
 
 fetch(url, {
     method: "GET",
     headers,
-    body: JSON.stringify(body),
 }).then(response =&gt; response.json());</code></pre></div>
 
 </span>
@@ -2438,20 +3794,22 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m4rnbzf9vywnjxkxkzqfcnhh&quot;,
-            &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
-            &quot;email&quot;: &quot;gulgowski.asia@example.com&quot;,
+            &quot;id&quot;: &quot;01m4tacy6eyk90x62be85h65kc&quot;,
+            &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
+            &quot;email&quot;: &quot;gilbert32@example.com&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;is_active&quot;: true,
-            &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+            &quot;open_tickets_count&quot;: 1,
+            &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m4rnbzfbr9hnkwrdypkm06c7&quot;,
-            &quot;name&quot;: &quot;Jermaine Tillman&quot;,
-            &quot;email&quot;: &quot;mya96@example.com&quot;,
+            &quot;id&quot;: &quot;01m4tacy6hxj8ksk3jv9dyrwnw&quot;,
+            &quot;name&quot;: &quot;Emanuel Emmerich&quot;,
+            &quot;email&quot;: &quot;little.art@example.net&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;is_active&quot;: true,
-            &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+            &quot;open_tickets_count&quot;: 1,
+            &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
         }
     ],
     &quot;links&quot;: {
@@ -2575,25 +3933,76 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="query">
     <br>
 <p>Filter by role: customer, agent or admin. Example: <code>agent</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
             </div>
-                        <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
-        <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>q</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
 <i>optional</i> &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="role"                data-endpoint="GETapi-v1-team"
-               value="customer"
-               data-component="body">
+                              name="q"                data-endpoint="GETapi-v1-team"
+               value="ana"
+               data-component="query">
     <br>
-<p>Example: <code>customer</code></p>
+<p>Search name and e-mail. Must not be greater than 100 characters. Example: <code>ana</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="GETapi-v1-team"
+               value="1"
+               data-component="query">
+    <br>
+<p>Page number. Must be at least 1. Example: <code>1</code></p>
+            </div>
+                </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
 Must be one of:
 <ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>tenant</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Sent by the sign-in endpoints and /auth/me.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>open_tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Open tickets assigned to the member (team listing only).</p>
+                    </div>
+                                    </details>
         </div>
-        </form>
-
-                    <h2 id="team-POSTapi-v1-team">Add a member</h2>
+                        <h2 id="team-POSTapi-v1-team">Add a member</h2>
 
 <p>
 </p>
@@ -2606,7 +4015,7 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8080/api/v1/team" \
+    "http://localhost:8090/api/v1/team" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -2620,7 +4029,7 @@ Must be one of:
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/team"
+    "http://localhost:8090/api/v1/team"
 );
 
 const headers = {
@@ -2651,12 +4060,12 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4rnbzfftj1cm5fatg2mqvsv&quot;,
+        &quot;id&quot;: &quot;01m4tacy6p2trxr8eb48zhxfdv&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
-        &quot;email&quot;: &quot;idickens@example.org&quot;,
+        &quot;email&quot;: &quot;hirthe.theo@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
-        &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
     }
 }</code>
  </pre>
@@ -2785,7 +4194,47 @@ Must be one of:
         </div>
         </form>
 
-                    <h2 id="team-GETapi-v1-team--member_id-">Show a member</h2>
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>tenant</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Sent by the sign-in endpoints and /auth/me.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>open_tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Open tickets assigned to the member (team listing only).</p>
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="team-GETapi-v1-team--member_id-">Show a member</h2>
 
 <p>
 </p>
@@ -2798,14 +4247,14 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8080/api/v1/team/architecto" \
+    --get "http://localhost:8090/api/v1/team/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/team/architecto"
+    "http://localhost:8090/api/v1/team/architecto"
 );
 
 const headers = {
@@ -2829,12 +4278,12 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4rnbzfj3badp5ackay0r99f&quot;,
+        &quot;id&quot;: &quot;01m4tacy6tr3mmwsqkmftdg57p&quot;,
         &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
-        &quot;email&quot;: &quot;aschuster@example.com&quot;,
+        &quot;email&quot;: &quot;leo34@example.net&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
-        &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
     }
 }</code>
  </pre>
@@ -2925,7 +4374,47 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
-                    <h2 id="team-PATCHapi-v1-team--member_id-">Update a member</h2>
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>tenant</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Sent by the sign-in endpoints and /auth/me.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>open_tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Open tickets assigned to the member (team listing only).</p>
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="team-PATCHapi-v1-team--member_id-">Update a member</h2>
 
 <p>
 </p>
@@ -2938,7 +4427,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost:8080/api/v1/team/architecto" \
+    "http://localhost:8090/api/v1/team/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -2951,7 +4440,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/team/architecto"
+    "http://localhost:8090/api/v1/team/architecto"
 );
 
 const headers = {
@@ -2981,12 +4470,12 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4rnbzfp2c8ykzkf423gr10y&quot;,
+        &quot;id&quot;: &quot;01m4tacy6z5mx64vy5w5dzkka8&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
-        &quot;email&quot;: &quot;gilbert32@example.com&quot;,
+        &quot;email&quot;: &quot;pfritsch@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
-        &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
     }
 }</code>
  </pre>
@@ -3126,7 +4615,47 @@ Must be one of:
         </div>
         </form>
 
-                <h1 id="ticket-messages">Ticket messages</h1>
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>tenant</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Sent by the sign-in endpoints and /auth/me.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>open_tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Open tickets assigned to the member (team listing only).</p>
+                    </div>
+                                    </details>
+        </div>
+                    <h1 id="ticket-messages">Ticket messages</h1>
 
     <p>Conversation on a ticket. Internal notes are only visible to staff.</p>
 
@@ -3143,14 +4672,14 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8080/api/v1/tickets/architecto/messages" \
+    --get "http://localhost:8090/api/v1/tickets/architecto/messages" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/tickets/architecto/messages"
+    "http://localhost:8090/api/v1/tickets/architecto/messages"
 );
 
 const headers = {
@@ -3175,28 +4704,30 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m4rnbzddaypnf4s80d9qr7k9&quot;,
-            &quot;ticket_id&quot;: &quot;01m4rnbzdc0gjedgfastamcqn8&quot;,
+            &quot;id&quot;: &quot;01m4tacy3ywms0nx7050vpzqcw&quot;,
+            &quot;ticket_id&quot;: &quot;01m4tacy3wsy13tg8abw0c9qzx&quot;,
             &quot;body&quot;: &quot;Animi quos velit et fugiat. Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci.&quot;,
             &quot;is_internal&quot;: false,
             &quot;author&quot;: {
-                &quot;id&quot;: &quot;01m4rnbzdc0gjedgfastamcqn9&quot;,
+                &quot;id&quot;: &quot;01m4tacy3x4v27ha5jjs0dpyrg&quot;,
                 &quot;name&quot;: &quot;Mr. Madisen Schaden&quot;,
-                &quot;role&quot;: &quot;customer&quot;
+                &quot;role&quot;: &quot;customer&quot;,
+                &quot;email&quot;: null
             },
-            &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m4rnbzdh6ez80a5ph7977e7p&quot;,
-            &quot;ticket_id&quot;: &quot;01m4rnbzdg2vca7n8wqpfwgzf9&quot;,
+            &quot;id&quot;: &quot;01m4tacy4297g3n2d30r2kqv76&quot;,
+            &quot;ticket_id&quot;: &quot;01m4tacy41jyfyymypgw4yzaqj&quot;,
             &quot;body&quot;: &quot;Neque blanditiis odio veritatis excepturi doloribus delectus. Qui repudiandae laboriosam est alias.&quot;,
             &quot;is_internal&quot;: false,
             &quot;author&quot;: {
-                &quot;id&quot;: &quot;01m4rnbzdh6ez80a5ph7977e7n&quot;,
+                &quot;id&quot;: &quot;01m4tacy41jyfyymypgw4yzaqk&quot;,
                 &quot;name&quot;: &quot;Lucie Bauch MD&quot;,
-                &quot;role&quot;: &quot;customer&quot;
+                &quot;role&quot;: &quot;customer&quot;,
+                &quot;email&quot;: null
             },
-            &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
         }
     ],
     &quot;links&quot;: {
@@ -3323,7 +4854,51 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
-                    <h2 id="ticket-messages-POSTapi-v1-tickets--ticket_id--messages">Post a message</h2>
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>author</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                        <h2 id="ticket-messages-POSTapi-v1-tickets--ticket_id--messages">Post a message</h2>
 
 <p>
 </p>
@@ -3336,7 +4911,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8080/api/v1/tickets/architecto/messages" \
+    "http://localhost:8090/api/v1/tickets/architecto/messages" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -3348,7 +4923,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/tickets/architecto/messages"
+    "http://localhost:8090/api/v1/tickets/architecto/messages"
 );
 
 const headers = {
@@ -3377,16 +4952,17 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4rnbzdqkhcyw1qm7nnvqd92&quot;,
-        &quot;ticket_id&quot;: &quot;01m4rnbzdpb06f9bq1y4n0hg3s&quot;,
+        &quot;id&quot;: &quot;01m4tacy49v7wvjrqx0bd8bejt&quot;,
+        &quot;ticket_id&quot;: &quot;01m4tacy48a6zj9sanb9gn20v0&quot;,
         &quot;body&quot;: &quot;Et animi quos velit et fugiat. Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci.&quot;,
         &quot;is_internal&quot;: false,
         &quot;author&quot;: {
-            &quot;id&quot;: &quot;01m4rnbzdqkhcyw1qm7nnvqd91&quot;,
+            &quot;id&quot;: &quot;01m4tacy49v7wvjrqx0bd8bejs&quot;,
             &quot;name&quot;: &quot;Colt Balistreri&quot;,
-            &quot;role&quot;: &quot;customer&quot;
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
         },
-        &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
     }
 }</code>
  </pre>
@@ -3512,7 +5088,51 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                <h1 id="tickets">Tickets</h1>
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>author</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                    <h1 id="tickets">Tickets</h1>
 
     <p>Customers see and manage only their own tickets; agents and admins see every ticket of the tenant.</p>
 
@@ -3529,14 +5149,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8080/api/v1/tickets?status=open&amp;priority=high&amp;category_id=&amp;assignee_id=&amp;requester_id=&amp;unassigned=&amp;q=printer&amp;sort=-created_at&amp;per_page=25&amp;page=1" \
+    --get "http://localhost:8090/api/v1/tickets?status=open&amp;priority=high&amp;category_id=&amp;assignee_id=&amp;requester_id=&amp;unassigned=&amp;overdue=&amp;q=printer&amp;sort=-created_at&amp;per_page=25&amp;page=1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/tickets"
+    "http://localhost:8090/api/v1/tickets"
 );
 
 const params = {
@@ -3546,6 +5166,7 @@ const params = {
     "assignee_id": "",
     "requester_id": "",
     "unassigned": "0",
+    "overdue": "0",
     "q": "printer",
     "sort": "-created_at",
     "per_page": "25",
@@ -3576,58 +5197,118 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m4rnbzbr8rys1c2tq7fndh3t&quot;,
+            &quot;id&quot;: &quot;01m4tacy21tyh5a2n6q5cn5472&quot;,
             &quot;subject&quot;: &quot;Eius et animi quos velit et.&quot;,
             &quot;description&quot;: &quot;Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.&quot;,
             &quot;status&quot;: &quot;open&quot;,
             &quot;priority&quot;: &quot;urgent&quot;,
             &quot;category&quot;: {
-                &quot;id&quot;: &quot;01m4rnbzbqy8gqb2znnrnfbdyv&quot;,
+                &quot;id&quot;: &quot;01m4tacy209z4ygsnv747nsnbf&quot;,
                 &quot;name&quot;: &quot;Voluptatem Laboriosam&quot;,
                 &quot;slug&quot;: &quot;voluptatem-laboriosam&quot;,
-                &quot;description&quot;: &quot;Quis adipisci molestias fugit deleniti distinctio eum.&quot;
+                &quot;description&quot;: &quot;Quis adipisci molestias fugit deleniti distinctio eum.&quot;,
+                &quot;sla_targets&quot;: {
+                    &quot;low&quot;: {
+                        &quot;first_response_minutes&quot;: 480,
+                        &quot;resolution_minutes&quot;: 4320,
+                        &quot;is_custom&quot;: false
+                    },
+                    &quot;normal&quot;: {
+                        &quot;first_response_minutes&quot;: 240,
+                        &quot;resolution_minutes&quot;: 1440,
+                        &quot;is_custom&quot;: false
+                    },
+                    &quot;high&quot;: {
+                        &quot;first_response_minutes&quot;: 60,
+                        &quot;resolution_minutes&quot;: 480,
+                        &quot;is_custom&quot;: false
+                    },
+                    &quot;urgent&quot;: {
+                        &quot;first_response_minutes&quot;: 15,
+                        &quot;resolution_minutes&quot;: 240,
+                        &quot;is_custom&quot;: false
+                    }
+                }
             },
             &quot;requester&quot;: {
-                &quot;id&quot;: &quot;01m4rnbzbn5p6yh8k5zg36kt9g&quot;,
+                &quot;id&quot;: &quot;01m4tacy1y42wg3jgqx5ak9bth&quot;,
                 &quot;name&quot;: &quot;Mina Bauch&quot;,
-                &quot;role&quot;: &quot;customer&quot;
+                &quot;role&quot;: &quot;customer&quot;,
+                &quot;email&quot;: null
             },
             &quot;assignee&quot;: {
-                &quot;id&quot;: &quot;01m4rnbzbpnf6zt4ny1b83fqez&quot;,
+                &quot;id&quot;: &quot;01m4tacy1zsng3xwxrtntpxvny&quot;,
                 &quot;name&quot;: &quot;Donny Leffler&quot;,
-                &quot;role&quot;: &quot;customer&quot;
+                &quot;role&quot;: &quot;customer&quot;,
+                &quot;email&quot;: null
             },
             &quot;resolved_at&quot;: null,
             &quot;closed_at&quot;: null,
-            &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;,
-            &quot;updated_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+            &quot;sla&quot;: {
+                &quot;first_response_at&quot;: null,
+                &quot;first_response_due_at&quot;: &quot;2026-10-13T09:59:47+00:00&quot;,
+                &quot;resolution_due_at&quot;: &quot;2026-10-13T13:44:47+00:00&quot;,
+                &quot;is_overdue&quot;: false
+            },
+            &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;,
+            &quot;updated_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m4rnbzc2n11x3dntvrj8efb0&quot;,
+            &quot;id&quot;: &quot;01m4tacy28dt6y2nnc90cn9n2f&quot;,
             &quot;subject&quot;: &quot;Id aut libero aliquam veniam.&quot;,
             &quot;description&quot;: &quot;Mollitia deleniti nemo odit quia officia. Dignissimos neque blanditiis odio.&quot;,
             &quot;status&quot;: &quot;open&quot;,
             &quot;priority&quot;: &quot;normal&quot;,
             &quot;category&quot;: {
-                &quot;id&quot;: &quot;01m4rnbzc1hcyjy5xg9082xbh7&quot;,
+                &quot;id&quot;: &quot;01m4tacy28dt6y2nnc90cn9n2e&quot;,
                 &quot;name&quot;: &quot;Recusandae Modi&quot;,
                 &quot;slug&quot;: &quot;recusandae-modi&quot;,
-                &quot;description&quot;: &quot;Ex repellendus assumenda et tenetur ab reiciendis.&quot;
+                &quot;description&quot;: &quot;Ex repellendus assumenda et tenetur ab reiciendis.&quot;,
+                &quot;sla_targets&quot;: {
+                    &quot;low&quot;: {
+                        &quot;first_response_minutes&quot;: 480,
+                        &quot;resolution_minutes&quot;: 4320,
+                        &quot;is_custom&quot;: false
+                    },
+                    &quot;normal&quot;: {
+                        &quot;first_response_minutes&quot;: 240,
+                        &quot;resolution_minutes&quot;: 1440,
+                        &quot;is_custom&quot;: false
+                    },
+                    &quot;high&quot;: {
+                        &quot;first_response_minutes&quot;: 60,
+                        &quot;resolution_minutes&quot;: 480,
+                        &quot;is_custom&quot;: false
+                    },
+                    &quot;urgent&quot;: {
+                        &quot;first_response_minutes&quot;: 15,
+                        &quot;resolution_minutes&quot;: 240,
+                        &quot;is_custom&quot;: false
+                    }
+                }
             },
             &quot;requester&quot;: {
-                &quot;id&quot;: &quot;01m4rnbzbzztz5y8bpncw4h6wm&quot;,
+                &quot;id&quot;: &quot;01m4tacy27zejfc6dcjspp359c&quot;,
                 &quot;name&quot;: &quot;Emanuel Emmerich&quot;,
-                &quot;role&quot;: &quot;customer&quot;
+                &quot;role&quot;: &quot;customer&quot;,
+                &quot;email&quot;: null
             },
             &quot;assignee&quot;: {
-                &quot;id&quot;: &quot;01m4rnbzc0fxdffc71t10dshe5&quot;,
+                &quot;id&quot;: &quot;01m4tacy28dt6y2nnc90cn9n2d&quot;,
                 &quot;name&quot;: &quot;Jacques Howe&quot;,
-                &quot;role&quot;: &quot;customer&quot;
+                &quot;role&quot;: &quot;customer&quot;,
+                &quot;email&quot;: null
             },
             &quot;resolved_at&quot;: null,
             &quot;closed_at&quot;: null,
-            &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;,
-            &quot;updated_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+            &quot;sla&quot;: {
+                &quot;first_response_at&quot;: null,
+                &quot;first_response_due_at&quot;: &quot;2026-10-13T13:44:47+00:00&quot;,
+                &quot;resolution_due_at&quot;: &quot;2026-10-14T09:44:47+00:00&quot;,
+                &quot;is_overdue&quot;: false
+            },
+            &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;,
+            &quot;updated_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
         }
     ],
     &quot;links&quot;: {
@@ -3827,6 +5508,28 @@ Must be one of:
 <p>Only tickets without an assignee. Example: <code>false</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>overdue</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <label data-endpoint="GETapi-v1-tickets" style="display: none">
+            <input type="radio" name="overdue"
+                   value="1"
+                   data-endpoint="GETapi-v1-tickets"
+                   data-component="query"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="GETapi-v1-tickets" style="display: none">
+            <input type="radio" name="overdue"
+                   value="0"
+                   data-endpoint="GETapi-v1-tickets"
+                   data-component="query"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Only unresolved tickets with a missed SLA deadline. Example: <code>false</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>q</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
 <i>optional</i> &nbsp;
@@ -3850,7 +5553,7 @@ Must be one of:
     <br>
 <p>Sort field; prefix with - for descending. Example: <code>-created_at</code></p>
 Must be one of:
-<ul style="list-style-type: square;"><li><code>created_at</code></li> <li><code>-created_at</code></li> <li><code>updated_at</code></li> <li><code>-updated_at</code></li> <li><code>priority</code></li> <li><code>-priority</code></li> <li><code>status</code></li> <li><code>-status</code></li></ul>
+<ul style="list-style-type: square;"><li><code>created_at</code></li> <li><code>-created_at</code></li> <li><code>updated_at</code></li> <li><code>-updated_at</code></li> <li><code>priority</code></li> <li><code>-priority</code></li> <li><code>status</code></li> <li><code>-status</code></li> <li><code>first_response_due_at</code></li> <li><code>-first_response_due_at</code></li> <li><code>resolution_due_at</code></li> <li><code>-resolution_due_at</code></li></ul>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
@@ -3878,7 +5581,181 @@ Must be one of:
             </div>
                 </form>
 
-                    <h2 id="tickets-POSTapi-v1-tickets">Open a ticket</h2>
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>open</code></li> <li><code>pending</code></li> <li><code>resolved</code></li> <li><code>closed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>low</code></li> <li><code>normal</code></li> <li><code>high</code></li> <li><code>urgent</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>assignee</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>requester</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolved_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>closed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sla</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_due_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolution_due_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                        <h2 id="tickets-POSTapi-v1-tickets">Open a ticket</h2>
 
 <p>
 </p>
@@ -3891,7 +5768,7 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8080/api/v1/tickets" \
+    "http://localhost:8090/api/v1/tickets" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -3904,7 +5781,7 @@ Must be one of:
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/tickets"
+    "http://localhost:8090/api/v1/tickets"
 );
 
 const headers = {
@@ -3934,31 +5811,61 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4rnbzchvvdgdk6j9192en2j&quot;,
+        &quot;id&quot;: &quot;01m4tacy2p93b36cxb0khyc0mt&quot;,
         &quot;subject&quot;: &quot;Eius et animi quos velit et.&quot;,
         &quot;description&quot;: &quot;Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;urgent&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m4rnbzchvvdgdk6j9192en2h&quot;,
+            &quot;id&quot;: &quot;01m4tacy2p93b36cxb0khyc0ms&quot;,
             &quot;name&quot;: &quot;Quis Adipisci&quot;,
             &quot;slug&quot;: &quot;quis-adipisci&quot;,
-            &quot;description&quot;: &quot;Fugit deleniti distinctio eum doloremque id aut libero.&quot;
+            &quot;description&quot;: &quot;Fugit deleniti distinctio eum doloremque id aut libero.&quot;,
+            &quot;sla_targets&quot;: {
+                &quot;low&quot;: {
+                    &quot;first_response_minutes&quot;: 480,
+                    &quot;resolution_minutes&quot;: 4320,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;normal&quot;: {
+                    &quot;first_response_minutes&quot;: 240,
+                    &quot;resolution_minutes&quot;: 1440,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;high&quot;: {
+                    &quot;first_response_minutes&quot;: 60,
+                    &quot;resolution_minutes&quot;: 480,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;urgent&quot;: {
+                    &quot;first_response_minutes&quot;: 15,
+                    &quot;resolution_minutes&quot;: 240,
+                    &quot;is_custom&quot;: false
+                }
+            }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m4rnbzcfczgw8tgh1yrrsjr2&quot;,
+            &quot;id&quot;: &quot;01m4tacy2n5w8qa29zhzsffkjf&quot;,
             &quot;name&quot;: &quot;Mina Bauch&quot;,
-            &quot;role&quot;: &quot;customer&quot;
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m4rnbzcgn3c1j0y2qtmhg18m&quot;,
+            &quot;id&quot;: &quot;01m4tacy2n5w8qa29zhzsffkjg&quot;,
             &quot;name&quot;: &quot;Domingo Leuschke&quot;,
-            &quot;role&quot;: &quot;customer&quot;
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
         },
         &quot;resolved_at&quot;: null,
         &quot;closed_at&quot;: null,
-        &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+        &quot;sla&quot;: {
+            &quot;first_response_at&quot;: null,
+            &quot;first_response_due_at&quot;: &quot;2026-10-13T09:59:47+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-13T13:44:47+00:00&quot;,
+            &quot;is_overdue&quot;: false
+        },
+        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
     }
 }</code>
  </pre>
@@ -4087,7 +5994,181 @@ Must be one of:
         </div>
         </form>
 
-                    <h2 id="tickets-GETapi-v1-tickets--id-">Show a ticket</h2>
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>open</code></li> <li><code>pending</code></li> <li><code>resolved</code></li> <li><code>closed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>low</code></li> <li><code>normal</code></li> <li><code>high</code></li> <li><code>urgent</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>assignee</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>requester</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolved_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>closed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sla</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_due_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolution_due_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                        <h2 id="tickets-GETapi-v1-tickets--id-">Show a ticket</h2>
 
 <p>
 </p>
@@ -4100,14 +6181,14 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8080/api/v1/tickets/architecto" \
+    --get "http://localhost:8090/api/v1/tickets/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/tickets/architecto"
+    "http://localhost:8090/api/v1/tickets/architecto"
 );
 
 const headers = {
@@ -4131,31 +6212,61 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4rnbzcqet7qgak2m0x5q45t&quot;,
+        &quot;id&quot;: &quot;01m4tacy2zf85gby7r7771xsjg&quot;,
         &quot;subject&quot;: &quot;Et animi quos velit et fugiat.&quot;,
         &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;normal&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m4rnbzcqet7qgak2m0x5q45s&quot;,
+            &quot;id&quot;: &quot;01m4tacy2zf85gby7r7771xsjf&quot;,
             &quot;name&quot;: &quot;Molestias Fugit&quot;,
             &quot;slug&quot;: &quot;molestias-fugit&quot;,
-            &quot;description&quot;: &quot;Distinctio eum doloremque id aut libero aliquam veniam corporis.&quot;
+            &quot;description&quot;: &quot;Distinctio eum doloremque id aut libero aliquam veniam corporis.&quot;,
+            &quot;sla_targets&quot;: {
+                &quot;low&quot;: {
+                    &quot;first_response_minutes&quot;: 480,
+                    &quot;resolution_minutes&quot;: 4320,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;normal&quot;: {
+                    &quot;first_response_minutes&quot;: 240,
+                    &quot;resolution_minutes&quot;: 1440,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;high&quot;: {
+                    &quot;first_response_minutes&quot;: 60,
+                    &quot;resolution_minutes&quot;: 480,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;urgent&quot;: {
+                    &quot;first_response_minutes&quot;: 15,
+                    &quot;resolution_minutes&quot;: 240,
+                    &quot;is_custom&quot;: false
+                }
+            }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m4rnbzcpjmkt26892kggt0sw&quot;,
+            &quot;id&quot;: &quot;01m4tacy2xktdgf3xzyx170fv7&quot;,
             &quot;name&quot;: &quot;Mr. Carey Smitham&quot;,
-            &quot;role&quot;: &quot;customer&quot;
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m4rnbzcpjmkt26892kggt0sx&quot;,
+            &quot;id&quot;: &quot;01m4tacy2yaxnbt2ypven77g8z&quot;,
             &quot;name&quot;: &quot;Matilda Feeney&quot;,
-            &quot;role&quot;: &quot;customer&quot;
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
         },
         &quot;resolved_at&quot;: null,
         &quot;closed_at&quot;: null,
-        &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+        &quot;sla&quot;: {
+            &quot;first_response_at&quot;: null,
+            &quot;first_response_due_at&quot;: &quot;2026-10-13T13:44:47+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-14T09:44:47+00:00&quot;,
+            &quot;is_overdue&quot;: false
+        },
+        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
     }
 }</code>
  </pre>
@@ -4246,7 +6357,181 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
-                    <h2 id="tickets-PATCHapi-v1-tickets--ticket_id--status">Change ticket status</h2>
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>open</code></li> <li><code>pending</code></li> <li><code>resolved</code></li> <li><code>closed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>low</code></li> <li><code>normal</code></li> <li><code>high</code></li> <li><code>urgent</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>assignee</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>requester</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolved_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>closed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sla</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_due_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolution_due_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                        <h2 id="tickets-PATCHapi-v1-tickets--ticket_id--status">Change ticket status</h2>
 
 <p>
 </p>
@@ -4259,7 +6544,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost:8080/api/v1/tickets/architecto/status" \
+    "http://localhost:8090/api/v1/tickets/architecto/status" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -4270,7 +6555,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/tickets/architecto/status"
+    "http://localhost:8090/api/v1/tickets/architecto/status"
 );
 
 const headers = {
@@ -4298,31 +6583,61 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4rnbzcxcpvfn2p5bh10ptq8&quot;,
+        &quot;id&quot;: &quot;01m4tacy37vten3t5egamqdbtq&quot;,
         &quot;subject&quot;: &quot;Et animi quos velit et fugiat.&quot;,
         &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;normal&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m4rnbzcxcpvfn2p5bh10ptq7&quot;,
+            &quot;id&quot;: &quot;01m4tacy36vrhwsk02cdcc4n8x&quot;,
             &quot;name&quot;: &quot;Eum Doloremque&quot;,
             &quot;slug&quot;: &quot;eum-doloremque&quot;,
-            &quot;description&quot;: &quot;Aut libero aliquam veniam corporis.&quot;
+            &quot;description&quot;: &quot;Aut libero aliquam veniam corporis.&quot;,
+            &quot;sla_targets&quot;: {
+                &quot;low&quot;: {
+                    &quot;first_response_minutes&quot;: 480,
+                    &quot;resolution_minutes&quot;: 4320,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;normal&quot;: {
+                    &quot;first_response_minutes&quot;: 240,
+                    &quot;resolution_minutes&quot;: 1440,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;high&quot;: {
+                    &quot;first_response_minutes&quot;: 60,
+                    &quot;resolution_minutes&quot;: 480,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;urgent&quot;: {
+                    &quot;first_response_minutes&quot;: 15,
+                    &quot;resolution_minutes&quot;: 240,
+                    &quot;is_custom&quot;: false
+                }
+            }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m4rnbzcwe3yhwa1pwhcbcs7q&quot;,
+            &quot;id&quot;: &quot;01m4tacy35v8etb0zh0dpfrs8e&quot;,
             &quot;name&quot;: &quot;Mr. Carey Smitham&quot;,
-            &quot;role&quot;: &quot;customer&quot;
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m4rnbzcxcpvfn2p5bh10ptq6&quot;,
+            &quot;id&quot;: &quot;01m4tacy36vrhwsk02cdcc4n8w&quot;,
             &quot;name&quot;: &quot;Janick Schultz DDS&quot;,
-            &quot;role&quot;: &quot;customer&quot;
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
         },
         &quot;resolved_at&quot;: null,
         &quot;closed_at&quot;: null,
-        &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+        &quot;sla&quot;: {
+            &quot;first_response_at&quot;: null,
+            &quot;first_response_due_at&quot;: &quot;2026-10-13T13:44:47+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-14T09:44:47+00:00&quot;,
+            &quot;is_overdue&quot;: false
+        },
+        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
     }
 }</code>
  </pre>
@@ -4428,7 +6743,181 @@ Must be one of:
         </div>
         </form>
 
-                    <h2 id="tickets-PATCHapi-v1-tickets--ticket_id--assignee">Assign a ticket</h2>
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>open</code></li> <li><code>pending</code></li> <li><code>resolved</code></li> <li><code>closed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>low</code></li> <li><code>normal</code></li> <li><code>high</code></li> <li><code>urgent</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>assignee</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>requester</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolved_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>closed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sla</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_due_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolution_due_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                        <h2 id="tickets-PATCHapi-v1-tickets--ticket_id--assignee">Assign a ticket</h2>
 
 <p>
 </p>
@@ -4441,7 +6930,7 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost:8080/api/v1/tickets/architecto/assignee" \
+    "http://localhost:8090/api/v1/tickets/architecto/assignee" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
 </code></pre></div>
@@ -4449,7 +6938,7 @@ Must be one of:
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/v1/tickets/architecto/assignee"
+    "http://localhost:8090/api/v1/tickets/architecto/assignee"
 );
 
 const headers = {
@@ -4473,31 +6962,61 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m4rnbzd5jhj77syg9ayhq60h&quot;,
+        &quot;id&quot;: &quot;01m4tacy3kqxen8r2hg74dfkw4&quot;,
         &quot;subject&quot;: &quot;Et animi quos velit et fugiat.&quot;,
         &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;normal&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m4rnbzd4e0k9z24ykavptm4y&quot;,
+            &quot;id&quot;: &quot;01m4tacy3jne7tt61pzxk6w6va&quot;,
             &quot;name&quot;: &quot;Aliquam Veniam&quot;,
             &quot;slug&quot;: &quot;aliquam-veniam&quot;,
-            &quot;description&quot;: &quot;Dolorem mollitia deleniti nemo.&quot;
+            &quot;description&quot;: &quot;Dolorem mollitia deleniti nemo.&quot;,
+            &quot;sla_targets&quot;: {
+                &quot;low&quot;: {
+                    &quot;first_response_minutes&quot;: 480,
+                    &quot;resolution_minutes&quot;: 4320,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;normal&quot;: {
+                    &quot;first_response_minutes&quot;: 240,
+                    &quot;resolution_minutes&quot;: 1440,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;high&quot;: {
+                    &quot;first_response_minutes&quot;: 60,
+                    &quot;resolution_minutes&quot;: 480,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;urgent&quot;: {
+                    &quot;first_response_minutes&quot;: 15,
+                    &quot;resolution_minutes&quot;: 240,
+                    &quot;is_custom&quot;: false
+                }
+            }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m4rnbzd3h0zwyh2qttvkw3jn&quot;,
+            &quot;id&quot;: &quot;01m4tacy3gbt7mhnmw0kdt58hg&quot;,
             &quot;name&quot;: &quot;Mr. Carey Smitham&quot;,
-            &quot;role&quot;: &quot;customer&quot;
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m4rnbzd4e0k9z24ykavptm4x&quot;,
+            &quot;id&quot;: &quot;01m4tacy3hfh2aszjh4y7ts840&quot;,
             &quot;name&quot;: &quot;Prof. Annabelle Kshlerin&quot;,
-            &quot;role&quot;: &quot;customer&quot;
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
         },
         &quot;resolved_at&quot;: null,
         &quot;closed_at&quot;: null,
-        &quot;created_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-12T18:18:01+00:00&quot;
+        &quot;sla&quot;: {
+            &quot;first_response_at&quot;: null,
+            &quot;first_response_due_at&quot;: &quot;2026-10-13T13:44:47+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-14T09:44:47+00:00&quot;,
+            &quot;is_overdue&quot;: false
+        },
+        &quot;created_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-13T09:44:47+00:00&quot;
     }
 }</code>
  </pre>
@@ -4601,7 +7120,181 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-            
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>open</code></li> <li><code>pending</code></li> <li><code>resolved</code></li> <li><code>closed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>low</code></li> <li><code>normal</code></li> <li><code>high</code></li> <li><code>urgent</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>assignee</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>requester</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolved_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>closed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sla</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_due_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolution_due_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                
 
         
     </div>

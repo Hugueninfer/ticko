@@ -24,6 +24,8 @@ final class UserSummaryResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'role' => $this->role->value,
+            // Staff need the requester's e-mail; customers never see staff addresses.
+            'email' => $request->user() instanceof User && $request->user()->isStaff() ? $this->email : null,
         ];
     }
 }

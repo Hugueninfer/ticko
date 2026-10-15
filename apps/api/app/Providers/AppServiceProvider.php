@@ -12,6 +12,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -43,6 +44,9 @@ class AppServiceProvider extends ServiceProvider
 
         Route::model('member', User::class);
 
+        // Dashboard figures cover the whole tenant, so only admins see them.
+        Gate::define('viewMetrics', fn (User $user): bool => $user->isAdmin());
+
         $this->configureRateLimiting();
     }
 
@@ -60,6 +64,8 @@ class AppServiceProvider extends ServiceProvider
                 Limit::perMinute($limit * 4)->by('auth:ip:'.$request->ip()),
             ];
         });
+
+        RateLimiter::for('demo', fn (Request $request): Limit => Limit::perMinute($this->limit('demo'))->by('demo:'.$request->ip()));
 
         RateLimiter::for('api', fn (Request $request): Limit => Limit::perMinute($this->limit('api'))
             ->by($request->user()?->getAuthIdentifier() ?? $request->ip()));

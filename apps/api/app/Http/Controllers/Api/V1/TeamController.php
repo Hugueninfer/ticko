@@ -12,6 +12,7 @@ use App\Http\Requests\Team\StoreTeamMemberRequest;
 use App\Http\Requests\Team\UpdateTeamMemberRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Gate;
 use Knuckles\Scribe\Attributes\Group;
@@ -23,16 +24,20 @@ final class TeamController extends Controller
     /**
      * List members
      */
-    #[ResponseFromApiResource(UserResource::class, User::class, collection: true, paginate: 50)]
+    #[ResponseFromApiResource(UserResource::class, User::class, collection: true, paginate: 50, withCount: ['openTickets'])]
     public function index(IndexTeamRequest $request): AnonymousResourceCollection
     {
         Gate::authorize('viewAny', User::class);
 
         $role = $request->role();
+        $search = $request->search();
         $members = User::query()
-            ->when($role !== null, fn ($q) => $q->where('role', $role))
+            ->withCount('openTickets')
+            ->when($role !== null, fn (Builder $q) => $q->where('role', $role))
+            ->when($search !== null, fn (Builder $q) => $q->where(fn (Builder $q) => $q->whereLike('name', (string) $search)->orWhereLike('email', (string) $search)))
             ->orderBy('name')
-            ->paginate(50);
+            ->paginate(50)
+            ->withQueryString();
 
         return UserResource::collection($members);
     }

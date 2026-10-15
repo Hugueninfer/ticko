@@ -3,8 +3,10 @@
 declare(strict_types=1);
 
 use App\Enums\Role;
+use App\Enums\TicketStatus;
 use App\Models\PersonalAccessToken;
 use App\Models\Tenant;
+use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -103,3 +105,19 @@ it('forbids agents and customers from managing members', function (string $who):
     ])->assertForbidden();
     $this->patchJson("/api/v1/team/{$this->customer->id}", ['role' => 'admin'])->assertForbidden();
 })->with(['agent', 'customer']);
+
+it('searches members and counts their open assigned tickets', function (): void {
+    $ana = $this->userIn($this->tenant, Role::Agent, ['name' => 'Ana Souza', 'email' => 'ana@acme.test']);
+    $this->inTenant($this->tenant, function () use ($ana): void {
+        Ticket::factory()->count(2)->create(['assignee_id' => $ana->id]);
+        Ticket::factory()->status(TicketStatus::Closed)->create(['assignee_id' => $ana->id]);
+    });
+
+    $this->actingAsUser($this->admin)->getJson('/api/v1/team?q=souza')
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.id', $ana->id)
+        ->assertJsonPath('data.0.open_tickets_count', 2);
+
+    $this->getJson('/api/v1/team?q=%25')->assertOk()->assertJsonCount(0, 'data');
+});

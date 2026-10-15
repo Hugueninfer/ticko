@@ -2,11 +2,30 @@
   "name": "ticko",
   "private": true,
   "description": "Ticko — AI-assisted multi-tenant helpdesk (monorepo)",
+  "type": "module",
   "packageManager": "pnpm@10.34.6",
   "engines": {
     "node": ">=22"
   },
   "scripts": {
-    "api-client:generate": "pnpm --filter @ticko/api-client generate"
+    "prepare": "pnpm api-client:generate",
+    "api-client:generate": "pnpm --filter @ticko/api-client generate",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write .",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
+    "test:coverage": "pnpm -r --if-present test:coverage",
+    "build": "pnpm -r --if-present build"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.5",
+    "eslint": "9.39.5",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "eslint-plugin-react-refresh": "0.5.7",
+    "globals": "17.13.0",
+    "prettier": "3.9.10",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.2"
   }
 }

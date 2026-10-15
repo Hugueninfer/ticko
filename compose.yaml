@@ -18,6 +18,8 @@ x-api-common: &api-common
     DB_HOST: postgres
     DB_PORT: "5432"
     REDIS_HOST: redis
+    # Read from the shell or .env; off unless explicitly enabled.
+    TICKO_DEMO_LOGIN: ${TICKO_DEMO_LOGIN:-false}
   read_only: true
   tmpfs:
     - /tmp

@@ -6,8 +6,9 @@
 	}
 }
 
+# One origin for everything: the SPA and the API share it, so the session
+# cookie is first-party and the browser never makes a cross-origin call.
 :8080 {
-	root * /var/www/html/public
 	encode zstd gzip
 
 	header {
@@ -23,22 +24,40 @@
 		max_size 12MB
 	}
 
-	# Never serve dotfiles or PHP sources other than the front controller.
-	@forbidden path /.* */.* *.php
-	@frontController path /index.php
-	handle @frontController {
+	# Laravel: the API, Sanctum's CSRF cookie, API docs, Horizon and health check.
+	@laravel path /api/* /sanctum/* /docs /docs/* /horizon /horizon/* /vendor/horizon/* /up
+	handle @laravel {
+		root * /var/www/html/public
+
+		# Never serve dotfiles or PHP sources other than the front controller.
+		@forbidden {
+			path /.* */.* *.php
+			not path /index.php
+		}
+		respond @forbidden 404
+
 		php_fastcgi {$PHP_FPM_UPSTREAM:api:9000} {
 			root /var/www/html/public
 		}
-	}
-	handle @forbidden {
-		respond 404
+		file_server
 	}
 
+	# The web app (static build). Unknown paths fall back to index.html for
+	# client-side routing.
 	handle {
-		php_fastcgi {$PHP_FPM_UPSTREAM:api:9000} {
-			root /var/www/html/public
-		}
+		root * /var/www/spa
+
+		# Strict CSP: only same-origin scripts, styles, fonts, images and API
+		# calls; no inline code, no framing.
+		header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
+
+		@assets path /assets/*
+		header @assets Cache-Control "public, max-age=31536000, immutable"
+
+		@html not path /assets/*
+		header @html Cache-Control "no-cache"
+
+		try_files {path} /index.html
 		file_server
 	}
 }

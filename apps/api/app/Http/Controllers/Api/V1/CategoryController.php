@@ -22,12 +22,12 @@ final class CategoryController extends Controller
     /**
      * List categories
      */
-    #[ResponseFromApiResource(CategoryResource::class, Category::class, collection: true)]
+    #[ResponseFromApiResource(CategoryResource::class, Category::class, collection: true, withCount: ['tickets'])]
     public function index(): AnonymousResourceCollection
     {
         Gate::authorize('viewAny', Category::class);
 
-        return CategoryResource::collection(Category::query()->orderBy('name')->get());
+        return CategoryResource::collection(Category::query()->withCount('tickets')->orderBy('name')->get());
     }
 
     /**

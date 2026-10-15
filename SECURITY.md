@@ -27,12 +27,14 @@ The full description is in the README's [Security](README.md#security) section.
 | --- | --- |
 | Tenant isolation | `BelongsToTenant` global scope **and** Postgres Row-Level Security (FORCEd) keyed on `app.tenant_id`; composite foreign keys keep relations inside a tenant; the app's DB role is neither superuser nor `BYPASSRLS`. |
 | Authentication | Sanctum: session cookie for the first-party SPA, expiring bearer tokens for mobile. Argon2id hashing, breached-password check, generic errors and constant-cost checks (no user enumeration), per-account and per-IP rate limits. |
-| Authorization | Policies on every resource; form requests authorize before validating; an architecture test fails if an API controller action does not call `authorize()`. Horizon is admin-only (and allow-listed outside `local`). |
+| Authorization | Policies on every resource; form requests authorize before validating; an architecture test fails if an API controller action does not call `Gate::authorize()`. Horizon is admin-only (and allow-listed outside `local`). |
 | Mass assignment | Explicit `$fillable` on every model; `tenant_id`, ownership and status fields are never fillable. |
 | Uploads | Type detected from content, dimension and size limits, re-encoded (drops EXIF/GPS and appended payloads), random names on a private disk, served through short-lived signed URLs with `nosniff` and a sandboxing CSP. |
 | Errors | RFC 7807 problem details; internal messages are never exposed outside debug mode. |
+| Web app | Served on the API's own origin under a strict CSP (same-origin scripts, styles, fonts, images and requests only; no inline code; no framing). Sanctum session cookie (httpOnly) with CSRF; no tokens in `localStorage`/`sessionStorage`; no CORS with credentials. User content is rendered as text only and lint forbids `dangerouslySetInnerHTML` and HTML string writes. No secrets in `VITE_*` variables. UI role checks are navigation only; the API authorizes every request. |
+| Demo sign-in | `/api/v1/auth/demo` answers 404 unless `TICKO_DEMO_LOGIN=true` and never in production; no demo password reaches the browser. |
 | Infrastructure | Postgres and Redis on an internal Docker network with no published ports; non-root, read-only containers with all capabilities dropped; only the web server binds a port, on `127.0.0.1` by default. |
-| Supply chain | `composer audit` and gitleaks in CI; GitHub Actions pinned by commit SHA with least-privilege permissions. |
+| Supply chain | `composer audit`, `pnpm audit` and gitleaks in CI; exact versions in `package.json` with a frozen lockfile; GitHub Actions pinned by commit SHA with least-privilege permissions. |
 
 ## Secrets
 

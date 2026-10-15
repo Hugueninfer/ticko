@@ -5,6 +5,8 @@ declare(strict_types=1);
 use App\Http\Controllers\Api\V1\AttachmentController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CategoryController;
+use App\Http\Controllers\Api\V1\DemoLoginController;
+use App\Http\Controllers\Api\V1\MetricsController;
 use App\Http\Controllers\Api\V1\TeamController;
 use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Controllers\Api\V1\TicketMessageController;
@@ -19,6 +21,12 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::middleware('throttle:auth')->group(function (): void {
         Route::post('auth/login', [AuthController::class, 'login'])->name('auth.login');
         Route::post('auth/tokens', [AuthController::class, 'issueToken'])->name('auth.tokens.store');
+    });
+
+    // Demo sign-in has no credentials to brute-force; it is limited per client only.
+    Route::middleware('throttle:demo')->group(function (): void {
+        Route::get('auth/demo', [DemoLoginController::class, 'show'])->name('auth.demo.show');
+        Route::post('auth/demo', [DemoLoginController::class, 'store'])->name('auth.demo.store');
     });
 
     Route::get('attachments/{attachment}/content', [AttachmentController::class, 'content'])
@@ -47,6 +55,8 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
         Route::get('attachments/{attachment}', [AttachmentController::class, 'show'])->name('attachments.show');
 
         Route::apiResource('categories', CategoryController::class);
+
+        Route::get('metrics', [MetricsController::class, 'show'])->name('metrics.show');
 
         Route::get('team', [TeamController::class, 'index'])->name('team.index');
         Route::post('team', [TeamController::class, 'store'])->name('team.store');

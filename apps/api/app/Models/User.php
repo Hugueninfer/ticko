@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\Role;
+use App\Enums\TicketStatus;
 use App\Models\Concerns\BelongsToTenant;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -26,6 +28,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property Carbon|null $email_verified_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property-read Tenant $tenant
  */
 class User extends Authenticatable
 {
@@ -46,6 +49,24 @@ class User extends Authenticatable
 
     /** @var array<string, mixed> */
     protected $attributes = ['is_active' => true];
+
+    /**
+     * @return HasMany<Ticket, $this>
+     */
+    public function assignedTickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class, 'assignee_id');
+    }
+
+    /**
+     * Open or pending tickets assigned to the user.
+     *
+     * @return HasMany<Ticket, $this>
+     */
+    public function openTickets(): HasMany
+    {
+        return $this->assignedTickets()->whereIn('status', [TicketStatus::Open, TicketStatus::Pending]);
+    }
 
     public function isStaff(): bool
     {
