@@ -29,6 +29,7 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::middleware('throttle:demo')->group(function (): void {
         Route::get('auth/demo', [DemoLoginController::class, 'show'])->name('auth.demo.show');
         Route::post('auth/demo', [DemoLoginController::class, 'store'])->name('auth.demo.store');
+        Route::post('auth/demo/tokens', [DemoLoginController::class, 'issueToken'])->name('auth.demo.tokens');
     });
 
     Route::get('attachments/{attachment}/content', [AttachmentController::class, 'content'])

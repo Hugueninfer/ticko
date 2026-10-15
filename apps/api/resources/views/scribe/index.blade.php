@@ -102,6 +102,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="authentication-POSTapi-v1-auth-demo">
                                 <a href="#authentication-POSTapi-v1-auth-demo">Sign in as a demo user (SPA session)</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="authentication-POSTapi-v1-auth-demo-tokens">
+                                <a href="#authentication-POSTapi-v1-auth-demo-tokens">Demo customer token (mobile)</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="authentication-POSTapi-v1-auth-logout">
                                 <a href="#authentication-POSTapi-v1-auth-logout">Log out (SPA session)</a>
                             </li>
@@ -442,28 +445,28 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m504dhwmkp7j8kh5hy1fm9tk&quot;,
-            &quot;ticket_id&quot;: &quot;01m504dhwk1b98tsgca37hptad&quot;,
+            &quot;id&quot;: &quot;01m504km0yah3ebs9fxggz98y8&quot;,
+            &quot;ticket_id&quot;: &quot;01m504km0x2hgg2aggajsrdxkm&quot;,
             &quot;original_name&quot;: &quot;screenshot.png&quot;,
             &quot;mime_type&quot;: &quot;image/png&quot;,
             &quot;size&quot;: 1024,
             &quot;width&quot;: 10,
             &quot;height&quot;: 10,
-            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m504dhwmkp7j8kh5hy1fm9tk/content?expires=1792080042&amp;tenant=01m504dhjrad5014qs7eqckzrt&amp;signature=1dd2b44d62413e49d2a59e543d7b483b59a89a5ce6382e8cf6f248bdb50b49e1&quot;,
+            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m504km0yah3ebs9fxggz98y8/content?expires=1792080241&amp;tenant=01m504kknfz3z8jsg9cww4nbs9&amp;signature=ca99640142e1a8d637039c21527d73381df8b6d55ac72b326ab957d8198d8524&quot;,
             &quot;url_expires_in&quot;: 300,
-            &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m504dhwq3e5anqge4qg0a1sk&quot;,
-            &quot;ticket_id&quot;: &quot;01m504dhwp40kwv4be93ghkegm&quot;,
+            &quot;id&quot;: &quot;01m504km12qwtc23frh905p6v7&quot;,
+            &quot;ticket_id&quot;: &quot;01m504km11heg6bvscrkdfjcka&quot;,
             &quot;original_name&quot;: &quot;screenshot.png&quot;,
             &quot;mime_type&quot;: &quot;image/png&quot;,
             &quot;size&quot;: 1024,
             &quot;width&quot;: 10,
             &quot;height&quot;: 10,
-            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m504dhwq3e5anqge4qg0a1sk/content?expires=1792080042&amp;tenant=01m504dhjrad5014qs7eqckzrt&amp;signature=7df7b0e2478288b1c1ea22d8ebc1a1bf49510229a85c74f6361845e6bf5e1fc9&quot;,
+            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m504km12qwtc23frh905p6v7/content?expires=1792080241&amp;tenant=01m504kknfz3z8jsg9cww4nbs9&amp;signature=13c9808ba5933230b1d4dbd0d20bf9a96b4c8240d4232f74281f4dad9131627e&quot;,
             &quot;url_expires_in&quot;: 300,
-            &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
         }
     ]
 }</code>
@@ -572,7 +575,7 @@ which removes EXIF metadata such as GPS position.</p>
     "http://localhost:8090/api/v1/tickets/architecto/attachments" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php8d32o7n782uodPahgjP" </code></pre></div>
+    --form "file=@/tmp/phpo7r37jmq4neqbJoHeeJ" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -604,16 +607,16 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m504dhx4azmphq9kzp168y4e&quot;,
-        &quot;ticket_id&quot;: &quot;01m504dhx235kbbvpb9rx360n7&quot;,
+        &quot;id&quot;: &quot;01m504km1dcf7sxs5zdvkan2x8&quot;,
+        &quot;ticket_id&quot;: &quot;01m504km1bde7zbd2a7q5tk91g&quot;,
         &quot;original_name&quot;: &quot;screenshot.png&quot;,
         &quot;mime_type&quot;: &quot;image/png&quot;,
         &quot;size&quot;: 1024,
         &quot;width&quot;: 10,
         &quot;height&quot;: 10,
-        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m504dhx4azmphq9kzp168y4e/content?expires=1792080042&amp;tenant=01m504dhjrad5014qs7eqckzrt&amp;signature=e8b41bdd257138ca8f16f9136e4e114c7338a930949370e4d30949fdfa093734&quot;,
+        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m504km1dcf7sxs5zdvkan2x8/content?expires=1792080241&amp;tenant=01m504kknfz3z8jsg9cww4nbs9&amp;signature=dd8e2f56e2656e6c79359c3aeeb20012c06da83b9c135b5044a0d8fb2772e5af&quot;,
         &quot;url_expires_in&quot;: 300,
-        &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
     }
 }</code>
  </pre>
@@ -713,7 +716,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>JPEG, PNG or WebP image (max 5 MB). Metadata is stripped. Must be a file. Must not be greater than 5120 kilobytes. Example: <code>/tmp/php8d32o7n782uodPahgjP</code></p>
+<p>JPEG, PNG or WebP image (max 5 MB). Metadata is stripped. Must be a file. Must not be greater than 5120 kilobytes. Example: <code>/tmp/phpo7r37jmq4neqbJoHeeJ</code></p>
         </div>
         </form>
 
@@ -761,16 +764,16 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m504dhx999j7fgy1v21mcpt1&quot;,
-        &quot;ticket_id&quot;: &quot;01m504dhx8xzj6fpm7zgg30453&quot;,
+        &quot;id&quot;: &quot;01m504km1k1s2p3ewr18ag0zax&quot;,
+        &quot;ticket_id&quot;: &quot;01m504km1jp0ywzb8cs5t4eh09&quot;,
         &quot;original_name&quot;: &quot;screenshot.png&quot;,
         &quot;mime_type&quot;: &quot;image/png&quot;,
         &quot;size&quot;: 1024,
         &quot;width&quot;: 10,
         &quot;height&quot;: 10,
-        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m504dhx999j7fgy1v21mcpt1/content?expires=1792080042&amp;tenant=01m504dhjrad5014qs7eqckzrt&amp;signature=c9a71775bccba1edd0ce99b3be2b5f9c73b28a9333e5a29aade53a7f4ff34b19&quot;,
+        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m504km1k1s2p3ewr18ag0zax/content?expires=1792080241&amp;tenant=01m504kknfz3z8jsg9cww4nbs9&amp;signature=cbd9cbf7b4c2244c217d16758875bc79d4e901e672da50982594a58941adf710&quot;,
         &quot;url_expires_in&quot;: 300,
-        &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
     }
 }</code>
  </pre>
@@ -922,13 +925,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m504dhr83tgew43dasy558dy&quot;,
+        &quot;id&quot;: &quot;01m504kkvvs4q4scwssyraw1sk&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
         &quot;email&quot;: &quot;gulgowski.asia@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
         &quot;tenant&quot;: {
-            &quot;id&quot;: &quot;01m504dhjrad5014qs7eqckzrt&quot;,
+            &quot;id&quot;: &quot;01m504kknfz3z8jsg9cww4nbs9&quot;,
             &quot;name&quot;: &quot;Example Inc.&quot;,
             &quot;slug&quot;: &quot;docs-example&quot;
         },
@@ -936,7 +939,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
     }
 }</code>
  </pre>
@@ -1456,13 +1459,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m504dhrrqdacmxsax13ptkbn&quot;,
+        &quot;id&quot;: &quot;01m504kkweaev9n16x5qy4bg3m&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
         &quot;email&quot;: &quot;idickens@example.org&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
         &quot;tenant&quot;: {
-            &quot;id&quot;: &quot;01m504dhjrad5014qs7eqckzrt&quot;,
+            &quot;id&quot;: &quot;01m504kknfz3z8jsg9cww4nbs9&quot;,
             &quot;name&quot;: &quot;Example Inc.&quot;,
             &quot;slug&quot;: &quot;docs-example&quot;
         },
@@ -1470,7 +1473,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
     }
 }</code>
  </pre>
@@ -1603,7 +1606,151 @@ Must be one of:
                     </div>
                                     </details>
         </div>
-                        <h2 id="authentication-POSTapi-v1-auth-logout">Log out (SPA session)</h2>
+                        <h2 id="authentication-POSTapi-v1-auth-demo-tokens">Demo customer token (mobile)</h2>
+
+<p>
+</p>
+
+<p>Issues an API token for the demo tenant's customer, so the mobile app
+can offer a one-tap demo without shipping a password.</p>
+
+<span id="example-requests-POSTapi-v1-auth-demo-tokens">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8090/api/v1/auth/demo/tokens" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"device_name\": \"Pixel 9\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/auth/demo/tokens"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "device_name": "Pixel 9"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-auth-demo-tokens">
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;token&quot;: &quot;01J...|plain-text-token&quot;,
+    &quot;token_type&quot;: &quot;Bearer&quot;,
+    &quot;expires_in&quot;: 2592000
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-auth-demo-tokens" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-auth-demo-tokens"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-auth-demo-tokens"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-auth-demo-tokens" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-auth-demo-tokens">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-auth-demo-tokens" data-method="POST"
+      data-path="api/v1/auth/demo/tokens"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-auth-demo-tokens', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-auth-demo-tokens"
+                    onclick="tryItOut('POSTapi-v1-auth-demo-tokens');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-auth-demo-tokens"
+                    onclick="cancelTryOut('POSTapi-v1-auth-demo-tokens');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-auth-demo-tokens"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/auth/demo/tokens</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-auth-demo-tokens"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-auth-demo-tokens"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>device_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="device_name"                data-endpoint="POSTapi-v1-auth-demo-tokens"
+               value="Pixel 9"
+               data-component="body">
+    <br>
+<p>Label for the token, e.g. the phone model. Must not be greater than 100 characters. Example: <code>Pixel 9</code></p>
+        </div>
+        </form>
+
+                    <h2 id="authentication-POSTapi-v1-auth-logout">Log out (SPA session)</h2>
 
 <p>
 </p>
@@ -1869,13 +2016,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m504dhs2y9d8rhe3r8716p2z&quot;,
+        &quot;id&quot;: &quot;01m504kkx0fe2m3xp4gk8v4dw6&quot;,
         &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
         &quot;email&quot;: &quot;aschuster@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
         &quot;tenant&quot;: {
-            &quot;id&quot;: &quot;01m504dhjrad5014qs7eqckzrt&quot;,
+            &quot;id&quot;: &quot;01m504kknfz3z8jsg9cww4nbs9&quot;,
             &quot;name&quot;: &quot;Example Inc.&quot;,
             &quot;slug&quot;: &quot;docs-example&quot;
         },
@@ -1883,7 +2030,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
     }
 }</code>
  </pre>
@@ -2201,13 +2348,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m504dhs9d4c3er4j1ay68sjz&quot;,
+        &quot;id&quot;: &quot;01m504kkx9c8jgtt425vjtsbzt&quot;,
         &quot;name&quot;: &quot;Leda Price&quot;,
         &quot;email&quot;: &quot;theo.hauck@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
         &quot;tenant&quot;: {
-            &quot;id&quot;: &quot;01m504dhjrad5014qs7eqckzrt&quot;,
+            &quot;id&quot;: &quot;01m504kknfz3z8jsg9cww4nbs9&quot;,
             &quot;name&quot;: &quot;Example Inc.&quot;,
             &quot;slug&quot;: &quot;docs-example&quot;
         },
@@ -2215,7 +2362,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
     }
 }</code>
  </pre>
@@ -2427,10 +2574,10 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m504dhxgy2mt6z745z77bafq&quot;,
-            &quot;name&quot;: &quot;Consequatur Accusamus&quot;,
-            &quot;slug&quot;: &quot;consequatur-accusamus&quot;,
-            &quot;description&quot;: &quot;Ea soluta consequatur quidem est numquam nulla.&quot;,
+            &quot;id&quot;: &quot;01m504km1tnnr3h0wcewb1wk3s&quot;,
+            &quot;name&quot;: &quot;Assumenda Ut&quot;,
+            &quot;slug&quot;: &quot;assumenda-ut&quot;,
+            &quot;description&quot;: &quot;Illum accusamus aspernatur nesciunt quis quae.&quot;,
             &quot;sla_targets&quot;: {
                 &quot;low&quot;: {
                     &quot;first_response_minutes&quot;: 480,
@@ -2456,10 +2603,10 @@ fetch(url, {
             &quot;tickets_count&quot;: 1
         },
         {
-            &quot;id&quot;: &quot;01m504dhxmn885akex05jgy74j&quot;,
-            &quot;name&quot;: &quot;Et Earum&quot;,
-            &quot;slug&quot;: &quot;et-earum&quot;,
-            &quot;description&quot;: &quot;Culpa possimus enim quod voluptatem eligendi ipsa placeat.&quot;,
+            &quot;id&quot;: &quot;01m504km211yfnd98e239sef6f&quot;,
+            &quot;name&quot;: &quot;Laborum Nam&quot;,
+            &quot;slug&quot;: &quot;laborum-nam&quot;,
+            &quot;description&quot;: &quot;Amet quia delectus sit sunt voluptatum voluptatum.&quot;,
             &quot;sla_targets&quot;: {
                 &quot;low&quot;: {
                     &quot;first_response_minutes&quot;: 480,
@@ -2681,10 +2828,10 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m504dhy0gdw9bxfj98sbm16y&quot;,
-        &quot;name&quot;: &quot;Fugiat Sunt&quot;,
-        &quot;slug&quot;: &quot;fugiat-sunt&quot;,
-        &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab.&quot;,
+        &quot;id&quot;: &quot;01m504km2dgs09tg8vp57zcx2c&quot;,
+        &quot;name&quot;: &quot;Et Fugiat&quot;,
+        &quot;slug&quot;: &quot;et-fugiat&quot;,
+        &quot;description&quot;: &quot;Nihil accusantium harum mollitia modi deserunt.&quot;,
         &quot;sla_targets&quot;: {
             &quot;low&quot;: {
                 &quot;first_response_minutes&quot;: 480,
@@ -3039,7 +3186,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m504dhy4vbaeks3d9vqv16pe&quot;,
+        &quot;id&quot;: &quot;01m504km2j9zqpf80qaz6r2bfs&quot;,
         &quot;name&quot;: &quot;Eius Et&quot;,
         &quot;slug&quot;: &quot;eius-et&quot;,
         &quot;description&quot;: &quot;Quos velit et fugiat sunt nihil accusantium harum.&quot;,
@@ -3275,10 +3422,10 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m504dhych370vmz3t8hta06e&quot;,
-        &quot;name&quot;: &quot;Sunt Nihil&quot;,
-        &quot;slug&quot;: &quot;sunt-nihil&quot;,
-        &quot;description&quot;: &quot;Harum mollitia modi deserunt aut ab provident perspiciatis quo.&quot;,
+        &quot;id&quot;: &quot;01m504km2tn3bjhbt0qmetp5hx&quot;,
+        &quot;name&quot;: &quot;Fugiat Sunt&quot;,
+        &quot;slug&quot;: &quot;fugiat-sunt&quot;,
+        &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab.&quot;,
         &quot;sla_targets&quot;: {
             &quot;low&quot;: {
                 &quot;first_response_minutes&quot;: 480,
@@ -4601,7 +4748,7 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m504dhyqw5y80dytqqdr4qht&quot;,
+            &quot;id&quot;: &quot;01m504km35r3nv9fvfya2s2t4r&quot;,
             &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
             &quot;email&quot;: &quot;gilbert32@example.com&quot;,
             &quot;role&quot;: &quot;customer&quot;,
@@ -4611,10 +4758,10 @@ fetch(url, {
                 &quot;push_status_changes&quot;: true
             },
             &quot;open_tickets_count&quot;: 1,
-            &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m504dhyvvbsj1rtfdc3x4th3&quot;,
+            &quot;id&quot;: &quot;01m504km39yxchhxxma4z71nj2&quot;,
             &quot;name&quot;: &quot;Emanuel Emmerich&quot;,
             &quot;email&quot;: &quot;little.art@example.net&quot;,
             &quot;role&quot;: &quot;customer&quot;,
@@ -4624,7 +4771,7 @@ fetch(url, {
                 &quot;push_status_changes&quot;: true
             },
             &quot;open_tickets_count&quot;: 1,
-            &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
         }
     ],
     &quot;links&quot;: {
@@ -4875,7 +5022,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m504dhz38etq8g5fjzryqwak&quot;,
+        &quot;id&quot;: &quot;01m504km3fb3pp9vkhcewhw3eh&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
         &quot;email&quot;: &quot;hirthe.theo@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
@@ -4884,7 +5031,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
     }
 }</code>
  </pre>
@@ -5097,7 +5244,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m504dhz8rwcfhvt2sr2t2cgr&quot;,
+        &quot;id&quot;: &quot;01m504km3knkf90s5fgvebccv7&quot;,
         &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
         &quot;email&quot;: &quot;leo34@example.net&quot;,
         &quot;role&quot;: &quot;customer&quot;,
@@ -5106,7 +5253,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
     }
 }</code>
  </pre>
@@ -5293,7 +5440,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m504dhzcmy6g0qcnt3jjxsgq&quot;,
+        &quot;id&quot;: &quot;01m504km3qm5r0d1m2c42gnjfz&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
         &quot;email&quot;: &quot;pfritsch@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
@@ -5302,7 +5449,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
     }
 }</code>
  </pre>
@@ -5531,30 +5678,30 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m504dhvzbtn459crmr64pvvp&quot;,
-            &quot;ticket_id&quot;: &quot;01m504dhvxx90r8xn354jpt84z&quot;,
+            &quot;id&quot;: &quot;01m504km0bw4a8ybp7p8wvskxv&quot;,
+            &quot;ticket_id&quot;: &quot;01m504km0935yhgnq7czc3j868&quot;,
             &quot;body&quot;: &quot;Animi quos velit et fugiat. Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci.&quot;,
             &quot;is_internal&quot;: false,
             &quot;author&quot;: {
-                &quot;id&quot;: &quot;01m504dhvyhven072tzc6gsq16&quot;,
+                &quot;id&quot;: &quot;01m504km0at50c7x3s5tt08y5r&quot;,
                 &quot;name&quot;: &quot;Mr. Madisen Schaden&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
             },
-            &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m504dhw5z8982n3zgev7xex6&quot;,
-            &quot;ticket_id&quot;: &quot;01m504dhw36rvy1tjfsd1df9hg&quot;,
+            &quot;id&quot;: &quot;01m504km0febjandgkeh4r439j&quot;,
+            &quot;ticket_id&quot;: &quot;01m504km0e810qhqevdc1v1r9v&quot;,
             &quot;body&quot;: &quot;Neque blanditiis odio veritatis excepturi doloribus delectus. Qui repudiandae laboriosam est alias.&quot;,
             &quot;is_internal&quot;: false,
             &quot;author&quot;: {
-                &quot;id&quot;: &quot;01m504dhw4z6rjy38wsfh3kyz0&quot;,
+                &quot;id&quot;: &quot;01m504km0febjandgkeh4r439h&quot;,
                 &quot;name&quot;: &quot;Lucie Bauch MD&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
             },
-            &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
         }
     ],
     &quot;links&quot;: {
@@ -5779,17 +5926,17 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m504dhwdx4bs5ct9f774xs2z&quot;,
-        &quot;ticket_id&quot;: &quot;01m504dhwbyfdh8fnevm84xy4b&quot;,
+        &quot;id&quot;: &quot;01m504km0qk6rnj8nfa33jx2bp&quot;,
+        &quot;ticket_id&quot;: &quot;01m504km0menyx34m0j79nh21p&quot;,
         &quot;body&quot;: &quot;Et animi quos velit et fugiat. Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci.&quot;,
         &quot;is_internal&quot;: false,
         &quot;author&quot;: {
-            &quot;id&quot;: &quot;01m504dhwc2t6aam4q43jywhws&quot;,
+            &quot;id&quot;: &quot;01m504km0pa9psxpjfp36d61hb&quot;,
             &quot;name&quot;: &quot;Colt Balistreri&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
         },
-        &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
     }
 }</code>
  </pre>
@@ -6025,13 +6172,13 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m504dht32bxzr1tcf60f0nhk&quot;,
+            &quot;id&quot;: &quot;01m504kky6rht7vq7w0nhjgxcy&quot;,
             &quot;subject&quot;: &quot;Eius et animi quos velit et.&quot;,
             &quot;description&quot;: &quot;Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.&quot;,
             &quot;status&quot;: &quot;open&quot;,
             &quot;priority&quot;: &quot;urgent&quot;,
             &quot;category&quot;: {
-                &quot;id&quot;: &quot;01m504dht2fjbcas4b3qsqcm1z&quot;,
+                &quot;id&quot;: &quot;01m504kky5d5crxfq9x2kezkq9&quot;,
                 &quot;name&quot;: &quot;Voluptatem Laboriosam&quot;,
                 &quot;slug&quot;: &quot;voluptatem-laboriosam&quot;,
                 &quot;description&quot;: &quot;Quis adipisci molestias fugit deleniti distinctio eum.&quot;,
@@ -6059,13 +6206,13 @@ fetch(url, {
                 }
             },
             &quot;requester&quot;: {
-                &quot;id&quot;: &quot;01m504dht04h7bqpj5vmm2vfe6&quot;,
+                &quot;id&quot;: &quot;01m504kky2y9128m1fcw50b9ra&quot;,
                 &quot;name&quot;: &quot;Mina Bauch&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
             },
             &quot;assignee&quot;: {
-                &quot;id&quot;: &quot;01m504dht1zjdgrt5nks70xdgz&quot;,
+                &quot;id&quot;: &quot;01m504kky3vk7n935z6mab0h6r&quot;,
                 &quot;name&quot;: &quot;Donny Leffler&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
@@ -6074,21 +6221,21 @@ fetch(url, {
             &quot;closed_at&quot;: null,
             &quot;sla&quot;: {
                 &quot;first_response_at&quot;: null,
-                &quot;first_response_due_at&quot;: &quot;2026-10-15T16:10:42+00:00&quot;,
-                &quot;resolution_due_at&quot;: &quot;2026-10-15T19:55:42+00:00&quot;,
+                &quot;first_response_due_at&quot;: &quot;2026-10-15T16:14:01+00:00&quot;,
+                &quot;resolution_due_at&quot;: &quot;2026-10-15T19:59:01+00:00&quot;,
                 &quot;is_overdue&quot;: false
             },
-            &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;,
-            &quot;updated_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;,
+            &quot;updated_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m504dhtafr0a037whhx0gnj1&quot;,
+            &quot;id&quot;: &quot;01m504kkygwwdvrzj2zm1zy82m&quot;,
             &quot;subject&quot;: &quot;Id aut libero aliquam veniam.&quot;,
             &quot;description&quot;: &quot;Mollitia deleniti nemo odit quia officia. Dignissimos neque blanditiis odio.&quot;,
             &quot;status&quot;: &quot;open&quot;,
             &quot;priority&quot;: &quot;normal&quot;,
             &quot;category&quot;: {
-                &quot;id&quot;: &quot;01m504dht9t32sgwncv9jw7ehq&quot;,
+                &quot;id&quot;: &quot;01m504kkygwwdvrzj2zm1zy82k&quot;,
                 &quot;name&quot;: &quot;Recusandae Modi&quot;,
                 &quot;slug&quot;: &quot;recusandae-modi&quot;,
                 &quot;description&quot;: &quot;Ex repellendus assumenda et tenetur ab reiciendis.&quot;,
@@ -6116,13 +6263,13 @@ fetch(url, {
                 }
             },
             &quot;requester&quot;: {
-                &quot;id&quot;: &quot;01m504dht8h78zm9ynjx2cpepb&quot;,
+                &quot;id&quot;: &quot;01m504kkyemx5cpsgb07q1d17k&quot;,
                 &quot;name&quot;: &quot;Emanuel Emmerich&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
             },
             &quot;assignee&quot;: {
-                &quot;id&quot;: &quot;01m504dht9t32sgwncv9jw7ehp&quot;,
+                &quot;id&quot;: &quot;01m504kkyf6daxjv50e63g9me5&quot;,
                 &quot;name&quot;: &quot;Jacques Howe&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
@@ -6131,12 +6278,12 @@ fetch(url, {
             &quot;closed_at&quot;: null,
             &quot;sla&quot;: {
                 &quot;first_response_at&quot;: null,
-                &quot;first_response_due_at&quot;: &quot;2026-10-15T19:55:42+00:00&quot;,
-                &quot;resolution_due_at&quot;: &quot;2026-10-16T15:55:42+00:00&quot;,
+                &quot;first_response_due_at&quot;: &quot;2026-10-15T19:59:01+00:00&quot;,
+                &quot;resolution_due_at&quot;: &quot;2026-10-16T15:59:01+00:00&quot;,
                 &quot;is_overdue&quot;: false
             },
-            &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;,
-            &quot;updated_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;,
+            &quot;updated_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
         }
     ],
     &quot;links&quot;: {
@@ -6675,13 +6822,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m504dhtpdve1mv75j9skncpb&quot;,
+        &quot;id&quot;: &quot;01m504kkz1nsadqmqwpx58ed4c&quot;,
         &quot;subject&quot;: &quot;Eius et animi quos velit et.&quot;,
         &quot;description&quot;: &quot;Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;urgent&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m504dhtn0j7w4p4h9cktemx5&quot;,
+            &quot;id&quot;: &quot;01m504kkz01mt10k8jksfdgkg7&quot;,
             &quot;name&quot;: &quot;Quis Adipisci&quot;,
             &quot;slug&quot;: &quot;quis-adipisci&quot;,
             &quot;description&quot;: &quot;Fugit deleniti distinctio eum doloremque id aut libero.&quot;,
@@ -6709,13 +6856,13 @@ fetch(url, {
             }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m504dhtmja5709gzwm2fasem&quot;,
+            &quot;id&quot;: &quot;01m504kkyxsaa21zwrp55y78rd&quot;,
             &quot;name&quot;: &quot;Mina Bauch&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m504dhtn0j7w4p4h9cktemx4&quot;,
+            &quot;id&quot;: &quot;01m504kkyzkv470m3fr6d66w3m&quot;,
             &quot;name&quot;: &quot;Domingo Leuschke&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
@@ -6724,12 +6871,12 @@ fetch(url, {
         &quot;closed_at&quot;: null,
         &quot;sla&quot;: {
             &quot;first_response_at&quot;: null,
-            &quot;first_response_due_at&quot;: &quot;2026-10-15T16:10:42+00:00&quot;,
-            &quot;resolution_due_at&quot;: &quot;2026-10-15T19:55:42+00:00&quot;,
+            &quot;first_response_due_at&quot;: &quot;2026-10-15T16:14:01+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-15T19:59:01+00:00&quot;,
             &quot;is_overdue&quot;: false
         },
-        &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
     }
 }</code>
  </pre>
@@ -7098,13 +7245,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m504dhty3nfc00hzt4vaa64j&quot;,
+        &quot;id&quot;: &quot;01m504kkzbbh6kw5htt9ca0asc&quot;,
         &quot;subject&quot;: &quot;Et animi quos velit et fugiat.&quot;,
         &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;normal&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m504dhty3nfc00hzt4vaa64h&quot;,
+            &quot;id&quot;: &quot;01m504kkzbbh6kw5htt9ca0asb&quot;,
             &quot;name&quot;: &quot;Molestias Fugit&quot;,
             &quot;slug&quot;: &quot;molestias-fugit&quot;,
             &quot;description&quot;: &quot;Distinctio eum doloremque id aut libero aliquam veniam corporis.&quot;,
@@ -7132,13 +7279,13 @@ fetch(url, {
             }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m504dhtxfe37e76azv3axgy2&quot;,
+            &quot;id&quot;: &quot;01m504kkzaxbvr2hdn1hqd9zef&quot;,
             &quot;name&quot;: &quot;Mr. Carey Smitham&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m504dhty3nfc00hzt4vaa64g&quot;,
+            &quot;id&quot;: &quot;01m504kkzbbh6kw5htt9ca0asa&quot;,
             &quot;name&quot;: &quot;Matilda Feeney&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
@@ -7147,12 +7294,12 @@ fetch(url, {
         &quot;closed_at&quot;: null,
         &quot;sla&quot;: {
             &quot;first_response_at&quot;: null,
-            &quot;first_response_due_at&quot;: &quot;2026-10-15T19:55:42+00:00&quot;,
-            &quot;resolution_due_at&quot;: &quot;2026-10-16T15:55:42+00:00&quot;,
+            &quot;first_response_due_at&quot;: &quot;2026-10-15T19:59:01+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-16T15:59:01+00:00&quot;,
             &quot;is_overdue&quot;: false
         },
-        &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
     }
 }</code>
  </pre>
@@ -7491,13 +7638,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m504dhv6xgr0m792agy4hrsw&quot;,
+        &quot;id&quot;: &quot;01m504kkzkz8j7ypj7zbex05w2&quot;,
         &quot;subject&quot;: &quot;Et animi quos velit et fugiat.&quot;,
         &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;normal&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m504dhv6xgr0m792agy4hrsv&quot;,
+            &quot;id&quot;: &quot;01m504kkzjhsjv4wjepq78q8kd&quot;,
             &quot;name&quot;: &quot;Eum Doloremque&quot;,
             &quot;slug&quot;: &quot;eum-doloremque&quot;,
             &quot;description&quot;: &quot;Aut libero aliquam veniam corporis.&quot;,
@@ -7525,13 +7672,13 @@ fetch(url, {
             }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m504dhv5den931fdgv5bzpdf&quot;,
+            &quot;id&quot;: &quot;01m504kkzhmqcn6jy03t3ndq7r&quot;,
             &quot;name&quot;: &quot;Mr. Carey Smitham&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m504dhv5den931fdgv5bzpdg&quot;,
+            &quot;id&quot;: &quot;01m504kkzjhsjv4wjepq78q8kc&quot;,
             &quot;name&quot;: &quot;Janick Schultz DDS&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
@@ -7540,12 +7687,12 @@ fetch(url, {
         &quot;closed_at&quot;: null,
         &quot;sla&quot;: {
             &quot;first_response_at&quot;: null,
-            &quot;first_response_due_at&quot;: &quot;2026-10-15T19:55:42+00:00&quot;,
-            &quot;resolution_due_at&quot;: &quot;2026-10-16T15:55:42+00:00&quot;,
+            &quot;first_response_due_at&quot;: &quot;2026-10-15T19:59:01+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-16T15:59:01+00:00&quot;,
             &quot;is_overdue&quot;: false
         },
-        &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
     }
 }</code>
  </pre>
@@ -7892,13 +8039,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m504dhvgxqb77z9mxwe6ybp7&quot;,
+        &quot;id&quot;: &quot;01m504kkzw09fcgrk09v5r74pq&quot;,
         &quot;subject&quot;: &quot;Et animi quos velit et fugiat.&quot;,
         &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;normal&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m504dhvfvjrwa3dtq9ed2wyx&quot;,
+            &quot;id&quot;: &quot;01m504kkzv47erppmvrbnkf775&quot;,
             &quot;name&quot;: &quot;Aliquam Veniam&quot;,
             &quot;slug&quot;: &quot;aliquam-veniam&quot;,
             &quot;description&quot;: &quot;Dolorem mollitia deleniti nemo.&quot;,
@@ -7926,13 +8073,13 @@ fetch(url, {
             }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m504dhve0n85a0t1hhckztam&quot;,
+            &quot;id&quot;: &quot;01m504kkzs8rgmsafqwv7p561x&quot;,
             &quot;name&quot;: &quot;Mr. Carey Smitham&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m504dhvfvjrwa3dtq9ed2wyw&quot;,
+            &quot;id&quot;: &quot;01m504kkztst9svpwp4dr2k785&quot;,
             &quot;name&quot;: &quot;Prof. Annabelle Kshlerin&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
@@ -7941,12 +8088,12 @@ fetch(url, {
         &quot;closed_at&quot;: null,
         &quot;sla&quot;: {
             &quot;first_response_at&quot;: null,
-            &quot;first_response_due_at&quot;: &quot;2026-10-15T19:55:42+00:00&quot;,
-            &quot;resolution_due_at&quot;: &quot;2026-10-16T15:55:42+00:00&quot;,
+            &quot;first_response_due_at&quot;: &quot;2026-10-15T19:59:01+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-16T15:59:01+00:00&quot;,
             &quot;is_overdue&quot;: false
         },
-        &quot;created_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T15:55:42+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T15:59:01+00:00&quot;
     }
 }</code>
  </pre>

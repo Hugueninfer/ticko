@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\Role;
+use App\Models\PersonalAccessToken;
 use App\Models\Tenant;
 
 beforeEach(function (): void {
@@ -70,3 +71,37 @@ it('is rate limited per client, separately from credential sign-in', function ()
     $this->withHeaders($this->spa)->postJson('/api/v1/auth/demo', ['role' => 'root'])->assertUnprocessable();
     $this->withHeaders($this->spa)->postJson('/api/v1/auth/demo', ['role' => 'root'])->assertTooManyRequests();
 });
+
+it('issues a token for the demo customer to the mobile app', function (): void {
+    $customer = $this->userIn($this->demo, Role::Customer);
+    $this->userIn($this->demo, Role::Customer);
+
+    $token = $this->withHeader('X-Tenant', 'other')
+        ->postJson('/api/v1/auth/demo/tokens', ['device_name' => 'Pixel 9'])
+        ->assertCreated()
+        ->assertJsonStructure(['token', 'token_type', 'expires_in'])
+        ->json('token');
+
+    $this->app['auth']->forgetGuards();
+    $this->withToken($token)->getJson('/api/v1/auth/me')
+        ->assertOk()
+        ->assertJsonPath('data.id', $customer->id)
+        ->assertJsonPath('data.role', 'customer')
+        ->assertJsonPath('data.tenant.slug', 'acme');
+});
+
+it('validates the demo token request and needs a demo customer', function (): void {
+    $this->postJson('/api/v1/auth/demo/tokens', [])->assertUnprocessable()->assertJsonValidationErrors('device_name');
+    $this->postJson('/api/v1/auth/demo/tokens', ['device_name' => 'Pixel'])->assertNotFound();
+});
+
+it('never issues demo tokens when demo sign-in is disabled or in production', function (Closure $setup): void {
+    $this->userIn($this->demo, Role::Customer);
+    $setup();
+
+    $this->postJson('/api/v1/auth/demo/tokens', ['device_name' => 'Pixel'])->assertNotFound();
+    expect(PersonalAccessToken::count())->toBe(0);
+})->with([
+    'disabled' => [fn () => config(['ticko.demo.enabled' => false])],
+    'production' => [fn () => app()->detectEnvironment(fn (): string => 'production')],
+]);
