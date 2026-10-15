@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Actions\Tickets;
 
+use App\Enums\PushReason;
 use App\Enums\TicketStatus;
+use App\Events\TicketStatusChanged;
+use App\Jobs\SendTicketPushNotification;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -24,10 +27,20 @@ final readonly class ChangeTicketStatus
             throw new AuthorizationException;
         }
 
+        $changed = $ticket->status !== $status;
+
         $ticket->status = $status;
         $ticket->resolved_at = $status === TicketStatus::Resolved ? now() : null;
         $ticket->closed_at = $status === TicketStatus::Closed ? now() : null;
         $ticket->save();
+
+        if ($changed) {
+            TicketStatusChanged::dispatch($ticket->tenant_id, $ticket->id, $status);
+
+            if ($actor->id !== $ticket->requester_id) {
+                SendTicketPushNotification::dispatch($ticket->tenant_id, $ticket->id, PushReason::StatusChange)->afterCommit();
+            }
+        }
 
         return $ticket;
     }

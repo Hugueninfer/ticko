@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Actions\Auth\IssueAccessToken;
+use App\Enums\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\ResolveTenant;
 use App\Http\Requests\Auth\DemoLoginRequest;
+use App\Http\Requests\Auth\DemoTokenRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Tenant;
 use App\Models\User;
@@ -21,7 +24,8 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * One-click sign-in as the seeded demo users, for local and demo environments.
+ * One-click sign-in as the seeded demo users, for local and demo environments:
+ * the agent or admin in the web app, the customer in the mobile app.
  * Answers 404 unless TICKO_DEMO_LOGIN is on, and always in production, so the
  * endpoints look absent wherever they are not meant to exist.
  */
@@ -65,6 +69,28 @@ final class DemoLoginController extends Controller
         $request->session()->put(ResolveTenant::SESSION_KEY, $tenant->id);
 
         return UserResource::make($user->load('tenant'));
+    }
+
+    /**
+     * Demo customer token (mobile)
+     *
+     * Issues an API token for the demo tenant's customer, so the mobile app
+     * can offer a one-tap demo without shipping a password.
+     */
+    #[Unauthenticated]
+    #[ScribeResponse(['token' => '01J...|plain-text-token', 'token_type' => 'Bearer', 'expires_in' => 2592000], 201)]
+    public function issueToken(DemoTokenRequest $request, TenantContext $tenants, IssueAccessToken $issue): JsonResponse
+    {
+        $tenants->set($this->demoTenant());
+
+        $user = User::query()->where('role', Role::Customer)->where('is_active', true)->orderBy('created_at')->first()
+            ?? throw new NotFoundHttpException;
+
+        return response()->json([
+            'token' => $issue->handle($user, $request->string('device_name')->toString()),
+            'token_type' => 'Bearer',
+            'expires_in' => config()->integer('ticko.token_ttl_minutes') * 60,
+        ], 201);
     }
 
     private function demoTenant(): Tenant

@@ -10,6 +10,7 @@ use App\Enums\TicketStatus;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 use Knuckles\Scribe\Attributes\ResponseField;
 
 /**
@@ -30,6 +31,8 @@ final class TicketResource extends JsonResource
     #[ResponseField('assignee.email', 'string', 'Only shown to staff.', nullable: true)]
     #[ResponseField('category.description', 'string', nullable: true)]
     #[ResponseField('category.tickets_count', 'integer', required: false)]
+    #[ResponseField('last_message', 'object', 'Latest public message, as an excerpt (ticket listing only).', required: false, nullable: true)]
+    #[ResponseField('last_message.author_role', 'string', enum: Role::class)]
     #[ResponseField('resolved_at', 'string', nullable: true)]
     #[ResponseField('closed_at', 'string', nullable: true)]
     #[ResponseField('sla.first_response_at', 'string', nullable: true)]
@@ -46,6 +49,13 @@ final class TicketResource extends JsonResource
             'category' => CategoryResource::make($this->whenLoaded('category')),
             'requester' => UserSummaryResource::make($this->whenLoaded('requester')),
             'assignee' => UserSummaryResource::make($this->whenLoaded('assignee')),
+            'last_message' => $this->whenLoaded('lastPublicMessage', fn (): ?array => $this->lastPublicMessage === null ? null : [
+                'id' => $this->lastPublicMessage->id,
+                'excerpt' => Str::limit(Str::squish($this->lastPublicMessage->body), 140),
+                'author_name' => $this->lastPublicMessage->author->name,
+                'author_role' => $this->lastPublicMessage->author->role->value,
+                'created_at' => $this->lastPublicMessage->created_at->toIso8601String(),
+            ]),
             'resolved_at' => $this->resolved_at?->toIso8601String(),
             'closed_at' => $this->closed_at?->toIso8601String(),
             'sla' => [

@@ -53,7 +53,7 @@ it('declares explicit $fillable on every model and no $guarded escape hatch', fu
 });
 
 it('scopes every model with a tenant_id column to the tenant', function (): void {
-    $scoped = ['User', 'Category', 'Ticket', 'TicketMessage', 'Attachment'];
+    $scoped = ['User', 'Category', 'Ticket', 'TicketMessage', 'Attachment', 'PushDevice'];
 
     foreach ($scoped as $name) {
         expect(class_uses_recursive('App\\Models\\'.$name))->toHaveKey(BelongsToTenant::class);
@@ -61,8 +61,10 @@ it('scopes every model with a tenant_id column to the tenant', function (): void
 });
 
 it('authorizes every API controller action', function (): void {
+    // Broadcasting auth (api/broadcasting/auth) is the framework's controller;
+    // its authorization lives in routes/channels.php (see BroadcastingTest).
     $routes = collect(Route::getRoutes()->getRoutes())
-        ->filter(fn ($route): bool => str_starts_with($route->uri(), 'api/'));
+        ->filter(fn ($route): bool => str_starts_with($route->uri(), 'api/v1/'));
 
     expect($routes)->not->toBeEmpty();
 

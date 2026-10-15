@@ -45,6 +45,9 @@ export type TeamMemberInput = RequestBody<'/api/v1/team', 'post'>;
 export type Role = TeamMember['role'];
 export type Metrics = Data<ResponseBody<'/api/v1/metrics', 'get'>>;
 export type DemoLogin = Data<ResponseBody<'/api/v1/auth/demo', 'get'>>;
+export type NotificationPreferences = CurrentUser['notification_preferences'];
+export type PushDeviceInput = RequestBody<'/api/v1/push-devices', 'post'>;
+export type RealtimeSettings = Data<ResponseBody<'/api/v1/realtime', 'get'>>;
 
 /** RFC 9457 problem details, the shape of every API error. */
 export interface ProblemDetails {

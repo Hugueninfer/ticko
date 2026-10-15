@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Tickets;
 
 use App\Enums\TicketPriority;
+use App\Enums\TicketStatus;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -14,13 +15,19 @@ final readonly class ListTickets
 {
     public const array SORTABLE = ['created_at', 'updated_at', 'priority', 'status', 'first_response_due_at', 'resolution_due_at'];
 
+    /** Groups of statuses for the `state` filter (the customer app's tabs). */
+    public const array STATES = [
+        'active' => [TicketStatus::Open, TicketStatus::Pending],
+        'done' => [TicketStatus::Resolved, TicketStatus::Closed],
+    ];
+
     /**
-     * @param  array{status?: string, priority?: string, category_id?: string, assignee_id?: string, requester_id?: string, unassigned?: bool, overdue?: bool, q?: string, sort?: string, per_page?: int}  $filters
+     * @param  array{status?: string, state?: string, priority?: string, category_id?: string, assignee_id?: string, requester_id?: string, unassigned?: bool, overdue?: bool, q?: string, sort?: string, per_page?: int}  $filters
      * @return LengthAwarePaginator<int, Ticket>
      */
     public function handle(User $viewer, array $filters): LengthAwarePaginator
     {
-        $query = Ticket::query()->with(['requester', 'assignee', 'category']);
+        $query = Ticket::query()->with(['requester', 'assignee', 'category', 'lastPublicMessage.author']);
 
         // Customers only ever see the tickets they opened.
         if (! $viewer->isStaff()) {
@@ -33,6 +40,10 @@ final readonly class ListTickets
             if (isset($filters[$column])) {
                 $query->where($column, $filters[$column]);
             }
+        }
+
+        if (isset($filters['state'])) {
+            $query->whereIn('status', self::STATES[$filters['state']]);
         }
 
         if (($filters['unassigned'] ?? false) === true) {

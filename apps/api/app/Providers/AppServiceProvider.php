@@ -6,11 +6,13 @@ namespace App\Providers;
 
 use App\Models\PersonalAccessToken;
 use App\Models\User;
+use App\Services\Push\ExpoPushClient;
 use App\Support\Tenancy\TenantContext;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
@@ -29,6 +31,11 @@ class AppServiceProvider extends ServiceProvider
             $app->make(DatabaseManager::class)->connection(),
         ));
         $this->app->singleton(ImageManager::class, fn () => new ImageManager(new GdDriver));
+        $this->app->bind(ExpoPushClient::class, fn (Application $app): ExpoPushClient => new ExpoPushClient(
+            $app->make(HttpFactory::class),
+            config()->string('services.expo.push_url'),
+            is_string($token = config('services.expo.access_token')) ? $token : null,
+        ));
     }
 
     public function boot(): void

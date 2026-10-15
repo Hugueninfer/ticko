@@ -3,6 +3,8 @@
 # Networks:
 #   edge     — only the Caddy web server publishes a port (127.0.0.1 by default).
 #   backend  — internal: Postgres and Redis are unreachable from outside Docker.
+#   realtime — internal: the Reverb WebSocket server; browsers and phones reach
+#              it only through Caddy (/app/*), never on a port of its own.
 
 name: ticko
 
@@ -20,6 +22,11 @@ x-api-common: &api-common
     REDIS_HOST: redis
     # Read from the shell or .env; off unless explicitly enabled.
     TICKO_DEMO_LOGIN: ${TICKO_DEMO_LOGIN:-false}
+    # The API and the queue publish realtime events to Reverb on the internal network.
+    BROADCAST_CONNECTION: reverb
+    REVERB_HOST: reverb
+    REVERB_PORT: "8080"
+    REVERB_SCHEME: http
   read_only: true
   tmpfs:
     - /tmp
@@ -40,6 +47,8 @@ services:
     depends_on:
       api:
         condition: service_healthy
+      reverb:
+        condition: service_healthy
     ports:
       - "${WEB_BIND:-127.0.0.1}:${WEB_PORT:-8080}:8080"
     healthcheck:
@@ -47,7 +56,7 @@ services:
       interval: 10s
       timeout: 3s
       retries: 5
-    networks: [edge]
+    networks: [edge, realtime]
     read_only: true
     tmpfs:
       - /data
@@ -64,7 +73,7 @@ services:
         condition: service_completed_successfully
       redis:
         condition: service_healthy
-    networks: [edge, backend]
+    networks: [edge, backend, realtime]
 
   queue:
     <<: *api-common
@@ -79,7 +88,19 @@ services:
         condition: service_completed_successfully
       redis:
         condition: service_healthy
-    networks: [backend]
+    networks: [backend, realtime]
+
+  # WebSocket server (Laravel Reverb). Only reachable through Caddy at /app/*;
+  # its HTTP publishing API (/apps/*) is only reachable inside Docker.
+  reverb:
+    <<: *api-common
+    command: ["php", "artisan", "reverb:start", "--host=0.0.0.0", "--port=8080"]
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:8080/up"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks: [realtime]
 
   migrate:
     <<: *api-common
@@ -174,6 +195,8 @@ networks:
   edge: {}
   egress: {}
   backend:
+    internal: true
+  realtime:
     internal: true
 
 volumes:

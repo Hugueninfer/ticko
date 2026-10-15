@@ -2,7 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ApiError, unwrap, type CurrentUser, type Role } from '@ticko/api-client';
 
 import { api, ensureCsrfCookie } from '@/lib/api';
-import { queryKeys } from '@/lib/query';
+import { queryKeys, settleQueries } from '@/lib/query';
+import { resumeRealtime, suspendRealtime } from '@/lib/realtime';
 
 /** The signed-in user, or null for guests. Other errors propagate. */
 export function useCurrentUser() {
@@ -87,9 +88,15 @@ export function useLogout() {
 
   return useMutation({
     mutationFn: async () => {
+      // A request still running with the current session would restore it
+      // after the logout (it saves the session and resends its cookie), so
+      // stop realtime first, then wait for every request in flight.
+      await suspendRealtime();
+      await settleQueries(queryClient);
       unwrap(await api.POST('/api/v1/auth/logout'));
     },
     onSettled: () => {
+      resumeRealtime();
       // Drop every cached response of the previous user.
       queryClient.clear();
       queryClient.setQueryData(queryKeys.me, null);

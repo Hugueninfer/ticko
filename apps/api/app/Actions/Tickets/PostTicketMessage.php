@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Actions\Tickets;
 
+use App\Enums\PushReason;
 use App\Enums\TicketStatus;
+use App\Events\TicketMessagePosted;
+use App\Jobs\SendTicketPushNotification;
 use App\Models\Ticket;
 use App\Models\TicketMessage;
 use App\Models\User;
@@ -14,7 +17,7 @@ final readonly class PostTicketMessage
 {
     public function handle(User $author, Ticket $ticket, string $body, bool $internal = false): TicketMessage
     {
-        return DB::transaction(function () use ($author, $ticket, $body, $internal): TicketMessage {
+        $message = DB::transaction(function () use ($author, $ticket, $body, $internal): TicketMessage {
             $message = new TicketMessage(['body' => $body, 'is_internal' => $internal]);
             $message->ticket_id = $ticket->id;
             $message->author_id = $author->id;
@@ -28,10 +31,21 @@ final readonly class PostTicketMessage
 
                 $ticket->status = $author->isStaff() ? TicketStatus::Pending : TicketStatus::Open;
                 $ticket->resolved_at = null;
+                // The conversation moved: list the ticket as recently updated.
+                $ticket->updated_at = $message->created_at;
                 $ticket->save();
             }
 
             return $message;
         });
+
+        TicketMessagePosted::dispatch($ticket->tenant_id, $ticket->id, $message->id, $internal);
+
+        // The requester hears about public replies from the team on their phone.
+        if (! $internal && $author->isStaff() && $author->id !== $ticket->requester_id) {
+            SendTicketPushNotification::dispatch($ticket->tenant_id, $ticket->id, PushReason::Reply)->afterCommit();
+        }
+
+        return $message;
     }
 }

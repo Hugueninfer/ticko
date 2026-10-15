@@ -21,6 +21,11 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
+    // Private channel authorization for the web (session) and mobile (bearer token) clients.
+    ->withBroadcasting(
+        __DIR__.'/../routes/channels.php',
+        ['prefix' => 'api', 'middleware' => ['api', 'auth:sanctum', 'active', 'throttle:api']],
+    )
     ->withMiddleware(function (Middleware $middleware): void {
         // Sanctum SPA cookie authentication for first-party frontends.
         $middleware->statefulApi();

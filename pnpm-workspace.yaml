@@ -2,3 +2,12 @@ packages:
   - "apps/web"
   - "apps/mobile"
   - "packages/*"
+
+# Advisories in development tooling only, with no patched release yet.
+# Both come from @expo/cli (the Expo dev server/bundler run on the
+# developer's machine), are not part of the app bundle, and are revisited
+# on every Expo SDK upgrade.
+auditConfig:
+  ignoreGhsas:
+    - GHSA-86w9-cpqp-85rv # node-forge, via @expo/cli
+    - GHSA-vfj7-8cjw-p6xm # braces, via @expo/cli > @expo/metro-file-map > micromatch

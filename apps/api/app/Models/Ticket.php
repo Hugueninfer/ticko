@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -37,6 +38,7 @@ use Illuminate\Support\Carbon;
  * @property-read User $requester
  * @property-read User|null $assignee
  * @property-read Category|null $category
+ * @property-read TicketMessage|null $lastPublicMessage
  */
 class Ticket extends Model
 {
@@ -68,6 +70,14 @@ class Ticket extends Model
         'status' => 'open',
         'priority' => 'normal',
     ];
+
+    /**
+     * Short reference shown to people ("#4F2K9Z"): the last 6 characters of the ULID.
+     */
+    public function reference(): string
+    {
+        return '#'.mb_strtoupper(mb_substr($this->id, -6));
+    }
 
     /**
      * Whether a pending SLA deadline has already passed.
@@ -127,6 +137,19 @@ class Ticket extends Model
     public function messages(): HasMany
     {
         return $this->hasMany(TicketMessage::class);
+    }
+
+    /**
+     * Latest message the requester can see (internal notes excluded).
+     *
+     * @return HasOne<TicketMessage, $this>
+     */
+    public function lastPublicMessage(): HasOne
+    {
+        return $this->hasOne(TicketMessage::class)->ofMany(
+            ['created_at' => 'max', 'id' => 'max'],
+            fn (Builder $query) => $query->whereRaw('is_internal = false'),
+        );
     }
 
     /**

@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Middleware\ResolveTenant;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\TokenRequest;
+use App\Http\Requests\Auth\UpdateNotificationPreferencesRequest;
 use App\Http\Requests\Auth\UpdatePasswordRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -131,5 +132,23 @@ final class AuthController extends Controller
             ->delete();
 
         return response()->noContent();
+    }
+
+    /**
+     * Update notification preferences
+     *
+     * Chooses which events send a push notification to the user's devices.
+     */
+    #[SelfService]
+    #[ResponseFromApiResource(UserResource::class, User::class, with: ['tenant'])]
+    public function updateNotificationPreferences(UpdateNotificationPreferencesRequest $request): UserResource
+    {
+        $user = $this->currentUser($request);
+        $user->forceFill([
+            'push_replies' => $request->boolean('push_replies'),
+            'push_status_changes' => $request->boolean('push_status_changes'),
+        ])->save();
+
+        return UserResource::make($user->load('tenant'));
     }
 }

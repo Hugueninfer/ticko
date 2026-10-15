@@ -30,6 +30,7 @@ final class IndexTicketsRequest extends FormRequest
 
         return [
             'status' => ['sometimes', Rule::enum(TicketStatus::class)],
+            'state' => ['sometimes', Rule::in(array_keys(ListTickets::STATES))],
             'priority' => ['sometimes', Rule::enum(TicketPriority::class)],
             'category_id' => ['sometimes', 'ulid'],
             'assignee_id' => ['sometimes', 'ulid'],
@@ -48,7 +49,7 @@ final class IndexTicketsRequest extends FormRequest
      */
     public function filters(): array
     {
-        /** @var array{status?: string, priority?: string, category_id?: string, assignee_id?: string, requester_id?: string, q?: string, sort?: string} $filters */
+        /** @var array{status?: string, state?: string, priority?: string, category_id?: string, assignee_id?: string, requester_id?: string, q?: string, sort?: string} $filters */
         $filters = $this->safe()->except(['unassigned', 'overdue', 'per_page', 'page']);
 
         if ($this->has('unassigned')) {
@@ -73,6 +74,7 @@ final class IndexTicketsRequest extends FormRequest
     {
         return [
             'status' => ['description' => 'Filter by status.', 'example' => 'open'],
+            'state' => ['description' => 'Filter by group of statuses: active (open, pending) or done (resolved, closed).', 'example' => 'active'],
             'priority' => ['description' => 'Filter by priority.', 'example' => 'high'],
             'category_id' => ['description' => 'Filter by category ULID.', 'example' => ''],
             'assignee_id' => ['description' => 'Filter by assignee ULID.', 'example' => ''],

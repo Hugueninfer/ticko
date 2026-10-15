@@ -33,6 +33,7 @@ it('stores an uploaded image privately under a random name', function (): void {
         ->assertJsonPath('data.width', 20)
         ->assertJsonPath('data.height', 10)
         ->assertJsonPath('data.original_name', 'image.png')
+        ->assertJsonPath('data.uploader_id', $this->customer->id)
         ->assertJsonMissingPath('data.path')
         ->assertJsonMissingPath('data.disk');
 
