@@ -1,5 +1,6 @@
 apps/api
-apps/mobile
+apps/mobile/.expo
+apps/mobile/expo-env.d.ts
 services
 pnpm-lock.yaml
 **/dist

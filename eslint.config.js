@@ -15,7 +15,9 @@ export default defineConfig(
     '**/playwright-report/**',
     '**/test-results/**',
     'apps/api/**',
-    'apps/mobile/**',
+    'apps/mobile/.expo/**',
+    'apps/mobile/expo-env.d.ts',
+    'apps/mobile/jest.config.js',
     'services/**',
     'packages/api-client/src/schema.d.ts',
   ]),
@@ -67,6 +69,28 @@ export default defineConfig(
     },
   },
   {
+    files: ['apps/mobile/**/*.{ts,tsx}'],
+    extends: [reactHooks.configs.flat['recommended-latest']],
+    rules: {
+      // Tokens live only in expo-secure-store, never in AsyncStorage.
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [{ name: '@react-native-async-storage/async-storage', message: 'Use expo-secure-store (src/lib/session.ts).' }],
+        },
+      ],
+      // Nothing personal or secret goes to the device logs.
+      'no-console': 'error',
+      'no-eval': 'error',
+      'no-implied-eval': 'error',
+    },
+  },
+  {
+    // Test doubles are CommonJS modules resolved by Jest.
+    files: ['apps/mobile/src/test/**'],
+    rules: { '@typescript-eslint/no-require-imports': 'off' },
+  },
+  {
     // The route table is configuration, not a component module.
     files: ['apps/web/src/router.tsx'],
     rules: { 'react-refresh/only-export-components': 'off' },
@@ -77,7 +101,7 @@ export default defineConfig(
     rules: { 'jsx-a11y/label-has-associated-control': 'off', 'jsx-a11y/heading-has-content': 'off' },
   },
   {
-    files: ['**/*.test.{ts,tsx}', 'apps/web/e2e/**', 'apps/web/src/test/**'],
+    files: ['**/*.test.{ts,tsx}', 'apps/web/e2e/**', 'apps/web/src/test/**', 'apps/mobile/src/test/**'],
     rules: {
       '@typescript-eslint/no-non-null-assertion': 'off',
       '@typescript-eslint/unbound-method': 'off',
