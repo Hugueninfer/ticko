@@ -24,6 +24,13 @@
 		max_size 12MB
 	}
 
+	# Realtime: WebSocket connections to Reverb (Pusher protocol). Only the
+	# socket endpoint is proxied; Reverb's publishing API stays internal.
+	@reverb path /app/*
+	handle @reverb {
+		reverse_proxy {$REVERB_UPSTREAM:reverb:8080}
+	}
+
 	# Laravel: the API, Sanctum's CSRF cookie, API docs, Horizon and health check.
 	@laravel path /api/* /sanctum/* /docs /docs/* /horizon /horizon/* /vendor/horizon/* /up
 	handle @laravel {
