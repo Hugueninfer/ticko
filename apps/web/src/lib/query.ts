@@ -15,6 +15,33 @@ export function createQueryClient(): QueryClient {
   });
 }
 
+/**
+ * Resolves once no query is in flight (or after `timeoutMs`).
+ *
+ * Signing out must wait for requests that started with the old session:
+ * one that finishes after the logout would store the old session again and
+ * send its cookie back, signing the browser in again.
+ */
+export function settleQueries(queryClient: QueryClient, timeoutMs = 5_000): Promise<void> {
+  if (queryClient.isFetching() === 0) {
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve) => {
+    const done = () => {
+      clearTimeout(timer);
+      unsubscribe();
+      resolve();
+    };
+    const timer = setTimeout(done, timeoutMs);
+    const unsubscribe = queryClient.getQueryCache().subscribe(() => {
+      if (queryClient.isFetching() === 0) {
+        done();
+      }
+    });
+  });
+}
+
 export const queryKeys = {
   me: ['me'] as const,
   demo: ['auth', 'demo'] as const,

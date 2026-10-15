@@ -9,6 +9,8 @@ import {
   authorizeChannel,
   connectRealtime,
   disconnectRealtime,
+  resumeRealtime,
+  suspendRealtime,
   useEcho,
   useRealtimeConnection,
   useStaffUpdates,
@@ -98,5 +100,36 @@ describe('realtime', () => {
 
     expect(invalidate).toHaveBeenCalledWith({ queryKey: ['tickets', 'list'] });
     expect(invalidate).toHaveBeenCalledWith({ queryKey: ['tickets', 'detail', 'tk-1'] });
+  });
+
+  it('waits for channel authorizations in flight before signing out', async () => {
+    let release: (response: Response) => void = () => undefined;
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() => new Promise<Response>((resolve) => (release = resolve))),
+    );
+    connectRealtime('key-1');
+    const options = mocks.Pusher.mock.lastCall?.[1] as {
+      channelAuthorization: { customHandler: (params: { socketId: string; channelName: string }, callback: () => void) => void };
+    };
+    options.channelAuthorization.customHandler({ socketId: '1.2', channelName: 'private-x' }, vi.fn());
+    const settled = vi.fn();
+
+    const waiting = suspendRealtime().then(settled);
+    await Promise.resolve();
+    expect(settled).not.toHaveBeenCalled();
+
+    release(new Response(JSON.stringify({ auth: 'k:s' }), { status: 200 }));
+    await waiting;
+    expect(settled).toHaveBeenCalled();
+
+    // While signing out nothing connects or authorizes; afterwards it can again.
+    const refused = vi.fn();
+    options.channelAuthorization.customHandler({ socketId: '1.3', channelName: 'private-x' }, refused);
+    expect(refused).toHaveBeenCalledWith(expect.any(Error), null);
+    expect(connectRealtime('key-1')).toBeNull();
+
+    resumeRealtime();
+    expect(connectRealtime('key-1')).not.toBeNull();
   });
 });

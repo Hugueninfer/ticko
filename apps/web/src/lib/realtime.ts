@@ -15,6 +15,10 @@ import { queryKeys } from './query';
 
 let echo: Echo<'reverb'> | null = null;
 const listeners = new Set<() => void>();
+/** Channel authorizations in flight (they carry the session cookie). */
+const pendingAuthorizations = new Set<Promise<void>>();
+/** While signing out: no new connection and no authorization request. */
+let suspended = false;
 
 function setEcho(next: Echo<'reverb'> | null): void {
   echo = next;
@@ -65,8 +69,12 @@ export async function authorizeChannel(
   }
 }
 
-export function connectRealtime(key: string): Echo<'reverb'> {
+export function connectRealtime(key: string): Echo<'reverb'> | null {
   disconnectRealtime();
+
+  if (suspended) {
+    return null;
+  }
 
   const tls = window.location.protocol === 'https:';
   const port = window.location.port ? Number(window.location.port) : tls ? 443 : 80;
@@ -79,7 +87,16 @@ export function connectRealtime(key: string): Echo<'reverb'> {
     enabledTransports: ['ws', 'wss'],
     disableStats: true,
     channelAuthorization: {
-      customHandler: ({ socketId, channelName }, callback) => void authorizeChannel(socketId, channelName, callback),
+      customHandler: ({ socketId, channelName }, callback) => {
+        if (suspended) {
+          callback(new Error('Signing out'), null);
+
+          return;
+        }
+
+        const pending = authorizeChannel(socketId, channelName, callback).finally(() => pendingAuthorizations.delete(pending));
+        pendingAuthorizations.add(pending);
+      },
     },
   });
   const instance = new Echo({ broadcaster: 'reverb', key, client });
@@ -91,6 +108,21 @@ export function connectRealtime(key: string): Echo<'reverb'> {
 export function disconnectRealtime(): void {
   echo?.disconnect();
   setEcho(null);
+}
+
+/**
+ * Before signing out: disconnects, stops new connections and channel
+ * authorizations, and waits for the ones in flight.
+ */
+export async function suspendRealtime(): Promise<void> {
+  suspended = true;
+  disconnectRealtime();
+  await Promise.allSettled([...pendingAuthorizations]);
+}
+
+/** After signing out (or a failed attempt): realtime may connect again. */
+export function resumeRealtime(): void {
+  suspended = false;
 }
 
 /** Connects while a staff member is signed in and the API enables realtime. */
