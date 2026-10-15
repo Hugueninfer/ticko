@@ -1,4 +1,4 @@
-import { BookOpen, ChartLine, Clock, Inbox, Languages, LogOut, Moon, Sun, Users } from 'lucide-react';
+import { BookOpen, ChartLine, Clock, FlaskConical, Inbox, Languages, LogOut, Moon, Sun, Users } from 'lucide-react';
 import { useState, type ComponentType } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, Outlet, useNavigate } from 'react-router';
@@ -16,6 +16,8 @@ interface NavItem {
   label: string;
   icon: ComponentType<{ className?: string }>;
   soon?: boolean;
+  /** Only active on this exact path (not on its children). */
+  end?: boolean;
 }
 
 function SideLink({ item }: { item: NavItem }) {
@@ -35,6 +37,7 @@ function SideLink({ item }: { item: NavItem }) {
   return (
     <NavLink
       to={item.to}
+      end={item.end}
       className={({ isActive }) =>
         cn('flex items-center gap-2.5 rounded-md px-2.5 py-1.5 hover:bg-muted', isActive && 'bg-muted font-medium')
       }
@@ -64,7 +67,8 @@ export function AppShell() {
 
   const main: NavItem[] = [
     { to: '/tickets', label: t('nav.queue'), icon: Inbox },
-    { to: '/knowledge', label: t('nav.knowledge'), icon: BookOpen, soon: true },
+    { to: '/knowledge', label: t('nav.knowledge'), icon: BookOpen, end: true },
+    { to: '/knowledge/playground', label: t('nav.playground'), icon: FlaskConical },
   ];
   const admin: NavItem[] = [
     { to: '/dashboard', label: t('nav.dashboard'), icon: ChartLine },

@@ -52,6 +52,12 @@ export const queryKeys = {
   messages: (id: string) => ['tickets', 'detail', id, 'messages'] as const,
   attachments: (id: string) => ['tickets', 'detail', id, 'attachments'] as const,
   categories: ['categories'] as const,
+  knowledge: ['knowledge'] as const,
+  articles: (filters: object) => ['knowledge', 'articles', filters] as const,
+  article: (id: string) => ['knowledge', 'article', id] as const,
+  chunks: (id: string) => ['knowledge', 'article', id, 'chunks'] as const,
+  knowledgeStats: ['knowledge', 'stats'] as const,
+  suggestion: (ticketId: string) => ['tickets', 'detail', ticketId, 'suggestion'] as const,
   team: (filters: object = {}) => ['team', filters] as const,
   metrics: (from: string, to: string) => ['metrics', from, to] as const,
 };

@@ -31,6 +31,7 @@ function setup(overrides: Parameters<typeof mockApi>[0] = {}) {
         },
       ],
     },
+    'GET /api/v1/tickets/:id/suggestions/latest': { data: null },
     'GET /api/v1/tickets': page([makeTicket({ id: 'other', subject: 'Troca de tamanho', status: 'resolved' }), ticket]),
     'GET /api/v1/team': (request) =>
       page(request.query.get('role') === 'agent' ? [makeMember(), { ...makeMember(), id: agent.id, name: agent.name }] : []),
@@ -39,7 +40,7 @@ function setup(overrides: Parameters<typeof mockApi>[0] = {}) {
 }
 
 describe('TicketDetailPage', () => {
-  it('shows the customer, the conversation as plain text, attachments and the AI placeholder', async () => {
+  it('shows the customer, the conversation as plain text, attachments and the AI panel', async () => {
     setup();
     renderApp(url);
 
@@ -53,7 +54,7 @@ describe('TicketDetailPage', () => {
     expect(document.querySelector('b')).toBeNull();
     expect(screen.getByText('Nota interna', { selector: 'span' })).toBeInTheDocument();
     expect(await screen.findByRole('link', { name: 'Abrir imagem rastreio.jpg' })).toHaveAttribute('rel', 'noopener noreferrer');
-    expect(screen.getByText('Sugestões de resposta em breve')).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Gerar sugestão' })).toBeInTheDocument();
     expect(await screen.findByRole('link', { name: 'Troca de tamanho' })).toBeInTheDocument();
   });
 

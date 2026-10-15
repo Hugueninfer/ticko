@@ -74,6 +74,7 @@ export function Composer({ ticketId, disabled }: { ticketId: string; disabled: b
 
   return (
     <form
+      data-composer
       className={cn('rounded-lg border bg-background', mode === 'note' && 'border-note-border bg-note')}
       onSubmit={(event) => {
         event.preventDefault();

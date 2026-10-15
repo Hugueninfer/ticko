@@ -1,6 +1,6 @@
 import type { Ticket, TicketStatus } from '@ticko/api-client';
 import { ApiError } from '@ticko/api-client';
-import { ChevronLeft, Sparkles } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router';
 
@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/card';
 import { NativeSelect } from '@/components/ui/input';
+import { AiPanel } from '@/features/ai/AiPanel';
 import { useStaff } from '@/features/team/api';
 import { formatDateTime, ticketRef } from '@/lib/format';
 
@@ -72,34 +73,6 @@ function CustomerColumn({ ticket }: { ticket: Ticket }) {
           </ul>
         )}
       </section>
-    </aside>
-  );
-}
-
-function AiPanelPlaceholder() {
-  const { t } = useTranslation();
-
-  return (
-    <aside className="flex w-80 shrink-0 flex-col border-l p-5" aria-label={t('ai.title')}>
-      <h2 className="flex items-center gap-2 font-semibold">
-        <span className="flex size-7 items-center justify-center rounded-md bg-ai-soft text-ai">
-          <Sparkles className="size-4" aria-hidden />
-        </span>
-        {t('ai.title')}
-        <Badge variant="ai" className="ml-auto">
-          {t('common.comingSoon')}
-        </Badge>
-      </h2>
-      <div className="mt-5 rounded-lg border border-dashed border-ai/40 bg-ai-soft/60 p-4">
-        <p className="font-medium">{t('ai.soonTitle')}</p>
-        <p className="mt-2 text-[13px] text-muted-foreground">{t('ai.soonText')}</p>
-        <div className="mt-4 grid gap-2" aria-hidden>
-          <Skeleton className="h-3 w-4/5 bg-ai/10" />
-          <Skeleton className="h-3 w-full bg-ai/10" />
-          <Skeleton className="h-3 w-2/3 bg-ai/10" />
-        </div>
-      </div>
-      <p className="mt-auto pt-4 text-center text-xs text-muted-foreground">{t('ai.rule')}</p>
     </aside>
   );
 }
@@ -209,7 +182,7 @@ export function TicketDetailPage() {
           </div>
         </section>
 
-        <AiPanelPlaceholder />
+        <AiPanel ticket={current} />
       </div>
     </div>
   );
