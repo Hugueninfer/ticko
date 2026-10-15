@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Api\V1\AiSuggestionController;
 use App\Http\Controllers\Api\V1\AttachmentController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\DemoLoginController;
+use App\Http\Controllers\Api\V1\KnowledgeArticleController;
+use App\Http\Controllers\Api\V1\KnowledgeSearchController;
 use App\Http\Controllers\Api\V1\MetricsController;
 use App\Http\Controllers\Api\V1\PushDeviceController;
 use App\Http\Controllers\Api\V1\RealtimeController;
@@ -64,6 +67,21 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
         Route::get('attachments/{attachment}', [AttachmentController::class, 'show'])->name('attachments.show');
 
         Route::apiResource('categories', CategoryController::class);
+
+        Route::get('knowledge/stats', [KnowledgeArticleController::class, 'stats'])->name('knowledge.stats');
+        Route::post('knowledge/search', KnowledgeSearchController::class)->middleware('throttle:ai')->name('knowledge.search');
+        Route::post('knowledge/articles/import', [KnowledgeArticleController::class, 'import'])->middleware('throttle:uploads')->name('knowledge.articles.import');
+        Route::apiResource('knowledge/articles', KnowledgeArticleController::class)->parameters(['articles' => 'article'])->names('knowledge.articles');
+        Route::post('knowledge/articles/{article}/publish', [KnowledgeArticleController::class, 'publish'])->name('knowledge.articles.publish');
+        Route::post('knowledge/articles/{article}/unpublish', [KnowledgeArticleController::class, 'unpublish'])->name('knowledge.articles.unpublish');
+        Route::post('knowledge/articles/{article}/reindex', [KnowledgeArticleController::class, 'reindex'])->middleware('throttle:ai')->name('knowledge.articles.reindex');
+        Route::get('knowledge/articles/{article}/chunks', [KnowledgeArticleController::class, 'chunks'])->name('knowledge.articles.chunks');
+
+        Route::get('tickets/{ticket}/suggestions/latest', [AiSuggestionController::class, 'latest'])->name('tickets.suggestions.latest');
+        Route::post('tickets/{ticket}/suggestions', [AiSuggestionController::class, 'store'])->middleware('throttle:ai')->name('tickets.suggestions.store');
+        Route::post('suggestions/{suggestion}/approve', [AiSuggestionController::class, 'approve'])->name('suggestions.approve');
+        Route::post('suggestions/{suggestion}/discard', [AiSuggestionController::class, 'discard'])->name('suggestions.discard');
+        Route::post('suggestions/{suggestion}/gap', [AiSuggestionController::class, 'gap'])->name('suggestions.gap');
 
         Route::get('metrics', [MetricsController::class, 'show'])->name('metrics.show');
 

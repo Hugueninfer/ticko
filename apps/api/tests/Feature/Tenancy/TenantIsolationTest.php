@@ -3,8 +3,10 @@
 declare(strict_types=1);
 
 use App\Enums\Role;
+use App\Models\AiSuggestion;
 use App\Models\Attachment;
 use App\Models\Category;
+use App\Models\KbArticle;
 use App\Models\Tenant;
 use App\Models\Ticket;
 use App\Models\TicketMessage;
@@ -33,8 +35,10 @@ beforeEach(function (): void {
         $ticket = Ticket::factory()->create(['requester_id' => $this->adminB->id, 'category_id' => $category->id]);
         TicketMessage::factory()->create(['ticket_id' => $ticket->id, 'author_id' => $this->adminB->id]);
         $attachment = Attachment::factory()->create(['ticket_id' => $ticket->id, 'uploader_id' => $this->adminB->id]);
+        $article = KbArticle::factory()->create(['author_id' => $this->adminB->id]);
+        $suggestion = AiSuggestion::factory()->create(['ticket_id' => $ticket->id, 'requested_by_id' => $this->adminB->id]);
 
-        return compact('category', 'ticket', 'attachment');
+        return compact('category', 'ticket', 'attachment', 'article', 'suggestion');
     });
 });
 
@@ -53,6 +57,19 @@ const FOREIGN_ENDPOINTS = [
     'delete category' => ['DELETE', '/api/v1/categories/{category}', []],
     'show member' => ['GET', '/api/v1/team/{member}', []],
     'update member' => ['PATCH', '/api/v1/team/{member}', ['role' => 'customer']],
+    'show article' => ['GET', '/api/v1/knowledge/articles/{article}', []],
+    'update article' => ['PATCH', '/api/v1/knowledge/articles/{article}', ['title' => 'Hijacked']],
+    'replace article' => ['PUT', '/api/v1/knowledge/articles/{article}', ['title' => 'Hijacked']],
+    'delete article' => ['DELETE', '/api/v1/knowledge/articles/{article}', []],
+    'publish article' => ['POST', '/api/v1/knowledge/articles/{article}/publish', []],
+    'unpublish article' => ['POST', '/api/v1/knowledge/articles/{article}/unpublish', []],
+    'reindex article' => ['POST', '/api/v1/knowledge/articles/{article}/reindex', []],
+    'article chunks' => ['GET', '/api/v1/knowledge/articles/{article}/chunks', []],
+    'latest suggestion' => ['GET', '/api/v1/tickets/{ticket}/suggestions/latest', []],
+    'request suggestion' => ['POST', '/api/v1/tickets/{ticket}/suggestions', []],
+    'approve suggestion' => ['POST', '/api/v1/suggestions/{suggestion}/approve', ['body' => 'hi']],
+    'discard suggestion' => ['POST', '/api/v1/suggestions/{suggestion}/discard', ['reason' => 'tone']],
+    'report gap' => ['POST', '/api/v1/suggestions/{suggestion}/gap', []],
 ];
 
 dataset('foreign single-resource endpoints', FOREIGN_ENDPOINTS);
@@ -63,6 +80,8 @@ it('hides other tenants\' resources', function (string $method, string $uri, arr
         '{attachment}' => $this->b['attachment']->id,
         '{category}' => $this->b['category']->id,
         '{member}' => $this->agentB->id,
+        '{article}' => $this->b['article']->id,
+        '{suggestion}' => $this->b['suggestion']->id,
     ]);
 
     if (($payload['file'] ?? null) === 'image') {
@@ -82,7 +101,10 @@ it('hides other tenants\' resources', function (string $method, string $uri, arr
             ->and(Attachment::count())->toBe(1)
             ->and(Category::firstOrFail()->name)->toBe($this->b['category']->name)
             ->and($this->agentB->fresh()->role)->toBe(Role::Agent)
-            ->and($this->b['ticket']->fresh()->status->value)->toBe('open');
+            ->and($this->b['ticket']->fresh()->status->value)->toBe('open')
+            ->and($this->b['article']->fresh()->title)->toBe($this->b['article']->title)
+            ->and($this->b['suggestion']->fresh()->status->value)->toBe('ready')
+            ->and(AiSuggestion::count())->toBe(1);
     });
 })->with('foreign single-resource endpoints');
 
@@ -96,6 +118,7 @@ it('never lists other tenants\' rows', function (string $uri, int $expected): vo
     'overdue tickets' => ['/api/v1/tickets?overdue=1', 0],
     'categories' => ['/api/v1/categories', 0],
     'team (only the caller)' => ['/api/v1/team', 1],
+    'knowledge articles' => ['/api/v1/knowledge/articles', 0],
 ]);
 
 it('creates new rows in the caller\'s tenant only', function (): void {

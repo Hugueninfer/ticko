@@ -35,6 +35,16 @@ arch('resources')
 
 arch('policies')->expect('App\Policies')->toBeFinal()->toHaveSuffix('Policy');
 
+// The AI never answers a customer by itself: nothing on the AI side can post
+// a message; only ApproveReplySuggestion (an agent's decision) does.
+arch('the AI cannot send messages')
+    ->expect(['App\Services\Ai', 'App\Services\Knowledge', 'App\Services\Suggestions', 'App\Jobs\GenerateReplySuggestion', 'App\Jobs\IndexKnowledgeArticle'])
+    ->not->toUse(['App\Actions\Tickets\PostTicketMessage', 'App\Actions\Suggestions\ApproveReplySuggestion']);
+
+arch('AI providers are reached only through their interfaces')
+    ->expect('App\Services\Ai\Providers')
+    ->toOnlyBeUsedIn(['App\Services\Ai', 'App\Providers\AiServiceProvider']);
+
 arch('actions do not depend on HTTP')
     ->expect('App\Actions')
     ->toBeReadonly()
@@ -53,7 +63,7 @@ it('declares explicit $fillable on every model and no $guarded escape hatch', fu
 });
 
 it('scopes every model with a tenant_id column to the tenant', function (): void {
-    $scoped = ['User', 'Category', 'Ticket', 'TicketMessage', 'Attachment', 'PushDevice'];
+    $scoped = ['User', 'Category', 'Ticket', 'TicketMessage', 'Attachment', 'PushDevice', 'KbArticle', 'KbChunk', 'AiSuggestion'];
 
     foreach ($scoped as $name) {
         expect(class_uses_recursive('App\\Models\\'.$name))->toHaveKey(BelongsToTenant::class);
@@ -69,7 +79,7 @@ it('authorizes every API controller action', function (): void {
     expect($routes)->not->toBeEmpty();
 
     foreach ($routes as $route) {
-        [$class, $method] = explode('@', $route->getActionName());
+        [$class, $method] = [...explode('@', $route->getActionName()), '__invoke'];
         $reflection = new ReflectionMethod($class, $method);
         $middleware = $route->gatherMiddleware();
         $label = "{$class}::{$method} ({$route->uri()})";
