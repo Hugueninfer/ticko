@@ -24,7 +24,7 @@ beforeEach(function (): void {
 
 function articlePayload(array $overrides = []): array
 {
-    return ['title' => 'Política de entregas e prazos', 'body' => Knowledge::DELIVERY, 'visibility' => 'customers', 'tags' => ['rastreio', 'prazo'], ...$overrides];
+    return ['title' => 'Política de entregas e prazos', 'markdown' => Knowledge::DELIVERY, 'visibility' => 'customers', 'tags' => ['rastreio', 'prazo'], ...$overrides];
 }
 
 it('lets agents write, publish and index articles', function (): void {
@@ -33,7 +33,7 @@ it('lets agents write, publish and index articles', function (): void {
         ->assertCreated()
         ->assertJsonPath('data.status', 'draft')
         ->assertJsonPath('data.index.status', 'none')
-        ->assertJsonPath('data.body', Knowledge::DELIVERY)
+        ->assertJsonPath('data.markdown', Knowledge::DELIVERY)
         ->json('data.id');
 
     // Drafts are never indexed.
@@ -61,7 +61,7 @@ it('keeps citing the published version while a draft is edited', function (): vo
     $article = Knowledge::publish($this->tenant, $this->agent, 'Entregas', Knowledge::DELIVERY);
 
     $this->actingAsUser($this->agent)
-        ->patchJson("/api/v1/knowledge/articles/{$article->id}", ['body' => "## Novo\nPrazo novo de 1 dia."])
+        ->patchJson("/api/v1/knowledge/articles/{$article->id}", ['markdown' => "## Novo\nPrazo novo de 1 dia."])
         ->assertOk()
         ->assertJsonPath('data.has_unpublished_changes', true);
 
@@ -121,7 +121,7 @@ it('lists articles with filters and figures', function (): void {
     Knowledge::publish($this->tenant, $this->agent, 'Política de entregas', Knowledge::DELIVERY, categoryId: $category->id);
     $this->actingAsUser($this->agent)->postJson('/api/v1/knowledge/articles', articlePayload(['title' => 'Cupons vigentes']))->assertCreated();
 
-    $this->getJson('/api/v1/knowledge/articles')->assertOk()->assertJsonCount(2, 'data')->assertJsonMissingPath('data.0.body');
+    $this->getJson('/api/v1/knowledge/articles')->assertOk()->assertJsonCount(2, 'data')->assertJsonMissingPath('data.0.markdown');
     $this->getJson('/api/v1/knowledge/articles?status=draft')->assertJsonCount(1, 'data')->assertJsonPath('data.0.title', 'Cupons vigentes');
     $this->getJson('/api/v1/knowledge/articles?q=entregas')->assertJsonCount(1, 'data');
     $this->getJson("/api/v1/knowledge/articles?category_id={$category->id}")->assertJsonCount(1, 'data')
@@ -141,7 +141,7 @@ it('imports a Markdown file as a draft', function (): void {
         ->assertCreated()
         ->assertJsonPath('data.title', 'Trocas e devoluções')
         ->assertJsonPath('data.status', 'draft')
-        ->assertJsonPath('data.body', trim(Knowledge::RETURNS));
+        ->assertJsonPath('data.markdown', trim(Knowledge::RETURNS));
 });
 
 it('rejects imports that are not text', function (): void {
@@ -161,7 +161,7 @@ it('validates articles', function (array $payload, string $field): void {
         ->assertJsonValidationErrors($field);
 })->with([
     'short title' => [['title' => 'ab'], 'title'],
-    'missing body' => [['body' => ''], 'body'],
+    'missing text' => [['markdown' => ''], 'markdown'],
     'unknown visibility' => [['visibility' => 'public'], 'visibility'],
     'too many tags' => [['tags' => array_fill(0, 11, 'x')], 'tags'],
     'category of another tenant' => [['category_id' => 'foreign'], 'category_id'],

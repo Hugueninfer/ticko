@@ -39,7 +39,7 @@ final class KbArticleResource extends JsonResource
     #[ResponseField('category', 'object', nullable: true)]
     #[ResponseField('category.description', 'string', nullable: true)]
     #[ResponseField('category.tickets_count', 'integer', required: false)]
-    #[ResponseField('body', 'string', 'Markdown working copy (single-article responses only).', required: false)]
+    #[ResponseField('markdown', 'string', 'Markdown working copy (single-article responses only).', required: false)]
     #[ResponseField('published_at', 'string', nullable: true)]
     #[ResponseField('updated_by.email', 'string', 'Only shown to staff.', nullable: true)]
     #[ResponseField('updated_by.role', 'string', enum: Role::class)]
@@ -48,7 +48,7 @@ final class KbArticleResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'body' => $this->when($this->withBody, $this->body),
+            'markdown' => $this->when($this->withBody, $this->body),
             'visibility' => $this->visibility->value,
             'tags' => $this->tags,
             'category' => CategoryResource::make($this->whenLoaded('category')),

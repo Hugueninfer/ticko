@@ -36,7 +36,7 @@ final class SaveArticleRequest extends FormRequest
 
         return [
             'title' => [$required, 'string', 'min:3', 'max:200'],
-            'body' => [$required, 'string', 'max:'.self::MAX_BODY],
+            'markdown' => [$required, 'string', 'max:'.self::MAX_BODY],
             'visibility' => [$required, Rule::enum(ArticleVisibility::class)],
             'tags' => ['sometimes', 'array', 'max:10'],
             'tags.*' => ['string', 'min:1', 'max:40'],
@@ -48,15 +48,32 @@ final class SaveArticleRequest extends FormRequest
     }
 
     /**
+     * The validated fields, named as the model names them (markdown -> body).
+     *
      * @return array{title?: string, body?: string, visibility?: string, tags?: list<string>, category_id?: string|null}
      */
     public function payload(): array
     {
-        /** @var array{title?: string, body?: string, visibility?: string, tags?: list<string>, category_id?: string|null} $data */
-        $data = $this->validated();
+        /** @var array{title?: string, markdown?: string, visibility?: string, tags?: list<string>, category_id?: string|null} $validated */
+        $validated = $this->validated();
+        $data = [];
 
-        if (isset($data['tags'])) {
-            $data['tags'] = array_values(array_unique(array_map('trim', $data['tags'])));
+        foreach (['title', 'visibility'] as $key) {
+            if (isset($validated[$key])) {
+                $data[$key] = $validated[$key];
+            }
+        }
+
+        if (isset($validated['markdown'])) {
+            $data['body'] = $validated['markdown'];
+        }
+
+        if (isset($validated['tags'])) {
+            $data['tags'] = array_values(array_unique(array_map(trim(...), $validated['tags'])));
+        }
+
+        if (array_key_exists('category_id', $validated)) {
+            $data['category_id'] = $validated['category_id'];
         }
 
         return $data;
@@ -69,7 +86,7 @@ final class SaveArticleRequest extends FormRequest
     {
         return [
             'title' => ['description' => 'Article title.', 'example' => 'Política de entregas e prazos'],
-            'body' => ['description' => 'Markdown. Only the published version is indexed and cited.', 'example' => "## Prazos\n\nSul e Sudeste: 3 a 5 dias úteis."],
+            'markdown' => ['description' => 'Article text in Markdown. Only the published version is indexed and cited.', 'example' => "## Prazos\n\nSul e Sudeste: 3 a 5 dias úteis."],
             'visibility' => ['description' => 'customers (staff and customers) or internal (staff only, never used in replies).', 'example' => 'customers'],
             'tags' => ['description' => 'Up to 10 tags.', 'example' => ['rastreio', 'prazo']],
             'category_id' => ['description' => 'Category ULID.', 'example' => null],
