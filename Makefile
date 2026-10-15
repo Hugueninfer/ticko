@@ -5,7 +5,7 @@ WEB_PORT = $(or $(shell grep -s '^WEB_PORT=' .env | cut -d= -f2),8080)
 # This computer's address on the local network (Linux, then macOS).
 LAN_IP = $(or $(shell hostname -I 2>/dev/null | awk '{print $$1}'),$(shell ipconfig getifaddr en0 2>/dev/null),127.0.0.1)
 
-.PHONY: help env up up-lan down logs demo test coverage lint fix stan docs audit gitleaks ci web-install web-dev web-test e2e mobile-env mobile-dev mobile-test
+.PHONY: help env up up-lan down logs demo kb-reindex test coverage lint fix stan docs audit gitleaks ci web-install web-dev web-test e2e mobile-env mobile-dev mobile-test
 
 help: ## Show available targets
 	@grep -E '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2}'
@@ -30,6 +30,9 @@ logs: ## Follow logs
 
 demo: ## Seed a demo tenant and print its credentials
 	$(COMPOSE) exec api php artisan ticko:demo
+
+kb-reindex: ## Index every published knowledge-base article again (after changing TICKO_AI_EMBEDDING_PROVIDER)
+	$(COMPOSE) exec api php artisan ticko:kb:reindex
 
 vendor: env
 	$(DEV) composer install

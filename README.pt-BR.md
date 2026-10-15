@@ -6,7 +6,9 @@
 Helpdesk multi-tenant com IA. Este repositório é um monorepo: a **fase 1** entregou a API,
 a infraestrutura e os controles de qualidade; a **fase 2**, o app web do atendente e do admin
 e o cliente tipado da API; a **fase 3**, o app mobile do cliente (Expo), as notificações push
-e as atualizações em tempo real (Laravel Reverb). O classificador de IA ainda é esqueleto.
+e as atualizações em tempo real (Laravel Reverb); a **fase 4**, a base de conhecimento, a busca
+(RAG) e as sugestões de resposta da IA que o atendente sempre aprova. O classificador de IA
+ainda é esqueleto.
 
 > 🇺🇸 English version: [README.md](README.md) (referência completa de arquitetura e endpoints)
 
@@ -62,6 +64,7 @@ Tenant real: `docker compose exec api php artisan ticko:tenant:create <slug> "<N
 | `make up-lan` | A stack acessível pelo celular no seu Wi-Fi (só a porta do web) |
 | `make mobile-dev` | Expo para o app mobile (leia o QR code com o Expo Go) |
 | `make mobile-test` | ESLint, Prettier, `tsc` e Jest com cobertura (mobile) |
+| `make kb-reindex` | Reindexa todos os artigos publicados (depois de trocar o provedor de embeddings) |
 
 ## Estrutura
 
@@ -115,6 +118,27 @@ infra/               Dockerfile, Caddy, init do Postgres
   aparelhos do cliente pela API de push do Expo, **sem conteúdo do ticket** (só "Nova resposta
   no ticket #4F2K9Z"), no idioma do aparelho e respeitando as preferências. O aparelho fica
   ligado ao token que o registrou: sair do app (revogar o token) desliga o push.
+- **Base de conhecimento e IA (RAG):** artigos em Markdown ("interno e cliente" ou "só
+  equipe"). Ao publicar, um job divide o texto em trechos (~320 tokens, 40 de sobreposição) e
+  gera embeddings de 768 dimensões (pgvector, HNSW), com progresso e erro na lista e a aba
+  "Como a IA vê" no editor. A busca é híbrida (full-text em português + cosseno no pgvector,
+  com peso ou fusão por ranking), sempre filtrada por tenant (além do RLS), publicação e modelo
+  de embedding. O **playground** mostra exatamente o contexto que a IA recebe.
+- **Sugestão de resposta:** o atendente pede, um job busca nos artigos visíveis ao cliente e,
+  só se o melhor trecho passar de `TICKO_AI_MIN_CONFIDENCE`, pede ao modelo um JSON com
+  citações obrigatórias (`[1]`). Sem base, com citação inventada ou modelo sem resposta, o
+  painel diz **"não sei"**, mostra os artigos mais próximos e permite sinalizar a lacuna.
+  **A IA nunca responde sozinha:** só a aprovação do atendente (com ou sem edição) envia; os
+  marcadores de fonte são removidos; o descarte pede motivo. Um teste de arquitetura impede
+  o código de IA de postar mensagens. Contra prompt injection: regras na instrução de sistema,
+  ticket e trechos como dados entre delimitadores com nonce aleatório, sem ferramentas, saída
+  validada, e só o mínimo do ticket vai ao modelo (sem e-mail ou dados de conta).
+- **Provedores** (`.env`): `TICKO_AI_TEXT_PROVIDER` = `fake` (padrão, offline) | `gemini` |
+  `groq` | `ollama`; `TICKO_AI_EMBEDDING_PROVIDER` = `fake` | `gemini` | `ollama` (o Groq não
+  tem embeddings). Chaves (`GEMINI_API_KEY`, `GROQ_API_KEY`) só no `.env` local. O `fake`
+  faz o demo, os testes e a CI funcionarem sem chave, mas a relevância dele é só lexical.
+  Trocar o provedor de embeddings pede `make kb-reindex`. **Privacidade:** no plano gratuito
+  do Gemini o Google pode usar os dados enviados; para dados reais use chave paga ou Ollama.
 - **SLA:** cada ticket recebe prazos de 1ª resposta e de resolução ao ser aberto (metas da
   categoria ou padrão por prioridade em `config/ticko.php`, em horário corrido). `?overdue=1`
   lista os atrasados; `GET /api/v1/metrics` (só admin) alimenta o dashboard.
@@ -144,6 +168,11 @@ infra/               Dockerfile, Caddy, init do Postgres
 - Mobile: ESLint (type-checked, hooks; proíbe AsyncStorage e `console`), Prettier, `tsc`
   estrito, Jest + React Native Testing Library com API falsa (cobertura mínima de 80% das
   linhas) e build do bundle Android com configuração de produção.
+- Base de conhecimento e IA: Pest com as APIs dos provedores falsas, chunking, busca híbrida
+  (isolamento com artigos iguais em dois tenants, rascunho/arquivado/"só equipe" fora,
+  modelo de embedding diferente ignorado), sugestão (citação obrigatória, "não sei" sem
+  chamar o modelo, delimitadores contra injection) e aprovação; Vitest em todos os estados
+  do painel; Playwright indexando, buscando e aprovando um rascunho.
 - Push e tempo real: Pest com a API do Expo falsa (texto sem conteúdo, preferências, aparelho
   desregistrado, isolamento de tenant dos aparelhos) e autorização dos canais por tenant e ticket.
 - CI no GitHub Actions: lint, Larastan, testes + cobertura, `composer audit`, gitleaks, build
@@ -173,6 +202,10 @@ Detalhes em [README.md#security](README.md#security) e como reportar falhas em
   local em dev); deep links e notificações só aceitam id de ticket válido e a API revalida o
   acesso; foto re-codificada no celular (sem EXIF/GPS) e de novo na API; nenhum segredo em
   `EXPO_PUBLIC_*`; nada de dados pessoais em log.
+- IA: só artigos publicados e visíveis ao cliente do próprio tenant; citações conferidas;
+  confiança baixa vira "não sei"; nada sai sem o atendente; texto não confiável delimitado;
+  chaves só no `.env`; chamadas ao provedor só pelos jobs da fila (a fila tem saída para a
+  internet; Postgres e Redis continuam isolados).
 - Tempo real e push: só canais privados, autorizados por tenant e ticket; eventos com ids,
   nunca conteúdo; push só com a referência do ticket. A API de publicação do Reverb não fica
   exposta e os clientes não enviam eventos entre si.
