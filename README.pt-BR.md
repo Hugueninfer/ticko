@@ -4,8 +4,9 @@
 ![Cobertura](https://raw.githubusercontent.com/Hugueninfer/ticko/badges/coverage.svg)
 
 Helpdesk multi-tenant com IA. Este repositório é um monorepo: a **fase 1** entregou a API,
-a infraestrutura e os controles de qualidade; a **fase 2** traz o app web do atendente e do
-admin e o cliente tipado da API. Mobile e o classificador de IA ainda são esqueletos.
+a infraestrutura e os controles de qualidade; a **fase 2**, o app web do atendente e do admin
+e o cliente tipado da API; a **fase 3**, o app mobile do cliente (Expo), as notificações push
+e as atualizações em tempo real (Laravel Reverb). O classificador de IA ainda é esqueleto.
 
 > 🇺🇸 English version: [README.md](README.md) (referência completa de arquitetura e endpoints)
 
@@ -58,13 +59,16 @@ Tenant real: `docker compose exec api php artisan ticko:tenant:create <slug> "<N
 | `make web-dev` | App web com hot reload em http://localhost:5173 (Node 22 + corepack) |
 | `make web-test` | ESLint, Prettier, `tsc` e Vitest com cobertura (web + cliente da API) |
 | `make e2e` | Playwright contra a stack rodando (antes: `make up && make demo`) |
+| `make up-lan` | A stack acessível pelo celular no seu Wi-Fi (só a porta do web) |
+| `make mobile-dev` | Expo para o app mobile (leia o QR code com o Expo Go) |
+| `make mobile-test` | ESLint, Prettier, `tsc` e Jest com cobertura (mobile) |
 
 ## Estrutura
 
 ```
 apps/api/            API Laravel 13 (PHP 8.4)              ← fase 1
 apps/web/            App web: React + Vite                  ← fase 2
-apps/mobile/         App mobile                             (esqueleto)
+apps/mobile/         App do cliente: React Native + Expo    ← fase 3
 services/classifier/ Classificador de tickets com IA        (esqueleto)
 packages/api-client/ Cliente tipado gerado do OpenAPI (web + mobile)
 infra/               Dockerfile, Caddy, init do Postgres
@@ -94,6 +98,23 @@ infra/               Dockerfile, Caddy, init do Postgres
   `/horizon` e `/up` para o Laravel; no `make web-dev` o Vite faz proxy dessas rotas. Login por
   cookie de sessão do Sanctum com CSRF; nenhum token fica no navegador e não existe CORS com
   credenciais.
+- **App mobile (cliente):** Expo SDK 56, Expo Router, TypeScript estrito, TanStack Query,
+  React Hook Form + Zod, mesmo i18n (pt-BR/inglês), tokens e fonte Geist do web, claro e
+  escuro. Telas: login (atalho "cliente demo" só onde a API permite), meus tickets (status
+  colorido, última mensagem), novo ticket (texto, foto da câmera ou galeria, assunto
+  opcional), conversa (chat, linha do tempo do status, fotos) e perfil com preferências de
+  notificação; estados vazio, carregando, erro e sem conexão. Token Sanctum com validade no
+  `expo-secure-store`. Como rodar no celular: [apps/mobile/README.pt-BR.md](apps/mobile/README.pt-BR.md).
+- **Tempo real:** Reverb num container próprio, em rede interna; o Caddy repassa só o
+  WebSocket (`/app`) na mesma origem, sem porta nova. Eventos em **canais privados**
+  (`tenant.{tenant}.tickets.{ticket}` para o solicitante e a equipe; `tenant.{tenant}.staff` só
+  para a equipe), autorizados em `routes/channels.php` por tenant e pela policy do ticket. O
+  evento leva **só ids**; o app busca o resto pela API. Notas internas só vão para o canal da
+  equipe. O web do atendente atualiza a fila e as conversas ao vivo.
+- **Push:** quando a equipe responde ou muda o status, um job na fila envia a notificação aos
+  aparelhos do cliente pela API de push do Expo, **sem conteúdo do ticket** (só "Nova resposta
+  no ticket #4F2K9Z"), no idioma do aparelho e respeitando as preferências. O aparelho fica
+  ligado ao token que o registrou: sair do app (revogar o token) desliga o push.
 - **SLA:** cada ticket recebe prazos de 1ª resposta e de resolução ao ser aberto (metas da
   categoria ou padrão por prioridade em `config/ticko.php`, em horário corrido). `?overdue=1`
   lista os atrasados; `GET /api/v1/metrics` (só admin) alimenta o dashboard.
@@ -120,9 +141,14 @@ infra/               Dockerfile, Caddy, init do Postgres
   Library (cobertura mínima de 80%) e Playwright contra a stack Docker (login, fila, responder e
   nota interna, páginas de admin, categorias, equipe), que também falha com qualquer violação
   de CSP.
+- Mobile: ESLint (type-checked, hooks; proíbe AsyncStorage e `console`), Prettier, `tsc`
+  estrito, Jest + React Native Testing Library com API falsa (cobertura mínima de 80% das
+  linhas) e build do bundle Android com configuração de produção.
+- Push e tempo real: Pest com a API do Expo falsa (texto sem conteúdo, preferências, aparelho
+  desregistrado, isolamento de tenant dos aparelhos) e autorização dos canais por tenant e ticket.
 - CI no GitHub Actions: lint, Larastan, testes + cobertura, `composer audit`, gitleaks, build
-  das imagens, lint/tipos/testes/build/`pnpm audit` do web e os testes E2E; permissões mínimas
-  e actions fixadas por SHA.
+  das imagens, lint/tipos/testes/build/`pnpm audit` do web, o job do mobile e os testes E2E;
+  permissões mínimas e actions fixadas por SHA.
 
 ## Segurança
 
@@ -142,6 +168,14 @@ Detalhes em [README.md#security](README.md#security) e como reportar falhas em
   origem; nada inline; sem iframe), cookie de sessão httpOnly, conteúdo de usuário sempre
   renderizado como texto (o lint proíbe `dangerouslySetInnerHTML`), nenhum segredo em
   variáveis `VITE_*`; o controle por papel no front é só navegação, quem autoriza é a API.
+- App mobile: token só no `expo-secure-store` (Keychain/Keystore, só neste aparelho), com
+  validade e revogado ao sair; HTTPS obrigatório fora do dev (HTTP só para endereço da rede
+  local em dev); deep links e notificações só aceitam id de ticket válido e a API revalida o
+  acesso; foto re-codificada no celular (sem EXIF/GPS) e de novo na API; nenhum segredo em
+  `EXPO_PUBLIC_*`; nada de dados pessoais em log.
+- Tempo real e push: só canais privados, autorizados por tenant e ticket; eventos com ids,
+  nunca conteúdo; push só com a referência do ticket. A API de publicação do Reverb não fica
+  exposta e os clientes não enviam eventos entre si.
 - Containers não-root, somente leitura, sem capabilities; nada de segredos no repositório
   (chaves de IA só no `.env` local).
 

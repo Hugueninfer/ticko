@@ -4,8 +4,9 @@
 ![Coverage](https://raw.githubusercontent.com/Hugueninfer/ticko/badges/coverage.svg)
 
 AI-assisted, multi-tenant helpdesk. This repository is a monorepo: **phase 1** delivered the
-API, its infrastructure and quality gates; **phase 2** adds the web app for agents and
-admins and the typed API client. Mobile and the AI classifier are skeletons for now.
+API, its infrastructure and quality gates; **phase 2** the web app for agents and admins and
+the typed API client; **phase 3** the customer mobile app (Expo), push notifications and
+realtime updates (Laravel Reverb). The AI classifier is a skeleton for now.
 
 > 🇧🇷 Leia em português: [README.pt-BR.md](README.pt-BR.md)
 
@@ -67,6 +68,9 @@ Real tenants: `docker compose exec api php artisan ticko:tenant:create <slug> "<
 | `make ci` | Everything CI runs for the API |
 | `make web-dev` | Web app with hot reload on http://localhost:5173 (Node 22 + corepack) |
 | `make web-test` | ESLint, Prettier, `tsc`, Vitest with coverage (web + API client) |
+| `make up-lan` | The stack, reachable from phones on your Wi-Fi (only the web port) |
+| `make mobile-dev` | Expo dev server for the mobile app (scan the QR code with Expo Go) |
+| `make mobile-test` | ESLint, Prettier, `tsc`, Jest with coverage (mobile) |
 | `make e2e` | Playwright against the running stack (`make up && make demo` first) |
 | `make down` / `make logs` | Stop / follow logs |
 
@@ -79,7 +83,7 @@ The web tooling needs Node 22 on the host (pnpm comes from corepack).
 apps/
   api/                Laravel 13 API (PHP 8.4)          ← phase 1
   web/                Web app: React + Vite              ← phase 2
-  mobile/             Mobile app                         (skeleton)
+  mobile/             Customer app: React Native + Expo  ← phase 3
 services/
   classifier/         AI ticket classifier (pgvector)    (skeleton)
 packages/
@@ -109,6 +113,35 @@ proxies `/api`, `/sanctum`, `/docs`, `/horizon` and `/up` to Laravel; with `make
 proxies the same paths to the stack. Sign-in uses Sanctum's session cookie and CSRF token; no
 token is ever stored in the browser and there is no CORS configuration with credentials.
 
+### Mobile app (`apps/mobile`)
+
+The customer app: React Native with **Expo SDK 56**, Expo Router, TypeScript (strict), TanStack
+Query, React Hook Form + Zod and the same i18n (pt-BR/English), tokens and Geist type as the
+web app, in light and dark. Screens: sign-in (with a demo-customer shortcut only where the API
+enables it), my tickets (coloured status, latest message), new ticket (text, photos from the
+camera or gallery, optional topic), the conversation (chat, status timeline, photos) and the
+profile with notification preferences; empty, loading, error and offline states throughout.
+
+It signs in with **expiring Sanctum bearer tokens** kept in `expo-secure-store`, gets **push
+notifications** through the Expo push service and **realtime** updates over Reverb. How to run
+it on your phone (Expo Go on the same Wi-Fi, or a tunnel): [apps/mobile/README.md](apps/mobile/README.md).
+
+### Realtime and push
+
+- **Reverb** runs as its own container on an internal network; Caddy proxies only the WebSocket
+  endpoint (`/app`) on the existing origin, so no new port is published. Events are broadcast
+  on **private channels**: `tenant.{tenant}.tickets.{ticket}` (the requester and the tenant's
+  staff) and `tenant.{tenant}.staff` (staff only), authorized in `routes/channels.php` by
+  tenant and by the ticket policy at `POST /api/broadcasting/auth` (session or bearer token).
+  Payloads carry **ids only**; clients refetch through the API. Internal notes reach the staff
+  channel only. The agent web app refreshes its queue and conversations live.
+- **Push:** when the team replies publicly or changes a ticket's status, a queued job sends a
+  notification to the requester's registered devices through the Expo push API. The text
+  never includes ticket content — only the reference ("New reply on ticket #4F2K9Z") — in the
+  device's language, and honours the user's preferences. Devices are tied to the API token
+  that registered them: signing out (revoking the token) unregisters the phone; devices Expo
+  reports as unregistered are removed.
+
 ## Architecture
 
 ```
@@ -116,8 +149,12 @@ token is ever stored in the browser and there is no CORS configuration with cred
                   │
           ┌───────▼───────┐   edge network
           │ web (Caddy)   │   web app (SPA), security headers, CSP
-          └───────┬───────┘
-                  │ FastCGI
+          └───┬───────┬───┘
+              │       │ /app (WebSocket)   realtime network (internal)
+              │   ┌───▼──────────┐
+              │   │ reverb       │◄── api / queue publish events
+              │   └──────────────┘
+              │ FastCGI
           ┌───────▼───────┐         ┌──────────────┐
           │ api (PHP-FPM) │         │ queue        │  Horizon workers
           └───┬───────┬───┘         └───┬──────┬───┘
@@ -178,8 +215,11 @@ header.
 | POST | `/auth/login`, `/auth/logout` | SPA session (Sanctum cookie) |
 | GET / POST | `/auth/demo` | Demo sign-in (only with `TICKO_DEMO_LOGIN`, never in production) |
 | POST / DELETE | `/auth/tokens`, `/auth/tokens/current` | Mobile bearer tokens |
-| GET / PUT | `/auth/me`, `/auth/password` | Current user |
-| GET / POST | `/tickets` | List (filters `status`, `priority`, `category_id`, `assignee_id`, `requester_id`, `unassigned`, `overdue`, `q`, `sort`, pagination) / open |
+| POST | `/auth/demo/tokens` | Demo customer token for the mobile app (same rules as `/auth/demo`) |
+| GET / PUT | `/auth/me`, `/auth/password`, `/auth/notification-preferences` | Current user |
+| POST / DELETE | `/push-devices`, `/push-devices/current` | Register / unregister this phone for push (bearer tokens) |
+| GET | `/realtime` | Public Reverb key for clients (`/api/broadcasting/auth` authorizes channels) |
+| GET / POST | `/tickets` | List (filters `status`, `state` (`active`/`done`), `priority`, `category_id`, `assignee_id`, `requester_id`, `unassigned`, `overdue`, `q`, `sort`, pagination) / open |
 | GET | `/tickets/{id}` | Show |
 | PATCH | `/tickets/{id}/status`, `/tickets/{id}/assignee` | Change status / assign |
 | GET / POST | `/tickets/{id}/messages` | Conversation (internal notes for staff) |
@@ -218,8 +258,15 @@ lifetime, rate limits, upload size, signed-URL lifetime, docs toggle, Horizon al
   Vitest + Testing Library against the real route tree (coverage gate of 80%), and Playwright
   end-to-end tests against the Docker stack (sign-in, queue, reply and internal note, admin
   pages, categories, team), which also fail on any CSP violation.
+- **Mobile:** ESLint (strict type-checked, hooks; AsyncStorage and `console` forbidden),
+  Prettier, `tsc` strict, Jest + React Native Testing Library against a fake API (coverage
+  gate of 80% of lines), and an Android bundle build with production settings.
+- **Push and realtime:** Pest tests with the Expo API faked (content-free text, preferences,
+  unregistered devices, tenant isolation of devices) and channel authorization by tenant
+  and ticket.
 - **CI** (GitHub Actions): lint, Larastan, tests + coverage, `composer audit`, gitleaks,
-  Docker image builds, web lint/types/tests/build/`pnpm audit`, and the end-to-end suite.
+  Docker image builds, web lint/types/tests/build/`pnpm audit`, the mobile job and the
+  end-to-end suite.
 
 ## Security
 
@@ -250,6 +297,14 @@ See [SECURITY.md](SECURITY.md) to report a vulnerability. Highlights:
   the theme, language and last company identifier), user content always rendered as text
   (lint forbids `dangerouslySetInnerHTML` and HTML string writes), no secrets in `VITE_*`
   variables, role checks in the UI for navigation only — the API authorizes every request.
+- **Mobile app:** bearer token only in `expo-secure-store` (Keychain/Keystore, this device
+  only), expiring and revoked on sign-out; HTTPS required outside development (plain HTTP only
+  to private addresses in dev); deep links and notification payloads accept only well-formed
+  ticket ids and the API re-checks access; photos re-encoded on the phone (no EXIF/GPS) and
+  again by the API; no secrets in `EXPO_PUBLIC_*`; no logging of personal data.
+- **Realtime/push:** private channels only, authorized per tenant and ticket; events carry ids,
+  never content; push notifications carry only the ticket reference. Reverb's publishing API
+  is not exposed, and clients cannot send events to each other.
 - **Containers:** non-root, read-only filesystems, all capabilities dropped,
   `no-new-privileges`; Postgres and Redis unreachable from the host; Redis password-protected.
 - **Supply chain:** `composer audit`, gitleaks, Actions pinned by SHA, least-privilege tokens.
