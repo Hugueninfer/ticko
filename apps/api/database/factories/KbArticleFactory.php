@@ -23,7 +23,7 @@ class KbArticleFactory extends Factory
             'title' => fake()->sentence(4),
             'body' => "## Introdução\n\n".fake()->paragraph()."\n\n## Detalhes\n\n".fake()->paragraph(),
             'visibility' => ArticleVisibility::Customers,
-            'tags' => [],
+            'tags' => ['entrega'],
             'author_id' => User::factory(),
             'updated_by_id' => fn (array $attributes) => $attributes['author_id'],
         ];

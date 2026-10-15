@@ -26,8 +26,16 @@ class AiSuggestionFactory extends Factory
             'status' => SuggestionStatus::Ready,
             'body' => 'Olá! O prazo é de até 2 dias úteis [1].',
             'confidence' => '0.850',
-            'citations' => [],
-            'candidates' => [],
+            'citations' => [[
+                'n' => 1,
+                'chunk_id' => '01k7a0000000000000000ch001',
+                'article_id' => '01k7a0000000000000000ar001',
+                'title' => 'Política de entregas e prazos',
+                'heading' => 'Rastreio sem atualização',
+                'quote' => 'O prazo de resposta é de até 2 dias úteis.',
+                'score' => 0.86,
+            ]],
+            'candidates' => [['article_id' => '01k7a0000000000000000ar001', 'title' => 'Política de entregas e prazos', 'score' => 0.86]],
             'provider' => 'fake',
             'model' => 'fake',
         ];

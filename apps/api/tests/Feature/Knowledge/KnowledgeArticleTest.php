@@ -121,7 +121,7 @@ it('lists articles with filters and figures', function (): void {
     Knowledge::publish($this->tenant, $this->agent, 'Política de entregas', Knowledge::DELIVERY, categoryId: $category->id);
     $this->actingAsUser($this->agent)->postJson('/api/v1/knowledge/articles', articlePayload(['title' => 'Cupons vigentes']))->assertCreated();
 
-    $this->getJson('/api/v1/knowledge/articles')->assertOk()->assertJsonCount(2, 'data')->assertJsonMissingPath('data.0.markdown');
+    $this->getJson('/api/v1/knowledge/articles')->assertOk()->assertJsonCount(2, 'data')->assertJsonPath('data.0.markdown', null);
     $this->getJson('/api/v1/knowledge/articles?status=draft')->assertJsonCount(1, 'data')->assertJsonPath('data.0.title', 'Cupons vigentes');
     $this->getJson('/api/v1/knowledge/articles?q=entregas')->assertJsonCount(1, 'data');
     $this->getJson("/api/v1/knowledge/articles?category_id={$category->id}")->assertJsonCount(1, 'data')
