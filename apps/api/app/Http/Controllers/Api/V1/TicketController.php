@@ -26,7 +26,7 @@ final class TicketController extends Controller
     /**
      * List tickets
      */
-    #[ResponseFromApiResource(TicketResource::class, Ticket::class, collection: true, paginate: 25, with: ['requester', 'assignee', 'category'])]
+    #[ResponseFromApiResource(TicketResource::class, Ticket::class, collection: true, paginate: 25, with: ['requester', 'assignee', 'category', 'lastPublicMessage.author'])]
     public function index(IndexTicketsRequest $request, ListTickets $list): AnonymousResourceCollection
     {
         Gate::authorize('viewAny', Ticket::class);

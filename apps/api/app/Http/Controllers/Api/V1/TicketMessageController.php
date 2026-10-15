@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Gate;
 use Knuckles\Scribe\Attributes\Group;
+use Knuckles\Scribe\Attributes\QueryParam;
 use Knuckles\Scribe\Attributes\ResponseFromApiResource;
 
 #[Group('Ticket messages', 'Conversation on a ticket. Internal notes are only visible to staff.')]
@@ -22,6 +23,7 @@ final class TicketMessageController extends Controller
     /**
      * List messages
      */
+    #[QueryParam('page', 'integer', 'Page number (50 messages per page, oldest first).', required: false, example: 1)]
     #[ResponseFromApiResource(TicketMessageResource::class, TicketMessage::class, collection: true, paginate: 50, with: ['author'])]
     public function index(Request $request, Ticket $ticket): AnonymousResourceCollection
     {
