@@ -25,6 +25,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $password
  * @property Role $role
  * @property bool $is_active
+ * @property bool $push_replies
+ * @property bool $push_status_changes
  * @property Carbon|null $email_verified_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -48,7 +50,7 @@ class User extends Authenticatable
     protected $hidden = ['password', 'remember_token'];
 
     /** @var array<string, mixed> */
-    protected $attributes = ['is_active' => true];
+    protected $attributes = ['is_active' => true, 'push_replies' => true, 'push_status_changes' => true];
 
     /**
      * @return HasMany<Ticket, $this>
@@ -66,6 +68,14 @@ class User extends Authenticatable
     public function openTickets(): HasMany
     {
         return $this->assignedTickets()->whereIn('status', [TicketStatus::Open, TicketStatus::Pending]);
+    }
+
+    /**
+     * @return HasMany<PushDevice, $this>
+     */
+    public function pushDevices(): HasMany
+    {
+        return $this->hasMany(PushDevice::class);
     }
 
     public function isStaff(): bool
@@ -96,6 +106,8 @@ class User extends Authenticatable
             'password' => 'hashed',
             'role' => Role::class,
             'is_active' => 'boolean',
+            'push_replies' => 'boolean',
+            'push_status_changes' => 'boolean',
         ];
     }
 }

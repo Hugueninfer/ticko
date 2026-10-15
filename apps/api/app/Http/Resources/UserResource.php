@@ -34,6 +34,10 @@ final class UserResource extends JsonResource
                 'name' => $this->tenant->name,
                 'slug' => $this->tenant->slug,
             ]),
+            'notification_preferences' => [
+                'push_replies' => $this->push_replies,
+                'push_status_changes' => $this->push_status_changes,
+            ],
             'open_tickets_count' => $this->whenCounted('open_tickets'),
             'created_at' => $this->created_at->toIso8601String(),
         ];
