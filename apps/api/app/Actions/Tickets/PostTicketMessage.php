@@ -31,6 +31,8 @@ final readonly class PostTicketMessage
 
                 $ticket->status = $author->isStaff() ? TicketStatus::Pending : TicketStatus::Open;
                 $ticket->resolved_at = null;
+                // The conversation moved: list the ticket as recently updated.
+                $ticket->updated_at = $message->created_at;
                 $ticket->save();
             }
 

@@ -8,6 +8,7 @@ use App\Enums\TicketStatus;
 use App\Models\Category;
 use App\Models\Tenant;
 use App\Models\Ticket;
+use App\Models\TicketMessage;
 
 beforeEach(function (): void {
     $this->tenant = Tenant::factory()->create();
@@ -203,4 +204,51 @@ it('shows people\'s e-mails to staff only', function (): void {
         ->assertOk()
         ->assertJsonPath('data.assignee.email', null)
         ->assertJsonPath('data.requester.email', null);
+});
+
+it('lists each ticket with an excerpt of its latest public message', function (): void {
+    $ticket = ticketFor($this, $this->customer);
+    $quiet = ticketFor($this, $this->customer);
+    $this->inTenant($this->tenant, function () use ($ticket): void {
+        TicketMessage::factory()->create(['ticket_id' => $ticket->id, 'author_id' => $this->customer->id, 'body' => 'First', 'created_at' => now()->subHour()]);
+        TicketMessage::factory()->create(['ticket_id' => $ticket->id, 'author_id' => $this->agent->id, 'body' => "We are   on it,\nhang tight. ".str_repeat('x', 200)]);
+        TicketMessage::factory()->internal()->create(['ticket_id' => $ticket->id, 'author_id' => $this->agent->id, 'body' => 'Internal gossip', 'created_at' => now()->addMinute()]);
+    });
+
+    $response = $this->actingAsUser($this->customer)->getJson('/api/v1/tickets')->assertOk();
+    $rows = collect($response->json('data'))->keyBy('id');
+
+    expect($rows[$quiet->id]['last_message'])->toBeNull()
+        ->and($rows[$ticket->id]['last_message']['author_name'])->toBe($this->agent->name)
+        ->and($rows[$ticket->id]['last_message']['author_role'])->toBe('agent')
+        ->and($rows[$ticket->id]['last_message']['excerpt'])->toStartWith('We are on it, hang tight.')
+        ->and(mb_strlen($rows[$ticket->id]['last_message']['excerpt']))->toBeLessThanOrEqual(143)
+        ->and($response->content())->not->toContain('Internal gossip');
+});
+
+it('filters tickets by state', function (string $state, array $expected): void {
+    foreach (TicketStatus::cases() as $status) {
+        ticketFor($this, $this->customer, ['status' => $status]);
+    }
+
+    $statuses = collect($this->actingAsUser($this->customer)->getJson("/api/v1/tickets?state={$state}")->assertOk()->json('data'))
+        ->pluck('status')->sort()->values()->all();
+
+    expect($statuses)->toBe($expected);
+})->with([
+    'active' => ['active', ['open', 'pending']],
+    'done' => ['done', ['closed', 'resolved']],
+]);
+
+it('rejects unknown states', function (): void {
+    $this->actingAsUser($this->customer)->getJson('/api/v1/tickets?state=archived')->assertUnprocessable()->assertJsonValidationErrors('state');
+});
+
+it('moves a ticket to the top of the recently updated list when someone replies', function (): void {
+    $old = ticketFor($this, $this->customer, ['updated_at' => now()->subDay()]);
+    ticketFor($this, $this->customer, ['updated_at' => now()->subHour()]);
+
+    $this->actingAsUser($this->agent)->postJson("/api/v1/tickets/{$old->id}/messages", ['body' => 'Update'])->assertCreated();
+
+    $this->actingAsUser($this->customer)->getJson('/api/v1/tickets?sort=-updated_at')->assertJsonPath('data.0.id', $old->id);
 });
