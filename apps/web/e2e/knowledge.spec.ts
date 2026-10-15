@@ -16,7 +16,9 @@ test('the knowledge base is indexed and searchable', async ({ page }) => {
   await expect(page.getByText('Rastreio sem atualização').first()).toBeVisible();
 
   await page.getByRole('link', { name: 'Playground de busca' }).click();
-  await page.getByLabel('Escreva como um cliente perguntaria…').fill('o rastreamento não é atualizado há uma semana, o que faço?');
+  await page
+    .getByLabel('Escreva como um cliente perguntaria…')
+    .fill('o rastreamento não é atualizado há uma semana, o que faço?');
   await page.getByRole('button', { name: 'Buscar' }).click();
   await expect(page.locator('main, body').getByRole('link', { name: 'Política de entregas e prazos' }).first()).toBeVisible();
   await expect(page.getByText(/Latência: \d+ ms/)).toBeVisible();
@@ -29,7 +31,9 @@ test('an agent writes, publishes and indexes an article', async ({ page }) => {
   await page.goto('/knowledge');
   await page.getByRole('link', { name: 'Novo artigo' }).click();
   await page.getByLabel('Título').fill(title);
-  await page.getByLabel('Texto (Markdown)').fill('## Prazo\n\nEletrônicos têm 90 dias de garantia legal.\n\n<script>alert(1)</script>');
+  await page
+    .getByLabel('Texto (Markdown)')
+    .fill('## Prazo\n\nEletrônicos têm 90 dias de garantia legal.\n\n<script>alert(1)</script>');
   await expect(page.getByRole('heading', { name: 'Prazo' })).toBeVisible();
   await page.getByRole('button', { name: 'Publicar', exact: true }).click();
 
@@ -40,7 +44,10 @@ test('an agent writes, publishes and indexes an article', async ({ page }) => {
 test('an agent reviews and sends an AI draft; nothing is sent without approval', async ({ page }) => {
   await signInAsDemo(page, 'Atendente');
   await page.getByRole('tab', { name: /Todos/ }).click();
-  await page.getByRole('link', { name: /rastre(io|amento) par(ou|ado)/i }).first().click();
+  await page
+    .getByRole('link', { name: /rastre(io|amento) par(ou|ado)/i })
+    .first()
+    .click();
 
   const panel = page.getByRole('complementary', { name: 'Sugestão da IA' });
   const regenerate = panel.getByRole('button', { name: /Gerar (sugestão|nova sugestão)/ }).first();

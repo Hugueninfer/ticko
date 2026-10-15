@@ -29,10 +29,14 @@ async function findPanel() {
 
 describe('AI suggestion panel', () => {
   it('asks for a draft and shows it while it is written', async () => {
+    const pending = makeSuggestion({ status: 'pending', body: null, confidence: null, citations: [] });
+    let current: unknown = null;
     const api = setup(null, {
-      'POST /api/v1/tickets/:id/suggestions': {
-        status: 202,
-        body: { data: makeSuggestion({ status: 'pending', body: null, confidence: null, citations: [] }) },
+      'GET /api/v1/tickets/:id/suggestions/latest': () => ({ data: current }),
+      'POST /api/v1/tickets/:id/suggestions': () => {
+        current = pending;
+
+        return { status: 202, body: { data: pending } };
       },
     });
     const { user } = renderApp(url);
@@ -148,8 +152,14 @@ describe('AI suggestion panel', () => {
   });
 
   it('reports provider failures and retries', async () => {
-    const api = setup(makeSuggestion({ status: 'failed', body: null, citations: [], error_code: 'LLM_TIMEOUT' }), {
-      'POST /api/v1/tickets/:id/suggestions': { status: 202, body: { data: makeSuggestion({ status: 'pending', body: null }) } },
+    let current = makeSuggestion({ status: 'failed', body: null, citations: [], error_code: 'LLM_TIMEOUT' });
+    const api = setup(null, {
+      'GET /api/v1/tickets/:id/suggestions/latest': () => ({ data: current }),
+      'POST /api/v1/tickets/:id/suggestions': () => {
+        current = makeSuggestion({ status: 'pending', body: null });
+
+        return { status: 202, body: { data: current } };
+      },
     });
     const { user } = renderApp(url);
     const ai = await findPanel();
