@@ -25,10 +25,11 @@ final class CreateTenantCommand extends Command
 
     public function handle(TenantContext $tenants): int
     {
+        $text = fn (mixed $value): string => is_string($value) ? $value : '';
         $data = [
-            'slug' => $this->argument('slug'),
-            'name' => $this->argument('name'),
-            'email' => $this->option('admin-email'),
+            'slug' => $text($this->argument('slug')),
+            'name' => $text($this->argument('name')),
+            'email' => $text($this->option('admin-email')),
         ];
 
         $validator = Validator::make($data, [
@@ -47,12 +48,12 @@ final class CreateTenantCommand extends Command
 
         $password = Str::password(20);
 
-        DB::transaction(function () use ($tenants, $data, $password): void {
+        DB::transaction(function () use ($tenants, $data, $password, $text): void {
             $tenant = Tenant::create(['slug' => $data['slug'], 'name' => $data['name']]);
 
             $tenants->run($tenant, fn () => User::create([
-                'name' => (string) $this->option('admin-name'),
-                'email' => mb_strtolower((string) $data['email']),
+                'name' => $text($this->option('admin-name')),
+                'email' => mb_strtolower($data['email']),
                 'password' => $password,
                 'role' => Role::Admin,
             ]));
