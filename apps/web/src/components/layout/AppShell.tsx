@@ -7,6 +7,7 @@ import { useCurrentUser, useLogout } from '@/auth/useAuth';
 import { Avatar } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { setLanguage, type Language } from '@/i18n';
+import { useRealtimeConnection, useStaffUpdates } from '@/lib/realtime';
 import { applyTheme, preferredTheme, type Theme } from '@/lib/theme';
 import { cn, initials } from '@/lib/utils';
 
@@ -50,6 +51,10 @@ export function AppShell() {
   const { data: user } = useCurrentUser();
   const logout = useLogout();
   const [theme, setTheme] = useState<Theme>(preferredTheme);
+
+  // Live queue and conversation updates while signed in.
+  useRealtimeConnection(Boolean(user));
+  useStaffUpdates(user?.tenant?.id);
 
   const toggleTheme = () => {
     const next = theme === 'dark' ? 'light' : 'dark';

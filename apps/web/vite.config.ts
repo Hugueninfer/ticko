@@ -19,7 +19,11 @@ export default defineConfig({
   server: {
     port: 5173,
     strictPort: true,
-    proxy: Object.fromEntries(proxied.map((prefix) => [prefix, { target: apiTarget, changeOrigin: false }])),
+    proxy: {
+      ...Object.fromEntries(proxied.map((prefix) => [prefix, { target: apiTarget, changeOrigin: false }])),
+      // Reverb WebSocket (realtime), served by Caddy on the same origin.
+      '/app': { target: apiTarget, changeOrigin: false, ws: true },
+    },
   },
   preview: {
     port: 4173,
