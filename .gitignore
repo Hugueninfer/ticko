@@ -33,3 +33,4 @@ apps/api/public/vendor/
 packages/api-client/src/schema.d.ts
 test-results/
 playwright-report/
+backups/

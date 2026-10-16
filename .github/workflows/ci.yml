@@ -271,6 +271,8 @@ jobs:
           echo "TICKO_RATE_LIMIT_API=600" >> .env
           docker compose up -d --build --wait
           docker compose exec -T api php artisan ticko:demo > /dev/null
+      - name: Encrypted backup restores with identical data
+        run: ./scripts/backup-verify.sh
       - name: Install Chromium for Playwright
         run: pnpm --filter @ticko/web exec playwright install --with-deps chromium
       - name: Run the end-to-end tests
