@@ -1,5 +1,5 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { unwrap, type TicketFilters, type TicketStatus } from '@ticko/api-client';
+import { unwrap, type ClassificationInput, type TicketFilters, type TicketStatus } from '@ticko/api-client';
 
 import { api } from '@/lib/api';
 import { queryKeys } from '@/lib/query';
@@ -79,6 +79,22 @@ export function useAssign(ticketId: string) {
         await api.PATCH('/api/v1/tickets/{ticket_id}/assignee', {
           params: { path: { ticket_id: ticketId } },
           body: { assignee_id: assigneeId },
+        }),
+      ).data,
+    onSuccess: invalidate,
+  });
+}
+
+/** Sets or corrects category, priority and sentiment (staff); the AI never changes them again. */
+export function useCorrectClassification(ticketId: string) {
+  const invalidate = useInvalidateTicket(ticketId);
+
+  return useMutation({
+    mutationFn: async (input: ClassificationInput) =>
+      unwrap(
+        await api.PATCH('/api/v1/tickets/{ticket_id}/classification', {
+          params: { path: { ticket_id: ticketId } },
+          body: input,
         }),
       ).data,
     onSuccess: invalidate,

@@ -1,9 +1,10 @@
-import type { Ticket, TicketPriority, TicketStatus } from '@ticko/api-client';
+import type { Sentiment, Ticket, TicketPriority, TicketStatus } from '@ticko/api-client';
 
 import { minutesUntil } from '@/lib/format';
 
 export const PRIORITIES: TicketPriority[] = ['urgent', 'high', 'normal', 'low'];
 export const STATUSES: TicketStatus[] = ['open', 'pending', 'resolved', 'closed'];
+export const SENTIMENTS: Sentiment[] = ['negative', 'neutral', 'positive'];
 
 export type SlaState =
   | { kind: 'done' }

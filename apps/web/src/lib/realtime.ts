@@ -171,6 +171,7 @@ export function useStaffUpdates(tenantId: string | undefined): void {
       .listen('.ticket.created', refresh)
       .listen('.message.posted', refresh)
       .listen('.status.changed', refresh)
+      .listen('.ticket.classified', refresh)
       .listen('.suggestion.updated', (event: { ticket_id: string }) => {
         void queryClient.invalidateQueries({ queryKey: queryKeys.suggestion(event.ticket_id) });
       })
