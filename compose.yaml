@@ -134,8 +134,12 @@ services:
       <<: *api-env
       OTEL_SERVICE_NAME: ticko-scheduler
     command: ["php", "artisan", "schedule:work"]
+    # `docker compose up --wait` needs a healthcheck on every service.
     healthcheck:
-      disable: true
+      test: ["CMD", "pgrep", "-f", "schedule:work"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
     depends_on:
       migrate:
         condition: service_completed_successfully
