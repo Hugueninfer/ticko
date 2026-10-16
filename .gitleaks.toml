@@ -11,6 +11,8 @@ paths = [
   # Lockfiles contain integrity hashes, not secrets.
   '''(^|/)pnpm-lock\.yaml$''',
   '''(^|/)composer\.lock$''',
+  # SHA-256 checksums of the public base-model files (names like "tokenizer_config.json").
+  '''^services/classifier/ticko_classifier/fetch_model\.py$''',
 ]
 regexes = [
   # Test-only APP_KEY in phpunit.xml ("testing-key-not-a-secret-0000000").
