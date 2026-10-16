@@ -17,7 +17,7 @@ test('agent works the queue: filters, opens a ticket, replies and adds a note', 
   await expect(rows.first().getByRole('link')).toBeVisible();
   await rows.first().getByRole('link').click();
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-  await expect(page.getByText('Sugestões de resposta em breve')).toBeVisible();
+  await expect(page.getByRole('complementary', { name: 'Sugestão da IA' })).toBeVisible();
 
   const reply = unique('Resposta E2E');
   await page.getByRole('textbox', { name: 'Responder' }).fill(reply);

@@ -33,11 +33,15 @@ The full description is in the README's [Security](README.md#security) section.
 | Errors | RFC 7807 problem details; internal messages are never exposed outside debug mode. |
 | Web app | Served on the API's own origin under a strict CSP (same-origin scripts, styles, fonts, images and requests only; no inline code; no framing). Sanctum session cookie (httpOnly) with CSRF; no tokens in `localStorage`/`sessionStorage`; no CORS with credentials. User content is rendered as text only and lint forbids `dangerouslySetInnerHTML` and HTML string writes. No secrets in `VITE_*` variables. UI role checks are navigation only; the API authorizes every request. |
 | Demo sign-in | `/api/v1/auth/demo` answers 404 unless `TICKO_DEMO_LOGIN=true` and never in production; no demo password reaches the browser. |
+| Mobile and realtime | Mobile bearer tokens only in the platform keystore (`expo-secure-store`), revoked on sign-out (which also unregisters push); HTTPS required outside development. Realtime events on private channels authorized by tenant and ticket, carrying ids only; push notifications carry only the ticket reference. |
+| AI (RAG) | Suggestions use only published, customer-visible articles of the caller's tenant (explicit tenant filter plus RLS); ticket text and passages are untrusted data inside per-request nonce delimiters; the model has no tools, must return JSON citing provided passages, and low confidence becomes "I don't know". **Nothing reaches a customer without an agent's approval** (enforced by an architecture test). Only minimal ticket data is sent to the provider. |
 | Infrastructure | Postgres and Redis on an internal Docker network with no published ports; non-root, read-only containers with all capabilities dropped; only the web server binds a port, on `127.0.0.1` by default. |
 | Supply chain | `composer audit`, `pnpm audit` and gitleaks in CI; exact versions in `package.json` with a frozen lockfile; GitHub Actions pinned by commit SHA with least-privilege permissions. |
 
 ## Secrets
 
 - Never commit `.env` files, keys or tokens. `make env` generates local secrets.
-- AI provider keys (later phases) belong only in your local `.env` or a secret manager.
+- AI provider keys (`GEMINI_API_KEY`, `GROQ_API_KEY`, optional `EXPO_ACCESS_TOKEN`) belong only in
+  your local `.env` or a secret manager; they are sent in request headers and never logged.
+  The default `fake` provider needs no key.
 - If a secret is committed by mistake, **rotate it first**, then remove it from history.

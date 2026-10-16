@@ -1,14 +1,33 @@
 import { QueryClient } from '@tanstack/react-query';
 import { ApiError } from '@ticko/api-client';
 
+/**
+ * Server errors and rate limits (429) are retried; other client errors
+ * (401/403/404/422) will not change on retry.
+ */
+export function shouldRetry(failureCount: number, error: unknown): boolean {
+  if (error instanceof ApiError && error.status < 500 && error.status !== 429) {
+    return false;
+  }
+
+  return failureCount < 2;
+}
+
+/** Rate-limited requests back off longer (2 s, then 4 s) than other failures. */
+export function retryDelay(attempt: number, error: unknown): number {
+  const base = error instanceof ApiError && error.status === 429 ? 2_000 : 500;
+
+  return Math.min(base * 2 ** attempt, 10_000);
+}
+
 export function createQueryClient(): QueryClient {
   return new QueryClient({
     defaultOptions: {
       queries: {
         staleTime: 15_000,
         refetchOnWindowFocus: true,
-        // Client errors (401/403/404/422) will not change on retry.
-        retry: (failureCount, error) => !(error instanceof ApiError && error.status < 500) && failureCount < 2,
+        retry: shouldRetry,
+        retryDelay,
       },
       mutations: { retry: false },
     },
@@ -52,6 +71,12 @@ export const queryKeys = {
   messages: (id: string) => ['tickets', 'detail', id, 'messages'] as const,
   attachments: (id: string) => ['tickets', 'detail', id, 'attachments'] as const,
   categories: ['categories'] as const,
+  knowledge: ['knowledge'] as const,
+  articles: (filters: object) => ['knowledge', 'articles', filters] as const,
+  article: (id: string) => ['knowledge', 'article', id] as const,
+  chunks: (id: string) => ['knowledge', 'article', id, 'chunks'] as const,
+  knowledgeStats: ['knowledge', 'stats'] as const,
+  suggestion: (ticketId: string) => ['tickets', 'detail', ticketId, 'suggestion'] as const,
   team: (filters: object = {}) => ['team', filters] as const,
   metrics: (from: string, to: string) => ['metrics', from, to] as const,
 };

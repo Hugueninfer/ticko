@@ -48,6 +48,17 @@ export type DemoLogin = Data<ResponseBody<'/api/v1/auth/demo', 'get'>>;
 export type NotificationPreferences = CurrentUser['notification_preferences'];
 export type PushDeviceInput = RequestBody<'/api/v1/push-devices', 'post'>;
 export type RealtimeSettings = Data<ResponseBody<'/api/v1/realtime', 'get'>>;
+export type KbArticle = Data<ResponseBody<'/api/v1/knowledge/articles/{id}', 'get'>>;
+export type KbArticleSummary = Data<ResponseBody<'/api/v1/knowledge/articles', 'get'>>[number];
+export type KbArticleInput = RequestBody<'/api/v1/knowledge/articles', 'post'>;
+export type KbArticleFilters = QueryParams<'/api/v1/knowledge/articles', 'get'>;
+export type KbChunk = Data<ResponseBody<'/api/v1/knowledge/articles/{article_id}/chunks', 'get'>>[number];
+export type KnowledgeStats = Data<ResponseBody<'/api/v1/knowledge/stats', 'get'>>;
+export type KnowledgeSearchInput = RequestBody<'/api/v1/knowledge/search', 'post'>;
+export type KnowledgeSearchHit = Data<ResponseBody<'/api/v1/knowledge/search', 'post'>>[number];
+export type AiSuggestion = NonNullable<Data<ResponseBody<'/api/v1/tickets/{ticket_id}/suggestions/latest', 'get'>>>;
+export type SuggestionStatus = AiSuggestion['status'];
+export type DiscardReason = NonNullable<AiSuggestion['discard_reason']>;
 
 /** RFC 9457 problem details, the shape of every API error. */
 export interface ProblemDetails {

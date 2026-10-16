@@ -1,6 +1,8 @@
 # services/classifier — ticket classification service
 
-**Status:** skeleton (phase 1). Nothing to run yet.
+**Status:** skeleton. Phase 4 put retrieval (pgvector) and reply suggestions inside the API
+(`apps/api/app/Services/Ai`, `Services/Knowledge`, `Services/Suggestions`); automatic
+classification (category, priority, sentiment) is still planned here.
 
 Planned: a separate service that suggests category, priority and similar tickets using
 embeddings stored in Postgres with **pgvector** (already enabled in the database image).

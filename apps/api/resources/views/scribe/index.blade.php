@@ -66,6 +66,28 @@
                     <a href="#authenticating-requests">Authenticating requests</a>
                 </li>
                             </ul>
+                    <ul id="tocify-header-ai-suggestions" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="ai-suggestions">
+                    <a href="#ai-suggestions">AI suggestions</a>
+                </li>
+                                    <ul id="tocify-subheader-ai-suggestions" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="ai-suggestions-GETapi-v1-tickets--ticket_id--suggestions-latest">
+                                <a href="#ai-suggestions-GETapi-v1-tickets--ticket_id--suggestions-latest">Latest suggestion of a ticket</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="ai-suggestions-POSTapi-v1-tickets--ticket_id--suggestions">
+                                <a href="#ai-suggestions-POSTapi-v1-tickets--ticket_id--suggestions">Ask for a suggestion</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="ai-suggestions-POSTapi-v1-suggestions--suggestion_id--approve">
+                                <a href="#ai-suggestions-POSTapi-v1-suggestions--suggestion_id--approve">Approve and send</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="ai-suggestions-POSTapi-v1-suggestions--suggestion_id--discard">
+                                <a href="#ai-suggestions-POSTapi-v1-suggestions--suggestion_id--discard">Discard</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="ai-suggestions-POSTapi-v1-suggestions--suggestion_id--gap">
+                                <a href="#ai-suggestions-POSTapi-v1-suggestions--suggestion_id--gap">Report a knowledge gap</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-attachments" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="attachments">
                     <a href="#attachments">Attachments</a>
@@ -151,6 +173,49 @@
                                     <ul id="tocify-subheader-endpoints" class="tocify-subheader">
                                                     <li class="tocify-item level-2" data-unique="endpoints-GETapi-broadcasting-auth">
                                 <a href="#endpoints-GETapi-broadcasting-auth">Authenticate the request for channel access.</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-knowledge-base" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="knowledge-base">
+                    <a href="#knowledge-base">Knowledge base</a>
+                </li>
+                                    <ul id="tocify-subheader-knowledge-base" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="knowledge-base-GETapi-v1-knowledge-stats">
+                                <a href="#knowledge-base-GETapi-v1-knowledge-stats">Knowledge-base figures</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="knowledge-base-POSTapi-v1-knowledge-search">
+                                <a href="#knowledge-base-POSTapi-v1-knowledge-search">Search the knowledge base (playground)</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="knowledge-base-POSTapi-v1-knowledge-articles-import">
+                                <a href="#knowledge-base-POSTapi-v1-knowledge-articles-import">Import a Markdown file (draft)</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="knowledge-base-GETapi-v1-knowledge-articles">
+                                <a href="#knowledge-base-GETapi-v1-knowledge-articles">List articles</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="knowledge-base-POSTapi-v1-knowledge-articles">
+                                <a href="#knowledge-base-POSTapi-v1-knowledge-articles">Create an article (draft)</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="knowledge-base-GETapi-v1-knowledge-articles--id-">
+                                <a href="#knowledge-base-GETapi-v1-knowledge-articles--id-">Show an article</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="knowledge-base-PUTapi-v1-knowledge-articles--id-">
+                                <a href="#knowledge-base-PUTapi-v1-knowledge-articles--id-">Edit an article</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="knowledge-base-DELETEapi-v1-knowledge-articles--id-">
+                                <a href="#knowledge-base-DELETEapi-v1-knowledge-articles--id-">Delete an article (admins)</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="knowledge-base-POSTapi-v1-knowledge-articles--article_id--publish">
+                                <a href="#knowledge-base-POSTapi-v1-knowledge-articles--article_id--publish">Publish an article</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="knowledge-base-POSTapi-v1-knowledge-articles--article_id--unpublish">
+                                <a href="#knowledge-base-POSTapi-v1-knowledge-articles--article_id--unpublish">Unpublish an article</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="knowledge-base-POSTapi-v1-knowledge-articles--article_id--reindex">
+                                <a href="#knowledge-base-POSTapi-v1-knowledge-articles--article_id--reindex">Index again</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="knowledge-base-GETapi-v1-knowledge-articles--article_id--chunks">
+                                <a href="#knowledge-base-GETapi-v1-knowledge-articles--article_id--chunks">Indexed passages ("how the AI sees it")</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -271,7 +336,1491 @@ Errors use RFC 7807 problem details (`application/problem+json`). Validation err
         <h1 id="authenticating-requests">Authenticating requests</h1>
 <p>This API is not authenticated.</p>
 
-        <h1 id="attachments">Attachments</h1>
+        <h1 id="ai-suggestions">AI suggestions</h1>
+
+    <p>Reply drafts written by the AI from the knowledge base, for agents. The AI never answers a customer by itself: a draft is only sent when an agent approves it.</p>
+
+                                <h2 id="ai-suggestions-GETapi-v1-tickets--ticket_id--suggestions-latest">Latest suggestion of a ticket</h2>
+
+<p>
+</p>
+
+<p><code>data</code> is null when none was requested yet.</p>
+
+<span id="example-requests-GETapi-v1-tickets--ticket_id--suggestions-latest">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8090/api/v1/tickets/architecto/suggestions/latest" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/tickets/architecto/suggestions/latest"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-tickets--ticket_id--suggestions-latest">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;01m50gzsrfw2kb6tkf3200p67h&quot;,
+        &quot;ticket_id&quot;: &quot;01m50gzsrdnyehxe7x29m315f9&quot;,
+        &quot;status&quot;: &quot;ready&quot;,
+        &quot;body&quot;: &quot;Ol&aacute;! O prazo &eacute; de at&eacute; 2 dias &uacute;teis [1].&quot;,
+        &quot;confidence&quot;: 0.85,
+        &quot;citations&quot;: [
+            {
+                &quot;n&quot;: 1,
+                &quot;quote&quot;: &quot;O prazo de resposta &eacute; de at&eacute; 2 dias &uacute;teis.&quot;,
+                &quot;score&quot;: 0.86,
+                &quot;title&quot;: &quot;Pol&iacute;tica de entregas e prazos&quot;,
+                &quot;heading&quot;: &quot;Rastreio sem atualiza&ccedil;&atilde;o&quot;,
+                &quot;chunk_id&quot;: &quot;01k7a0000000000000000ch001&quot;,
+                &quot;article_id&quot;: &quot;01k7a0000000000000000ar001&quot;
+            }
+        ],
+        &quot;candidates&quot;: [
+            {
+                &quot;score&quot;: 0.86,
+                &quot;title&quot;: &quot;Pol&iacute;tica de entregas e prazos&quot;,
+                &quot;article_id&quot;: &quot;01k7a0000000000000000ar001&quot;
+            }
+        ],
+        &quot;error_code&quot;: null,
+        &quot;provider&quot;: &quot;fake&quot;,
+        &quot;model&quot;: &quot;fake&quot;,
+        &quot;latency_ms&quot;: null,
+        &quot;edited&quot;: false,
+        &quot;discard_reason&quot;: null,
+        &quot;reviewed_by&quot;: {
+            &quot;id&quot;: &quot;01m50gzsrfw2kb6tkf3200p67g&quot;,
+            &quot;name&quot;: &quot;Simeon Willms&quot;,
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
+        },
+        &quot;reviewed_at&quot;: null,
+        &quot;message_id&quot;: null,
+        &quot;gap_reported_at&quot;: null,
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-tickets--ticket_id--suggestions-latest" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-tickets--ticket_id--suggestions-latest"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-tickets--ticket_id--suggestions-latest"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-tickets--ticket_id--suggestions-latest" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-tickets--ticket_id--suggestions-latest">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-tickets--ticket_id--suggestions-latest" data-method="GET"
+      data-path="api/v1/tickets/{ticket_id}/suggestions/latest"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-tickets--ticket_id--suggestions-latest', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-tickets--ticket_id--suggestions-latest"
+                    onclick="tryItOut('GETapi-v1-tickets--ticket_id--suggestions-latest');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-tickets--ticket_id--suggestions-latest"
+                    onclick="cancelTryOut('GETapi-v1-tickets--ticket_id--suggestions-latest');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-tickets--ticket_id--suggestions-latest"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/tickets/{ticket_id}/suggestions/latest</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-tickets--ticket_id--suggestions-latest"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-tickets--ticket_id--suggestions-latest"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>ticket_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="ticket_id"                data-endpoint="GETapi-v1-tickets--ticket_id--suggestions-latest"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The ID of the ticket. Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>pending</code></li> <li><code>ready</code></li> <li><code>insufficient</code></li> <li><code>failed</code></li> <li><code>approved</code></li> <li><code>discarded</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>body</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Draft with source markers like [1] (removed when sent).</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>confidence</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>error_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>e.g. LLM_TIMEOUT when the provider failed.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>provider</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>model</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>latency_ms</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>discard_reason</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>wrong_information</code></li> <li><code>tone</code></li> <li><code>outdated_source</code></li> <li><code>other</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>reviewed_by</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>reviewed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>message_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>gap_reported_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="ai-suggestions-POSTapi-v1-tickets--ticket_id--suggestions">Ask for a suggestion</h2>
+
+<p>
+</p>
+
+<p>The draft is written in the background; follow it with the latest
+suggestion endpoint or the staff realtime channel.</p>
+
+<span id="example-requests-POSTapi-v1-tickets--ticket_id--suggestions">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8090/api/v1/tickets/architecto/suggestions" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/tickets/architecto/suggestions"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-tickets--ticket_id--suggestions">
+            <blockquote>
+            <p>Example response (202):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;01m50gzsrqd1apyts6j4x601r3&quot;,
+        &quot;ticket_id&quot;: &quot;01m50gzsrn3dfn1wwjydw09k8n&quot;,
+        &quot;status&quot;: &quot;ready&quot;,
+        &quot;body&quot;: &quot;Ol&aacute;! O prazo &eacute; de at&eacute; 2 dias &uacute;teis [1].&quot;,
+        &quot;confidence&quot;: 0.85,
+        &quot;citations&quot;: [
+            {
+                &quot;n&quot;: 1,
+                &quot;quote&quot;: &quot;O prazo de resposta &eacute; de at&eacute; 2 dias &uacute;teis.&quot;,
+                &quot;score&quot;: 0.86,
+                &quot;title&quot;: &quot;Pol&iacute;tica de entregas e prazos&quot;,
+                &quot;heading&quot;: &quot;Rastreio sem atualiza&ccedil;&atilde;o&quot;,
+                &quot;chunk_id&quot;: &quot;01k7a0000000000000000ch001&quot;,
+                &quot;article_id&quot;: &quot;01k7a0000000000000000ar001&quot;
+            }
+        ],
+        &quot;candidates&quot;: [
+            {
+                &quot;score&quot;: 0.86,
+                &quot;title&quot;: &quot;Pol&iacute;tica de entregas e prazos&quot;,
+                &quot;article_id&quot;: &quot;01k7a0000000000000000ar001&quot;
+            }
+        ],
+        &quot;error_code&quot;: null,
+        &quot;provider&quot;: &quot;fake&quot;,
+        &quot;model&quot;: &quot;fake&quot;,
+        &quot;latency_ms&quot;: null,
+        &quot;edited&quot;: false,
+        &quot;discard_reason&quot;: null,
+        &quot;reviewed_by&quot;: {
+            &quot;id&quot;: &quot;01m50gzsrqd1apyts6j4x601r2&quot;,
+            &quot;name&quot;: &quot;Cole White I&quot;,
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
+        },
+        &quot;reviewed_at&quot;: null,
+        &quot;message_id&quot;: null,
+        &quot;gap_reported_at&quot;: null,
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-tickets--ticket_id--suggestions" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-tickets--ticket_id--suggestions"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-tickets--ticket_id--suggestions"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-tickets--ticket_id--suggestions" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-tickets--ticket_id--suggestions">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-tickets--ticket_id--suggestions" data-method="POST"
+      data-path="api/v1/tickets/{ticket_id}/suggestions"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-tickets--ticket_id--suggestions', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-tickets--ticket_id--suggestions"
+                    onclick="tryItOut('POSTapi-v1-tickets--ticket_id--suggestions');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-tickets--ticket_id--suggestions"
+                    onclick="cancelTryOut('POSTapi-v1-tickets--ticket_id--suggestions');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-tickets--ticket_id--suggestions"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/tickets/{ticket_id}/suggestions</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-tickets--ticket_id--suggestions"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-tickets--ticket_id--suggestions"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>ticket_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="ticket_id"                data-endpoint="POSTapi-v1-tickets--ticket_id--suggestions"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The ID of the ticket. Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>pending</code></li> <li><code>ready</code></li> <li><code>insufficient</code></li> <li><code>failed</code></li> <li><code>approved</code></li> <li><code>discarded</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>body</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Draft with source markers like [1] (removed when sent).</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>confidence</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>error_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>e.g. LLM_TIMEOUT when the provider failed.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>provider</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>model</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>latency_ms</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>discard_reason</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>wrong_information</code></li> <li><code>tone</code></li> <li><code>outdated_source</code></li> <li><code>other</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>reviewed_by</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>reviewed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>message_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>gap_reported_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="ai-suggestions-POSTapi-v1-suggestions--suggestion_id--approve">Approve and send</h2>
+
+<p>
+</p>
+
+<p>Posts the (possibly edited) draft as the agent's public reply.</p>
+
+<span id="example-requests-POSTapi-v1-suggestions--suggestion_id--approve">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8090/api/v1/suggestions/architecto/approve" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"body\": \"Oi, Mariana! O prazo é de até 2 dias úteis.\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/suggestions/architecto/approve"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "body": "Oi, Mariana! O prazo é de até 2 dias úteis."
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-suggestions--suggestion_id--approve">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;01m50gzsrz3gdrm6sxwhcg1t34&quot;,
+        &quot;ticket_id&quot;: &quot;01m50gzsrymhayn9gp5vz1aj9g&quot;,
+        &quot;status&quot;: &quot;ready&quot;,
+        &quot;body&quot;: &quot;Ol&aacute;! O prazo &eacute; de at&eacute; 2 dias &uacute;teis [1].&quot;,
+        &quot;confidence&quot;: 0.85,
+        &quot;citations&quot;: [
+            {
+                &quot;n&quot;: 1,
+                &quot;quote&quot;: &quot;O prazo de resposta &eacute; de at&eacute; 2 dias &uacute;teis.&quot;,
+                &quot;score&quot;: 0.86,
+                &quot;title&quot;: &quot;Pol&iacute;tica de entregas e prazos&quot;,
+                &quot;heading&quot;: &quot;Rastreio sem atualiza&ccedil;&atilde;o&quot;,
+                &quot;chunk_id&quot;: &quot;01k7a0000000000000000ch001&quot;,
+                &quot;article_id&quot;: &quot;01k7a0000000000000000ar001&quot;
+            }
+        ],
+        &quot;candidates&quot;: [
+            {
+                &quot;score&quot;: 0.86,
+                &quot;title&quot;: &quot;Pol&iacute;tica de entregas e prazos&quot;,
+                &quot;article_id&quot;: &quot;01k7a0000000000000000ar001&quot;
+            }
+        ],
+        &quot;error_code&quot;: null,
+        &quot;provider&quot;: &quot;fake&quot;,
+        &quot;model&quot;: &quot;fake&quot;,
+        &quot;latency_ms&quot;: null,
+        &quot;edited&quot;: false,
+        &quot;discard_reason&quot;: null,
+        &quot;reviewed_by&quot;: {
+            &quot;id&quot;: &quot;01m50gzsrz3gdrm6sxwhcg1t33&quot;,
+            &quot;name&quot;: &quot;Prof. Juvenal O&#039;Kon&quot;,
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
+        },
+        &quot;reviewed_at&quot;: null,
+        &quot;message_id&quot;: null,
+        &quot;gap_reported_at&quot;: null,
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-suggestions--suggestion_id--approve" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-suggestions--suggestion_id--approve"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-suggestions--suggestion_id--approve"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-suggestions--suggestion_id--approve" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-suggestions--suggestion_id--approve">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-suggestions--suggestion_id--approve" data-method="POST"
+      data-path="api/v1/suggestions/{suggestion_id}/approve"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-suggestions--suggestion_id--approve', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-suggestions--suggestion_id--approve"
+                    onclick="tryItOut('POSTapi-v1-suggestions--suggestion_id--approve');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-suggestions--suggestion_id--approve"
+                    onclick="cancelTryOut('POSTapi-v1-suggestions--suggestion_id--approve');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-suggestions--suggestion_id--approve"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/suggestions/{suggestion_id}/approve</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-suggestions--suggestion_id--approve"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-suggestions--suggestion_id--approve"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>suggestion_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="suggestion_id"                data-endpoint="POSTapi-v1-suggestions--suggestion_id--approve"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The ID of the suggestion. Example: <code>architecto</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>body</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="body"                data-endpoint="POSTapi-v1-suggestions--suggestion_id--approve"
+               value="Oi, Mariana! O prazo é de até 2 dias úteis."
+               data-component="body">
+    <br>
+<p>The reply as the agent wants to send it (the draft, possibly edited). Must not be greater than 20000 characters. Example: <code>Oi, Mariana! O prazo é de até 2 dias úteis.</code></p>
+        </div>
+        </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>pending</code></li> <li><code>ready</code></li> <li><code>insufficient</code></li> <li><code>failed</code></li> <li><code>approved</code></li> <li><code>discarded</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>body</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Draft with source markers like [1] (removed when sent).</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>confidence</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>error_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>e.g. LLM_TIMEOUT when the provider failed.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>provider</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>model</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>latency_ms</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>discard_reason</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>wrong_information</code></li> <li><code>tone</code></li> <li><code>outdated_source</code></li> <li><code>other</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>reviewed_by</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>reviewed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>message_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>gap_reported_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="ai-suggestions-POSTapi-v1-suggestions--suggestion_id--discard">Discard</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-v1-suggestions--suggestion_id--discard">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8090/api/v1/suggestions/architecto/discard" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"reason\": \"tone\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/suggestions/architecto/discard"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "reason": "tone"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-suggestions--suggestion_id--discard">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;01m50gzssam4p2gbvbh1cmy9a5&quot;,
+        &quot;ticket_id&quot;: &quot;01m50gzss7ywrx9t1cw5zg2xq0&quot;,
+        &quot;status&quot;: &quot;ready&quot;,
+        &quot;body&quot;: &quot;Ol&aacute;! O prazo &eacute; de at&eacute; 2 dias &uacute;teis [1].&quot;,
+        &quot;confidence&quot;: 0.85,
+        &quot;citations&quot;: [
+            {
+                &quot;n&quot;: 1,
+                &quot;quote&quot;: &quot;O prazo de resposta &eacute; de at&eacute; 2 dias &uacute;teis.&quot;,
+                &quot;score&quot;: 0.86,
+                &quot;title&quot;: &quot;Pol&iacute;tica de entregas e prazos&quot;,
+                &quot;heading&quot;: &quot;Rastreio sem atualiza&ccedil;&atilde;o&quot;,
+                &quot;chunk_id&quot;: &quot;01k7a0000000000000000ch001&quot;,
+                &quot;article_id&quot;: &quot;01k7a0000000000000000ar001&quot;
+            }
+        ],
+        &quot;candidates&quot;: [
+            {
+                &quot;score&quot;: 0.86,
+                &quot;title&quot;: &quot;Pol&iacute;tica de entregas e prazos&quot;,
+                &quot;article_id&quot;: &quot;01k7a0000000000000000ar001&quot;
+            }
+        ],
+        &quot;error_code&quot;: null,
+        &quot;provider&quot;: &quot;fake&quot;,
+        &quot;model&quot;: &quot;fake&quot;,
+        &quot;latency_ms&quot;: null,
+        &quot;edited&quot;: false,
+        &quot;discard_reason&quot;: null,
+        &quot;reviewed_by&quot;: {
+            &quot;id&quot;: &quot;01m50gzss9ex6cz4yndf946ds7&quot;,
+            &quot;name&quot;: &quot;Lambert Watsica&quot;,
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
+        },
+        &quot;reviewed_at&quot;: null,
+        &quot;message_id&quot;: null,
+        &quot;gap_reported_at&quot;: null,
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-suggestions--suggestion_id--discard" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-suggestions--suggestion_id--discard"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-suggestions--suggestion_id--discard"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-suggestions--suggestion_id--discard" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-suggestions--suggestion_id--discard">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-suggestions--suggestion_id--discard" data-method="POST"
+      data-path="api/v1/suggestions/{suggestion_id}/discard"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-suggestions--suggestion_id--discard', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-suggestions--suggestion_id--discard"
+                    onclick="tryItOut('POSTapi-v1-suggestions--suggestion_id--discard');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-suggestions--suggestion_id--discard"
+                    onclick="cancelTryOut('POSTapi-v1-suggestions--suggestion_id--discard');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-suggestions--suggestion_id--discard"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/suggestions/{suggestion_id}/discard</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-suggestions--suggestion_id--discard"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-suggestions--suggestion_id--discard"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>suggestion_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="suggestion_id"                data-endpoint="POSTapi-v1-suggestions--suggestion_id--discard"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The ID of the suggestion. Example: <code>architecto</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>reason</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="reason"                data-endpoint="POSTapi-v1-suggestions--suggestion_id--discard"
+               value="tone"
+               data-component="body">
+    <br>
+<p>wrong_information, tone, outdated_source or other. Example: <code>tone</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>wrong_information</code></li> <li><code>tone</code></li> <li><code>outdated_source</code></li> <li><code>other</code></li></ul>
+        </div>
+        </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>pending</code></li> <li><code>ready</code></li> <li><code>insufficient</code></li> <li><code>failed</code></li> <li><code>approved</code></li> <li><code>discarded</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>body</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Draft with source markers like [1] (removed when sent).</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>confidence</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>error_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>e.g. LLM_TIMEOUT when the provider failed.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>provider</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>model</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>latency_ms</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>discard_reason</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>wrong_information</code></li> <li><code>tone</code></li> <li><code>outdated_source</code></li> <li><code>other</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>reviewed_by</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>reviewed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>message_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>gap_reported_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="ai-suggestions-POSTapi-v1-suggestions--suggestion_id--gap">Report a knowledge gap</h2>
+
+<p>
+</p>
+
+<p>The knowledge base had no answer for this ticket.</p>
+
+<span id="example-requests-POSTapi-v1-suggestions--suggestion_id--gap">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8090/api/v1/suggestions/architecto/gap" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/suggestions/architecto/gap"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-suggestions--suggestion_id--gap">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;01m50gzssh34y8d9byhqxawyk2&quot;,
+        &quot;ticket_id&quot;: &quot;01m50gzssf842nknr8ga9zh82q&quot;,
+        &quot;status&quot;: &quot;ready&quot;,
+        &quot;body&quot;: &quot;Ol&aacute;! O prazo &eacute; de at&eacute; 2 dias &uacute;teis [1].&quot;,
+        &quot;confidence&quot;: 0.85,
+        &quot;citations&quot;: [
+            {
+                &quot;n&quot;: 1,
+                &quot;quote&quot;: &quot;O prazo de resposta &eacute; de at&eacute; 2 dias &uacute;teis.&quot;,
+                &quot;score&quot;: 0.86,
+                &quot;title&quot;: &quot;Pol&iacute;tica de entregas e prazos&quot;,
+                &quot;heading&quot;: &quot;Rastreio sem atualiza&ccedil;&atilde;o&quot;,
+                &quot;chunk_id&quot;: &quot;01k7a0000000000000000ch001&quot;,
+                &quot;article_id&quot;: &quot;01k7a0000000000000000ar001&quot;
+            }
+        ],
+        &quot;candidates&quot;: [
+            {
+                &quot;score&quot;: 0.86,
+                &quot;title&quot;: &quot;Pol&iacute;tica de entregas e prazos&quot;,
+                &quot;article_id&quot;: &quot;01k7a0000000000000000ar001&quot;
+            }
+        ],
+        &quot;error_code&quot;: null,
+        &quot;provider&quot;: &quot;fake&quot;,
+        &quot;model&quot;: &quot;fake&quot;,
+        &quot;latency_ms&quot;: null,
+        &quot;edited&quot;: false,
+        &quot;discard_reason&quot;: null,
+        &quot;reviewed_by&quot;: {
+            &quot;id&quot;: &quot;01m50gzssghnsygvkn27mm9v2x&quot;,
+            &quot;name&quot;: &quot;Briana Konopelski&quot;,
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
+        },
+        &quot;reviewed_at&quot;: null,
+        &quot;message_id&quot;: null,
+        &quot;gap_reported_at&quot;: null,
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-suggestions--suggestion_id--gap" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-suggestions--suggestion_id--gap"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-suggestions--suggestion_id--gap"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-suggestions--suggestion_id--gap" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-suggestions--suggestion_id--gap">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-suggestions--suggestion_id--gap" data-method="POST"
+      data-path="api/v1/suggestions/{suggestion_id}/gap"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-suggestions--suggestion_id--gap', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-suggestions--suggestion_id--gap"
+                    onclick="tryItOut('POSTapi-v1-suggestions--suggestion_id--gap');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-suggestions--suggestion_id--gap"
+                    onclick="cancelTryOut('POSTapi-v1-suggestions--suggestion_id--gap');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-suggestions--suggestion_id--gap"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/suggestions/{suggestion_id}/gap</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-suggestions--suggestion_id--gap"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-suggestions--suggestion_id--gap"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>suggestion_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="suggestion_id"                data-endpoint="POSTapi-v1-suggestions--suggestion_id--gap"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The ID of the suggestion. Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>pending</code></li> <li><code>ready</code></li> <li><code>insufficient</code></li> <li><code>failed</code></li> <li><code>approved</code></li> <li><code>discarded</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>body</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Draft with source markers like [1] (removed when sent).</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>confidence</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>error_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>e.g. LLM_TIMEOUT when the provider failed.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>provider</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>model</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>latency_ms</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>discard_reason</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>wrong_information</code></li> <li><code>tone</code></li> <li><code>outdated_source</code></li> <li><code>other</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>reviewed_by</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>reviewed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>message_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>gap_reported_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                    <h1 id="attachments">Attachments</h1>
 
     <p>Images attached to tickets. Files are stored privately and served through short-lived signed URLs.</p>
 
@@ -445,30 +1994,30 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m5054xq3qc0rzqnrgh1vfwfj&quot;,
-            &quot;ticket_id&quot;: &quot;01m5054xq27z3h4ndg2qxac32v&quot;,
-            &quot;uploader_id&quot;: &quot;01m5054xq3qc0rzqnrgh1vfwfh&quot;,
+            &quot;id&quot;: &quot;01m50gzsjxd4wd63fqetxg00yh&quot;,
+            &quot;ticket_id&quot;: &quot;01m50gzsjw1zwa6h2jxgtxpcp7&quot;,
+            &quot;uploader_id&quot;: &quot;01m50gzsjxd4wd63fqetxg00yg&quot;,
             &quot;original_name&quot;: &quot;screenshot.png&quot;,
             &quot;mime_type&quot;: &quot;image/png&quot;,
             &quot;size&quot;: 1024,
             &quot;width&quot;: 10,
             &quot;height&quot;: 10,
-            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m5054xq3qc0rzqnrgh1vfwfj/content?expires=1792080808&amp;tenant=01m5054xctahm7r5896q99vrn8&amp;signature=86b5dbd96ed85ff8917fabce2f8757aae62ee71f7c6d262de42096e0a9e66ca1&quot;,
+            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m50gzsjxd4wd63fqetxg00yh/content?expires=1792093223&amp;tenant=01m50gzs89x0x2avf6s96sa295&amp;signature=2025edba0e055272812f5e0e5cfd44a3d87828b74c88dbff7df8c3b6c5713c6d&quot;,
             &quot;url_expires_in&quot;: 300,
-            &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m5054xq78aqn7rzwt58ezek6&quot;,
-            &quot;ticket_id&quot;: &quot;01m5054xq5407wtx65y4nn4e4r&quot;,
-            &quot;uploader_id&quot;: &quot;01m5054xq6hm42gk92wvkv64sg&quot;,
+            &quot;id&quot;: &quot;01m50gzsk0jg4whm87s5m22trv&quot;,
+            &quot;ticket_id&quot;: &quot;01m50gzsjz1mc740m9z77pzqjd&quot;,
+            &quot;uploader_id&quot;: &quot;01m50gzsjz1mc740m9z77pzqje&quot;,
             &quot;original_name&quot;: &quot;screenshot.png&quot;,
             &quot;mime_type&quot;: &quot;image/png&quot;,
             &quot;size&quot;: 1024,
             &quot;width&quot;: 10,
             &quot;height&quot;: 10,
-            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m5054xq78aqn7rzwt58ezek6/content?expires=1792080808&amp;tenant=01m5054xctahm7r5896q99vrn8&amp;signature=63be30840310e38c8f84011904ae49b64ea98514229bbe92359a94071dfa925f&quot;,
+            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m50gzsk0jg4whm87s5m22trv/content?expires=1792093223&amp;tenant=01m50gzs89x0x2avf6s96sa295&amp;signature=d0274047b44c7ead5e2873ea7fb3ac48c9b3669b0798c83c214cdb8add8d9776&quot;,
             &quot;url_expires_in&quot;: 300,
-            &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
         }
     ]
 }</code>
@@ -577,7 +2126,7 @@ which removes EXIF metadata such as GPS position.</p>
     "http://localhost:8090/api/v1/tickets/architecto/attachments" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpi8bk6pmk83h7dppEFmI" </code></pre></div>
+    --form "file=@/tmp/phprvlmtsop6eebehLhhEE" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -609,17 +2158,17 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m5054xqhnvj8sme7vn58pv4y&quot;,
-        &quot;ticket_id&quot;: &quot;01m5054xqgaa32k6x5q2dkajv9&quot;,
-        &quot;uploader_id&quot;: &quot;01m5054xqhnvj8sme7vn58pv4x&quot;,
+        &quot;id&quot;: &quot;01m50gzskdxt88tk90fdhfj1rv&quot;,
+        &quot;ticket_id&quot;: &quot;01m50gzskaa6jjvz5dtxm9gf1m&quot;,
+        &quot;uploader_id&quot;: &quot;01m50gzskbvvbktmfa44vab8ee&quot;,
         &quot;original_name&quot;: &quot;screenshot.png&quot;,
         &quot;mime_type&quot;: &quot;image/png&quot;,
         &quot;size&quot;: 1024,
         &quot;width&quot;: 10,
         &quot;height&quot;: 10,
-        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m5054xqhnvj8sme7vn58pv4y/content?expires=1792080808&amp;tenant=01m5054xctahm7r5896q99vrn8&amp;signature=9ba0e185d4766ee535b595ff63250fe45562469066e914d6bd65cc6f5112c729&quot;,
+        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m50gzskdxt88tk90fdhfj1rv/content?expires=1792093223&amp;tenant=01m50gzs89x0x2avf6s96sa295&amp;signature=bc8578700783f3d6964c34deba7373ccddb808c9ae2fcbada30422d764abb7f0&quot;,
         &quot;url_expires_in&quot;: 300,
-        &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
     }
 }</code>
  </pre>
@@ -719,7 +2268,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>JPEG, PNG or WebP image (max 5 MB). Metadata is stripped. Must be a file. Must not be greater than 5120 kilobytes. Example: <code>/tmp/phpi8bk6pmk83h7dppEFmI</code></p>
+<p>JPEG, PNG or WebP image (max 5 MB). Metadata is stripped. Must be a file. Must not be greater than 5120 kilobytes. Example: <code>/tmp/phprvlmtsop6eebehLhhEE</code></p>
         </div>
         </form>
 
@@ -767,17 +2316,17 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m5054xqp075bpj65860a175n&quot;,
-        &quot;ticket_id&quot;: &quot;01m5054xqn6440vszmpxjbvkzv&quot;,
-        &quot;uploader_id&quot;: &quot;01m5054xqp075bpj65860a175m&quot;,
+        &quot;id&quot;: &quot;01m50gzskn884gv7766vajsgvt&quot;,
+        &quot;ticket_id&quot;: &quot;01m50gzskky5bcv8vtjxxsptmm&quot;,
+        &quot;uploader_id&quot;: &quot;01m50gzskmgwzbeda6dxwgzd8m&quot;,
         &quot;original_name&quot;: &quot;screenshot.png&quot;,
         &quot;mime_type&quot;: &quot;image/png&quot;,
         &quot;size&quot;: 1024,
         &quot;width&quot;: 10,
         &quot;height&quot;: 10,
-        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m5054xqp075bpj65860a175n/content?expires=1792080808&amp;tenant=01m5054xctahm7r5896q99vrn8&amp;signature=534fe29bc44d6a07cee5cd0cb0ecc0defd74e74c42e825532d9dc73e1498ba9a&quot;,
+        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m50gzskn884gv7766vajsgvt/content?expires=1792093223&amp;tenant=01m50gzs89x0x2avf6s96sa295&amp;signature=68b7150c152d122a5764e9f91bbbcfb3a75f7ae0f619f2d74ef73d40f114313e&quot;,
         &quot;url_expires_in&quot;: 300,
-        &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
     }
 }</code>
  </pre>
@@ -929,13 +2478,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m5054xhwhf8jw2k8q4mdwcem&quot;,
+        &quot;id&quot;: &quot;01m50gzse8ygj1etwd7hy8ptar&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
         &quot;email&quot;: &quot;gulgowski.asia@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
         &quot;tenant&quot;: {
-            &quot;id&quot;: &quot;01m5054xctahm7r5896q99vrn8&quot;,
+            &quot;id&quot;: &quot;01m50gzs89x0x2avf6s96sa295&quot;,
             &quot;name&quot;: &quot;Example Inc.&quot;,
             &quot;slug&quot;: &quot;docs-example&quot;
         },
@@ -943,7 +2492,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
     }
 }</code>
  </pre>
@@ -1463,13 +3012,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m5054xjf3sq3qm3q6ze5n8f2&quot;,
+        &quot;id&quot;: &quot;01m50gzserkzt8qrrw1hcm8998&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
         &quot;email&quot;: &quot;idickens@example.org&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
         &quot;tenant&quot;: {
-            &quot;id&quot;: &quot;01m5054xctahm7r5896q99vrn8&quot;,
+            &quot;id&quot;: &quot;01m50gzs89x0x2avf6s96sa295&quot;,
             &quot;name&quot;: &quot;Example Inc.&quot;,
             &quot;slug&quot;: &quot;docs-example&quot;
         },
@@ -1477,7 +3026,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
     }
 }</code>
  </pre>
@@ -2020,13 +3569,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m5054xjt0gn7f37awb6c1hhr&quot;,
+        &quot;id&quot;: &quot;01m50gzsf4bpnf115f00zmdb6z&quot;,
         &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
         &quot;email&quot;: &quot;aschuster@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
         &quot;tenant&quot;: {
-            &quot;id&quot;: &quot;01m5054xctahm7r5896q99vrn8&quot;,
+            &quot;id&quot;: &quot;01m50gzs89x0x2avf6s96sa295&quot;,
             &quot;name&quot;: &quot;Example Inc.&quot;,
             &quot;slug&quot;: &quot;docs-example&quot;
         },
@@ -2034,7 +3583,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
     }
 }</code>
  </pre>
@@ -2352,13 +3901,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m5054xk0j7m2452fkmnk71tq&quot;,
+        &quot;id&quot;: &quot;01m50gzsfab9h1ej5pc47v5qnf&quot;,
         &quot;name&quot;: &quot;Leda Price&quot;,
         &quot;email&quot;: &quot;theo.hauck@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
         &quot;tenant&quot;: {
-            &quot;id&quot;: &quot;01m5054xctahm7r5896q99vrn8&quot;,
+            &quot;id&quot;: &quot;01m50gzs89x0x2avf6s96sa295&quot;,
             &quot;name&quot;: &quot;Example Inc.&quot;,
             &quot;slug&quot;: &quot;docs-example&quot;
         },
@@ -2366,7 +3915,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
     }
 }</code>
  </pre>
@@ -2578,7 +4127,7 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m5054xqvcnfnpdajgb16026d&quot;,
+            &quot;id&quot;: &quot;01m50gzskss88vakd61m62q3zd&quot;,
             &quot;name&quot;: &quot;Repudiandae Laboriosam&quot;,
             &quot;slug&quot;: &quot;repudiandae-laboriosam&quot;,
             &quot;description&quot;: &quot;Alias tenetur ratione nemo voluptate accusamus ut et.&quot;,
@@ -2607,7 +4156,7 @@ fetch(url, {
             &quot;tickets_count&quot;: 1
         },
         {
-            &quot;id&quot;: &quot;01m5054xqynpzafaqtzfya9att&quot;,
+            &quot;id&quot;: &quot;01m50gzskywgfcz4fghv69nbaz&quot;,
             &quot;name&quot;: &quot;Error Neque&quot;,
             &quot;slug&quot;: &quot;error-neque&quot;,
             &quot;description&quot;: &quot;Et ipsam dolorem et ut dicta vitae assumenda.&quot;,
@@ -2832,7 +4381,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m5054xr9fb1vv66fp1n1a0s8&quot;,
+        &quot;id&quot;: &quot;01m50gzsmaf0yszsnj5pq8tvma&quot;,
         &quot;name&quot;: &quot;Fugiat Sunt&quot;,
         &quot;slug&quot;: &quot;fugiat-sunt&quot;,
         &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab.&quot;,
@@ -3190,7 +4739,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m5054xrd7g02nafdks1sd666&quot;,
+        &quot;id&quot;: &quot;01m50gzsmdptnhjm9v68rd0dm7&quot;,
         &quot;name&quot;: &quot;Eius Et&quot;,
         &quot;slug&quot;: &quot;eius-et&quot;,
         &quot;description&quot;: &quot;Quos velit et fugiat sunt nihil accusantium harum.&quot;,
@@ -3426,7 +4975,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m5054xrm99xgcsteh8dzke34&quot;,
+        &quot;id&quot;: &quot;01m50gzsmny8z2ps3y4rc28hac&quot;,
         &quot;name&quot;: &quot;Sunt Nihil&quot;,
         &quot;slug&quot;: &quot;sunt-nihil&quot;,
         &quot;description&quot;: &quot;Harum mollitia modi deserunt aut ab provident perspiciatis quo.&quot;,
@@ -3999,6 +5548,3663 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Example: <code>application/json</code></p>
             </div>
                         </form>
+
+                <h1 id="knowledge-base">Knowledge base</h1>
+
+    <p>Markdown articles the AI may cite (staff only). Only published, indexed articles are searched; drafts never are.</p>
+
+                                <h2 id="knowledge-base-GETapi-v1-knowledge-stats">Knowledge-base figures</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-knowledge-stats">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8090/api/v1/knowledge/stats" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/knowledge/stats"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-knowledge-stats">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;published&quot;: 42,
+        &quot;chunks&quot;: 386,
+        &quot;queued&quot;: 2,
+        &quot;failed&quot;: 1,
+        &quot;gaps&quot;: 3
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-knowledge-stats" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-knowledge-stats"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-knowledge-stats"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-knowledge-stats" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-knowledge-stats">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-knowledge-stats" data-method="GET"
+      data-path="api/v1/knowledge/stats"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-knowledge-stats', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-knowledge-stats"
+                    onclick="tryItOut('GETapi-v1-knowledge-stats');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-knowledge-stats"
+                    onclick="cancelTryOut('GETapi-v1-knowledge-stats');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-knowledge-stats"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/knowledge/stats</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-knowledge-stats"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-knowledge-stats"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="knowledge-base-POSTapi-v1-knowledge-search">Search the knowledge base (playground)</h2>
+
+<p>
+</p>
+
+<p>Hybrid search exactly as the AI uses it: full-text and semantic scores
+and the combined score of each passage.</p>
+
+<span id="example-requests-POSTapi-v1-knowledge-search">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8090/api/v1/knowledge/search" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"query\": \"o rastreio do meu pedido parou, o que faço?\",
+    \"text_weight\": 0.4,
+    \"top_k\": 5,
+    \"rerank\": false,
+    \"customer_visible_only\": false
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/knowledge/search"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "query": "o rastreio do meu pedido parou, o que faço?",
+    "text_weight": 0.4,
+    "top_k": 5,
+    "rerank": false,
+    "customer_visible_only": false
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-knowledge-search">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: [
+        {
+            &quot;chunk_id&quot;: &quot;01J...&quot;,
+            &quot;article_id&quot;: &quot;01J...&quot;,
+            &quot;title&quot;: &quot;Pol&iacute;tica de entregas e prazos&quot;,
+            &quot;ordinal&quot;: 3,
+            &quot;heading&quot;: &quot;Rastreio sem atualiza&ccedil;&atilde;o&quot;,
+            &quot;content&quot;: &quot;Se o rastreamento n&atilde;o for atualizado...&quot;,
+            &quot;text_score&quot;: 0.62,
+            &quot;semantic_score&quot;: 0.89,
+            &quot;score&quot;: 0.91,
+            &quot;movement&quot;: 1
+        }
+    ],
+    &quot;meta&quot;: {
+        &quot;latency_ms&quot;: 212,
+        &quot;embedding_model&quot;: &quot;gemini/gemini-embedding-001&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-knowledge-search" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-knowledge-search"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-knowledge-search"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-knowledge-search" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-knowledge-search">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-knowledge-search" data-method="POST"
+      data-path="api/v1/knowledge/search"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-knowledge-search', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-knowledge-search"
+                    onclick="tryItOut('POSTapi-v1-knowledge-search');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-knowledge-search"
+                    onclick="cancelTryOut('POSTapi-v1-knowledge-search');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-knowledge-search"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/knowledge/search</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-knowledge-search"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-knowledge-search"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>query</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="query"                data-endpoint="POSTapi-v1-knowledge-search"
+               value="o rastreio do meu pedido parou, o que faço?"
+               data-component="body">
+    <br>
+<p>The question, as a customer would ask it. Must be at least 2 characters. Must not be greater than 500 characters. Example: <code>o rastreio do meu pedido parou, o que faço?</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>text_weight</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="text_weight"                data-endpoint="POSTapi-v1-knowledge-search"
+               value="0.4"
+               data-component="body">
+    <br>
+<p>Weight of the full-text score, 0 to 1 (the rest is semantic). Must be at least 0. Must not be greater than 1. Example: <code>0.4</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>top_k</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="top_k"                data-endpoint="POSTapi-v1-knowledge-search"
+               value="5"
+               data-component="body">
+    <br>
+<p>Number of passages (1-10). Must be at least 1. Must not be greater than 10. Example: <code>5</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>rerank</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <label data-endpoint="POSTapi-v1-knowledge-search" style="display: none">
+            <input type="radio" name="rerank"
+                   value="true"
+                   data-endpoint="POSTapi-v1-knowledge-search"
+                   data-component="body"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="POSTapi-v1-knowledge-search" style="display: none">
+            <input type="radio" name="rerank"
+                   value="false"
+                   data-endpoint="POSTapi-v1-knowledge-search"
+                   data-component="body"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Combine both rankings with reciprocal rank fusion. Example: <code>false</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>category_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="category_id"                data-endpoint="POSTapi-v1-knowledge-search"
+               value=""
+               data-component="body">
+    <br>
+<p>Only articles of this category.</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>customer_visible_only</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <label data-endpoint="POSTapi-v1-knowledge-search" style="display: none">
+            <input type="radio" name="customer_visible_only"
+                   value="true"
+                   data-endpoint="POSTapi-v1-knowledge-search"
+                   data-component="body"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="POSTapi-v1-knowledge-search" style="display: none">
+            <input type="radio" name="customer_visible_only"
+                   value="false"
+                   data-endpoint="POSTapi-v1-knowledge-search"
+                   data-component="body"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Only articles the AI may use in replies. Example: <code>false</code></p>
+        </div>
+        </form>
+
+                    <h2 id="knowledge-base-POSTapi-v1-knowledge-articles-import">Import a Markdown file (draft)</h2>
+
+<p>
+</p>
+
+<p>The first "# Heading" becomes the title (or the file name).</p>
+
+<span id="example-requests-POSTapi-v1-knowledge-articles-import">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8090/api/v1/knowledge/articles/import" \
+    --header "Content-Type: multipart/form-data" \
+    --header "Accept: application/json" \
+    --form "file=@/tmp/phpnqk0m0lp6i8g3fcGmDG" </code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/knowledge/articles/import"
+);
+
+const headers = {
+    "Content-Type": "multipart/form-data",
+    "Accept": "application/json",
+};
+
+const body = new FormData();
+body.append('file', document.querySelector('input[name="file"]').files[0]);
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-knowledge-articles-import">
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;01m50gzsnb8jmh89d617znmnfc&quot;,
+        &quot;title&quot;: &quot;Eius et animi quos.&quot;,
+        &quot;markdown&quot;: null,
+        &quot;visibility&quot;: &quot;customers&quot;,
+        &quot;tags&quot;: [
+            &quot;entrega&quot;
+        ],
+        &quot;category&quot;: {
+            &quot;id&quot;: &quot;01m50gzsnaf30rd0x7f5xpep4y&quot;,
+            &quot;name&quot;: &quot;Nemo Voluptate&quot;,
+            &quot;slug&quot;: &quot;nemo-voluptate&quot;,
+            &quot;description&quot;: &quot;Ut et recusandae modi rerum ex repellendus.&quot;,
+            &quot;sla_targets&quot;: {
+                &quot;low&quot;: {
+                    &quot;first_response_minutes&quot;: 480,
+                    &quot;resolution_minutes&quot;: 4320,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;normal&quot;: {
+                    &quot;first_response_minutes&quot;: 240,
+                    &quot;resolution_minutes&quot;: 1440,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;high&quot;: {
+                    &quot;first_response_minutes&quot;: 60,
+                    &quot;resolution_minutes&quot;: 480,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;urgent&quot;: {
+                    &quot;first_response_minutes&quot;: 15,
+                    &quot;resolution_minutes&quot;: 240,
+                    &quot;is_custom&quot;: false
+                }
+            }
+        },
+        &quot;status&quot;: &quot;draft&quot;,
+        &quot;has_unpublished_changes&quot;: false,
+        &quot;published_at&quot;: null,
+        &quot;index&quot;: {
+            &quot;status&quot;: &quot;none&quot;,
+            &quot;progress&quot;: 0,
+            &quot;error&quot;: null,
+            &quot;indexed_at&quot;: null,
+            &quot;chunks_count&quot;: 0
+        },
+        &quot;citations_count&quot;: 0,
+        &quot;updated_by&quot;: {
+            &quot;id&quot;: &quot;01m50gzsnaf30rd0x7f5xpep4x&quot;,
+            &quot;name&quot;: &quot;Dr. Alan Green&quot;,
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
+        },
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-knowledge-articles-import" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-knowledge-articles-import"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-knowledge-articles-import"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-knowledge-articles-import" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-knowledge-articles-import">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-knowledge-articles-import" data-method="POST"
+      data-path="api/v1/knowledge/articles/import"
+      data-authed="0"
+      data-hasfiles="1"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-knowledge-articles-import', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-knowledge-articles-import"
+                    onclick="tryItOut('POSTapi-v1-knowledge-articles-import');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-knowledge-articles-import"
+                    onclick="cancelTryOut('POSTapi-v1-knowledge-articles-import');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-knowledge-articles-import"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/knowledge/articles/import</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-knowledge-articles-import"
+               value="multipart/form-data"
+               data-component="header">
+    <br>
+<p>Example: <code>multipart/form-data</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-knowledge-articles-import"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>file</code></b>&nbsp;&nbsp;
+<small>file</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="file" style="display: none"
+                              name="file"                data-endpoint="POSTapi-v1-knowledge-articles-import"
+               value=""
+               data-component="body">
+    <br>
+<p>Must be a file. Must not be greater than 200 kilobytes. Example: <code>/tmp/phpnqk0m0lp6i8g3fcGmDG</code></p>
+        </div>
+        </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>published</code></li> <li><code>archived</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>visibility</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customers</code></li> <li><code>internal</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>index</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>none</code></li> <li><code>queued</code></li> <li><code>indexing</code></li> <li><code>indexed</code></li> <li><code>failed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>error</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Provider error code when indexing failed.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>indexed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>markdown</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Markdown working copy; null in listings.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>published_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>updated_by</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                        <h2 id="knowledge-base-GETapi-v1-knowledge-articles">List articles</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-knowledge-articles">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8090/api/v1/knowledge/articles?q=entrega&amp;status=published&amp;index_status=&amp;category_id=&amp;per_page=25&amp;page=1" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/knowledge/articles"
+);
+
+const params = {
+    "q": "entrega",
+    "status": "published",
+    "index_status": "",
+    "category_id": "",
+    "per_page": "25",
+    "page": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-knowledge-articles">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: &quot;01m50gzsnrfq08e4k8v840vv9t&quot;,
+            &quot;title&quot;: &quot;Eius et animi quos.&quot;,
+            &quot;markdown&quot;: null,
+            &quot;visibility&quot;: &quot;customers&quot;,
+            &quot;tags&quot;: [
+                &quot;entrega&quot;
+            ],
+            &quot;category&quot;: {
+                &quot;id&quot;: &quot;01m50gzsnq1jy0yfg0zpdat5v0&quot;,
+                &quot;name&quot;: &quot;Recusandae Modi&quot;,
+                &quot;slug&quot;: &quot;recusandae-modi&quot;,
+                &quot;description&quot;: &quot;Ex repellendus assumenda et tenetur ab reiciendis.&quot;,
+                &quot;sla_targets&quot;: {
+                    &quot;low&quot;: {
+                        &quot;first_response_minutes&quot;: 480,
+                        &quot;resolution_minutes&quot;: 4320,
+                        &quot;is_custom&quot;: false
+                    },
+                    &quot;normal&quot;: {
+                        &quot;first_response_minutes&quot;: 240,
+                        &quot;resolution_minutes&quot;: 1440,
+                        &quot;is_custom&quot;: false
+                    },
+                    &quot;high&quot;: {
+                        &quot;first_response_minutes&quot;: 60,
+                        &quot;resolution_minutes&quot;: 480,
+                        &quot;is_custom&quot;: false
+                    },
+                    &quot;urgent&quot;: {
+                        &quot;first_response_minutes&quot;: 15,
+                        &quot;resolution_minutes&quot;: 240,
+                        &quot;is_custom&quot;: false
+                    }
+                }
+            },
+            &quot;status&quot;: &quot;draft&quot;,
+            &quot;has_unpublished_changes&quot;: false,
+            &quot;published_at&quot;: null,
+            &quot;index&quot;: {
+                &quot;status&quot;: &quot;none&quot;,
+                &quot;progress&quot;: 0,
+                &quot;error&quot;: null,
+                &quot;indexed_at&quot;: null,
+                &quot;chunks_count&quot;: 0
+            },
+            &quot;citations_count&quot;: 0,
+            &quot;updated_by&quot;: {
+                &quot;id&quot;: &quot;01m50gzsnpqvxd2sc2wq5c4fay&quot;,
+                &quot;name&quot;: &quot;Nelson Little&quot;,
+                &quot;role&quot;: &quot;customer&quot;,
+                &quot;email&quot;: null
+            },
+            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
+            &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        },
+        {
+            &quot;id&quot;: &quot;01m50gzsp1zzwt1pgayev7gjct&quot;,
+            &quot;title&quot;: &quot;Perspiciatis deserunt ducimus corrupti et.&quot;,
+            &quot;markdown&quot;: null,
+            &quot;visibility&quot;: &quot;customers&quot;,
+            &quot;tags&quot;: [
+                &quot;entrega&quot;
+            ],
+            &quot;category&quot;: {
+                &quot;id&quot;: &quot;01m50gzsp0f8ntnmbnzwpmzbqm&quot;,
+                &quot;name&quot;: &quot;Ea Ut&quot;,
+                &quot;slug&quot;: &quot;ea-ut&quot;,
+                &quot;description&quot;: &quot;Deserunt sint quis in quod.&quot;,
+                &quot;sla_targets&quot;: {
+                    &quot;low&quot;: {
+                        &quot;first_response_minutes&quot;: 480,
+                        &quot;resolution_minutes&quot;: 4320,
+                        &quot;is_custom&quot;: false
+                    },
+                    &quot;normal&quot;: {
+                        &quot;first_response_minutes&quot;: 240,
+                        &quot;resolution_minutes&quot;: 1440,
+                        &quot;is_custom&quot;: false
+                    },
+                    &quot;high&quot;: {
+                        &quot;first_response_minutes&quot;: 60,
+                        &quot;resolution_minutes&quot;: 480,
+                        &quot;is_custom&quot;: false
+                    },
+                    &quot;urgent&quot;: {
+                        &quot;first_response_minutes&quot;: 15,
+                        &quot;resolution_minutes&quot;: 240,
+                        &quot;is_custom&quot;: false
+                    }
+                }
+            },
+            &quot;status&quot;: &quot;draft&quot;,
+            &quot;has_unpublished_changes&quot;: false,
+            &quot;published_at&quot;: null,
+            &quot;index&quot;: {
+                &quot;status&quot;: &quot;none&quot;,
+                &quot;progress&quot;: 0,
+                &quot;error&quot;: null,
+                &quot;indexed_at&quot;: null,
+                &quot;chunks_count&quot;: 0
+            },
+            &quot;citations_count&quot;: 0,
+            &quot;updated_by&quot;: {
+                &quot;id&quot;: &quot;01m50gzsnzrkp7x4c0t4vdk8xr&quot;,
+                &quot;name&quot;: &quot;Dr. Lennie Klocko&quot;,
+                &quot;role&quot;: &quot;customer&quot;,
+                &quot;email&quot;: null
+            },
+            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
+            &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        }
+    ],
+    &quot;links&quot;: {
+        &quot;first&quot;: &quot;/?page=1&quot;,
+        &quot;last&quot;: &quot;/?page=1&quot;,
+        &quot;prev&quot;: null,
+        &quot;next&quot;: null
+    },
+    &quot;meta&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;from&quot;: 1,
+        &quot;last_page&quot;: 1,
+        &quot;links&quot;: [
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            },
+            {
+                &quot;url&quot;: &quot;/?page=1&quot;,
+                &quot;label&quot;: &quot;1&quot;,
+                &quot;page&quot;: 1,
+                &quot;active&quot;: true
+            },
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            }
+        ],
+        &quot;path&quot;: &quot;/&quot;,
+        &quot;per_page&quot;: 25,
+        &quot;to&quot;: 2,
+        &quot;total&quot;: 2
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-knowledge-articles" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-knowledge-articles"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-knowledge-articles"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-knowledge-articles" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-knowledge-articles">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-knowledge-articles" data-method="GET"
+      data-path="api/v1/knowledge/articles"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-knowledge-articles', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-knowledge-articles"
+                    onclick="tryItOut('GETapi-v1-knowledge-articles');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-knowledge-articles"
+                    onclick="cancelTryOut('GETapi-v1-knowledge-articles');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-knowledge-articles"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/knowledge/articles</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-knowledge-articles"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-knowledge-articles"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>q</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="q"                data-endpoint="GETapi-v1-knowledge-articles"
+               value="entrega"
+               data-component="query">
+    <br>
+<p>Search titles. Must not be greater than 100 characters. Example: <code>entrega</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-v1-knowledge-articles"
+               value="published"
+               data-component="query">
+    <br>
+<p>draft, published or archived. Example: <code>published</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>published</code></li> <li><code>archived</code></li></ul>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>index_status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="index_status"                data-endpoint="GETapi-v1-knowledge-articles"
+               value=""
+               data-component="query">
+    <br>
+<p>none, queued, indexing, indexed or failed.</p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>none</code></li> <li><code>queued</code></li> <li><code>indexing</code></li> <li><code>indexed</code></li> <li><code>failed</code></li></ul>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>category_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="category_id"                data-endpoint="GETapi-v1-knowledge-articles"
+               value=""
+               data-component="query">
+    <br>
+<p>Category ULID.</p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="per_page"                data-endpoint="GETapi-v1-knowledge-articles"
+               value="25"
+               data-component="query">
+    <br>
+<p>Page size (1-100). Must be at least 1. Must not be greater than 100. Example: <code>25</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="GETapi-v1-knowledge-articles"
+               value="1"
+               data-component="query">
+    <br>
+<p>Page number. Must be at least 1. Example: <code>1</code></p>
+            </div>
+                </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>published</code></li> <li><code>archived</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>visibility</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customers</code></li> <li><code>internal</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>index</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>none</code></li> <li><code>queued</code></li> <li><code>indexing</code></li> <li><code>indexed</code></li> <li><code>failed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>error</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Provider error code when indexing failed.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>indexed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>markdown</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Markdown working copy; null in listings.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>published_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>updated_by</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                        <h2 id="knowledge-base-POSTapi-v1-knowledge-articles">Create an article (draft)</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-v1-knowledge-articles">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8090/api/v1/knowledge/articles" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"title\": \"Política de entregas e prazos\",
+    \"markdown\": \"## Prazos\\n\\nSul e Sudeste: 3 a 5 dias úteis.\",
+    \"visibility\": \"customers\",
+    \"tags\": [
+        \"b\"
+    ]
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/knowledge/articles"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "title": "Política de entregas e prazos",
+    "markdown": "## Prazos\n\nSul e Sudeste: 3 a 5 dias úteis.",
+    "visibility": "customers",
+    "tags": [
+        "b"
+    ]
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-knowledge-articles">
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;01m50gzspfb5wk4615477xyes3&quot;,
+        &quot;title&quot;: &quot;Et animi quos velit.&quot;,
+        &quot;markdown&quot;: null,
+        &quot;visibility&quot;: &quot;customers&quot;,
+        &quot;tags&quot;: [
+            &quot;entrega&quot;
+        ],
+        &quot;category&quot;: {
+            &quot;id&quot;: &quot;01m50gzspebzw73kqvp09d18hj&quot;,
+            &quot;name&quot;: &quot;Tenetur Ab&quot;,
+            &quot;slug&quot;: &quot;tenetur-ab&quot;,
+            &quot;description&quot;: &quot;Quia perspiciatis deserunt ducimus corrupti et.&quot;,
+            &quot;sla_targets&quot;: {
+                &quot;low&quot;: {
+                    &quot;first_response_minutes&quot;: 480,
+                    &quot;resolution_minutes&quot;: 4320,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;normal&quot;: {
+                    &quot;first_response_minutes&quot;: 240,
+                    &quot;resolution_minutes&quot;: 1440,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;high&quot;: {
+                    &quot;first_response_minutes&quot;: 60,
+                    &quot;resolution_minutes&quot;: 480,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;urgent&quot;: {
+                    &quot;first_response_minutes&quot;: 15,
+                    &quot;resolution_minutes&quot;: 240,
+                    &quot;is_custom&quot;: false
+                }
+            }
+        },
+        &quot;status&quot;: &quot;draft&quot;,
+        &quot;has_unpublished_changes&quot;: false,
+        &quot;published_at&quot;: null,
+        &quot;index&quot;: {
+            &quot;status&quot;: &quot;none&quot;,
+            &quot;progress&quot;: 0,
+            &quot;error&quot;: null,
+            &quot;indexed_at&quot;: null,
+            &quot;chunks_count&quot;: 0
+        },
+        &quot;citations_count&quot;: 0,
+        &quot;updated_by&quot;: {
+            &quot;id&quot;: &quot;01m50gzspdr3etavegsgztxeet&quot;,
+            &quot;name&quot;: &quot;Mr. Murl Cruickshank Jr.&quot;,
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
+        },
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-knowledge-articles" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-knowledge-articles"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-knowledge-articles"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-knowledge-articles" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-knowledge-articles">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-knowledge-articles" data-method="POST"
+      data-path="api/v1/knowledge/articles"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-knowledge-articles', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-knowledge-articles"
+                    onclick="tryItOut('POSTapi-v1-knowledge-articles');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-knowledge-articles"
+                    onclick="cancelTryOut('POSTapi-v1-knowledge-articles');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-knowledge-articles"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/knowledge/articles</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-knowledge-articles"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-knowledge-articles"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="title"                data-endpoint="POSTapi-v1-knowledge-articles"
+               value="Política de entregas e prazos"
+               data-component="body">
+    <br>
+<p>Article title. Must be at least 3 characters. Must not be greater than 200 characters. Example: <code>Política de entregas e prazos</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>markdown</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="markdown"                data-endpoint="POSTapi-v1-knowledge-articles"
+               value="## Prazos
+
+Sul e Sudeste: 3 a 5 dias úteis."
+               data-component="body">
+    <br>
+<p>Article text in Markdown. Only the published version is indexed and cited. Must not be greater than 100000 characters. Example: `## Prazos</p>
+<p>Sul e Sudeste: 3 a 5 dias úteis.`</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>visibility</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="visibility"                data-endpoint="POSTapi-v1-knowledge-articles"
+               value="customers"
+               data-component="body">
+    <br>
+<p>customers (staff and customers) or internal (staff only, never used in replies). Example: <code>customers</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customers</code></li> <li><code>internal</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>tags</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="tags[0]"                data-endpoint="POSTapi-v1-knowledge-articles"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="tags[1]"                data-endpoint="POSTapi-v1-knowledge-articles"
+               data-component="body">
+    <br>
+<p>Must be at least 1 character. Must not be greater than 40 characters.</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>category_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="category_id"                data-endpoint="POSTapi-v1-knowledge-articles"
+               value=""
+               data-component="body">
+    <br>
+<p>Category ULID. Must match an existing stored value.</p>
+        </div>
+        </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>published</code></li> <li><code>archived</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>visibility</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customers</code></li> <li><code>internal</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>index</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>none</code></li> <li><code>queued</code></li> <li><code>indexing</code></li> <li><code>indexed</code></li> <li><code>failed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>error</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Provider error code when indexing failed.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>indexed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>markdown</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Markdown working copy; null in listings.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>published_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>updated_by</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                        <h2 id="knowledge-base-GETapi-v1-knowledge-articles--id-">Show an article</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-knowledge-articles--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8090/api/v1/knowledge/articles/architecto" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/knowledge/articles/architecto"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-knowledge-articles--id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;01m50gzsptsvf0ad52wjd65qps&quot;,
+        &quot;title&quot;: &quot;Et animi quos velit.&quot;,
+        &quot;markdown&quot;: null,
+        &quot;visibility&quot;: &quot;customers&quot;,
+        &quot;tags&quot;: [
+            &quot;entrega&quot;
+        ],
+        &quot;category&quot;: {
+            &quot;id&quot;: &quot;01m50gzsps45wnkdpv62wk22yb&quot;,
+            &quot;name&quot;: &quot;Quia Perspiciatis&quot;,
+            &quot;slug&quot;: &quot;quia-perspiciatis&quot;,
+            &quot;description&quot;: &quot;Ducimus corrupti et dolores quia maiores assumenda.&quot;,
+            &quot;sla_targets&quot;: {
+                &quot;low&quot;: {
+                    &quot;first_response_minutes&quot;: 480,
+                    &quot;resolution_minutes&quot;: 4320,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;normal&quot;: {
+                    &quot;first_response_minutes&quot;: 240,
+                    &quot;resolution_minutes&quot;: 1440,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;high&quot;: {
+                    &quot;first_response_minutes&quot;: 60,
+                    &quot;resolution_minutes&quot;: 480,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;urgent&quot;: {
+                    &quot;first_response_minutes&quot;: 15,
+                    &quot;resolution_minutes&quot;: 240,
+                    &quot;is_custom&quot;: false
+                }
+            }
+        },
+        &quot;status&quot;: &quot;draft&quot;,
+        &quot;has_unpublished_changes&quot;: false,
+        &quot;published_at&quot;: null,
+        &quot;index&quot;: {
+            &quot;status&quot;: &quot;none&quot;,
+            &quot;progress&quot;: 0,
+            &quot;error&quot;: null,
+            &quot;indexed_at&quot;: null,
+            &quot;chunks_count&quot;: 0
+        },
+        &quot;citations_count&quot;: 0,
+        &quot;updated_by&quot;: {
+            &quot;id&quot;: &quot;01m50gzsps45wnkdpv62wk22ya&quot;,
+            &quot;name&quot;: &quot;Mr. Graham Crist&quot;,
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
+        },
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-knowledge-articles--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-knowledge-articles--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-knowledge-articles--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-knowledge-articles--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-knowledge-articles--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-knowledge-articles--id-" data-method="GET"
+      data-path="api/v1/knowledge/articles/{id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-knowledge-articles--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-knowledge-articles--id-"
+                    onclick="tryItOut('GETapi-v1-knowledge-articles--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-knowledge-articles--id-"
+                    onclick="cancelTryOut('GETapi-v1-knowledge-articles--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-knowledge-articles--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/knowledge/articles/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-knowledge-articles--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-knowledge-articles--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="GETapi-v1-knowledge-articles--id-"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The ID of the article. Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>published</code></li> <li><code>archived</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>visibility</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customers</code></li> <li><code>internal</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>index</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>none</code></li> <li><code>queued</code></li> <li><code>indexing</code></li> <li><code>indexed</code></li> <li><code>failed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>error</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Provider error code when indexing failed.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>indexed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>markdown</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Markdown working copy; null in listings.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>published_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>updated_by</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                        <h2 id="knowledge-base-PUTapi-v1-knowledge-articles--id-">Edit an article</h2>
+
+<p>
+</p>
+
+<p>Changes the working copy; a published article keeps serving its
+published version until it is published again.</p>
+
+<span id="example-requests-PUTapi-v1-knowledge-articles--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PUT \
+    "http://localhost:8090/api/v1/knowledge/articles/architecto" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"title\": \"Política de entregas e prazos\",
+    \"markdown\": \"## Prazos\\n\\nSul e Sudeste: 3 a 5 dias úteis.\",
+    \"visibility\": \"customers\",
+    \"tags\": [
+        \"b\"
+    ]
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/knowledge/articles/architecto"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "title": "Política de entregas e prazos",
+    "markdown": "## Prazos\n\nSul e Sudeste: 3 a 5 dias úteis.",
+    "visibility": "customers",
+    "tags": [
+        "b"
+    ]
+};
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PUTapi-v1-knowledge-articles--id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;01m50gzsq8wv77pk2anpjh028e&quot;,
+        &quot;title&quot;: &quot;Quo voluptatibus aut harum eius ipsa.&quot;,
+        &quot;markdown&quot;: null,
+        &quot;visibility&quot;: &quot;customers&quot;,
+        &quot;tags&quot;: [
+            &quot;entrega&quot;
+        ],
+        &quot;category&quot;: {
+            &quot;id&quot;: &quot;01m50gzsq7qz4pkbxfkjwnssfs&quot;,
+            &quot;name&quot;: &quot;Sint Ipsa&quot;,
+            &quot;slug&quot;: &quot;sint-ipsa&quot;,
+            &quot;description&quot;: &quot;Nemo architecto aperiam non error similique est iste illo.&quot;,
+            &quot;sla_targets&quot;: {
+                &quot;low&quot;: {
+                    &quot;first_response_minutes&quot;: 480,
+                    &quot;resolution_minutes&quot;: 4320,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;normal&quot;: {
+                    &quot;first_response_minutes&quot;: 240,
+                    &quot;resolution_minutes&quot;: 1440,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;high&quot;: {
+                    &quot;first_response_minutes&quot;: 60,
+                    &quot;resolution_minutes&quot;: 480,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;urgent&quot;: {
+                    &quot;first_response_minutes&quot;: 15,
+                    &quot;resolution_minutes&quot;: 240,
+                    &quot;is_custom&quot;: false
+                }
+            }
+        },
+        &quot;status&quot;: &quot;draft&quot;,
+        &quot;has_unpublished_changes&quot;: false,
+        &quot;published_at&quot;: null,
+        &quot;index&quot;: {
+            &quot;status&quot;: &quot;none&quot;,
+            &quot;progress&quot;: 0,
+            &quot;error&quot;: null,
+            &quot;indexed_at&quot;: null,
+            &quot;chunks_count&quot;: 0
+        },
+        &quot;citations_count&quot;: 0,
+        &quot;updated_by&quot;: {
+            &quot;id&quot;: &quot;01m50gzsq6d1x7x8vvkzxak49c&quot;,
+            &quot;name&quot;: &quot;Mr. Eliezer Lehner Sr.&quot;,
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
+        },
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PUTapi-v1-knowledge-articles--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PUTapi-v1-knowledge-articles--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PUTapi-v1-knowledge-articles--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PUTapi-v1-knowledge-articles--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTapi-v1-knowledge-articles--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PUTapi-v1-knowledge-articles--id-" data-method="PUT"
+      data-path="api/v1/knowledge/articles/{id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PUTapi-v1-knowledge-articles--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PUTapi-v1-knowledge-articles--id-"
+                    onclick="tryItOut('PUTapi-v1-knowledge-articles--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PUTapi-v1-knowledge-articles--id-"
+                    onclick="cancelTryOut('PUTapi-v1-knowledge-articles--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PUTapi-v1-knowledge-articles--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>api/v1/knowledge/articles/{id}</code></b>
+        </p>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/v1/knowledge/articles/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PUTapi-v1-knowledge-articles--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PUTapi-v1-knowledge-articles--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="PUTapi-v1-knowledge-articles--id-"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The ID of the article. Example: <code>architecto</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="title"                data-endpoint="PUTapi-v1-knowledge-articles--id-"
+               value="Política de entregas e prazos"
+               data-component="body">
+    <br>
+<p>Article title. Must be at least 3 characters. Must not be greater than 200 characters. Example: <code>Política de entregas e prazos</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>markdown</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="markdown"                data-endpoint="PUTapi-v1-knowledge-articles--id-"
+               value="## Prazos
+
+Sul e Sudeste: 3 a 5 dias úteis."
+               data-component="body">
+    <br>
+<p>Article text in Markdown. Only the published version is indexed and cited. Must not be greater than 100000 characters. Example: `## Prazos</p>
+<p>Sul e Sudeste: 3 a 5 dias úteis.`</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>visibility</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="visibility"                data-endpoint="PUTapi-v1-knowledge-articles--id-"
+               value="customers"
+               data-component="body">
+    <br>
+<p>customers (staff and customers) or internal (staff only, never used in replies). Example: <code>customers</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customers</code></li> <li><code>internal</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>tags</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="tags[0]"                data-endpoint="PUTapi-v1-knowledge-articles--id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="tags[1]"                data-endpoint="PUTapi-v1-knowledge-articles--id-"
+               data-component="body">
+    <br>
+<p>Must be at least 1 character. Must not be greater than 40 characters.</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>category_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="category_id"                data-endpoint="PUTapi-v1-knowledge-articles--id-"
+               value=""
+               data-component="body">
+    <br>
+<p>Category ULID. Must match an existing stored value.</p>
+        </div>
+        </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>published</code></li> <li><code>archived</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>visibility</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customers</code></li> <li><code>internal</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>index</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>none</code></li> <li><code>queued</code></li> <li><code>indexing</code></li> <li><code>indexed</code></li> <li><code>failed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>error</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Provider error code when indexing failed.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>indexed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>markdown</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Markdown working copy; null in listings.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>published_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>updated_by</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                        <h2 id="knowledge-base-DELETEapi-v1-knowledge-articles--id-">Delete an article (admins)</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-DELETEapi-v1-knowledge-articles--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost:8090/api/v1/knowledge/articles/architecto" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/knowledge/articles/architecto"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-v1-knowledge-articles--id-">
+</span>
+<span id="execution-results-DELETEapi-v1-knowledge-articles--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-v1-knowledge-articles--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-v1-knowledge-articles--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-v1-knowledge-articles--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-v1-knowledge-articles--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-v1-knowledge-articles--id-" data-method="DELETE"
+      data-path="api/v1/knowledge/articles/{id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-v1-knowledge-articles--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-v1-knowledge-articles--id-"
+                    onclick="tryItOut('DELETEapi-v1-knowledge-articles--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-v1-knowledge-articles--id-"
+                    onclick="cancelTryOut('DELETEapi-v1-knowledge-articles--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-v1-knowledge-articles--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/v1/knowledge/articles/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-v1-knowledge-articles--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-v1-knowledge-articles--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="DELETEapi-v1-knowledge-articles--id-"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The ID of the article. Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="knowledge-base-POSTapi-v1-knowledge-articles--article_id--publish">Publish an article</h2>
+
+<p>
+</p>
+
+<p>Publishes the working copy and queues its indexing.</p>
+
+<span id="example-requests-POSTapi-v1-knowledge-articles--article_id--publish">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8090/api/v1/knowledge/articles/architecto/publish" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/knowledge/articles/architecto/publish"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-knowledge-articles--article_id--publish">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;01m50gzsqjfmmycpk4ca3v8jxy&quot;,
+        &quot;title&quot;: &quot;Et animi quos velit.&quot;,
+        &quot;markdown&quot;: null,
+        &quot;visibility&quot;: &quot;customers&quot;,
+        &quot;tags&quot;: [
+            &quot;entrega&quot;
+        ],
+        &quot;category&quot;: {
+            &quot;id&quot;: &quot;01m50gzsqh2mpxkk04185djzmy&quot;,
+            &quot;name&quot;: &quot;Assumenda Odit&quot;,
+            &quot;slug&quot;: &quot;assumenda-odit&quot;,
+            &quot;description&quot;: &quot;Repellat officiis corporis nesciunt ut.&quot;,
+            &quot;sla_targets&quot;: {
+                &quot;low&quot;: {
+                    &quot;first_response_minutes&quot;: 480,
+                    &quot;resolution_minutes&quot;: 4320,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;normal&quot;: {
+                    &quot;first_response_minutes&quot;: 240,
+                    &quot;resolution_minutes&quot;: 1440,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;high&quot;: {
+                    &quot;first_response_minutes&quot;: 60,
+                    &quot;resolution_minutes&quot;: 480,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;urgent&quot;: {
+                    &quot;first_response_minutes&quot;: 15,
+                    &quot;resolution_minutes&quot;: 240,
+                    &quot;is_custom&quot;: false
+                }
+            }
+        },
+        &quot;status&quot;: &quot;draft&quot;,
+        &quot;has_unpublished_changes&quot;: false,
+        &quot;published_at&quot;: null,
+        &quot;index&quot;: {
+            &quot;status&quot;: &quot;none&quot;,
+            &quot;progress&quot;: 0,
+            &quot;error&quot;: null,
+            &quot;indexed_at&quot;: null,
+            &quot;chunks_count&quot;: 0
+        },
+        &quot;citations_count&quot;: 0,
+        &quot;updated_by&quot;: {
+            &quot;id&quot;: &quot;01m50gzsqh2mpxkk04185djzmx&quot;,
+            &quot;name&quot;: &quot;Mona Lemke&quot;,
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
+        },
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-knowledge-articles--article_id--publish" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-knowledge-articles--article_id--publish"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-knowledge-articles--article_id--publish"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-knowledge-articles--article_id--publish" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-knowledge-articles--article_id--publish">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-knowledge-articles--article_id--publish" data-method="POST"
+      data-path="api/v1/knowledge/articles/{article_id}/publish"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-knowledge-articles--article_id--publish', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-knowledge-articles--article_id--publish"
+                    onclick="tryItOut('POSTapi-v1-knowledge-articles--article_id--publish');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-knowledge-articles--article_id--publish"
+                    onclick="cancelTryOut('POSTapi-v1-knowledge-articles--article_id--publish');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-knowledge-articles--article_id--publish"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/knowledge/articles/{article_id}/publish</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-knowledge-articles--article_id--publish"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-knowledge-articles--article_id--publish"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>article_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="article_id"                data-endpoint="POSTapi-v1-knowledge-articles--article_id--publish"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The ID of the article. Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>published</code></li> <li><code>archived</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>visibility</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customers</code></li> <li><code>internal</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>index</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>none</code></li> <li><code>queued</code></li> <li><code>indexing</code></li> <li><code>indexed</code></li> <li><code>failed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>error</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Provider error code when indexing failed.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>indexed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>markdown</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Markdown working copy; null in listings.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>published_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>updated_by</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                        <h2 id="knowledge-base-POSTapi-v1-knowledge-articles--article_id--unpublish">Unpublish an article</h2>
+
+<p>
+</p>
+
+<p>The AI stops citing it immediately.</p>
+
+<span id="example-requests-POSTapi-v1-knowledge-articles--article_id--unpublish">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8090/api/v1/knowledge/articles/architecto/unpublish" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/knowledge/articles/architecto/unpublish"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-knowledge-articles--article_id--unpublish">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;01m50gzsqt08zw207ywejrqyhb&quot;,
+        &quot;title&quot;: &quot;Et animi quos velit.&quot;,
+        &quot;markdown&quot;: null,
+        &quot;visibility&quot;: &quot;customers&quot;,
+        &quot;tags&quot;: [
+            &quot;entrega&quot;
+        ],
+        &quot;category&quot;: {
+            &quot;id&quot;: &quot;01m50gzsqt08zw207ywejrqyha&quot;,
+            &quot;name&quot;: &quot;Molestiae Ut&quot;,
+            &quot;slug&quot;: &quot;molestiae-ut&quot;,
+            &quot;description&quot;: &quot;Est esse sint aut.&quot;,
+            &quot;sla_targets&quot;: {
+                &quot;low&quot;: {
+                    &quot;first_response_minutes&quot;: 480,
+                    &quot;resolution_minutes&quot;: 4320,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;normal&quot;: {
+                    &quot;first_response_minutes&quot;: 240,
+                    &quot;resolution_minutes&quot;: 1440,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;high&quot;: {
+                    &quot;first_response_minutes&quot;: 60,
+                    &quot;resolution_minutes&quot;: 480,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;urgent&quot;: {
+                    &quot;first_response_minutes&quot;: 15,
+                    &quot;resolution_minutes&quot;: 240,
+                    &quot;is_custom&quot;: false
+                }
+            }
+        },
+        &quot;status&quot;: &quot;draft&quot;,
+        &quot;has_unpublished_changes&quot;: false,
+        &quot;published_at&quot;: null,
+        &quot;index&quot;: {
+            &quot;status&quot;: &quot;none&quot;,
+            &quot;progress&quot;: 0,
+            &quot;error&quot;: null,
+            &quot;indexed_at&quot;: null,
+            &quot;chunks_count&quot;: 0
+        },
+        &quot;citations_count&quot;: 0,
+        &quot;updated_by&quot;: {
+            &quot;id&quot;: &quot;01m50gzsqsn3nx716z2prwzd3x&quot;,
+            &quot;name&quot;: &quot;Alexa Hamill DDS&quot;,
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
+        },
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-knowledge-articles--article_id--unpublish" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-knowledge-articles--article_id--unpublish"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-knowledge-articles--article_id--unpublish"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-knowledge-articles--article_id--unpublish" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-knowledge-articles--article_id--unpublish">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-knowledge-articles--article_id--unpublish" data-method="POST"
+      data-path="api/v1/knowledge/articles/{article_id}/unpublish"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-knowledge-articles--article_id--unpublish', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-knowledge-articles--article_id--unpublish"
+                    onclick="tryItOut('POSTapi-v1-knowledge-articles--article_id--unpublish');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-knowledge-articles--article_id--unpublish"
+                    onclick="cancelTryOut('POSTapi-v1-knowledge-articles--article_id--unpublish');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-knowledge-articles--article_id--unpublish"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/knowledge/articles/{article_id}/unpublish</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-knowledge-articles--article_id--unpublish"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-knowledge-articles--article_id--unpublish"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>article_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="article_id"                data-endpoint="POSTapi-v1-knowledge-articles--article_id--unpublish"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The ID of the article. Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>published</code></li> <li><code>archived</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>visibility</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customers</code></li> <li><code>internal</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>index</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>none</code></li> <li><code>queued</code></li> <li><code>indexing</code></li> <li><code>indexed</code></li> <li><code>failed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>error</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Provider error code when indexing failed.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>indexed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>markdown</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Markdown working copy; null in listings.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>published_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>updated_by</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                        <h2 id="knowledge-base-POSTapi-v1-knowledge-articles--article_id--reindex">Index again</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-v1-knowledge-articles--article_id--reindex">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8090/api/v1/knowledge/articles/architecto/reindex" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/knowledge/articles/architecto/reindex"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-knowledge-articles--article_id--reindex">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;01m50gzsr19paw3yf5jbfh7fbd&quot;,
+        &quot;title&quot;: &quot;Et animi quos velit.&quot;,
+        &quot;markdown&quot;: null,
+        &quot;visibility&quot;: &quot;customers&quot;,
+        &quot;tags&quot;: [
+            &quot;entrega&quot;
+        ],
+        &quot;category&quot;: {
+            &quot;id&quot;: &quot;01m50gzsr0cc00rg6h4asng49v&quot;,
+            &quot;name&quot;: &quot;Aut Molestiae&quot;,
+            &quot;slug&quot;: &quot;aut-molestiae&quot;,
+            &quot;description&quot;: &quot;Suscipit doloribus fugiat ut aut deserunt et error.&quot;,
+            &quot;sla_targets&quot;: {
+                &quot;low&quot;: {
+                    &quot;first_response_minutes&quot;: 480,
+                    &quot;resolution_minutes&quot;: 4320,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;normal&quot;: {
+                    &quot;first_response_minutes&quot;: 240,
+                    &quot;resolution_minutes&quot;: 1440,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;high&quot;: {
+                    &quot;first_response_minutes&quot;: 60,
+                    &quot;resolution_minutes&quot;: 480,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;urgent&quot;: {
+                    &quot;first_response_minutes&quot;: 15,
+                    &quot;resolution_minutes&quot;: 240,
+                    &quot;is_custom&quot;: false
+                }
+            }
+        },
+        &quot;status&quot;: &quot;draft&quot;,
+        &quot;has_unpublished_changes&quot;: false,
+        &quot;published_at&quot;: null,
+        &quot;index&quot;: {
+            &quot;status&quot;: &quot;none&quot;,
+            &quot;progress&quot;: 0,
+            &quot;error&quot;: null,
+            &quot;indexed_at&quot;: null,
+            &quot;chunks_count&quot;: 0
+        },
+        &quot;citations_count&quot;: 0,
+        &quot;updated_by&quot;: {
+            &quot;id&quot;: &quot;01m50gzsr0cc00rg6h4asng49t&quot;,
+            &quot;name&quot;: &quot;Fae Bernhard Sr.&quot;,
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: null
+        },
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-knowledge-articles--article_id--reindex" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-knowledge-articles--article_id--reindex"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-knowledge-articles--article_id--reindex"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-knowledge-articles--article_id--reindex" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-knowledge-articles--article_id--reindex">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-knowledge-articles--article_id--reindex" data-method="POST"
+      data-path="api/v1/knowledge/articles/{article_id}/reindex"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-knowledge-articles--article_id--reindex', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-knowledge-articles--article_id--reindex"
+                    onclick="tryItOut('POSTapi-v1-knowledge-articles--article_id--reindex');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-knowledge-articles--article_id--reindex"
+                    onclick="cancelTryOut('POSTapi-v1-knowledge-articles--article_id--reindex');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-knowledge-articles--article_id--reindex"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/knowledge/articles/{article_id}/reindex</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-knowledge-articles--article_id--reindex"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-knowledge-articles--article_id--reindex"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>article_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="article_id"                data-endpoint="POSTapi-v1-knowledge-articles--article_id--reindex"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The ID of the article. Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>published</code></li> <li><code>archived</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>visibility</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customers</code></li> <li><code>internal</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>index</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>none</code></li> <li><code>queued</code></li> <li><code>indexing</code></li> <li><code>indexed</code></li> <li><code>failed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>error</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Provider error code when indexing failed.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>indexed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>markdown</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Markdown working copy; null in listings.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>published_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>updated_by</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                        <h2 id="knowledge-base-GETapi-v1-knowledge-articles--article_id--chunks">Indexed passages (&quot;how the AI sees it&quot;)</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-knowledge-articles--article_id--chunks">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8090/api/v1/knowledge/articles/architecto/chunks" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/knowledge/articles/architecto/chunks"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-knowledge-articles--article_id--chunks">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: &quot;01J...&quot;,
+            &quot;ordinal&quot;: 1,
+            &quot;heading&quot;: &quot;Prazos por regi&atilde;o&quot;,
+            &quot;content&quot;: &quot;Sul e Sudeste: 3 a 5 dias &uacute;teis.&quot;,
+            &quot;tokens&quot;: 174,
+            &quot;embedding_model&quot;: &quot;gemini/gemini-embedding-001&quot;,
+            &quot;citations_count&quot;: 37
+        }
+    ],
+    &quot;meta&quot;: {
+        &quot;embedding_model&quot;: &quot;gemini/gemini-embedding-001&quot;,
+        &quot;target_tokens&quot;: 320,
+        &quot;overlap_tokens&quot;: 40
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-knowledge-articles--article_id--chunks" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-knowledge-articles--article_id--chunks"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-knowledge-articles--article_id--chunks"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-knowledge-articles--article_id--chunks" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-knowledge-articles--article_id--chunks">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-knowledge-articles--article_id--chunks" data-method="GET"
+      data-path="api/v1/knowledge/articles/{article_id}/chunks"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-knowledge-articles--article_id--chunks', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-knowledge-articles--article_id--chunks"
+                    onclick="tryItOut('GETapi-v1-knowledge-articles--article_id--chunks');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-knowledge-articles--article_id--chunks"
+                    onclick="cancelTryOut('GETapi-v1-knowledge-articles--article_id--chunks');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-knowledge-articles--article_id--chunks"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/knowledge/articles/{article_id}/chunks</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-knowledge-articles--article_id--chunks"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-knowledge-articles--article_id--chunks"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>article_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="article_id"                data-endpoint="GETapi-v1-knowledge-articles--article_id--chunks"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The ID of the article. Example: <code>architecto</code></p>
+            </div>
+                    </form>
 
                 <h1 id="metrics">Metrics</h1>
 
@@ -4752,7 +9958,7 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m5054xrzz467x6g4p9czqd22&quot;,
+            &quot;id&quot;: &quot;01m50gzssvmyk4yqdr9mdn6ays&quot;,
             &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
             &quot;email&quot;: &quot;gilbert32@example.com&quot;,
             &quot;role&quot;: &quot;customer&quot;,
@@ -4762,10 +9968,10 @@ fetch(url, {
                 &quot;push_status_changes&quot;: true
             },
             &quot;open_tickets_count&quot;: 1,
-            &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m5054xs3qf1k531grpf6dpy1&quot;,
+            &quot;id&quot;: &quot;01m50gzst0whdpv42vvmfm0dym&quot;,
             &quot;name&quot;: &quot;Emanuel Emmerich&quot;,
             &quot;email&quot;: &quot;elton.conroy@example.com&quot;,
             &quot;role&quot;: &quot;customer&quot;,
@@ -4775,7 +9981,7 @@ fetch(url, {
                 &quot;push_status_changes&quot;: true
             },
             &quot;open_tickets_count&quot;: 1,
-            &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
         }
     ],
     &quot;links&quot;: {
@@ -5026,7 +10232,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m5054xs9f08zn19cf3wdtaga&quot;,
+        &quot;id&quot;: &quot;01m50gzst6d0z6nf0rdrdtmqem&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
         &quot;email&quot;: &quot;hirthe.theo@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
@@ -5035,7 +10241,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
     }
 }</code>
  </pre>
@@ -5248,7 +10454,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m5054xscsfd4wea0nqvmv18t&quot;,
+        &quot;id&quot;: &quot;01m50gzst9sdhnhhnzw6fygv03&quot;,
         &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
         &quot;email&quot;: &quot;leo34@example.net&quot;,
         &quot;role&quot;: &quot;customer&quot;,
@@ -5257,7 +10463,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
     }
 }</code>
  </pre>
@@ -5444,7 +10650,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m5054xsgmcn2d8259x6518cx&quot;,
+        &quot;id&quot;: &quot;01m50gzstddy24k06az114amg5&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
         &quot;email&quot;: &quot;pfritsch@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
@@ -5453,7 +10659,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
     }
 }</code>
  </pre>
@@ -5688,30 +10894,30 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m5054xpfgwe9ewqhp3mnszf3&quot;,
-            &quot;ticket_id&quot;: &quot;01m5054xpdggcfsga6mcbzgq5z&quot;,
-            &quot;body&quot;: &quot;Reprehenderit ipsam illum id quia eveniet fugit. Quod modi libero consectetur ducimus vel ex. Provident corrupti in exercitationem tenetur quod.&quot;,
+            &quot;id&quot;: &quot;01m50gzsj6sxfsgwg4c8yj1kz3&quot;,
+            &quot;ticket_id&quot;: &quot;01m50gzsj48ph3ns64d08nj0bp&quot;,
+            &quot;body&quot;: &quot;Consequatur omnis repudiandae error alias. Voluptas quis ipsa dolorem voluptatibus sit. Dignissimos voluptatum velit ipsum id.&quot;,
             &quot;is_internal&quot;: false,
             &quot;author&quot;: {
-                &quot;id&quot;: &quot;01m5054xpeczgbbapa84hwvbne&quot;,
-                &quot;name&quot;: &quot;Tina Pfannerstill MD&quot;,
+                &quot;id&quot;: &quot;01m50gzsj5qefjkvbea2zgq5sz&quot;,
+                &quot;name&quot;: &quot;Kaleigh Kuhic&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
             },
-            &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m5054xpndw7gj5qv24vaz700&quot;,
-            &quot;ticket_id&quot;: &quot;01m5054xpksrjsaqv5rfe6bvs8&quot;,
-            &quot;body&quot;: &quot;Dolores rerum rerum aut quas ut. Tempora dolor exercitationem quia soluta aut a unde. Blanditiis magni earum id asperiores ea debitis qui.&quot;,
+            &quot;id&quot;: &quot;01m50gzsjd9tj1fwxxgnx4ymb2&quot;,
+            &quot;ticket_id&quot;: &quot;01m50gzsjbndk2a2tvr5m8enzy&quot;,
+            &quot;body&quot;: &quot;Rerum repellendus ut velit nobis. Sit totam pariatur accusamus recusandae optio. Eveniet enim porro adipisci aliquid illo aut.&quot;,
             &quot;is_internal&quot;: false,
             &quot;author&quot;: {
-                &quot;id&quot;: &quot;01m5054xpmj2k2ragwet9bynfk&quot;,
-                &quot;name&quot;: &quot;Osbaldo Pagac&quot;,
+                &quot;id&quot;: &quot;01m50gzsjc6t0f4ax8v00hz0s5&quot;,
+                &quot;name&quot;: &quot;Yadira Hettinger&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
             },
-            &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
         }
     ],
     &quot;links&quot;: {
@@ -5949,17 +11155,17 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m5054xpyhvjvj8xqw6rshh4v&quot;,
-        &quot;ticket_id&quot;: &quot;01m5054xpwt5vmbzt9qfb8ctb8&quot;,
+        &quot;id&quot;: &quot;01m50gzsjmx6z680z8pzsgtnfb&quot;,
+        &quot;ticket_id&quot;: &quot;01m50gzsjk5yqfxrx1qr9wg54w&quot;,
         &quot;body&quot;: &quot;Et animi quos velit et fugiat. Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci.&quot;,
         &quot;is_internal&quot;: false,
         &quot;author&quot;: {
-            &quot;id&quot;: &quot;01m5054xpxjn185wq3k7w3rm4f&quot;,
+            &quot;id&quot;: &quot;01m50gzsjmx6z680z8pzsgtnfa&quot;,
             &quot;name&quot;: &quot;Mr. Madisen Schaden&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
         },
-        &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
     }
 }</code>
  </pre>
@@ -6195,13 +11401,13 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m5054xkty351q3wf4hx0104g&quot;,
+            &quot;id&quot;: &quot;01m50gzsg52k835rsh0jeakpw7&quot;,
             &quot;subject&quot;: &quot;Eius et animi quos velit et.&quot;,
             &quot;description&quot;: &quot;Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.&quot;,
             &quot;status&quot;: &quot;open&quot;,
             &quot;priority&quot;: &quot;urgent&quot;,
             &quot;category&quot;: {
-                &quot;id&quot;: &quot;01m5054xksvp9bpz5janv1r3y9&quot;,
+                &quot;id&quot;: &quot;01m50gzsg4akmbenmaddcyznkm&quot;,
                 &quot;name&quot;: &quot;Voluptatem Laboriosam&quot;,
                 &quot;slug&quot;: &quot;voluptatem-laboriosam&quot;,
                 &quot;description&quot;: &quot;Quis adipisci molestias fugit deleniti distinctio eum.&quot;,
@@ -6229,43 +11435,43 @@ fetch(url, {
                 }
             },
             &quot;requester&quot;: {
-                &quot;id&quot;: &quot;01m5054xkrv4fr4tcach0tfx2h&quot;,
+                &quot;id&quot;: &quot;01m50gzsg2c6m3qfp90e14abde&quot;,
                 &quot;name&quot;: &quot;Mina Bauch&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
             },
             &quot;assignee&quot;: {
-                &quot;id&quot;: &quot;01m5054xksvp9bpz5janv1r3y8&quot;,
+                &quot;id&quot;: &quot;01m50gzsg39mnz8vzs2b25zcdm&quot;,
                 &quot;name&quot;: &quot;Donny Leffler&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
             },
             &quot;last_message&quot;: {
-                &quot;id&quot;: &quot;01m5054xkyzz42wb2d9c1f12ex&quot;,
+                &quot;id&quot;: &quot;01m50gzsg9yd2evnrp6gvc090n&quot;,
                 &quot;excerpt&quot;: &quot;Aut libero aliquam veniam corporis. Mollitia deleniti nemo odit quia officia. Dignissimos neque blanditiis odio.&quot;,
                 &quot;author_name&quot;: &quot;Prof. Daniella Emmerich III&quot;,
                 &quot;author_role&quot;: &quot;customer&quot;,
-                &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+                &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
             },
             &quot;resolved_at&quot;: null,
             &quot;closed_at&quot;: null,
             &quot;sla&quot;: {
                 &quot;first_response_at&quot;: null,
-                &quot;first_response_due_at&quot;: &quot;2026-10-15T16:23:28+00:00&quot;,
-                &quot;resolution_due_at&quot;: &quot;2026-10-15T20:08:28+00:00&quot;,
+                &quot;first_response_due_at&quot;: &quot;2026-10-15T19:50:23+00:00&quot;,
+                &quot;resolution_due_at&quot;: &quot;2026-10-15T23:35:23+00:00&quot;,
                 &quot;is_overdue&quot;: false
             },
-            &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;,
-            &quot;updated_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
+            &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m5054xm8gqy64310nt3fspmd&quot;,
+            &quot;id&quot;: &quot;01m50gzsggf7jqmfm75dyx9n8k&quot;,
             &quot;subject&quot;: &quot;Ratione nemo voluptate accusamus ut et recusandae modi rerum.&quot;,
             &quot;description&quot;: &quot;Assumenda et tenetur ab reiciendis quia. Deserunt ducimus corrupti et dolores quia maiores. Odit doloribus repellat officiis corporis nesciunt ut ratione iure.&quot;,
             &quot;status&quot;: &quot;open&quot;,
             &quot;priority&quot;: &quot;urgent&quot;,
             &quot;category&quot;: {
-                &quot;id&quot;: &quot;01m5054xm7w8tgtyas4fn2q0ce&quot;,
+                &quot;id&quot;: &quot;01m50gzsgfhaga56bwseezf7d6&quot;,
                 &quot;name&quot;: &quot;Et Ipsam&quot;,
                 &quot;slug&quot;: &quot;et-ipsam&quot;,
                 &quot;description&quot;: &quot;Et ut dicta vitae assumenda consequatur.&quot;,
@@ -6293,34 +11499,34 @@ fetch(url, {
                 }
             },
             &quot;requester&quot;: {
-                &quot;id&quot;: &quot;01m5054xm54v781dhpwk3q6xyr&quot;,
+                &quot;id&quot;: &quot;01m50gzsge89hs7tz4rh9wr25z&quot;,
                 &quot;name&quot;: &quot;Mr. Thaddeus Glover IV&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
             },
             &quot;assignee&quot;: {
-                &quot;id&quot;: &quot;01m5054xm6kk58y4yehgj4wwm3&quot;,
+                &quot;id&quot;: &quot;01m50gzsgfhaga56bwseezf7d5&quot;,
                 &quot;name&quot;: &quot;Lucie Bauch MD&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
                 &quot;email&quot;: null
             },
             &quot;last_message&quot;: {
-                &quot;id&quot;: &quot;01m5054xmcvjz92mq5e4dwv9pt&quot;,
+                &quot;id&quot;: &quot;01m50gzsgjzfw41v7andejepfj&quot;,
                 &quot;excerpt&quot;: &quot;Sunt quisquam sit repellendus. Eaque alias ratione dolores sed rem ea ut. Deserunt sint quis in quod.&quot;,
                 &quot;author_name&quot;: &quot;Cordia Cummings&quot;,
                 &quot;author_role&quot;: &quot;customer&quot;,
-                &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+                &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
             },
             &quot;resolved_at&quot;: null,
             &quot;closed_at&quot;: null,
             &quot;sla&quot;: {
                 &quot;first_response_at&quot;: null,
-                &quot;first_response_due_at&quot;: &quot;2026-10-15T16:23:28+00:00&quot;,
-                &quot;resolution_due_at&quot;: &quot;2026-10-15T20:08:28+00:00&quot;,
+                &quot;first_response_due_at&quot;: &quot;2026-10-15T19:50:23+00:00&quot;,
+                &quot;resolution_due_at&quot;: &quot;2026-10-15T23:35:23+00:00&quot;,
                 &quot;is_overdue&quot;: false
             },
-            &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;,
-            &quot;updated_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
+            &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
         }
     ],
     &quot;links&quot;: {
@@ -6859,13 +12065,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m5054xn0e9tgrz6n9raa7968&quot;,
+        &quot;id&quot;: &quot;01m50gzsgzx8jv10xvy08p4wrz&quot;,
         &quot;subject&quot;: &quot;Eius et animi quos velit et.&quot;,
         &quot;description&quot;: &quot;Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;urgent&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m5054xn0e9tgrz6n9raa7967&quot;,
+            &quot;id&quot;: &quot;01m50gzsgy6wvrstp1gg7sajtf&quot;,
             &quot;name&quot;: &quot;Quis Adipisci&quot;,
             &quot;slug&quot;: &quot;quis-adipisci&quot;,
             &quot;description&quot;: &quot;Fugit deleniti distinctio eum doloremque id aut libero.&quot;,
@@ -6893,13 +12099,13 @@ fetch(url, {
             }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m5054xmx9crvfx0s6h6ygpgf&quot;,
+            &quot;id&quot;: &quot;01m50gzsgxn83wsrt0zjkwshqq&quot;,
             &quot;name&quot;: &quot;Mina Bauch&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m5054xmzzqsgg31yhv3kh8p9&quot;,
+            &quot;id&quot;: &quot;01m50gzsgy6wvrstp1gg7sajte&quot;,
             &quot;name&quot;: &quot;Domingo Leuschke&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
@@ -6908,12 +12114,12 @@ fetch(url, {
         &quot;closed_at&quot;: null,
         &quot;sla&quot;: {
             &quot;first_response_at&quot;: null,
-            &quot;first_response_due_at&quot;: &quot;2026-10-15T16:23:28+00:00&quot;,
-            &quot;resolution_due_at&quot;: &quot;2026-10-15T20:08:28+00:00&quot;,
+            &quot;first_response_due_at&quot;: &quot;2026-10-15T19:50:23+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-15T23:35:23+00:00&quot;,
             &quot;is_overdue&quot;: false
         },
-        &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
     }
 }</code>
  </pre>
@@ -7282,13 +12488,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m5054xnd4ny4ngr9xt1zy3hn&quot;,
+        &quot;id&quot;: &quot;01m50gzsh7kv9x8hj3cdqb027g&quot;,
         &quot;subject&quot;: &quot;Et animi quos velit et fugiat.&quot;,
         &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;normal&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m5054xncjh7vy5njxwx87jtn&quot;,
+            &quot;id&quot;: &quot;01m50gzsh6zgxqs5cade86s7s8&quot;,
             &quot;name&quot;: &quot;Molestias Fugit&quot;,
             &quot;slug&quot;: &quot;molestias-fugit&quot;,
             &quot;description&quot;: &quot;Distinctio eum doloremque id aut libero aliquam veniam corporis.&quot;,
@@ -7316,13 +12522,13 @@ fetch(url, {
             }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m5054xnay2e8g7tff1h0ds9s&quot;,
+            &quot;id&quot;: &quot;01m50gzsh5sqch2mx2qkv0292x&quot;,
             &quot;name&quot;: &quot;Mr. Carey Smitham&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m5054xnbe2heyntq5gt24483&quot;,
+            &quot;id&quot;: &quot;01m50gzsh6zgxqs5cade86s7s7&quot;,
             &quot;name&quot;: &quot;Matilda Feeney&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
@@ -7331,12 +12537,12 @@ fetch(url, {
         &quot;closed_at&quot;: null,
         &quot;sla&quot;: {
             &quot;first_response_at&quot;: null,
-            &quot;first_response_due_at&quot;: &quot;2026-10-15T20:08:28+00:00&quot;,
-            &quot;resolution_due_at&quot;: &quot;2026-10-16T16:08:28+00:00&quot;,
+            &quot;first_response_due_at&quot;: &quot;2026-10-15T23:35:23+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-16T19:35:23+00:00&quot;,
             &quot;is_overdue&quot;: false
         },
-        &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
     }
 }</code>
  </pre>
@@ -7675,13 +12881,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m5054xns6hq68rtetd5yjt41&quot;,
+        &quot;id&quot;: &quot;01m50gzshfsa0e76fswgyeq71w&quot;,
         &quot;subject&quot;: &quot;Et animi quos velit et fugiat.&quot;,
         &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;normal&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m5054xnr96a89zpr1g508rqs&quot;,
+            &quot;id&quot;: &quot;01m50gzshee0kjkf3w14eeqje0&quot;,
             &quot;name&quot;: &quot;Eum Doloremque&quot;,
             &quot;slug&quot;: &quot;eum-doloremque&quot;,
             &quot;description&quot;: &quot;Aut libero aliquam veniam corporis.&quot;,
@@ -7709,13 +12915,13 @@ fetch(url, {
             }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m5054xnqmntr8j1njrtgq1bk&quot;,
+            &quot;id&quot;: &quot;01m50gzshda9q2zmnzn4c4ngae&quot;,
             &quot;name&quot;: &quot;Mr. Carey Smitham&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m5054xnqmntr8j1njrtgq1bm&quot;,
+            &quot;id&quot;: &quot;01m50gzshee0kjkf3w14eeqjdz&quot;,
             &quot;name&quot;: &quot;Janick Schultz DDS&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
@@ -7724,12 +12930,12 @@ fetch(url, {
         &quot;closed_at&quot;: null,
         &quot;sla&quot;: {
             &quot;first_response_at&quot;: null,
-            &quot;first_response_due_at&quot;: &quot;2026-10-15T20:08:28+00:00&quot;,
-            &quot;resolution_due_at&quot;: &quot;2026-10-16T16:08:28+00:00&quot;,
+            &quot;first_response_due_at&quot;: &quot;2026-10-15T23:35:23+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-16T19:35:23+00:00&quot;,
             &quot;is_overdue&quot;: false
         },
-        &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
     }
 }</code>
  </pre>
@@ -8076,13 +13282,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m5054xp4ddrywp15tdt82n2h&quot;,
+        &quot;id&quot;: &quot;01m50gzshqg9fh617fzd3skfaz&quot;,
         &quot;subject&quot;: &quot;Et animi quos velit et fugiat.&quot;,
         &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;normal&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m5054xp4ddrywp15tdt82n2g&quot;,
+            &quot;id&quot;: &quot;01m50gzshprewms4sxty6snymy&quot;,
             &quot;name&quot;: &quot;Aliquam Veniam&quot;,
             &quot;slug&quot;: &quot;aliquam-veniam&quot;,
             &quot;description&quot;: &quot;Dolorem mollitia deleniti nemo.&quot;,
@@ -8110,13 +13316,13 @@ fetch(url, {
             }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m5054xp3my57cz5h5epxws6r&quot;,
+            &quot;id&quot;: &quot;01m50gzshnpkgtwjv01xd62r38&quot;,
             &quot;name&quot;: &quot;Mr. Carey Smitham&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m5054xp3my57cz5h5epxws6s&quot;,
+            &quot;id&quot;: &quot;01m50gzshprewms4sxty6snymx&quot;,
             &quot;name&quot;: &quot;Prof. Annabelle Kshlerin&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;email&quot;: null
@@ -8125,12 +13331,12 @@ fetch(url, {
         &quot;closed_at&quot;: null,
         &quot;sla&quot;: {
             &quot;first_response_at&quot;: null,
-            &quot;first_response_due_at&quot;: &quot;2026-10-15T20:08:28+00:00&quot;,
-            &quot;resolution_due_at&quot;: &quot;2026-10-16T16:08:28+00:00&quot;,
+            &quot;first_response_due_at&quot;: &quot;2026-10-15T23:35:23+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-16T19:35:23+00:00&quot;,
             &quot;is_overdue&quot;: false
         },
-        &quot;created_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T16:08:28+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
     }
 }</code>
  </pre>

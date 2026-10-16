@@ -28,6 +28,8 @@ return [
         'api' => (int) env('TICKO_RATE_LIMIT_API', 120),
         'uploads' => (int) env('TICKO_RATE_LIMIT_UPLOADS', 20),
         'demo' => (int) env('TICKO_RATE_LIMIT_DEMO', 30),
+        // AI calls cost money and quota: suggestions and search playground, per user.
+        'ai' => (int) env('TICKO_RATE_LIMIT_AI', 20),
     ],
 
     // API documentation (Swagger UI at /docs). Disabled in production unless enabled explicitly.
@@ -39,6 +41,35 @@ return [
     'demo' => [
         'enabled' => (bool) env('TICKO_DEMO_LOGIN', false),
         'tenant' => env('TICKO_DEMO_TENANT', 'acme'),
+    ],
+
+    // AI: knowledge-base retrieval and reply suggestions. "fake" works offline
+    // (development, demo, tests, CI). Keys live only in the local .env.
+    'ai' => [
+        'text_provider' => env('TICKO_AI_TEXT_PROVIDER', 'fake'),           // fake | gemini | groq | ollama
+        'embedding_provider' => env('TICKO_AI_EMBEDDING_PROVIDER', 'fake'), // fake | gemini | ollama
+        'timeout_seconds' => (int) env('TICKO_AI_TIMEOUT', 25),
+        // Below this confidence the AI says it does not know instead of answering.
+        'min_confidence' => (float) env('TICKO_AI_MIN_CONFIDENCE', 0.35),
+        'top_k' => 5,
+        // Retrieval: weight of the full-text score (the rest is semantic).
+        'text_weight' => 0.4,
+        'gemini' => [
+            'url' => env('GEMINI_API_URL', 'https://generativelanguage.googleapis.com/v1beta'),
+            'key' => env('GEMINI_API_KEY'),
+            'text_model' => env('GEMINI_TEXT_MODEL', 'gemini-2.5-flash'),
+            'embedding_model' => env('GEMINI_EMBEDDING_MODEL', 'gemini-embedding-001'),
+        ],
+        'groq' => [
+            'url' => env('GROQ_API_URL', 'https://api.groq.com/openai/v1'),
+            'key' => env('GROQ_API_KEY'),
+            'text_model' => env('GROQ_TEXT_MODEL', 'llama-3.3-70b-versatile'),
+        ],
+        'ollama' => [
+            'url' => env('OLLAMA_URL', 'http://host.docker.internal:11434'),
+            'text_model' => env('OLLAMA_TEXT_MODEL', 'llama3.1:8b'),
+            'embedding_model' => env('OLLAMA_EMBEDDING_MODEL', 'nomic-embed-text'),
+        ],
     ],
 
     // E-mails of admins allowed into the Horizon dashboard outside the local environment.

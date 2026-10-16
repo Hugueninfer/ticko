@@ -267,6 +267,8 @@ jobs:
         run: |
           ./scripts/make-env.sh
           echo "TICKO_RATE_LIMIT_DEMO=120" >> .env
+          # One demo account drives the whole suite within a minute.
+          echo "TICKO_RATE_LIMIT_API=600" >> .env
           docker compose up -d --build --wait
           docker compose exec -T api php artisan ticko:demo > /dev/null
       - name: Install Chromium for Playwright

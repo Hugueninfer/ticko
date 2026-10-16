@@ -74,6 +74,9 @@ services:
       redis:
         condition: service_healthy
     networks: [edge, backend, realtime]
+    # The search playground embeds the query in the request (Ollama on this computer).
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   queue:
     <<: *api-common
@@ -88,7 +91,11 @@ services:
         condition: service_completed_successfully
       redis:
         condition: service_healthy
-    networks: [backend, realtime]
+    # egress: AI providers (Gemini, Groq) are called from queued jobs.
+    networks: [backend, realtime, egress]
+    # Lets jobs reach an Ollama server running on this computer (OLLAMA_URL).
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   # WebSocket server (Laravel Reverb). Only reachable through Caddy at /app/*;
   # its HTTP publishing API (/apps/*) is only reachable inside Docker.

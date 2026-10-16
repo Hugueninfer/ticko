@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Actions\Knowledge\PublishKnowledgeArticle;
+use App\Actions\Knowledge\SaveKnowledgeArticle;
 use App\Enums\Role;
 use App\Enums\TicketPriority;
 use App\Enums\TicketStatus;
 use App\Models\Category;
+use App\Models\KbArticle;
 use App\Models\Tenant;
 use App\Models\Ticket;
 use App\Models\TicketMessage;
 use App\Models\User;
+use App\Support\Demo\DemoKnowledgeBase;
 use App\Support\Tenancy\TenantContext;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -55,8 +59,12 @@ final class SeedDemoCommand extends Command
             return self::FAILURE;
         }
 
-        if (Tenant::where('slug', 'acme')->exists()) {
-            $this->warn('The demo tenant "acme" already exists. Nothing to do.');
+        $existing = Tenant::where('slug', 'acme')->first();
+
+        if ($existing !== null) {
+            // Older demo tenants get the knowledge base added once.
+            $added = $tenants->run($existing, fn (): int => $this->seedKnowledgeBase());
+            $this->warn('The demo tenant "acme" already exists.'.($added > 0 ? " Added {$added} knowledge-base articles." : ' Nothing to do.'));
 
             return self::SUCCESS;
         }
@@ -115,9 +123,45 @@ final class SeedDemoCommand extends Command
             });
         });
 
+        $tenant = Tenant::where('slug', 'acme')->firstOrFail();
+        $tenants->run($tenant, fn (): int => $this->seedKnowledgeBase());
+
         $this->info('Demo tenant created. Send "X-Tenant: acme" when logging in.');
         $this->table(['Role', 'E-mail', 'Password'], $rows);
 
         return self::SUCCESS;
+    }
+
+    /**
+     * Demo articles, published through the normal flow (indexed by the queue).
+     * Returns how many were created; none if the tenant already has articles.
+     */
+    private function seedKnowledgeBase(): int
+    {
+        if (KbArticle::query()->exists()) {
+            return 0;
+        }
+
+        $author = User::query()->where('role', Role::Admin)->orderBy('created_at')->firstOrFail();
+        $categories = Category::query()->pluck('id', 'name');
+        $save = app(SaveKnowledgeArticle::class);
+        $publish = app(PublishKnowledgeArticle::class);
+
+        foreach (DemoKnowledgeBase::articles() as [$title, $category, $visibility, $published, $body]) {
+            $categoryId = $category !== null ? ($categories[$category] ?? null) : null;
+            $article = $save->handle($author, [
+                'title' => $title,
+                'body' => $body,
+                'visibility' => $visibility->value,
+                'tags' => [],
+                'category_id' => is_string($categoryId) ? $categoryId : null,
+            ]);
+
+            if ($published) {
+                $publish->handle($author, $article);
+            }
+        }
+
+        return count(DemoKnowledgeBase::articles());
     }
 }

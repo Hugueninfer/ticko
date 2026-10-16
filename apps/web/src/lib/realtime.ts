@@ -149,7 +149,7 @@ export function useRealtimeConnection(enabled: boolean): void {
   }, [enabled, key]);
 }
 
-/** Refreshes the queue and counters when any ticket of the tenant changes. */
+/** Refreshes the queue, counters, AI drafts and knowledge base when the tenant's data changes. */
 export function useStaffUpdates(tenantId: string | undefined): void {
   const queryClient = useQueryClient();
   const connection = useEcho();
@@ -170,7 +170,13 @@ export function useStaffUpdates(tenantId: string | undefined): void {
       .private(name)
       .listen('.ticket.created', refresh)
       .listen('.message.posted', refresh)
-      .listen('.status.changed', refresh);
+      .listen('.status.changed', refresh)
+      .listen('.suggestion.updated', (event: { ticket_id: string }) => {
+        void queryClient.invalidateQueries({ queryKey: queryKeys.suggestion(event.ticket_id) });
+      })
+      .listen('.article.changed', () => {
+        void queryClient.invalidateQueries({ queryKey: queryKeys.knowledge });
+      });
 
     return () => {
       connection.leave(name);

@@ -6,7 +6,8 @@
 AI-assisted, multi-tenant helpdesk. This repository is a monorepo: **phase 1** delivered the
 API, its infrastructure and quality gates; **phase 2** the web app for agents and admins and
 the typed API client; **phase 3** the customer mobile app (Expo), push notifications and
-realtime updates (Laravel Reverb). The AI classifier is a skeleton for now.
+realtime updates (Laravel Reverb); **phase 4** the knowledge base, retrieval (RAG) and AI reply
+suggestions that an agent always approves. The AI classifier is a skeleton for now.
 
 > 🇧🇷 Leia em português: [README.pt-BR.md](README.pt-BR.md)
 
@@ -71,6 +72,7 @@ Real tenants: `docker compose exec api php artisan ticko:tenant:create <slug> "<
 | `make up-lan` | The stack, reachable from phones on your Wi-Fi (only the web port) |
 | `make mobile-dev` | Expo dev server for the mobile app (scan the QR code with Expo Go) |
 | `make mobile-test` | ESLint, Prettier, `tsc`, Jest with coverage (mobile) |
+| `make kb-reindex` | Re-embed every published article (after changing the embedding provider) |
 | `make e2e` | Playwright against the running stack (`make up && make demo` first) |
 | `make down` / `make logs` | Stop / follow logs |
 
@@ -141,6 +143,48 @@ it on your phone (Expo Go on the same Wi-Fi, or a tunnel): [apps/mobile/README.m
   device's language, and honours the user's preferences. Devices are tied to the API token
   that registered them: signing out (revoking the token) unregisters the phone; devices Expo
   reports as unregistered are removed.
+
+### Knowledge base and AI suggestions (RAG)
+
+- **Knowledge base** (`/knowledge` in the web app): agents write Markdown articles, marked
+  *staff and customers* or *staff only*. Publishing snapshots the text and a queued job splits
+  it into passages (~320 tokens, 40 overlap) and embeds them (768-dimension vectors in
+  pgvector, HNSW). The list shows indexing progress and failures (with retry); the editor
+  shows "how the AI sees it". Drafts are never indexed; unpublishing removes an article from
+  the AI at once. Markdown files can be imported.
+- **Hybrid search**: Postgres full-text (Portuguese `tsvector`) plus pgvector cosine
+  similarity, weighted or fused by rank (RRF). Every query filters by tenant (on top of RLS),
+  published state and embedding model. The **search playground** shows exactly the passages
+  and scores the AI receives.
+- **Reply suggestions** (the AI panel of a ticket): an agent asks for a draft; a job searches
+  the *customer-visible* articles with the customer's words and, only when the best passage
+  scores above `TICKO_AI_MIN_CONFIDENCE`, asks the model for a JSON answer that must cite the
+  provided passages (`[1]`). Otherwise — no good passage, the model says it cannot answer,
+  or it cites a source it was not given — the panel says **"I don't know"**, lists the
+  closest articles and lets the agent report a knowledge gap. Provider failures show an error
+  code and a retry; the queue keeps working.
+- **The AI never answers a customer by itself.** A draft reaches the customer only when an
+  agent approves it (as is or edited); source markers are removed; discards record a reason.
+  An architecture test forbids the AI side of the code from posting messages.
+- **Prompt injection:** rules live in the system instruction; ticket text and passages are
+  untrusted data inside delimiters with a random per-request nonce (look-alike tags are
+  stripped); the model has no tools; its output must be valid JSON with valid citations;
+  only minimal ticket data is sent (subject, messages, the customer's first name — no e-mail
+  or account data).
+- **Providers** (`.env`, behind `TextGenerator` / `Embedder` interfaces):
+
+  | Setting | Values |
+  | --- | --- |
+  | `TICKO_AI_TEXT_PROVIDER` | `fake` (default, offline), `gemini`, `groq`, `ollama` |
+  | `TICKO_AI_EMBEDDING_PROVIDER` | `fake` (default), `gemini`, `ollama` — Groq has no embeddings |
+  | `GEMINI_API_KEY`, `GROQ_API_KEY` | Only in your local `.env`; sent in headers, never logged |
+  | `OLLAMA_URL` | e.g. `http://host.docker.internal:11434` for Ollama on your computer |
+
+  The `fake` provider (hashed word stems and extractive answers) makes development, the demo,
+  tests and CI work without any key; its relevance is lexical only, so judge search quality
+  with a real embedding model. Changing the embedding provider needs `make kb-reindex`.
+  **Privacy:** on Gemini's free tier Google may use submitted data to improve its products —
+  use a paid key or Ollama for real customer data.
 
 ## Architecture
 
@@ -219,6 +263,10 @@ header.
 | GET / PUT | `/auth/me`, `/auth/password`, `/auth/notification-preferences` | Current user |
 | POST / DELETE | `/push-devices`, `/push-devices/current` | Register / unregister this phone for push (bearer tokens) |
 | GET | `/realtime` | Public Reverb key for clients (`/api/broadcasting/auth` authorizes channels) |
+| CRUD | `/knowledge/articles` (+ `/import`, `/{id}/publish`, `/unpublish`, `/reindex`, `/chunks`) | Knowledge base (staff; delete: admins) |
+| GET / POST | `/knowledge/stats`, `/knowledge/search` | Figures and hybrid search (playground) |
+| GET / POST | `/tickets/{id}/suggestions/latest`, `/tickets/{id}/suggestions` | AI reply draft (staff) |
+| POST | `/suggestions/{id}/approve`, `/discard`, `/gap` | Agent decisions on a draft |
 | GET / POST | `/tickets` | List (filters `status`, `state` (`active`/`done`), `priority`, `category_id`, `assignee_id`, `requester_id`, `unassigned`, `overdue`, `q`, `sort`, pagination) / open |
 | GET | `/tickets/{id}` | Show |
 | PATCH | `/tickets/{id}/status`, `/tickets/{id}/assignee` | Change status / assign |
@@ -261,6 +309,12 @@ lifetime, rate limits, upload size, signed-URL lifetime, docs toggle, Horizon al
 - **Mobile:** ESLint (strict type-checked, hooks; AsyncStorage and `console` forbidden),
   Prettier, `tsc` strict, Jest + React Native Testing Library against a fake API (coverage
   gate of 80% of lines), and an Android bundle build with production settings.
+- **Knowledge base and AI:** Pest tests with the providers' HTTP APIs faked (request shapes,
+  keys in headers, error codes), chunking, hybrid search (tenant isolation with identical
+  articles in two tenants, drafts/archived/staff-only exclusion, embedding-model mismatch),
+  drafting (citations required, "I don't know" without calling the model, prompt-injection
+  delimiters, staff-only articles never in prompts) and approval; Vitest for every panel
+  state; Playwright for indexing, the playground and approving a draft.
 - **Push and realtime:** Pest tests with the Expo API faked (content-free text, preferences,
   unregistered devices, tenant isolation of devices) and channel authorization by tenant
   and ticket.
@@ -302,6 +356,10 @@ See [SECURITY.md](SECURITY.md) to report a vulnerability. Highlights:
   to private addresses in dev); deep links and notification payloads accept only well-formed
   ticket ids and the API re-checks access; photos re-encoded on the phone (no EXIF/GPS) and
   again by the API; no secrets in `EXPO_PUBLIC_*`; no logging of personal data.
+- **AI:** suggestions only from customer-visible, published articles of the caller's tenant;
+  citations verified; low confidence means "I don't know"; nothing is sent without an agent;
+  untrusted text delimited; keys only in `.env`; provider calls only from queued jobs (the queue
+  has egress; Postgres and Redis still have none).
 - **Realtime/push:** private channels only, authorized per tenant and ticket; events carry ids,
   never content; push notifications carry only the ticket reference. Reverb's publishing API
   is not exposed, and clients cannot send events to each other.

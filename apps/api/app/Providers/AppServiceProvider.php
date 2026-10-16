@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\AiSuggestion;
+use App\Models\KbArticle;
 use App\Models\PersonalAccessToken;
 use App\Models\User;
 use App\Services\Push\ExpoPushClient;
@@ -50,6 +52,8 @@ class AppServiceProvider extends ServiceProvider
         Password::defaults(fn (): Password => Password::min(12)->max(255)->uncompromised());
 
         Route::model('member', User::class);
+        Route::model('article', KbArticle::class);
+        Route::model('suggestion', AiSuggestion::class);
 
         // Dashboard figures cover the whole tenant, so only admins see them.
         Gate::define('viewMetrics', fn (User $user): bool => $user->isAdmin());
@@ -76,6 +80,12 @@ class AppServiceProvider extends ServiceProvider
 
         RateLimiter::for('api', fn (Request $request): Limit => Limit::perMinute($this->limit('api'))
             ->by($request->user()?->getAuthIdentifier() ?? $request->ip()));
+
+        RateLimiter::for('ai', function (Request $request): Limit {
+            $user = $request->user()?->getAuthIdentifier();
+
+            return Limit::perMinute($this->limit('ai'))->by('ai:'.(is_string($user) ? $user : (string) $request->ip()));
+        });
 
         RateLimiter::for('uploads', fn (Request $request): Limit => Limit::perMinute($this->limit('uploads'))
             ->by($request->user()?->getAuthIdentifier() ?? $request->ip()));

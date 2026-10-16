@@ -50,4 +50,15 @@ final class TicketPolicy
     {
         return $user->isStaff() && $this->reply($user, $ticket);
     }
+
+    /** Ask the AI for a reply draft (staff only; the draft still needs approval). */
+    public function suggestReply(User $user, Ticket $ticket): bool
+    {
+        return $user->isStaff() && $this->reply($user, $ticket);
+    }
+
+    public function viewSuggestions(User $user, Ticket $ticket): bool
+    {
+        return $user->isStaff() && $this->view($user, $ticket);
+    }
 }

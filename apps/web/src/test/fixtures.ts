@@ -1,4 +1,13 @@
-import type { Category, CurrentUser, Metrics, TeamMember, Ticket, TicketMessage } from '@ticko/api-client';
+import type {
+  AiSuggestion,
+  Category,
+  CurrentUser,
+  KbArticle,
+  Metrics,
+  TeamMember,
+  Ticket,
+  TicketMessage,
+} from '@ticko/api-client';
 
 const tenant = { id: 'tenant-1', name: 'Loja Aurora', slug: 'acme' };
 
@@ -121,4 +130,58 @@ export function makeMetrics(overrides: Partial<Metrics> = {}): Metrics {
     ],
     ...overrides,
   };
+}
+
+export function makeArticle(overrides: Partial<KbArticle> = {}): KbArticle {
+  return {
+    id: 'kb-1',
+    title: 'Política de entregas e prazos',
+    markdown: '## Prazos\n\nSul e Sudeste: 3 a 5 dias úteis.',
+    visibility: 'customers',
+    tags: ['rastreio'],
+    category: null,
+    status: 'published',
+    has_unpublished_changes: false,
+    published_at: '2026-10-12T10:00:00+00:00',
+    index: { status: 'indexed', progress: 100, error: null, indexed_at: '2026-10-12T10:01:00+00:00', chunks_count: 14 },
+    citations_count: 312,
+    updated_by: { id: 'user-agent', name: 'Caio Freitas', role: 'agent', email: 'caio@acme.test' },
+    created_at: '2026-10-01T10:00:00+00:00',
+    updated_at: '2026-10-12T10:00:00+00:00',
+    ...overrides,
+  };
+}
+
+export function makeSuggestion(overrides: Partial<AiSuggestion> = {}): AiSuggestion {
+  return {
+    id: 'sg-1',
+    ticket_id: 'ticket-1',
+    status: 'ready',
+    body: 'Oi, Mariana! Abrimos uma investigação com a transportadora [1].',
+    confidence: 0.86,
+    citations: [
+      {
+        n: 1,
+        chunk_id: 'ch-1',
+        article_id: 'kb-1',
+        title: 'Política de entregas e prazos',
+        heading: 'Rastreio sem atualização',
+        quote: 'O prazo de resposta é de até 2 dias úteis.',
+        score: 0.86,
+      },
+    ],
+    candidates: [{ article_id: 'kb-1', title: 'Política de entregas e prazos', score: 0.86 }],
+    error_code: null,
+    provider: 'fake',
+    model: 'fake-extractive',
+    latency_ms: 120,
+    edited: false,
+    discard_reason: null,
+    reviewed_by: null,
+    reviewed_at: null,
+    message_id: null,
+    gap_reported_at: null,
+    created_at: '2026-10-12T14:09:00+00:00',
+    ...overrides,
+  } as AiSuggestion;
 }
