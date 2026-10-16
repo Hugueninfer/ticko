@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\Tenant;
+use App\Models\User;
 use App\Support\OpenApi\RequiredResponseFields;
 use App\Support\Tenancy\TenantContext;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Knuckles\Scribe\Scribe;
 use Symfony\Component\Yaml\Yaml;
@@ -30,6 +32,11 @@ final class ApiDocsServiceProvider extends ServiceProvider
         Scribe::bootstrap(function (): void {
             $tenant = Tenant::query()->firstOrCreate(['slug' => 'docs-example'], ['name' => 'Example Inc.']);
             $this->app->make(TenantContext::class)->set($tenant);
+
+            // Examples show what staff see (staff-only fields are marked optional).
+            $agent = User::query()->where('email', 'docs-agent@example.com')->first()
+                ?? User::factory()->agent()->create(['email' => 'docs-agent@example.com', 'name' => 'Docs Agent']);
+            Auth::setUser($agent);
         });
 
         Scribe::afterGenerating(function (array $paths): void {

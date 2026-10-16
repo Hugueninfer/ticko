@@ -72,6 +72,25 @@ return [
         ],
     ],
 
+    // Ticket classifier (services/classifier), reached on an internal network
+    // with a shared token. Empty URL = classification off.
+    'classifier' => [
+        'url' => env('CLASSIFIER_URL', ''),
+        'token' => env('CLASSIFIER_TOKEN', ''),
+        'timeout_seconds' => (int) env('CLASSIFIER_TIMEOUT', 10),
+        // Below this confidence a label is stored but not applied to the ticket.
+        'min_confidence' => (float) env('CLASSIFIER_MIN_CONFIDENCE', 0.6),
+        // Classifier category label => tenant category slug it fills, when the tenant has one.
+        'category_slugs' => [
+            'entrega' => 'entrega',
+            'pagamento' => 'pagamento',
+            'troca_devolucao' => 'troca-e-devolucao',
+            'conta_acesso' => 'conta-e-acesso',
+            'produto' => 'produto',
+            'outro' => 'outro',
+        ],
+    ],
+
     // E-mails of admins allowed into the Horizon dashboard outside the local environment.
     'horizon_admins' => array_values(array_filter(explode(',', (string) env('TICKO_HORIZON_ADMINS', '')))),
 ];

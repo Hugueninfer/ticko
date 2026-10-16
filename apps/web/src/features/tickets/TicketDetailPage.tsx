@@ -19,6 +19,7 @@ import { formatDateTime, ticketRef } from '@/lib/format';
 import { useAssign, useAttachments, useChangeStatus, useMessages, useTicket, useTicketList } from './api';
 import { PriorityBadge, SlaIndicator, StatusLabel } from './components/badges';
 import { STATUSES } from './ticket-meta';
+import { AiBadge, ClassificationCard, SentimentLabel } from './components/Classification';
 import { Composer } from './components/Composer';
 import { AttachmentGrid, Conversation } from './components/Conversation';
 
@@ -39,11 +40,24 @@ function CustomerColumn({ ticket }: { ticket: Ticket }) {
 
       <dl className="grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-2.5 rounded-lg border p-3.5 text-[13px]">
         <dt className="text-muted-foreground">{t('ticket.category')}</dt>
-        <dd>{ticket.category ? <Badge variant="primary">{ticket.category.name}</Badge> : t('ticket.noCategory')}</dd>
-        <dt className="text-muted-foreground">{t('ticket.priority')}</dt>
-        <dd>
-          <PriorityBadge priority={ticket.priority} />
+        <dd className="flex flex-wrap items-center gap-1">
+          {ticket.category ? <Badge variant="primary">{ticket.category.name}</Badge> : t('ticket.noCategory')}
+          <AiBadge ticket={ticket} field="category" />
         </dd>
+        <dt className="text-muted-foreground">{t('ticket.priority')}</dt>
+        <dd className="flex flex-wrap items-center gap-1">
+          <PriorityBadge priority={ticket.priority} />
+          <AiBadge ticket={ticket} field="priority" />
+        </dd>
+        {ticket.sources ? (
+          <>
+            <dt className="text-muted-foreground">{t('classification.sentiment')}</dt>
+            <dd className="flex flex-wrap items-center gap-1">
+              <SentimentLabel sentiment={ticket.sentiment} />
+              <AiBadge ticket={ticket} field="sentiment" />
+            </dd>
+          </>
+        ) : null}
         <dt className="text-muted-foreground">{t('ticket.status')}</dt>
         <dd>
           <StatusLabel status={ticket.status} />
@@ -51,6 +65,8 @@ function CustomerColumn({ ticket }: { ticket: Ticket }) {
         <dt className="text-muted-foreground">{t('ticket.openedAt')}</dt>
         <dd>{formatDateTime(ticket.created_at, i18n.resolvedLanguage ?? 'pt-BR')}</dd>
       </dl>
+
+      <ClassificationCard ticket={ticket} />
 
       <section>
         <h2 className="mb-2 text-xs font-semibold tracking-wide text-muted-foreground uppercase">{t('ticket.history')}</h2>

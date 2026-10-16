@@ -1,0 +1,82 @@
+{
+  "version": "lora-v1",
+  "base_model": {
+    "repo": "neuralmind/bert-base-portuguese-cased",
+    "revision": "4a78cfbf83c9c97533dd6d6694ca4323029ff061"
+  },
+  "labels": {
+    "category": [
+      "entrega",
+      "pagamento",
+      "troca_devolucao",
+      "conta_acesso",
+      "produto",
+      "outro"
+    ],
+    "priority": [
+      "low",
+      "normal",
+      "high",
+      "urgent"
+    ],
+    "sentiment": [
+      "negative",
+      "neutral",
+      "positive"
+    ]
+  },
+  "lora": {
+    "r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.1,
+    "target_modules": [
+      "query",
+      "value"
+    ]
+  },
+  "training": {
+    "examples": 2400,
+    "epochs": 3,
+    "batch_size": 16,
+    "learning_rate": 0.0005,
+    "max_length": 128,
+    "trainable_parameters": 304909,
+    "total_parameters": 108637453,
+    "device": "cpu",
+    "hardware": "x86_64",
+    "threads": 12,
+    "seconds": 1559.5,
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 421.04,
+        "val_accuracy": {
+          "category": 0.932,
+          "priority": 0.55,
+          "sentiment": 0.912
+        },
+        "elapsed_seconds": 429.7
+      },
+      {
+        "epoch": 2,
+        "train_loss": 119.96,
+        "val_accuracy": {
+          "category": 0.93,
+          "priority": 0.532,
+          "sentiment": 0.922
+        },
+        "elapsed_seconds": 1097.4
+      },
+      {
+        "epoch": 3,
+        "train_loss": 69.2,
+        "val_accuracy": {
+          "category": 0.934,
+          "priority": 0.538,
+          "sentiment": 0.918
+        },
+        "elapsed_seconds": 1559.5
+      }
+    ]
+  }
+}

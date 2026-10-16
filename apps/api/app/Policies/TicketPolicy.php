@@ -57,6 +57,12 @@ final class TicketPolicy
         return $user->isStaff() && $this->reply($user, $ticket);
     }
 
+    /** Set or correct category, priority and sentiment (staff only). */
+    public function classify(User $user, Ticket $ticket): bool
+    {
+        return $user->isStaff() && $user->tenant_id === $ticket->tenant_id;
+    }
+
     public function viewSuggestions(User $user, Ticket $ticket): bool
     {
         return $user->isStaff() && $this->view($user, $ticket);

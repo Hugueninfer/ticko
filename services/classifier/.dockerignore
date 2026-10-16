@@ -1,0 +1,10 @@
+# Only the code, the versioned model artifacts and the lockfiles go in.
+data/
+reports/
+tests/
+.venv/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.coverage

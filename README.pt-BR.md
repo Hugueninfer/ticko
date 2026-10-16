@@ -7,8 +7,9 @@ Helpdesk multi-tenant com IA. Este repositório é um monorepo: a **fase 1** ent
 a infraestrutura e os controles de qualidade; a **fase 2**, o app web do atendente e do admin
 e o cliente tipado da API; a **fase 3**, o app mobile do cliente (Expo), as notificações push
 e as atualizações em tempo real (Laravel Reverb); a **fase 4**, a base de conhecimento, a busca
-(RAG) e as sugestões de resposta da IA que o atendente sempre aprova. O classificador de IA
-ainda é esqueleto.
+(RAG) e as sugestões de resposta da IA que o atendente sempre aprova; a **fase 5**, o
+classificador de tickets (categoria, prioridade e sentimento) — um BERTimbau + LoRA treinado
+em dados sintéticos, servido numa rede interna.
 
 > 🇺🇸 English version: [README.md](README.md) (referência completa de arquitetura e endpoints)
 
@@ -65,6 +66,9 @@ Tenant real: `docker compose exec api php artisan ticko:tenant:create <slug> "<N
 | `make mobile-dev` | Expo para o app mobile (leia o QR code com o Expo Go) |
 | `make mobile-test` | ESLint, Prettier, `tsc` e Jest com cobertura (mobile) |
 | `make kb-reindex` | Reindexa todos os artigos publicados (depois de trocar o provedor de embeddings) |
+| `make up-ml` | A stack mais o classificador de tickets (o primeiro build baixa ~1 GB) |
+| `make classifier-test` / `classifier-eval` | Classificador: lint, testes, pip-audit / avaliações de F1 e de prompt injection |
+| `make classifier-train` | Retreina o baseline e o LoRA na CPU (~26 min) |
 
 ## Estrutura
 
@@ -72,7 +76,7 @@ Tenant real: `docker compose exec api php artisan ticko:tenant:create <slug> "<N
 apps/api/            API Laravel 13 (PHP 8.4)              ← fase 1
 apps/web/            App web: React + Vite                  ← fase 2
 apps/mobile/         App do cliente: React Native + Expo    ← fase 3
-services/classifier/ Classificador de tickets com IA        (esqueleto)
+services/classifier/ Classificador: FastAPI + BERTimbau/LoRA ← fase 5
 packages/api-client/ Cliente tipado gerado do OpenAPI (web + mobile)
 infra/               Dockerfile, Caddy, init do Postgres
 ```
@@ -139,6 +143,15 @@ infra/               Dockerfile, Caddy, init do Postgres
   faz o demo, os testes e a CI funcionarem sem chave, mas a relevância dele é só lexical.
   Trocar o provedor de embeddings pede `make kb-reindex`. **Privacidade:** no plano gratuito
   do Gemini o Google pode usar os dados enviados; para dados reais use chave paga ou Ollama.
+- **Classificação de tickets:** um job classifica cada ticket novo em **categoria**,
+  **prioridade** e **sentimento do cliente** com um BERTimbau ajustado com LoRA em dados
+  sintéticos 100% fictícios. A IA só preenche **o que ninguém escolheu** e só acima de
+  `CLASSIFIER_MIN_CONFIDENCE` (0,6); abaixo disso a sugestão fica guardada e visível, mas não é
+  aplicada (mudar a prioridade recalcula o SLA). O atendente vê o **selo "IA"** em cada campo e
+  o card *Classificação da IA*; **Corrigir** define os valores de vez. As correções vão para
+  `classification_corrections` e tudo fica em `audit_events` (somente inserção). Desligado por
+  padrão: `make up-ml` liga. Relatório completo (dataset, baseline × LoRA, F1 por classe, tempo
+  de treino na CPU) em [services/classifier/README.pt-BR.md](services/classifier/README.pt-BR.md).
 - **SLA:** cada ticket recebe prazos de 1ª resposta e de resolução ao ser aberto (metas da
   categoria ou padrão por prioridade em `config/ticko.php`, em horário corrido). `?overdue=1`
   lista os atrasados; `GET /api/v1/metrics` (só admin) alimenta o dashboard.
@@ -209,6 +222,11 @@ Detalhes em [README.md#security](README.md#security) e como reportar falhas em
 - Tempo real e push: só canais privados, autorizados por tenant e ticket; eventos com ids,
   nunca conteúdo; push só com a referência do ticket. A API de publicação do Reverb não fica
   exposta e os clientes não enviam eventos entre si.
+- Classificador: só rede interna (sem porta e sem internet) com token de serviço; dados
+  pessoais mascarados antes do envio; texto do ticket nunca vai para log; saída validada contra
+  enums fechados e exibida só como texto; modelo base fixado por revisão e SHA-256, só
+  safetensors (sem pickle); dependências Python com hash e `pip-audit`; avaliações de F1 e de
+  prompt injection na CI; imagem mínima, não-root, fixada por digest.
 - Containers não-root, somente leitura, sem capabilities; nada de segredos no repositório
   (chaves de IA só no `.env` local).
 

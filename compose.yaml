@@ -5,6 +5,8 @@
 #   backend  — internal: Postgres and Redis are unreachable from outside Docker.
 #   realtime — internal: the Reverb WebSocket server; browsers and phones reach
 #              it only through Caddy (/app/*), never on a port of its own.
+#   ml       — internal: the ticket classifier, reachable only by the queue
+#              (with a service token). Optional: `make up-ml`.
 
 name: ticko
 
@@ -27,6 +29,8 @@ x-api-common: &api-common
     REVERB_HOST: reverb
     REVERB_PORT: "8080"
     REVERB_SCHEME: http
+    # Empty = classification off. `make up-ml` sets it to http://classifier:8000.
+    CLASSIFIER_URL: ${CLASSIFIER_URL:-}
   read_only: true
   tmpfs:
     - /tmp
@@ -92,7 +96,8 @@ services:
       redis:
         condition: service_healthy
     # egress: AI providers (Gemini, Groq) are called from queued jobs.
-    networks: [backend, realtime, egress]
+    # ml: the classifier, called from the ClassifyTicket job.
+    networks: [backend, realtime, egress, ml]
     # Lets jobs reach an Ollama server running on this computer (OLLAMA_URL).
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -108,6 +113,26 @@ services:
       timeout: 3s
       retries: 5
     networks: [realtime]
+
+  # Ticket classifier (services/classifier): category, priority and sentiment.
+  # No published port, no outbound network, non-root, read-only filesystem.
+  classifier:
+    build:
+      context: services/classifier
+      target: runtime
+    image: ticko-classifier:local
+    profiles: [ml]
+    environment:
+      CLASSIFIER_TOKEN: ${CLASSIFIER_TOKEN:?run make env first}
+      CLASSIFIER_MODEL: ${CLASSIFIER_MODEL:-lora}
+    networks: [ml]
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    restart: unless-stopped
 
   migrate:
     <<: *api-common
@@ -204,6 +229,8 @@ networks:
   backend:
     internal: true
   realtime:
+    internal: true
+  ml:
     internal: true
 
 volumes:

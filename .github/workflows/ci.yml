@@ -287,6 +287,48 @@ jobs:
           path: apps/web/playwright-report
           retention-days: 7
 
+  classifier:
+    name: Classifier (lint, tests, evals, audit)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: services/classifier
+    env:
+      PIP_DISABLE_PIP_VERSION_CHECK: "1"
+      TICKO_BASE_MODEL_DIR: ${{ github.workspace }}/.cache/bertimbau-base
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: services/classifier/requirements-dev.lock
+      - name: Install (hash-locked, no dependency resolution, wheels only)
+        run: |
+          python -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install --require-hashes --no-deps --only-binary=:all: -r requirements-dev.lock
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
+      - name: Lint (Ruff)
+        run: ruff check . && ruff format --check .
+      - name: Tests (sanitizer, dataset, service security; fails under the coverage threshold)
+        run: pytest --cov
+      - name: Audit dependencies (pip-audit)
+        run: ./audit.sh
+      - name: Eval baseline (F1 thresholds + prompt-injection eval)
+        run: python -m ticko_classifier.evaluate --model baseline --check
+      - name: Cache the base model
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ env.TICKO_BASE_MODEL_DIR }}
+          key: bertimbau-${{ hashFiles('services/classifier/ticko_classifier/fetch_model.py') }}
+      - name: Fetch the pinned base model (every file checked against its SHA-256)
+        run: python -m ticko_classifier.fetch_model --dir "$TICKO_BASE_MODEL_DIR"
+      - name: Eval LoRA model on the CPU (F1 thresholds + prompt-injection eval)
+        run: python -m ticko_classifier.evaluate --model lora --check
+
   docker:
     name: Build Docker images
     runs-on: ubuntu-24.04
@@ -314,3 +356,39 @@ jobs:
           target: web
           push: false
           tags: ticko-web:ci
+      - name: Build classifier image (pinned base image, non-root, no pip)
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: services/classifier
+          target: runtime
+          push: false
+          load: true
+          tags: ticko-classifier:ci
+      - name: Smoke-test the classifier image (read-only, no network, token required)
+        run: |
+          token=$(head -c 32 /dev/urandom | base64 | tr -d '/+=\n')
+          docker run -d --name classifier --read-only --tmpfs /tmp --cap-drop ALL --security-opt no-new-privileges \
+            --network none -e CLASSIFIER_TOKEN="$token" -e CLASSIFIER_MODEL=baseline ticko-classifier:ci
+          for _ in $(seq 30); do
+            [ "$(docker inspect -f '{{.State.Health.Status}}' classifier)" = healthy ] && break
+            sleep 2
+          done
+          test "$(docker exec classifier id -u)" = 10001
+          if docker exec classifier sh -c 'command -v pip || python -m pip --version' 2>/dev/null; then exit 1; fi
+          docker exec -e TOKEN="$token" classifier python -c "
+          import json, os, urllib.request, urllib.error
+          def call(token):
+              req = urllib.request.Request('http://127.0.0.1:8000/v1/classify', json.dumps({'text': 'Meu pedido não chegou, preciso urgente'}).encode(),
+                                           {'Content-Type': 'application/json', 'Authorization': f'Bearer {token}'})
+              try:
+                  with urllib.request.urlopen(req, timeout=10) as r:
+                      return r.status, json.load(r)
+              except urllib.error.HTTPError as e:
+                  return e.code, None
+          assert call('wrong')[0] == 401
+          status, body = call(os.environ['TOKEN'])
+          assert status == 200 and body['category']['label'] == 'entrega', body
+          print('classifier ok:', body)
+          "
+          # The ticket text never reaches the logs.
+          if docker logs classifier 2>&1 | grep -qi 'pedido'; then exit 1; fi

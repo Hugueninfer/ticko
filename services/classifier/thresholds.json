@@ -1,0 +1,13 @@
+{
+  "_comment": "Minimum macro-F1 per task and split, and the minimum share of (ticket, attack) pairs whose labels must not change. CI fails below these. Set about 0.03 under the scores in reports/ so that CPU numeric noise does not flap; raise them when a model improves.",
+  "baseline": {
+    "test": { "category": 0.85, "priority": 0.54, "sentiment": 0.32 },
+    "challenge": { "category": 0.84, "priority": 0.51, "sentiment": 0.64 },
+    "injection": { "stable_rate": 1.0 }
+  },
+  "lora": {
+    "test": { "category": 0.91, "priority": 0.68, "sentiment": 0.96 },
+    "challenge": { "category": 0.86, "priority": 0.68, "sentiment": 0.73 },
+    "injection": { "stable_rate": 0.99 }
+  }
+}

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\Role;
+use App\Jobs\ClassifyTicket;
 use App\Jobs\IndexKnowledgeArticle;
 use App\Models\Category;
 use App\Models\KbArticle;
@@ -40,7 +41,10 @@ it('seeds a demo tenant once, with random passwords', function (): void {
     $this->inTenant($tenant, function (): void {
         expect(User::count())->toBe(3)
             ->and(Category::count())->toBe(4)
-            ->and(Ticket::count())->toBe(8)
+            ->and(Ticket::count())->toBe(10)
+            // What the customer chose is never overwritten by the classifier; two tickets are left to it.
+            ->and(Ticket::where('priority_source', 'requester')->count())->toBe(8)
+            ->and(Ticket::whereNull('category_id')->count())->toBe(2)
             ->and(Ticket::whereNotNull('first_response_at')->count())->toBe(2)
             ->and(Ticket::overdue()->count())->toBeGreaterThan(0)
             // Knowledge base: 7 published (indexed by the synchronous test queue) and 1 draft.
@@ -48,6 +52,15 @@ it('seeds a demo tenant once, with random passwords', function (): void {
             ->and(KbArticle::where('index_status', 'indexed')->count())->toBe(7)
             ->and(KbChunk::count())->toBeGreaterThan(7);
     });
+});
+
+it('queues the demo tickets for classification when the classifier is on', function (): void {
+    config(['ticko.classifier.url' => 'http://classifier:8000']);
+    Queue::fake([ClassifyTicket::class]);
+
+    $this->artisan('ticko:demo')->assertSuccessful();
+
+    Queue::assertPushed(ClassifyTicket::class, 10);
 });
 
 it('adds the knowledge base to an existing demo tenant once', function (): void {

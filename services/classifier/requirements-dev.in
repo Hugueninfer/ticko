@@ -1,0 +1,8 @@
+# Training, evaluation, tests and audits. Locked in requirements-dev.lock.
+-r requirements.in
+scikit-learn
+pytest
+pytest-cov
+httpx
+ruff
+pip-audit>=2.10

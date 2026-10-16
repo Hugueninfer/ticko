@@ -46,6 +46,7 @@ const FOREIGN_ENDPOINTS = [
     'show ticket' => ['GET', '/api/v1/tickets/{ticket}', []],
     'change ticket status' => ['PATCH', '/api/v1/tickets/{ticket}/status', ['status' => 'closed']],
     'assign ticket' => ['PATCH', '/api/v1/tickets/{ticket}/assignee', ['assignee_id' => null]],
+    'classify ticket' => ['PATCH', '/api/v1/tickets/{ticket}/classification', ['priority' => 'urgent']],
     'list messages' => ['GET', '/api/v1/tickets/{ticket}/messages', []],
     'post message' => ['POST', '/api/v1/tickets/{ticket}/messages', ['body' => 'hi']],
     'list attachments' => ['GET', '/api/v1/tickets/{ticket}/attachments', []],

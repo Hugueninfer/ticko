@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\FieldSource;
+use App\Enums\Sentiment;
 use App\Enums\TicketPriority;
 use App\Enums\TicketStatus;
 use App\Models\Concerns\BelongsToTenant;
@@ -33,12 +35,17 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $first_response_at
  * @property Carbon|null $first_response_due_at
  * @property Carbon|null $resolution_due_at
+ * @property Sentiment|null $sentiment
+ * @property FieldSource|null $category_source
+ * @property FieldSource|null $priority_source
+ * @property FieldSource|null $sentiment_source
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read User $requester
  * @property-read User|null $assignee
  * @property-read Category|null $category
  * @property-read TicketMessage|null $lastPublicMessage
+ * @property-read TicketClassification|null $latestClassification
  */
 class Ticket extends Model
 {
@@ -70,6 +77,24 @@ class Ticket extends Model
         'status' => 'open',
         'priority' => 'normal',
     ];
+
+    /**
+     * Recomputes the SLA deadlines from the opening time for the current
+     * priority and category, when the priority or category changes after
+     * opening (e.g. by the classifier). A deadline already met is kept.
+     */
+    public function recomputeDeadlines(): void
+    {
+        $target = SlaTarget::for($this->priority, $this->category_id !== null ? Category::find($this->category_id) : null);
+
+        if ($this->first_response_at === null) {
+            $this->first_response_due_at = $this->created_at->copy()->addMinutes($target->firstResponseMinutes);
+        }
+
+        if ($this->resolved_at === null && $this->closed_at === null) {
+            $this->resolution_due_at = $this->created_at->copy()->addMinutes($target->resolutionMinutes);
+        }
+    }
 
     /**
      * Short reference shown to people ("#4F2K9Z"): the last 6 characters of the ULID.
@@ -153,6 +178,14 @@ class Ticket extends Model
     }
 
     /**
+     * @return HasOne<TicketClassification, $this>
+     */
+    public function latestClassification(): HasOne
+    {
+        return $this->hasOne(TicketClassification::class)->latestOfMany();
+    }
+
+    /**
      * @return HasMany<Attachment, $this>
      */
     public function attachments(): HasMany
@@ -173,6 +206,10 @@ class Ticket extends Model
             'first_response_at' => 'datetime',
             'first_response_due_at' => 'datetime',
             'resolution_due_at' => 'datetime',
+            'sentiment' => Sentiment::class,
+            'category_source' => FieldSource::class,
+            'priority_source' => FieldSource::class,
+            'sentiment_source' => FieldSource::class,
         ];
     }
 }

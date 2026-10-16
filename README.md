@@ -7,7 +7,8 @@ AI-assisted, multi-tenant helpdesk. This repository is a monorepo: **phase 1** d
 API, its infrastructure and quality gates; **phase 2** the web app for agents and admins and
 the typed API client; **phase 3** the customer mobile app (Expo), push notifications and
 realtime updates (Laravel Reverb); **phase 4** the knowledge base, retrieval (RAG) and AI reply
-suggestions that an agent always approves. The AI classifier is a skeleton for now.
+suggestions that an agent always approves; **phase 5** the ticket classifier (category, priority
+and sentiment) — a BERTimbau + LoRA model trained on synthetic data, served on an internal network.
 
 > 🇧🇷 Leia em português: [README.pt-BR.md](README.pt-BR.md)
 
@@ -74,6 +75,9 @@ Real tenants: `docker compose exec api php artisan ticko:tenant:create <slug> "<
 | `make mobile-test` | ESLint, Prettier, `tsc`, Jest with coverage (mobile) |
 | `make kb-reindex` | Re-embed every published article (after changing the embedding provider) |
 | `make e2e` | Playwright against the running stack (`make up && make demo` first) |
+| `make up-ml` | The stack plus the ticket classifier (first build downloads ~1 GB) |
+| `make classifier-test` / `classifier-eval` | Classifier: lint, tests, pip-audit / F1 and prompt-injection evals |
+| `make classifier-train` | Retrain the baseline and the LoRA model on the CPU (~26 min) |
 | `make down` / `make logs` | Stop / follow logs |
 
 All PHP tooling runs inside the `dev` container (`docker compose --profile tools run --rm dev …`).
@@ -87,7 +91,7 @@ apps/
   web/                Web app: React + Vite              ← phase 2
   mobile/             Customer app: React Native + Expo  ← phase 3
 services/
-  classifier/         AI ticket classifier (pgvector)    (skeleton)
+  classifier/         Ticket classifier: FastAPI + BERTimbau/LoRA ← phase 5
 packages/
   api-client/         Typed client generated from the OpenAPI document (web + mobile)
 infra/
@@ -185,6 +189,25 @@ it on your phone (Expo Go on the same Wi-Fi, or a tunnel): [apps/mobile/README.m
   with a real embedding model. Changing the embedding provider needs `make kb-reindex`.
   **Privacy:** on Gemini's free tier Google may use submitted data to improve its products —
   use a paid key or Ollama for real customer data.
+
+### Ticket classification (`services/classifier`)
+
+- New tickets are classified in the background (`ClassifyTicket` job) into **category**,
+  **priority** and **customer sentiment** by a BERTimbau model fine-tuned with LoRA on a
+  synthetic, fully fictional pt-BR dataset. Full report — dataset, baseline vs LoRA per-class
+  F1 and confusion matrices, training time on a laptop CPU — in
+  [services/classifier/README.md](services/classifier/README.md).
+- The AI fills **only what nobody chose** and only above `CLASSIFIER_MIN_CONFIDENCE` (0.6);
+  lower-confidence suggestions are stored and shown, not applied. Priority changes recompute
+  the SLA deadlines.
+- Agents see an **"AI" badge** on each field the classifier set and a *AI classification* card
+  with its suggestions and confidences; **Correct** sets the values for good
+  (`PATCH /api/v1/tickets/{id}/classification`). Corrections of AI values are stored in
+  `classification_corrections` (future training data) and both the automatic classification
+  and the correction go to the append-only `audit_events`.
+- Off by default: `make up-ml` starts the classifier and points the API at it. The service
+  lives on an internal network reachable only by the queue, with a service token; the API
+  masks personal data before sending and validates the answer against closed enums.
 
 ## Architecture
 
@@ -363,6 +386,11 @@ See [SECURITY.md](SECURITY.md) to report a vulnerability. Highlights:
 - **Realtime/push:** private channels only, authorized per tenant and ticket; events carry ids,
   never content; push notifications carry only the ticket reference. Reverb's publishing API
   is not exposed, and clients cannot send events to each other.
+- **Classifier:** internal network only (no port, no egress) with a service token; PII masked
+  before sending; ticket text never logged; output validated against closed enums and rendered
+  as text; base model pinned by revision and SHA-256, safetensors only (no pickle); hash-locked
+  Python dependencies with `pip-audit`; F1 and prompt-injection evals in CI; minimal non-root
+  image pinned by digest. Details: [services/classifier/README.md](services/classifier/README.md#security).
 - **Containers:** non-root, read-only filesystems, all capabilities dropped,
   `no-new-privileges`; Postgres and Redis unreachable from the host; Redis password-protected.
 - **Supply chain:** `composer audit`, gitleaks, Actions pinned by SHA, least-privilege tokens.
