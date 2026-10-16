@@ -13,6 +13,9 @@ paths = [
   '''(^|/)composer\.lock$''',
   # SHA-256 checksums of the public base-model files (names like "tokenizer_config.json").
   '''^services/classifier/ticko_classifier/fetch_model\.py$''',
+  # Redaction tests: fake credentials that must be masked in telemetry.
+  '''^apps/api/tests/Unit/RedactorTest\.php$''',
+  '''^apps/api/tests/Feature/Telemetry/TelemetryTest\.php$''',
 ]
 regexes = [
   # Test-only APP_KEY in phpunit.xml ("testing-key-not-a-secret-0000000").
