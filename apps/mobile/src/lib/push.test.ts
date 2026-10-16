@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 
 import { mockApi } from '@/test/api-mock';
 
+import type * as PushModule from './push';
 import { openFromNotification, pushSupport, registerForPush } from './push';
 
 const constants = Constants as { executionEnvironment: string; expoConfig: { extra?: unknown } | null };
@@ -52,6 +53,22 @@ describe('push notifications', () => {
       token: 'ExponentPushToken[test]',
       platform: 'ios',
       locale: 'en',
+    });
+  });
+
+  it('never loads expo-notifications in Expo Go (importing it throws there on Android)', async () => {
+    constants.executionEnvironment = 'storeClient';
+
+    await jest.isolateModulesAsync(async () => {
+      jest.doMock('expo-notifications', () => {
+        throw new Error('expo-notifications: removed from Expo Go');
+      });
+      // eslint-disable-next-line @typescript-eslint/no-require-imports -- a fresh copy of the module under test
+      const push = require('./push') as typeof PushModule;
+
+      expect(push.pushSupport()).toBe('expo-go');
+      await expect(push.permissionGranted()).resolves.toBe(false);
+      await expect(push.registerForPush('pt-BR', true)).resolves.toBe('expo-go');
     });
   });
 
