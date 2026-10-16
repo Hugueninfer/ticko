@@ -63,7 +63,7 @@ it('declares explicit $fillable on every model and no $guarded escape hatch', fu
 });
 
 it('scopes every model with a tenant_id column to the tenant', function (): void {
-    $scoped = ['User', 'Category', 'Ticket', 'TicketMessage', 'Attachment', 'PushDevice', 'KbArticle', 'KbChunk', 'AiSuggestion'];
+    $scoped = ['User', 'Category', 'Ticket', 'TicketMessage', 'Attachment', 'PushDevice', 'KbArticle', 'KbChunk', 'AiSuggestion', 'TicketClassification', 'ClassificationCorrection', 'AuditEvent'];
 
     foreach ($scoped as $name) {
         expect(class_uses_recursive('App\\Models\\'.$name))->toHaveKey(BelongsToTenant::class);

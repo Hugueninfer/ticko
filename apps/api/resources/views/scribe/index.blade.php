@@ -304,6 +304,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="tickets-PATCHapi-v1-tickets--ticket_id--assignee">
                                 <a href="#tickets-PATCHapi-v1-tickets--ticket_id--assignee">Assign a ticket</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="tickets-PATCHapi-v1-tickets--ticket_id--classification">
+                                <a href="#tickets-PATCHapi-v1-tickets--ticket_id--classification">Set or correct the classification</a>
+                            </li>
                                                                         </ul>
                             </ul>
             </div>
@@ -314,7 +317,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: October 15, 2026</li>
+        <li>Last updated: October 16, 2026</li>
     </ul>
 </div>
 
@@ -384,8 +387,8 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzsrfw2kb6tkf3200p67h&quot;,
-        &quot;ticket_id&quot;: &quot;01m50gzsrdnyehxe7x29m315f9&quot;,
+        &quot;id&quot;: &quot;01m512tywmg3mdat4s1tcfvn11&quot;,
+        &quot;ticket_id&quot;: &quot;01m512tywgt6k4w9t80727ssqx&quot;,
         &quot;status&quot;: &quot;ready&quot;,
         &quot;body&quot;: &quot;Ol&aacute;! O prazo &eacute; de at&eacute; 2 dias &uacute;teis [1].&quot;,
         &quot;confidence&quot;: 0.85,
@@ -414,15 +417,15 @@ fetch(url, {
         &quot;edited&quot;: false,
         &quot;discard_reason&quot;: null,
         &quot;reviewed_by&quot;: {
-            &quot;id&quot;: &quot;01m50gzsrfw2kb6tkf3200p67g&quot;,
-            &quot;name&quot;: &quot;Simeon Willms&quot;,
+            &quot;id&quot;: &quot;01m512tywktv26bbsgrfny9c70&quot;,
+            &quot;name&quot;: &quot;Ayla Gusikowski PhD&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;ludie22@example.net&quot;
         },
         &quot;reviewed_at&quot;: null,
         &quot;message_id&quot;: null,
         &quot;gap_reported_at&quot;: null,
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
     }
 }</code>
  </pre>
@@ -593,15 +596,27 @@ Must be one of:
 Must be one of:
 <ul style="list-style-type: square;"><li><code>wrong_information</code></li> <li><code>tone</code></li> <li><code>outdated_source</code></li> <li><code>other</code></li></ul>
                     </div>
-                                                                <div style="margin-left: 14px; clear: unset;">
-                        <b style="line-height: 2;"><code>reviewed_by</code></b>&nbsp;&nbsp;
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>reviewed_by</code></b>&nbsp;&nbsp;
 <small>object</small>&nbsp;
  &nbsp;
  &nbsp;
 <br>
 
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
                     </div>
-                                                                <div style="margin-left: 14px; clear: unset;">
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>reviewed_at</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -672,8 +687,8 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzsrqd1apyts6j4x601r3&quot;,
-        &quot;ticket_id&quot;: &quot;01m50gzsrn3dfn1wwjydw09k8n&quot;,
+        &quot;id&quot;: &quot;01m512tyx3057nwgfjmr7rjn1t&quot;,
+        &quot;ticket_id&quot;: &quot;01m512tywzhvnjdqyrzyz1fr9m&quot;,
         &quot;status&quot;: &quot;ready&quot;,
         &quot;body&quot;: &quot;Ol&aacute;! O prazo &eacute; de at&eacute; 2 dias &uacute;teis [1].&quot;,
         &quot;confidence&quot;: 0.85,
@@ -702,15 +717,15 @@ fetch(url, {
         &quot;edited&quot;: false,
         &quot;discard_reason&quot;: null,
         &quot;reviewed_by&quot;: {
-            &quot;id&quot;: &quot;01m50gzsrqd1apyts6j4x601r2&quot;,
-            &quot;name&quot;: &quot;Cole White I&quot;,
+            &quot;id&quot;: &quot;01m512tyx2pyf408ds3qmcm1a3&quot;,
+            &quot;name&quot;: &quot;Tomas Gleason&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;orville81@example.com&quot;
         },
         &quot;reviewed_at&quot;: null,
         &quot;message_id&quot;: null,
         &quot;gap_reported_at&quot;: null,
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
     }
 }</code>
  </pre>
@@ -881,15 +896,27 @@ Must be one of:
 Must be one of:
 <ul style="list-style-type: square;"><li><code>wrong_information</code></li> <li><code>tone</code></li> <li><code>outdated_source</code></li> <li><code>other</code></li></ul>
                     </div>
-                                                                <div style="margin-left: 14px; clear: unset;">
-                        <b style="line-height: 2;"><code>reviewed_by</code></b>&nbsp;&nbsp;
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>reviewed_by</code></b>&nbsp;&nbsp;
 <small>object</small>&nbsp;
  &nbsp;
  &nbsp;
 <br>
 
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
                     </div>
-                                                                <div style="margin-left: 14px; clear: unset;">
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>reviewed_at</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -967,8 +994,8 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzsrz3gdrm6sxwhcg1t34&quot;,
-        &quot;ticket_id&quot;: &quot;01m50gzsrymhayn9gp5vz1aj9g&quot;,
+        &quot;id&quot;: &quot;01m512tyxhwkh6npj2rhnyfsg0&quot;,
+        &quot;ticket_id&quot;: &quot;01m512tyxemez5vd91qejaspk8&quot;,
         &quot;status&quot;: &quot;ready&quot;,
         &quot;body&quot;: &quot;Ol&aacute;! O prazo &eacute; de at&eacute; 2 dias &uacute;teis [1].&quot;,
         &quot;confidence&quot;: 0.85,
@@ -997,15 +1024,15 @@ fetch(url, {
         &quot;edited&quot;: false,
         &quot;discard_reason&quot;: null,
         &quot;reviewed_by&quot;: {
-            &quot;id&quot;: &quot;01m50gzsrz3gdrm6sxwhcg1t33&quot;,
-            &quot;name&quot;: &quot;Prof. Juvenal O&#039;Kon&quot;,
+            &quot;id&quot;: &quot;01m512tyxg4s2mv92p85e1ry50&quot;,
+            &quot;name&quot;: &quot;Dr. Lennie Klocko&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;ubalistreri@example.com&quot;
         },
         &quot;reviewed_at&quot;: null,
         &quot;message_id&quot;: null,
         &quot;gap_reported_at&quot;: null,
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
     }
 }</code>
  </pre>
@@ -1189,15 +1216,27 @@ Must be one of:
 Must be one of:
 <ul style="list-style-type: square;"><li><code>wrong_information</code></li> <li><code>tone</code></li> <li><code>outdated_source</code></li> <li><code>other</code></li></ul>
                     </div>
-                                                                <div style="margin-left: 14px; clear: unset;">
-                        <b style="line-height: 2;"><code>reviewed_by</code></b>&nbsp;&nbsp;
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>reviewed_by</code></b>&nbsp;&nbsp;
 <small>object</small>&nbsp;
  &nbsp;
  &nbsp;
 <br>
 
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
                     </div>
-                                                                <div style="margin-left: 14px; clear: unset;">
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>reviewed_at</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -1275,8 +1314,8 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzssam4p2gbvbh1cmy9a5&quot;,
-        &quot;ticket_id&quot;: &quot;01m50gzss7ywrx9t1cw5zg2xq0&quot;,
+        &quot;id&quot;: &quot;01m512tyy0dxrw3b59h8feyqmr&quot;,
+        &quot;ticket_id&quot;: &quot;01m512tyxt7hefaw08pa5e3zmn&quot;,
         &quot;status&quot;: &quot;ready&quot;,
         &quot;body&quot;: &quot;Ol&aacute;! O prazo &eacute; de at&eacute; 2 dias &uacute;teis [1].&quot;,
         &quot;confidence&quot;: 0.85,
@@ -1305,15 +1344,15 @@ fetch(url, {
         &quot;edited&quot;: false,
         &quot;discard_reason&quot;: null,
         &quot;reviewed_by&quot;: {
-            &quot;id&quot;: &quot;01m50gzss9ex6cz4yndf946ds7&quot;,
-            &quot;name&quot;: &quot;Lambert Watsica&quot;,
+            &quot;id&quot;: &quot;01m512tyxzy43jsetgr20vanj4&quot;,
+            &quot;name&quot;: &quot;Prof. Juvenal O&#039;Kon&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;herman.andrew@example.net&quot;
         },
         &quot;reviewed_at&quot;: null,
         &quot;message_id&quot;: null,
         &quot;gap_reported_at&quot;: null,
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
     }
 }</code>
  </pre>
@@ -1499,15 +1538,27 @@ Must be one of:
 Must be one of:
 <ul style="list-style-type: square;"><li><code>wrong_information</code></li> <li><code>tone</code></li> <li><code>outdated_source</code></li> <li><code>other</code></li></ul>
                     </div>
-                                                                <div style="margin-left: 14px; clear: unset;">
-                        <b style="line-height: 2;"><code>reviewed_by</code></b>&nbsp;&nbsp;
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>reviewed_by</code></b>&nbsp;&nbsp;
 <small>object</small>&nbsp;
  &nbsp;
  &nbsp;
 <br>
 
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
                     </div>
-                                                                <div style="margin-left: 14px; clear: unset;">
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>reviewed_at</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -1577,8 +1628,8 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzssh34y8d9byhqxawyk2&quot;,
-        &quot;ticket_id&quot;: &quot;01m50gzssf842nknr8ga9zh82q&quot;,
+        &quot;id&quot;: &quot;01m512tyycaswqda9b03vszdng&quot;,
+        &quot;ticket_id&quot;: &quot;01m512tyy90qwme55xm1aj0jkf&quot;,
         &quot;status&quot;: &quot;ready&quot;,
         &quot;body&quot;: &quot;Ol&aacute;! O prazo &eacute; de at&eacute; 2 dias &uacute;teis [1].&quot;,
         &quot;confidence&quot;: 0.85,
@@ -1607,15 +1658,15 @@ fetch(url, {
         &quot;edited&quot;: false,
         &quot;discard_reason&quot;: null,
         &quot;reviewed_by&quot;: {
-            &quot;id&quot;: &quot;01m50gzssghnsygvkn27mm9v2x&quot;,
+            &quot;id&quot;: &quot;01m512tyycaswqda9b03vszdnf&quot;,
             &quot;name&quot;: &quot;Briana Konopelski&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;daniela80@example.net&quot;
         },
         &quot;reviewed_at&quot;: null,
         &quot;message_id&quot;: null,
         &quot;gap_reported_at&quot;: null,
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
     }
 }</code>
  </pre>
@@ -1786,15 +1837,27 @@ Must be one of:
 Must be one of:
 <ul style="list-style-type: square;"><li><code>wrong_information</code></li> <li><code>tone</code></li> <li><code>outdated_source</code></li> <li><code>other</code></li></ul>
                     </div>
-                                                                <div style="margin-left: 14px; clear: unset;">
-                        <b style="line-height: 2;"><code>reviewed_by</code></b>&nbsp;&nbsp;
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>reviewed_by</code></b>&nbsp;&nbsp;
 <small>object</small>&nbsp;
  &nbsp;
  &nbsp;
 <br>
 
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
                     </div>
-                                                                <div style="margin-left: 14px; clear: unset;">
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>reviewed_at</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -1994,30 +2057,30 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m50gzsjxd4wd63fqetxg00yh&quot;,
-            &quot;ticket_id&quot;: &quot;01m50gzsjw1zwa6h2jxgtxpcp7&quot;,
-            &quot;uploader_id&quot;: &quot;01m50gzsjxd4wd63fqetxg00yg&quot;,
+            &quot;id&quot;: &quot;01m512tyafjm0870xf4epw2hqs&quot;,
+            &quot;ticket_id&quot;: &quot;01m512tyac715wt3dazz6zgmdh&quot;,
+            &quot;uploader_id&quot;: &quot;01m512tyaewb3sfs3zrwfn8hnj&quot;,
             &quot;original_name&quot;: &quot;screenshot.png&quot;,
             &quot;mime_type&quot;: &quot;image/png&quot;,
             &quot;size&quot;: 1024,
             &quot;width&quot;: 10,
             &quot;height&quot;: 10,
-            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m50gzsjxd4wd63fqetxg00yh/content?expires=1792093223&amp;tenant=01m50gzs89x0x2avf6s96sa295&amp;signature=2025edba0e055272812f5e0e5cfd44a3d87828b74c88dbff7df8c3b6c5713c6d&quot;,
+            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m512tyafjm0870xf4epw2hqs/content?expires=1792111938&amp;tenant=01m512txk6zj1rsamfjpag9jyp&amp;signature=005592b403ea03a0d2a8204a4025e9bb40d832bde45d0ca3be882f91bb530abb&quot;,
             &quot;url_expires_in&quot;: 300,
-            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m50gzsk0jg4whm87s5m22trv&quot;,
-            &quot;ticket_id&quot;: &quot;01m50gzsjz1mc740m9z77pzqjd&quot;,
-            &quot;uploader_id&quot;: &quot;01m50gzsjz1mc740m9z77pzqje&quot;,
+            &quot;id&quot;: &quot;01m512tyaswmk1yzeszmv0xzb4&quot;,
+            &quot;ticket_id&quot;: &quot;01m512tyan9gq9k4be6ted2jet&quot;,
+            &quot;uploader_id&quot;: &quot;01m512tyaqpfg4h9k3x14bxkwh&quot;,
             &quot;original_name&quot;: &quot;screenshot.png&quot;,
             &quot;mime_type&quot;: &quot;image/png&quot;,
             &quot;size&quot;: 1024,
             &quot;width&quot;: 10,
             &quot;height&quot;: 10,
-            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m50gzsk0jg4whm87s5m22trv/content?expires=1792093223&amp;tenant=01m50gzs89x0x2avf6s96sa295&amp;signature=d0274047b44c7ead5e2873ea7fb3ac48c9b3669b0798c83c214cdb8add8d9776&quot;,
+            &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m512tyaswmk1yzeszmv0xzb4/content?expires=1792111938&amp;tenant=01m512txk6zj1rsamfjpag9jyp&amp;signature=e7b88eccf49b45f8e1bc562e6af8c526e1a26fa4bee723b456ba0bcb52fccd43&quot;,
             &quot;url_expires_in&quot;: 300,
-            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
         }
     ]
 }</code>
@@ -2126,7 +2189,7 @@ which removes EXIF metadata such as GPS position.</p>
     "http://localhost:8090/api/v1/tickets/architecto/attachments" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phprvlmtsop6eebehLhhEE" </code></pre></div>
+    --form "file=@/tmp/phpk9d50pfunhveeIGlCpP" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2158,17 +2221,17 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzskdxt88tk90fdhfj1rv&quot;,
-        &quot;ticket_id&quot;: &quot;01m50gzskaa6jjvz5dtxm9gf1m&quot;,
-        &quot;uploader_id&quot;: &quot;01m50gzskbvvbktmfa44vab8ee&quot;,
+        &quot;id&quot;: &quot;01m512tybsd3qa49kmm8vybnh4&quot;,
+        &quot;ticket_id&quot;: &quot;01m512tybpbdnw43c4gj76zb2y&quot;,
+        &quot;uploader_id&quot;: &quot;01m512tybrdgm9w7zf75wzdgp1&quot;,
         &quot;original_name&quot;: &quot;screenshot.png&quot;,
         &quot;mime_type&quot;: &quot;image/png&quot;,
         &quot;size&quot;: 1024,
         &quot;width&quot;: 10,
         &quot;height&quot;: 10,
-        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m50gzskdxt88tk90fdhfj1rv/content?expires=1792093223&amp;tenant=01m50gzs89x0x2avf6s96sa295&amp;signature=bc8578700783f3d6964c34deba7373ccddb808c9ae2fcbada30422d764abb7f0&quot;,
+        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m512tybsd3qa49kmm8vybnh4/content?expires=1792111938&amp;tenant=01m512txk6zj1rsamfjpag9jyp&amp;signature=97b1a7d100a1d323e0658a515cd75330af8e89f93d066c298f043c3a6edabe9b&quot;,
         &quot;url_expires_in&quot;: 300,
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
     }
 }</code>
  </pre>
@@ -2268,7 +2331,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>JPEG, PNG or WebP image (max 5 MB). Metadata is stripped. Must be a file. Must not be greater than 5120 kilobytes. Example: <code>/tmp/phprvlmtsop6eebehLhhEE</code></p>
+<p>JPEG, PNG or WebP image (max 5 MB). Metadata is stripped. Must be a file. Must not be greater than 5120 kilobytes. Example: <code>/tmp/phpk9d50pfunhveeIGlCpP</code></p>
         </div>
         </form>
 
@@ -2316,17 +2379,17 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzskn884gv7766vajsgvt&quot;,
-        &quot;ticket_id&quot;: &quot;01m50gzskky5bcv8vtjxxsptmm&quot;,
-        &quot;uploader_id&quot;: &quot;01m50gzskmgwzbeda6dxwgzd8m&quot;,
+        &quot;id&quot;: &quot;01m512tyc8gyk15dd95megew1m&quot;,
+        &quot;ticket_id&quot;: &quot;01m512tyc4219kwxtaks4jsh8t&quot;,
+        &quot;uploader_id&quot;: &quot;01m512tyc7jga3qxvc3gyysmgw&quot;,
         &quot;original_name&quot;: &quot;screenshot.png&quot;,
         &quot;mime_type&quot;: &quot;image/png&quot;,
         &quot;size&quot;: 1024,
         &quot;width&quot;: 10,
         &quot;height&quot;: 10,
-        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m50gzskn884gv7766vajsgvt/content?expires=1792093223&amp;tenant=01m50gzs89x0x2avf6s96sa295&amp;signature=68b7150c152d122a5764e9f91bbbcfb3a75f7ae0f619f2d74ef73d40f114313e&quot;,
+        &quot;url&quot;: &quot;http://localhost:8090/api/v1/attachments/01m512tyc8gyk15dd95megew1m/content?expires=1792111938&amp;tenant=01m512txk6zj1rsamfjpag9jyp&amp;signature=e5169858aea25b3275a5deb3c598ddc8c8cb22c813f7b4c5d2912faff873895a&quot;,
         &quot;url_expires_in&quot;: 300,
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
     }
 }</code>
  </pre>
@@ -2478,13 +2541,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzse8ygj1etwd7hy8ptar&quot;,
+        &quot;id&quot;: &quot;01m512txzcsp8t9q1tzkp91e6j&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
         &quot;email&quot;: &quot;gulgowski.asia@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
         &quot;tenant&quot;: {
-            &quot;id&quot;: &quot;01m50gzs89x0x2avf6s96sa295&quot;,
+            &quot;id&quot;: &quot;01m512txk6zj1rsamfjpag9jyp&quot;,
             &quot;name&quot;: &quot;Example Inc.&quot;,
             &quot;slug&quot;: &quot;docs-example&quot;
         },
@@ -2492,7 +2555,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
     }
 }</code>
  </pre>
@@ -3012,13 +3075,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzserkzt8qrrw1hcm8998&quot;,
+        &quot;id&quot;: &quot;01m512ty0ccj70a9neecq7qn04&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
         &quot;email&quot;: &quot;idickens@example.org&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
         &quot;tenant&quot;: {
-            &quot;id&quot;: &quot;01m50gzs89x0x2avf6s96sa295&quot;,
+            &quot;id&quot;: &quot;01m512txk6zj1rsamfjpag9jyp&quot;,
             &quot;name&quot;: &quot;Example Inc.&quot;,
             &quot;slug&quot;: &quot;docs-example&quot;
         },
@@ -3026,7 +3089,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
     }
 }</code>
  </pre>
@@ -3569,13 +3632,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzsf4bpnf115f00zmdb6z&quot;,
+        &quot;id&quot;: &quot;01m512ty16vttrj0mzk57sxh3c&quot;,
         &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
         &quot;email&quot;: &quot;aschuster@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
         &quot;tenant&quot;: {
-            &quot;id&quot;: &quot;01m50gzs89x0x2avf6s96sa295&quot;,
+            &quot;id&quot;: &quot;01m512txk6zj1rsamfjpag9jyp&quot;,
             &quot;name&quot;: &quot;Example Inc.&quot;,
             &quot;slug&quot;: &quot;docs-example&quot;
         },
@@ -3583,7 +3646,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
     }
 }</code>
  </pre>
@@ -3901,13 +3964,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzsfab9h1ej5pc47v5qnf&quot;,
+        &quot;id&quot;: &quot;01m512ty1k1eqx3ysnfpk7ajj5&quot;,
         &quot;name&quot;: &quot;Leda Price&quot;,
         &quot;email&quot;: &quot;theo.hauck@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
         &quot;tenant&quot;: {
-            &quot;id&quot;: &quot;01m50gzs89x0x2avf6s96sa295&quot;,
+            &quot;id&quot;: &quot;01m512txk6zj1rsamfjpag9jyp&quot;,
             &quot;name&quot;: &quot;Example Inc.&quot;,
             &quot;slug&quot;: &quot;docs-example&quot;
         },
@@ -3915,7 +3978,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
     }
 }</code>
  </pre>
@@ -4127,10 +4190,10 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m50gzskss88vakd61m62q3zd&quot;,
-            &quot;name&quot;: &quot;Repudiandae Laboriosam&quot;,
-            &quot;slug&quot;: &quot;repudiandae-laboriosam&quot;,
-            &quot;description&quot;: &quot;Alias tenetur ratione nemo voluptate accusamus ut et.&quot;,
+            &quot;id&quot;: &quot;01m512tycmgszbt9qdmn7evwsg&quot;,
+            &quot;name&quot;: &quot;Nemo Voluptate&quot;,
+            &quot;slug&quot;: &quot;nemo-voluptate&quot;,
+            &quot;description&quot;: &quot;Ut et recusandae modi rerum ex repellendus.&quot;,
             &quot;sla_targets&quot;: {
                 &quot;low&quot;: {
                     &quot;first_response_minutes&quot;: 480,
@@ -4156,10 +4219,10 @@ fetch(url, {
             &quot;tickets_count&quot;: 1
         },
         {
-            &quot;id&quot;: &quot;01m50gzskywgfcz4fghv69nbaz&quot;,
-            &quot;name&quot;: &quot;Error Neque&quot;,
-            &quot;slug&quot;: &quot;error-neque&quot;,
-            &quot;description&quot;: &quot;Et ipsam dolorem et ut dicta vitae assumenda.&quot;,
+            &quot;id&quot;: &quot;01m512tycw9wwvc7fvxwb4et9p&quot;,
+            &quot;name&quot;: &quot;Ut Aut&quot;,
+            &quot;slug&quot;: &quot;ut-aut&quot;,
+            &quot;description&quot;: &quot;Et error neque recusandae et.&quot;,
             &quot;sla_targets&quot;: {
                 &quot;low&quot;: {
                     &quot;first_response_minutes&quot;: 480,
@@ -4381,7 +4444,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzsmaf0yszsnj5pq8tvma&quot;,
+        &quot;id&quot;: &quot;01m512tydv782rvga6dt6yeasz&quot;,
         &quot;name&quot;: &quot;Fugiat Sunt&quot;,
         &quot;slug&quot;: &quot;fugiat-sunt&quot;,
         &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab.&quot;,
@@ -4739,7 +4802,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzsmdptnhjm9v68rd0dm7&quot;,
+        &quot;id&quot;: &quot;01m512tye0tv8tgnhwd8k4t88e&quot;,
         &quot;name&quot;: &quot;Eius Et&quot;,
         &quot;slug&quot;: &quot;eius-et&quot;,
         &quot;description&quot;: &quot;Quos velit et fugiat sunt nihil accusantium harum.&quot;,
@@ -4975,7 +5038,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzsmny8z2ps3y4rc28hac&quot;,
+        &quot;id&quot;: &quot;01m512tyec9ae1ajwqqdzr4tpk&quot;,
         &quot;name&quot;: &quot;Sunt Nihil&quot;,
         &quot;slug&quot;: &quot;sunt-nihil&quot;,
         &quot;description&quot;: &quot;Harum mollitia modi deserunt aut ab provident perspiciatis quo.&quot;,
@@ -5942,7 +6005,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost:8090/api/v1/knowledge/articles/import" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpnqk0m0lp6i8g3fcGmDG" </code></pre></div>
+    --form "file=@/tmp/php1hlf0vlds6k18GCFCkf" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -5974,7 +6037,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzsnb8jmh89d617znmnfc&quot;,
+        &quot;id&quot;: &quot;01m512tyfajgktpjkwbybx0133&quot;,
         &quot;title&quot;: &quot;Eius et animi quos.&quot;,
         &quot;markdown&quot;: null,
         &quot;visibility&quot;: &quot;customers&quot;,
@@ -5982,10 +6045,10 @@ fetch(url, {
             &quot;entrega&quot;
         ],
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m50gzsnaf30rd0x7f5xpep4y&quot;,
-            &quot;name&quot;: &quot;Nemo Voluptate&quot;,
-            &quot;slug&quot;: &quot;nemo-voluptate&quot;,
-            &quot;description&quot;: &quot;Ut et recusandae modi rerum ex repellendus.&quot;,
+            &quot;id&quot;: &quot;01m512tyf9d8agk4wy72dx4xgt&quot;,
+            &quot;name&quot;: &quot;Recusandae Modi&quot;,
+            &quot;slug&quot;: &quot;recusandae-modi&quot;,
+            &quot;description&quot;: &quot;Ex repellendus assumenda et tenetur ab reiciendis.&quot;,
             &quot;sla_targets&quot;: {
                 &quot;low&quot;: {
                     &quot;first_response_minutes&quot;: 480,
@@ -6021,13 +6084,13 @@ fetch(url, {
         },
         &quot;citations_count&quot;: 0,
         &quot;updated_by&quot;: {
-            &quot;id&quot;: &quot;01m50gzsnaf30rd0x7f5xpep4x&quot;,
-            &quot;name&quot;: &quot;Dr. Alan Green&quot;,
+            &quot;id&quot;: &quot;01m512tyf80rw874rkhqcfd6xd&quot;,
+            &quot;name&quot;: &quot;Nelson Little&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;anderson.herbert@example.com&quot;
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
     }
 }</code>
  </pre>
@@ -6114,7 +6177,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be a file. Must not be greater than 200 kilobytes. Example: <code>/tmp/phpnqk0m0lp6i8g3fcGmDG</code></p>
+<p>Must be a file. Must not be greater than 200 kilobytes. Example: <code>/tmp/php1hlf0vlds6k18GCFCkf</code></p>
         </div>
         </form>
 
@@ -6320,7 +6383,7 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m50gzsnrfq08e4k8v840vv9t&quot;,
+            &quot;id&quot;: &quot;01m512tyftxx608fhynhax3afa&quot;,
             &quot;title&quot;: &quot;Eius et animi quos.&quot;,
             &quot;markdown&quot;: null,
             &quot;visibility&quot;: &quot;customers&quot;,
@@ -6328,10 +6391,10 @@ fetch(url, {
                 &quot;entrega&quot;
             ],
             &quot;category&quot;: {
-                &quot;id&quot;: &quot;01m50gzsnq1jy0yfg0zpdat5v0&quot;,
-                &quot;name&quot;: &quot;Recusandae Modi&quot;,
-                &quot;slug&quot;: &quot;recusandae-modi&quot;,
-                &quot;description&quot;: &quot;Ex repellendus assumenda et tenetur ab reiciendis.&quot;,
+                &quot;id&quot;: &quot;01m512tyftxx608fhynhax3af9&quot;,
+                &quot;name&quot;: &quot;Tenetur Ab&quot;,
+                &quot;slug&quot;: &quot;tenetur-ab&quot;,
+                &quot;description&quot;: &quot;Quia perspiciatis deserunt ducimus corrupti et.&quot;,
                 &quot;sla_targets&quot;: {
                     &quot;low&quot;: {
                         &quot;first_response_minutes&quot;: 480,
@@ -6367,27 +6430,27 @@ fetch(url, {
             },
             &quot;citations_count&quot;: 0,
             &quot;updated_by&quot;: {
-                &quot;id&quot;: &quot;01m50gzsnpqvxd2sc2wq5c4fay&quot;,
-                &quot;name&quot;: &quot;Nelson Little&quot;,
+                &quot;id&quot;: &quot;01m512tyfsyekpqdj3jk0aya92&quot;,
+                &quot;name&quot;: &quot;Mr. Murl Cruickshank Jr.&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
-                &quot;email&quot;: null
+                &quot;email&quot;: &quot;modesta58@example.net&quot;
             },
-            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
-            &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;,
+            &quot;updated_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m50gzsp1zzwt1pgayev7gjct&quot;,
-            &quot;title&quot;: &quot;Perspiciatis deserunt ducimus corrupti et.&quot;,
+            &quot;id&quot;: &quot;01m512tygcjbz47yy5c3etq5ef&quot;,
+            &quot;title&quot;: &quot;Quia maiores assumenda.&quot;,
             &quot;markdown&quot;: null,
             &quot;visibility&quot;: &quot;customers&quot;,
             &quot;tags&quot;: [
                 &quot;entrega&quot;
             ],
             &quot;category&quot;: {
-                &quot;id&quot;: &quot;01m50gzsp0f8ntnmbnzwpmzbqm&quot;,
-                &quot;name&quot;: &quot;Ea Ut&quot;,
-                &quot;slug&quot;: &quot;ea-ut&quot;,
-                &quot;description&quot;: &quot;Deserunt sint quis in quod.&quot;,
+                &quot;id&quot;: &quot;01m512tyg5dbw06dep0eksj73r&quot;,
+                &quot;name&quot;: &quot;Consectetur Id&quot;,
+                &quot;slug&quot;: &quot;consectetur-id&quot;,
+                &quot;description&quot;: &quot;Consectetur assumenda eaque neque sit.&quot;,
                 &quot;sla_targets&quot;: {
                     &quot;low&quot;: {
                         &quot;first_response_minutes&quot;: 480,
@@ -6423,13 +6486,13 @@ fetch(url, {
             },
             &quot;citations_count&quot;: 0,
             &quot;updated_by&quot;: {
-                &quot;id&quot;: &quot;01m50gzsnzrkp7x4c0t4vdk8xr&quot;,
-                &quot;name&quot;: &quot;Dr. Lennie Klocko&quot;,
+                &quot;id&quot;: &quot;01m512tyg06jngnc6mcd87e142&quot;,
+                &quot;name&quot;: &quot;Lambert Watsica&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
-                &quot;email&quot;: null
+                &quot;email&quot;: &quot;johnson.amani@example.com&quot;
             },
-            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
-            &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;,
+            &quot;updated_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
         }
     ],
     &quot;links&quot;: {
@@ -6828,7 +6891,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzspfb5wk4615477xyes3&quot;,
+        &quot;id&quot;: &quot;01m512tyj2d09vp7rfqpefse77&quot;,
         &quot;title&quot;: &quot;Et animi quos velit.&quot;,
         &quot;markdown&quot;: null,
         &quot;visibility&quot;: &quot;customers&quot;,
@@ -6836,10 +6899,10 @@ fetch(url, {
             &quot;entrega&quot;
         ],
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m50gzspebzw73kqvp09d18hj&quot;,
-            &quot;name&quot;: &quot;Tenetur Ab&quot;,
-            &quot;slug&quot;: &quot;tenetur-ab&quot;,
-            &quot;description&quot;: &quot;Quia perspiciatis deserunt ducimus corrupti et.&quot;,
+            &quot;id&quot;: &quot;01m512tyhyw15ez9fef56ej0hs&quot;,
+            &quot;name&quot;: &quot;Quia Perspiciatis&quot;,
+            &quot;slug&quot;: &quot;quia-perspiciatis&quot;,
+            &quot;description&quot;: &quot;Ducimus corrupti et dolores quia maiores assumenda.&quot;,
             &quot;sla_targets&quot;: {
                 &quot;low&quot;: {
                     &quot;first_response_minutes&quot;: 480,
@@ -6875,13 +6938,13 @@ fetch(url, {
         },
         &quot;citations_count&quot;: 0,
         &quot;updated_by&quot;: {
-            &quot;id&quot;: &quot;01m50gzspdr3etavegsgztxeet&quot;,
-            &quot;name&quot;: &quot;Mr. Murl Cruickshank Jr.&quot;,
+            &quot;id&quot;: &quot;01m512tyhspt14qwyysrdc468p&quot;,
+            &quot;name&quot;: &quot;Mr. Graham Crist&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;michelle.cassin@example.com&quot;
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
     }
 }</code>
  </pre>
@@ -7217,7 +7280,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzsptsvf0ad52wjd65qps&quot;,
+        &quot;id&quot;: &quot;01m512tykn935zfw62jcf46qay&quot;,
         &quot;title&quot;: &quot;Et animi quos velit.&quot;,
         &quot;markdown&quot;: null,
         &quot;visibility&quot;: &quot;customers&quot;,
@@ -7225,10 +7288,10 @@ fetch(url, {
             &quot;entrega&quot;
         ],
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m50gzsps45wnkdpv62wk22yb&quot;,
-            &quot;name&quot;: &quot;Quia Perspiciatis&quot;,
-            &quot;slug&quot;: &quot;quia-perspiciatis&quot;,
-            &quot;description&quot;: &quot;Ducimus corrupti et dolores quia maiores assumenda.&quot;,
+            &quot;id&quot;: &quot;01m512tykgxprzjwbnrbjj3x35&quot;,
+            &quot;name&quot;: &quot;Assumenda Odit&quot;,
+            &quot;slug&quot;: &quot;assumenda-odit&quot;,
+            &quot;description&quot;: &quot;Repellat officiis corporis nesciunt ut.&quot;,
             &quot;sla_targets&quot;: {
                 &quot;low&quot;: {
                     &quot;first_response_minutes&quot;: 480,
@@ -7264,13 +7327,13 @@ fetch(url, {
         },
         &quot;citations_count&quot;: 0,
         &quot;updated_by&quot;: {
-            &quot;id&quot;: &quot;01m50gzsps45wnkdpv62wk22ya&quot;,
-            &quot;name&quot;: &quot;Mr. Graham Crist&quot;,
+            &quot;id&quot;: &quot;01m512tykajvmcmt0h391zma6r&quot;,
+            &quot;name&quot;: &quot;Mona Lemke&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;rosario67@example.net&quot;
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
     }
 }</code>
  </pre>
@@ -7570,18 +7633,18 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzsq8wv77pk2anpjh028e&quot;,
-        &quot;title&quot;: &quot;Quo voluptatibus aut harum eius ipsa.&quot;,
+        &quot;id&quot;: &quot;01m512tynmf1x2jxa3vxjj2r8j&quot;,
+        &quot;title&quot;: &quot;Et animi quos velit.&quot;,
         &quot;markdown&quot;: null,
         &quot;visibility&quot;: &quot;customers&quot;,
         &quot;tags&quot;: [
             &quot;entrega&quot;
         ],
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m50gzsq7qz4pkbxfkjwnssfs&quot;,
-            &quot;name&quot;: &quot;Sint Ipsa&quot;,
-            &quot;slug&quot;: &quot;sint-ipsa&quot;,
-            &quot;description&quot;: &quot;Nemo architecto aperiam non error similique est iste illo.&quot;,
+            &quot;id&quot;: &quot;01m512tynd3n8tenngwdrxx6p2&quot;,
+            &quot;name&quot;: &quot;Nesciunt Ut&quot;,
+            &quot;slug&quot;: &quot;nesciunt-ut&quot;,
+            &quot;description&quot;: &quot;Iure impedit molestiae ut rem est esse sint.&quot;,
             &quot;sla_targets&quot;: {
                 &quot;low&quot;: {
                     &quot;first_response_minutes&quot;: 480,
@@ -7617,13 +7680,13 @@ fetch(url, {
         },
         &quot;citations_count&quot;: 0,
         &quot;updated_by&quot;: {
-            &quot;id&quot;: &quot;01m50gzsq6d1x7x8vvkzxak49c&quot;,
-            &quot;name&quot;: &quot;Mr. Eliezer Lehner Sr.&quot;,
+            &quot;id&quot;: &quot;01m512tyn72e41qy3ac2k4a376&quot;,
+            &quot;name&quot;: &quot;Alexa Hamill DDS&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;walker26@example.com&quot;
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
     }
 }</code>
  </pre>
@@ -8100,7 +8163,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzsqjfmmycpk4ca3v8jxy&quot;,
+        &quot;id&quot;: &quot;01m512tyqpnqt1a0q9qc6yyr5y&quot;,
         &quot;title&quot;: &quot;Et animi quos velit.&quot;,
         &quot;markdown&quot;: null,
         &quot;visibility&quot;: &quot;customers&quot;,
@@ -8108,10 +8171,10 @@ fetch(url, {
             &quot;entrega&quot;
         ],
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m50gzsqh2mpxkk04185djzmy&quot;,
-            &quot;name&quot;: &quot;Assumenda Odit&quot;,
-            &quot;slug&quot;: &quot;assumenda-odit&quot;,
-            &quot;description&quot;: &quot;Repellat officiis corporis nesciunt ut.&quot;,
+            &quot;id&quot;: &quot;01m512tyqgwv7fy8tm1265s5v3&quot;,
+            &quot;name&quot;: &quot;Molestiae Ut&quot;,
+            &quot;slug&quot;: &quot;molestiae-ut&quot;,
+            &quot;description&quot;: &quot;Est esse sint aut.&quot;,
             &quot;sla_targets&quot;: {
                 &quot;low&quot;: {
                     &quot;first_response_minutes&quot;: 480,
@@ -8147,13 +8210,13 @@ fetch(url, {
         },
         &quot;citations_count&quot;: 0,
         &quot;updated_by&quot;: {
-            &quot;id&quot;: &quot;01m50gzsqh2mpxkk04185djzmx&quot;,
-            &quot;name&quot;: &quot;Mona Lemke&quot;,
+            &quot;id&quot;: &quot;01m512tyqb6gtrs0t7cszxfd2a&quot;,
+            &quot;name&quot;: &quot;Fae Bernhard Sr.&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;fae.corwin@example.net&quot;
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
     }
 }</code>
  </pre>
@@ -8434,7 +8497,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzsqt08zw207ywejrqyhb&quot;,
+        &quot;id&quot;: &quot;01m512tysen4dcvx4aj7zdbv3n&quot;,
         &quot;title&quot;: &quot;Et animi quos velit.&quot;,
         &quot;markdown&quot;: null,
         &quot;visibility&quot;: &quot;customers&quot;,
@@ -8442,10 +8505,10 @@ fetch(url, {
             &quot;entrega&quot;
         ],
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m50gzsqt08zw207ywejrqyha&quot;,
-            &quot;name&quot;: &quot;Molestiae Ut&quot;,
-            &quot;slug&quot;: &quot;molestiae-ut&quot;,
-            &quot;description&quot;: &quot;Est esse sint aut.&quot;,
+            &quot;id&quot;: &quot;01m512tys8frke77vkar3f765x&quot;,
+            &quot;name&quot;: &quot;Aut Deserunt&quot;,
+            &quot;slug&quot;: &quot;aut-deserunt&quot;,
+            &quot;description&quot;: &quot;Error neque recusandae et ipsam dolorem et ut dicta.&quot;,
             &quot;sla_targets&quot;: {
                 &quot;low&quot;: {
                     &quot;first_response_minutes&quot;: 480,
@@ -8481,13 +8544,13 @@ fetch(url, {
         },
         &quot;citations_count&quot;: 0,
         &quot;updated_by&quot;: {
-            &quot;id&quot;: &quot;01m50gzsqsn3nx716z2prwzd3x&quot;,
-            &quot;name&quot;: &quot;Alexa Hamill DDS&quot;,
+            &quot;id&quot;: &quot;01m512tys2wkc6nzdmhx976cqn&quot;,
+            &quot;name&quot;: &quot;Ms. Callie Towne IV&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;marquardt.zion@example.com&quot;
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
     }
 }</code>
  </pre>
@@ -8768,7 +8831,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzsr19paw3yf5jbfh7fbd&quot;,
+        &quot;id&quot;: &quot;01m512tyv7g4bbmgdn8vvf80v3&quot;,
         &quot;title&quot;: &quot;Et animi quos velit.&quot;,
         &quot;markdown&quot;: null,
         &quot;visibility&quot;: &quot;customers&quot;,
@@ -8776,10 +8839,10 @@ fetch(url, {
             &quot;entrega&quot;
         ],
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m50gzsr0cc00rg6h4asng49v&quot;,
-            &quot;name&quot;: &quot;Aut Molestiae&quot;,
-            &quot;slug&quot;: &quot;aut-molestiae&quot;,
-            &quot;description&quot;: &quot;Suscipit doloribus fugiat ut aut deserunt et error.&quot;,
+            &quot;id&quot;: &quot;01m512tyv2mgw12djb6m91p9df&quot;,
+            &quot;name&quot;: &quot;Error Neque&quot;,
+            &quot;slug&quot;: &quot;error-neque&quot;,
+            &quot;description&quot;: &quot;Et ipsam dolorem et ut dicta vitae assumenda.&quot;,
             &quot;sla_targets&quot;: {
                 &quot;low&quot;: {
                     &quot;first_response_minutes&quot;: 480,
@@ -8815,13 +8878,13 @@ fetch(url, {
         },
         &quot;citations_count&quot;: 0,
         &quot;updated_by&quot;: {
-            &quot;id&quot;: &quot;01m50gzsr0cc00rg6h4asng49t&quot;,
-            &quot;name&quot;: &quot;Fae Bernhard Sr.&quot;,
+            &quot;id&quot;: &quot;01m512tytwc9kv5zf5p72rp7b4&quot;,
+            &quot;name&quot;: &quot;Mr. Thaddeus Glover IV&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;karine49@example.com&quot;
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
     }
 }</code>
  </pre>
@@ -9958,7 +10021,7 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m50gzssvmyk4yqdr9mdn6ays&quot;,
+            &quot;id&quot;: &quot;01m512tyyw925ndmkas1k7gfqj&quot;,
             &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
             &quot;email&quot;: &quot;gilbert32@example.com&quot;,
             &quot;role&quot;: &quot;customer&quot;,
@@ -9968,12 +10031,12 @@ fetch(url, {
                 &quot;push_status_changes&quot;: true
             },
             &quot;open_tickets_count&quot;: 1,
-            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m50gzst0whdpv42vvmfm0dym&quot;,
-            &quot;name&quot;: &quot;Emanuel Emmerich&quot;,
-            &quot;email&quot;: &quot;elton.conroy@example.com&quot;,
+            &quot;id&quot;: &quot;01m512tyz26v7dz1n5mbe405yh&quot;,
+            &quot;name&quot;: &quot;Cristian O&#039;Reilly&quot;,
+            &quot;email&quot;: &quot;little.art@example.net&quot;,
             &quot;role&quot;: &quot;customer&quot;,
             &quot;is_active&quot;: true,
             &quot;notification_preferences&quot;: {
@@ -9981,7 +10044,7 @@ fetch(url, {
                 &quot;push_status_changes&quot;: true
             },
             &quot;open_tickets_count&quot;: 1,
-            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
         }
     ],
     &quot;links&quot;: {
@@ -10232,7 +10295,7 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzst6d0z6nf0rdrdtmqem&quot;,
+        &quot;id&quot;: &quot;01m512tyzexvfj62yr6byhy4ec&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
         &quot;email&quot;: &quot;hirthe.theo@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
@@ -10241,7 +10304,7 @@ fetch(url, {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
     }
 }</code>
  </pre>
@@ -10423,14 +10486,14 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8090/api/v1/team/architecto" \
+    --get "http://localhost:8090/api/v1/team/01m512txx46h1mc4he3hg9719y" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8090/api/v1/team/architecto"
+    "http://localhost:8090/api/v1/team/01m512txx46h1mc4he3hg9719y"
 );
 
 const headers = {
@@ -10454,16 +10517,16 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzst9sdhnhhnzw6fygv03&quot;,
-        &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
-        &quot;email&quot;: &quot;leo34@example.net&quot;,
+        &quot;id&quot;: &quot;01m512tyzkr4nw421t46v2mpd7&quot;,
+        &quot;name&quot;: &quot;Jazlyn Keebler&quot;,
+        &quot;email&quot;: &quot;ferne52@example.com&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
         &quot;notification_preferences&quot;: {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
     }
 }</code>
  </pre>
@@ -10547,10 +10610,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="member_id"                data-endpoint="GETapi-v1-team--member_id-"
-               value="architecto"
+               value="01m512txx46h1mc4he3hg9719y"
                data-component="url">
     <br>
-<p>The ID of the member. Example: <code>architecto</code></p>
+<p>The ID of the member. Example: <code>01m512txx46h1mc4he3hg9719y</code></p>
             </div>
                     </form>
 
@@ -10607,7 +10670,7 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost:8090/api/v1/team/architecto" \
+    "http://localhost:8090/api/v1/team/01m512txx46h1mc4he3hg9719y" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -10620,7 +10683,7 @@ Must be one of:
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8090/api/v1/team/architecto"
+    "http://localhost:8090/api/v1/team/01m512txx46h1mc4he3hg9719y"
 );
 
 const headers = {
@@ -10650,16 +10713,16 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzstddy24k06az114amg5&quot;,
+        &quot;id&quot;: &quot;01m512tyztz475vvxfs8df6b2y&quot;,
         &quot;name&quot;: &quot;Ms. Audra Crooks II&quot;,
-        &quot;email&quot;: &quot;pfritsch@example.com&quot;,
+        &quot;email&quot;: &quot;leo34@example.net&quot;,
         &quot;role&quot;: &quot;customer&quot;,
         &quot;is_active&quot;: true,
         &quot;notification_preferences&quot;: {
             &quot;push_replies&quot;: true,
             &quot;push_status_changes&quot;: true
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:19+00:00&quot;
     }
 }</code>
  </pre>
@@ -10743,10 +10806,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="member_id"                data-endpoint="PATCHapi-v1-team--member_id-"
-               value="architecto"
+               value="01m512txx46h1mc4he3hg9719y"
                data-component="url">
     <br>
-<p>The ID of the member. Example: <code>architecto</code></p>
+<p>The ID of the member. Example: <code>01m512txx46h1mc4he3hg9719y</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -10894,30 +10957,30 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m50gzsj6sxfsgwg4c8yj1kz3&quot;,
-            &quot;ticket_id&quot;: &quot;01m50gzsj48ph3ns64d08nj0bp&quot;,
-            &quot;body&quot;: &quot;Consequatur omnis repudiandae error alias. Voluptas quis ipsa dolorem voluptatibus sit. Dignissimos voluptatum velit ipsum id.&quot;,
+            &quot;id&quot;: &quot;01m512ty99mn16c5nj9bhy64yp&quot;,
+            &quot;ticket_id&quot;: &quot;01m512ty96zecnvw6rs0ec9msm&quot;,
+            &quot;body&quot;: &quot;Et non ratione iste sed repudiandae eos quam. Vero alias itaque maiores deleniti ad ea eos quo. Magnam ullam ut ad voluptatem. Fugit omnis autem pariatur aut voluptatem nobis magnam.&quot;,
             &quot;is_internal&quot;: false,
             &quot;author&quot;: {
-                &quot;id&quot;: &quot;01m50gzsj5qefjkvbea2zgq5sz&quot;,
-                &quot;name&quot;: &quot;Kaleigh Kuhic&quot;,
+                &quot;id&quot;: &quot;01m512ty98cfphwqjarzx74bvr&quot;,
+                &quot;name&quot;: &quot;Dannie Renner&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
-                &quot;email&quot;: null
+                &quot;email&quot;: &quot;tyrell79@example.com&quot;
             },
-            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m50gzsjd9tj1fwxxgnx4ymb2&quot;,
-            &quot;ticket_id&quot;: &quot;01m50gzsjbndk2a2tvr5m8enzy&quot;,
-            &quot;body&quot;: &quot;Rerum repellendus ut velit nobis. Sit totam pariatur accusamus recusandae optio. Eveniet enim porro adipisci aliquid illo aut.&quot;,
+            &quot;id&quot;: &quot;01m512ty9jdy8g5rzkcy3zmswg&quot;,
+            &quot;ticket_id&quot;: &quot;01m512ty9grtsqxs1yj9t47jzf&quot;,
+            &quot;body&quot;: &quot;Velit exercitationem tempora beatae quas nesciunt voluptatem. Dolore aut est sint cum sunt. Ut vero at cupiditate animi magni autem. In modi repudiandae perspiciatis quia. Repellendus est qui adipisci numquam itaque.&quot;,
             &quot;is_internal&quot;: false,
             &quot;author&quot;: {
-                &quot;id&quot;: &quot;01m50gzsjc6t0f4ax8v00hz0s5&quot;,
-                &quot;name&quot;: &quot;Yadira Hettinger&quot;,
+                &quot;id&quot;: &quot;01m512ty9h9hk7dnwa5ncxgpbk&quot;,
+                &quot;name&quot;: &quot;Kenton Hoeger&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
-                &quot;email&quot;: null
+                &quot;email&quot;: &quot;feil.dawn@example.org&quot;
             },
-            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
         }
     ],
     &quot;links&quot;: {
@@ -11155,17 +11218,17 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzsjmx6z680z8pzsgtnfb&quot;,
-        &quot;ticket_id&quot;: &quot;01m50gzsjk5yqfxrx1qr9wg54w&quot;,
+        &quot;id&quot;: &quot;01m512tya2m7rg6g5pkm6hgagn&quot;,
+        &quot;ticket_id&quot;: &quot;01m512ty9z6a4fmfw4111c7y0z&quot;,
         &quot;body&quot;: &quot;Et animi quos velit et fugiat. Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci.&quot;,
         &quot;is_internal&quot;: false,
         &quot;author&quot;: {
-            &quot;id&quot;: &quot;01m50gzsjmx6z680z8pzsgtnfa&quot;,
+            &quot;id&quot;: &quot;01m512tya18a3nxeangx5gr7gw&quot;,
             &quot;name&quot;: &quot;Mr. Madisen Schaden&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;colt.balistreri@example.net&quot;
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
     }
 }</code>
  </pre>
@@ -11401,13 +11464,13 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: &quot;01m50gzsg52k835rsh0jeakpw7&quot;,
+            &quot;id&quot;: &quot;01m512ty3d6661jz3k12j0rd0n&quot;,
             &quot;subject&quot;: &quot;Eius et animi quos velit et.&quot;,
             &quot;description&quot;: &quot;Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.&quot;,
             &quot;status&quot;: &quot;open&quot;,
             &quot;priority&quot;: &quot;urgent&quot;,
             &quot;category&quot;: {
-                &quot;id&quot;: &quot;01m50gzsg4akmbenmaddcyznkm&quot;,
+                &quot;id&quot;: &quot;01m512ty3cr6ce8ca9qgnak1rz&quot;,
                 &quot;name&quot;: &quot;Voluptatem Laboriosam&quot;,
                 &quot;slug&quot;: &quot;voluptatem-laboriosam&quot;,
                 &quot;description&quot;: &quot;Quis adipisci molestias fugit deleniti distinctio eum.&quot;,
@@ -11435,43 +11498,49 @@ fetch(url, {
                 }
             },
             &quot;requester&quot;: {
-                &quot;id&quot;: &quot;01m50gzsg2c6m3qfp90e14abde&quot;,
+                &quot;id&quot;: &quot;01m512ty39r5wvksm1vk097aqa&quot;,
                 &quot;name&quot;: &quot;Mina Bauch&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
-                &quot;email&quot;: null
+                &quot;email&quot;: &quot;okeefe.isidro@example.org&quot;
             },
             &quot;assignee&quot;: {
-                &quot;id&quot;: &quot;01m50gzsg39mnz8vzs2b25zcdm&quot;,
+                &quot;id&quot;: &quot;01m512ty3aa6z7955zjv07ad9b&quot;,
                 &quot;name&quot;: &quot;Donny Leffler&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
-                &quot;email&quot;: null
+                &quot;email&quot;: &quot;mitchell.matilda@example.org&quot;
             },
             &quot;last_message&quot;: {
-                &quot;id&quot;: &quot;01m50gzsg9yd2evnrp6gvc090n&quot;,
+                &quot;id&quot;: &quot;01m512ty3nea8ap0kb1dbgyy4h&quot;,
                 &quot;excerpt&quot;: &quot;Aut libero aliquam veniam corporis. Mollitia deleniti nemo odit quia officia. Dignissimos neque blanditiis odio.&quot;,
                 &quot;author_name&quot;: &quot;Prof. Daniella Emmerich III&quot;,
                 &quot;author_role&quot;: &quot;customer&quot;,
-                &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+                &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
+            },
+            &quot;sentiment&quot;: null,
+            &quot;sources&quot;: {
+                &quot;category&quot;: null,
+                &quot;priority&quot;: null,
+                &quot;sentiment&quot;: null
             },
             &quot;resolved_at&quot;: null,
             &quot;closed_at&quot;: null,
             &quot;sla&quot;: {
                 &quot;first_response_at&quot;: null,
-                &quot;first_response_due_at&quot;: &quot;2026-10-15T19:50:23+00:00&quot;,
-                &quot;resolution_due_at&quot;: &quot;2026-10-15T23:35:23+00:00&quot;,
+                &quot;first_response_due_at&quot;: &quot;2026-10-16T01:02:18+00:00&quot;,
+                &quot;resolution_due_at&quot;: &quot;2026-10-16T04:47:18+00:00&quot;,
                 &quot;is_overdue&quot;: false
             },
-            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
-            &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;,
+            &quot;updated_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
         },
         {
-            &quot;id&quot;: &quot;01m50gzsggf7jqmfm75dyx9n8k&quot;,
+            &quot;id&quot;: &quot;01m512ty472fnbpfv5g5sgdj6t&quot;,
             &quot;subject&quot;: &quot;Ratione nemo voluptate accusamus ut et recusandae modi rerum.&quot;,
             &quot;description&quot;: &quot;Assumenda et tenetur ab reiciendis quia. Deserunt ducimus corrupti et dolores quia maiores. Odit doloribus repellat officiis corporis nesciunt ut ratione iure.&quot;,
             &quot;status&quot;: &quot;open&quot;,
             &quot;priority&quot;: &quot;urgent&quot;,
             &quot;category&quot;: {
-                &quot;id&quot;: &quot;01m50gzsgfhaga56bwseezf7d6&quot;,
+                &quot;id&quot;: &quot;01m512ty46bqs29ggs594g3shf&quot;,
                 &quot;name&quot;: &quot;Et Ipsam&quot;,
                 &quot;slug&quot;: &quot;et-ipsam&quot;,
                 &quot;description&quot;: &quot;Et ut dicta vitae assumenda consequatur.&quot;,
@@ -11499,34 +11568,40 @@ fetch(url, {
                 }
             },
             &quot;requester&quot;: {
-                &quot;id&quot;: &quot;01m50gzsge89hs7tz4rh9wr25z&quot;,
+                &quot;id&quot;: &quot;01m512ty43rnqxcbh1fzgcgtzq&quot;,
                 &quot;name&quot;: &quot;Mr. Thaddeus Glover IV&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
-                &quot;email&quot;: null
+                &quot;email&quot;: &quot;simeon.willms@example.net&quot;
             },
             &quot;assignee&quot;: {
-                &quot;id&quot;: &quot;01m50gzsgfhaga56bwseezf7d5&quot;,
+                &quot;id&quot;: &quot;01m512ty45qyxhev3z3e6jeame&quot;,
                 &quot;name&quot;: &quot;Lucie Bauch MD&quot;,
                 &quot;role&quot;: &quot;customer&quot;,
-                &quot;email&quot;: null
+                &quot;email&quot;: &quot;destiney.bernhard@example.org&quot;
             },
             &quot;last_message&quot;: {
-                &quot;id&quot;: &quot;01m50gzsgjzfw41v7andejepfj&quot;,
+                &quot;id&quot;: &quot;01m512ty4cqd0d8dgw8pajyvmt&quot;,
                 &quot;excerpt&quot;: &quot;Sunt quisquam sit repellendus. Eaque alias ratione dolores sed rem ea ut. Deserunt sint quis in quod.&quot;,
                 &quot;author_name&quot;: &quot;Cordia Cummings&quot;,
                 &quot;author_role&quot;: &quot;customer&quot;,
-                &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+                &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
+            },
+            &quot;sentiment&quot;: null,
+            &quot;sources&quot;: {
+                &quot;category&quot;: null,
+                &quot;priority&quot;: null,
+                &quot;sentiment&quot;: null
             },
             &quot;resolved_at&quot;: null,
             &quot;closed_at&quot;: null,
             &quot;sla&quot;: {
                 &quot;first_response_at&quot;: null,
-                &quot;first_response_due_at&quot;: &quot;2026-10-15T19:50:23+00:00&quot;,
-                &quot;resolution_due_at&quot;: &quot;2026-10-15T23:35:23+00:00&quot;,
+                &quot;first_response_due_at&quot;: &quot;2026-10-16T01:02:18+00:00&quot;,
+                &quot;resolution_due_at&quot;: &quot;2026-10-16T04:47:18+00:00&quot;,
                 &quot;is_overdue&quot;: false
             },
-            &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
-            &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+            &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;,
+            &quot;updated_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
         }
     ],
     &quot;links&quot;: {
@@ -11956,6 +12031,162 @@ Must be one of:
                                     </details>
         </div>
                                                                     <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Customer sentiment (staff only).</p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>negative</code></li> <li><code>neutral</code></li> <li><code>positive</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sources</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Who set category, priority and sentiment: requester, ai or staff (staff only).</p>
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>classification</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Latest automatic classification (staff, single-ticket responses).</p>
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>classified</code></li> <li><code>failed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>model</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Classifier category (closed set; mapped to the tenant category by slug).</p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>entrega</code></li> <li><code>pagamento</code></li> <li><code>troca_devolucao</code></li> <li><code>conta_acesso</code></li> <li><code>produto</code></li> <li><code>outro</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>low</code></li> <li><code>normal</code></li> <li><code>high</code></li> <li><code>urgent</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>negative</code></li> <li><code>neutral</code></li> <li><code>positive</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>error_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>resolved_at</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -12065,13 +12296,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzsgzx8jv10xvy08p4wrz&quot;,
+        &quot;id&quot;: &quot;01m512ty5a3xkptg9hsvexvsxw&quot;,
         &quot;subject&quot;: &quot;Eius et animi quos velit et.&quot;,
         &quot;description&quot;: &quot;Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;urgent&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m50gzsgy6wvrstp1gg7sajtf&quot;,
+            &quot;id&quot;: &quot;01m512ty59hhze9qzf6x4w9qj0&quot;,
             &quot;name&quot;: &quot;Quis Adipisci&quot;,
             &quot;slug&quot;: &quot;quis-adipisci&quot;,
             &quot;description&quot;: &quot;Fugit deleniti distinctio eum doloremque id aut libero.&quot;,
@@ -12099,27 +12330,33 @@ fetch(url, {
             }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m50gzsgxn83wsrt0zjkwshqq&quot;,
+            &quot;id&quot;: &quot;01m512ty56xg95ytcyn5en9fsm&quot;,
             &quot;name&quot;: &quot;Mina Bauch&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;ztromp@example.org&quot;
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m50gzsgy6wvrstp1gg7sajte&quot;,
+            &quot;id&quot;: &quot;01m512ty584za5txgpyd38tezr&quot;,
             &quot;name&quot;: &quot;Domingo Leuschke&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;jleffler@example.com&quot;
+        },
+        &quot;sentiment&quot;: null,
+        &quot;sources&quot;: {
+            &quot;category&quot;: null,
+            &quot;priority&quot;: null,
+            &quot;sentiment&quot;: null
         },
         &quot;resolved_at&quot;: null,
         &quot;closed_at&quot;: null,
         &quot;sla&quot;: {
             &quot;first_response_at&quot;: null,
-            &quot;first_response_due_at&quot;: &quot;2026-10-15T19:50:23+00:00&quot;,
-            &quot;resolution_due_at&quot;: &quot;2026-10-15T23:35:23+00:00&quot;,
+            &quot;first_response_due_at&quot;: &quot;2026-10-16T01:02:18+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-16T04:47:18+00:00&quot;,
             &quot;is_overdue&quot;: false
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
     }
 }</code>
  </pre>
@@ -12391,6 +12628,162 @@ Must be one of:
                                     </details>
         </div>
                                                                     <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Customer sentiment (staff only).</p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>negative</code></li> <li><code>neutral</code></li> <li><code>positive</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sources</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Who set category, priority and sentiment: requester, ai or staff (staff only).</p>
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>classification</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Latest automatic classification (staff, single-ticket responses).</p>
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>classified</code></li> <li><code>failed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>model</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Classifier category (closed set; mapped to the tenant category by slug).</p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>entrega</code></li> <li><code>pagamento</code></li> <li><code>troca_devolucao</code></li> <li><code>conta_acesso</code></li> <li><code>produto</code></li> <li><code>outro</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>low</code></li> <li><code>normal</code></li> <li><code>high</code></li> <li><code>urgent</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>negative</code></li> <li><code>neutral</code></li> <li><code>positive</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>error_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>resolved_at</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -12488,13 +12881,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzsh7kv9x8hj3cdqb027g&quot;,
+        &quot;id&quot;: &quot;01m512ty61f2ewsbshmycxs5ze&quot;,
         &quot;subject&quot;: &quot;Et animi quos velit et fugiat.&quot;,
         &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;normal&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m50gzsh6zgxqs5cade86s7s8&quot;,
+            &quot;id&quot;: &quot;01m512ty60mmt87r6an6crkjtk&quot;,
             &quot;name&quot;: &quot;Molestias Fugit&quot;,
             &quot;slug&quot;: &quot;molestias-fugit&quot;,
             &quot;description&quot;: &quot;Distinctio eum doloremque id aut libero aliquam veniam corporis.&quot;,
@@ -12522,27 +12915,56 @@ fetch(url, {
             }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m50gzsh5sqch2mx2qkv0292x&quot;,
+            &quot;id&quot;: &quot;01m512ty5y8a578jseprgnzfgd&quot;,
             &quot;name&quot;: &quot;Mr. Carey Smitham&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;sleffler@example.org&quot;
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m50gzsh6zgxqs5cade86s7s7&quot;,
+            &quot;id&quot;: &quot;01m512ty5zhcxgmg0jbrwv32dn&quot;,
             &quot;name&quot;: &quot;Matilda Feeney&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;pauline09@example.com&quot;
+        },
+        &quot;sentiment&quot;: null,
+        &quot;sources&quot;: {
+            &quot;category&quot;: null,
+            &quot;priority&quot;: null,
+            &quot;sentiment&quot;: null
+        },
+        &quot;classification&quot;: {
+            &quot;status&quot;: &quot;classified&quot;,
+            &quot;model&quot;: &quot;bertimbau-lora-v1&quot;,
+            &quot;category&quot;: {
+                &quot;label&quot;: &quot;entrega&quot;,
+                &quot;confidence&quot;: 0.93
+            },
+            &quot;priority&quot;: {
+                &quot;label&quot;: &quot;high&quot;,
+                &quot;confidence&quot;: 0.81
+            },
+            &quot;sentiment&quot;: {
+                &quot;label&quot;: &quot;negative&quot;,
+                &quot;confidence&quot;: 0.88
+            },
+            &quot;applied&quot;: [
+                &quot;category&quot;,
+                &quot;priority&quot;,
+                &quot;sentiment&quot;
+            ],
+            &quot;error_code&quot;: null,
+            &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
         },
         &quot;resolved_at&quot;: null,
         &quot;closed_at&quot;: null,
         &quot;sla&quot;: {
             &quot;first_response_at&quot;: null,
-            &quot;first_response_due_at&quot;: &quot;2026-10-15T23:35:23+00:00&quot;,
-            &quot;resolution_due_at&quot;: &quot;2026-10-16T19:35:23+00:00&quot;,
+            &quot;first_response_due_at&quot;: &quot;2026-10-16T04:47:18+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-17T00:47:18+00:00&quot;,
             &quot;is_overdue&quot;: false
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
     }
 }</code>
  </pre>
@@ -12776,6 +13198,162 @@ Must be one of:
                                     </details>
         </div>
                                                                     <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Customer sentiment (staff only).</p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>negative</code></li> <li><code>neutral</code></li> <li><code>positive</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sources</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Who set category, priority and sentiment: requester, ai or staff (staff only).</p>
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>classification</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Latest automatic classification (staff, single-ticket responses).</p>
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>classified</code></li> <li><code>failed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>model</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Classifier category (closed set; mapped to the tenant category by slug).</p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>entrega</code></li> <li><code>pagamento</code></li> <li><code>troca_devolucao</code></li> <li><code>conta_acesso</code></li> <li><code>produto</code></li> <li><code>outro</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>low</code></li> <li><code>normal</code></li> <li><code>high</code></li> <li><code>urgent</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>negative</code></li> <li><code>neutral</code></li> <li><code>positive</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>error_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>resolved_at</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -12881,13 +13459,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzshfsa0e76fswgyeq71w&quot;,
+        &quot;id&quot;: &quot;01m512ty6zraknmy66meme144v&quot;,
         &quot;subject&quot;: &quot;Et animi quos velit et fugiat.&quot;,
         &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;normal&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m50gzshee0kjkf3w14eeqje0&quot;,
+            &quot;id&quot;: &quot;01m512ty6yjczvjr3c0e73j7rg&quot;,
             &quot;name&quot;: &quot;Eum Doloremque&quot;,
             &quot;slug&quot;: &quot;eum-doloremque&quot;,
             &quot;description&quot;: &quot;Aut libero aliquam veniam corporis.&quot;,
@@ -12915,27 +13493,33 @@ fetch(url, {
             }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m50gzshda9q2zmnzn4c4ngae&quot;,
+            &quot;id&quot;: &quot;01m512ty6vc9x3ya94mewj1dfk&quot;,
             &quot;name&quot;: &quot;Mr. Carey Smitham&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;tleuschke@example.net&quot;
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m50gzshee0kjkf3w14eeqjdz&quot;,
+            &quot;id&quot;: &quot;01m512ty6xamtmwfqzvn52cgcn&quot;,
             &quot;name&quot;: &quot;Janick Schultz DDS&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;kconsidine@example.net&quot;
+        },
+        &quot;sentiment&quot;: null,
+        &quot;sources&quot;: {
+            &quot;category&quot;: null,
+            &quot;priority&quot;: null,
+            &quot;sentiment&quot;: null
         },
         &quot;resolved_at&quot;: null,
         &quot;closed_at&quot;: null,
         &quot;sla&quot;: {
             &quot;first_response_at&quot;: null,
-            &quot;first_response_due_at&quot;: &quot;2026-10-15T23:35:23+00:00&quot;,
-            &quot;resolution_due_at&quot;: &quot;2026-10-16T19:35:23+00:00&quot;,
+            &quot;first_response_due_at&quot;: &quot;2026-10-16T04:47:18+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-17T00:47:18+00:00&quot;,
             &quot;is_overdue&quot;: false
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
     }
 }</code>
  </pre>
@@ -13184,6 +13768,162 @@ Must be one of:
                                     </details>
         </div>
                                                                     <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Customer sentiment (staff only).</p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>negative</code></li> <li><code>neutral</code></li> <li><code>positive</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sources</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Who set category, priority and sentiment: requester, ai or staff (staff only).</p>
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>classification</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Latest automatic classification (staff, single-ticket responses).</p>
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>classified</code></li> <li><code>failed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>model</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Classifier category (closed set; mapped to the tenant category by slug).</p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>entrega</code></li> <li><code>pagamento</code></li> <li><code>troca_devolucao</code></li> <li><code>conta_acesso</code></li> <li><code>produto</code></li> <li><code>outro</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>low</code></li> <li><code>normal</code></li> <li><code>high</code></li> <li><code>urgent</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>negative</code></li> <li><code>neutral</code></li> <li><code>positive</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>error_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>resolved_at</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -13282,13 +14022,13 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;01m50gzshqg9fh617fzd3skfaz&quot;,
+        &quot;id&quot;: &quot;01m512ty7p8g5kfzn0am71ye4q&quot;,
         &quot;subject&quot;: &quot;Et animi quos velit et fugiat.&quot;,
         &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.&quot;,
         &quot;status&quot;: &quot;open&quot;,
         &quot;priority&quot;: &quot;normal&quot;,
         &quot;category&quot;: {
-            &quot;id&quot;: &quot;01m50gzshprewms4sxty6snymy&quot;,
+            &quot;id&quot;: &quot;01m512ty7mfdq654t39mm62cd7&quot;,
             &quot;name&quot;: &quot;Aliquam Veniam&quot;,
             &quot;slug&quot;: &quot;aliquam-veniam&quot;,
             &quot;description&quot;: &quot;Dolorem mollitia deleniti nemo.&quot;,
@@ -13316,27 +14056,33 @@ fetch(url, {
             }
         },
         &quot;requester&quot;: {
-            &quot;id&quot;: &quot;01m50gzshnpkgtwjv01xd62r38&quot;,
+            &quot;id&quot;: &quot;01m512ty7jebwaz2kf80b2sa2w&quot;,
             &quot;name&quot;: &quot;Mr. Carey Smitham&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;vraynor@example.com&quot;
         },
         &quot;assignee&quot;: {
-            &quot;id&quot;: &quot;01m50gzshprewms4sxty6snymx&quot;,
+            &quot;id&quot;: &quot;01m512ty7knk5vfpvp0v1w5b78&quot;,
             &quot;name&quot;: &quot;Prof. Annabelle Kshlerin&quot;,
             &quot;role&quot;: &quot;customer&quot;,
-            &quot;email&quot;: null
+            &quot;email&quot;: &quot;micaela88@example.org&quot;
+        },
+        &quot;sentiment&quot;: null,
+        &quot;sources&quot;: {
+            &quot;category&quot;: null,
+            &quot;priority&quot;: null,
+            &quot;sentiment&quot;: null
         },
         &quot;resolved_at&quot;: null,
         &quot;closed_at&quot;: null,
         &quot;sla&quot;: {
             &quot;first_response_at&quot;: null,
-            &quot;first_response_due_at&quot;: &quot;2026-10-15T23:35:23+00:00&quot;,
-            &quot;resolution_due_at&quot;: &quot;2026-10-16T19:35:23+00:00&quot;,
+            &quot;first_response_due_at&quot;: &quot;2026-10-16T04:47:18+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-17T00:47:18+00:00&quot;,
             &quot;is_overdue&quot;: false
         },
-        &quot;created_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;,
-        &quot;updated_at&quot;: &quot;2026-10-15T19:35:23+00:00&quot;
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
     }
 }</code>
  </pre>
@@ -13579,6 +14325,785 @@ Must be one of:
 
 Must be one of:
 <ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Customer sentiment (staff only).</p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>negative</code></li> <li><code>neutral</code></li> <li><code>positive</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sources</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Who set category, priority and sentiment: requester, ai or staff (staff only).</p>
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>classification</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Latest automatic classification (staff, single-ticket responses).</p>
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>classified</code></li> <li><code>failed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>model</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Classifier category (closed set; mapped to the tenant category by slug).</p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>entrega</code></li> <li><code>pagamento</code></li> <li><code>troca_devolucao</code></li> <li><code>conta_acesso</code></li> <li><code>produto</code></li> <li><code>outro</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>low</code></li> <li><code>normal</code></li> <li><code>high</code></li> <li><code>urgent</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>negative</code></li> <li><code>neutral</code></li> <li><code>positive</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>error_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolved_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>closed_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sla</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>first_response_due_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>resolution_due_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                        <h2 id="tickets-PATCHapi-v1-tickets--ticket_id--classification">Set or correct the classification</h2>
+
+<p>
+</p>
+
+<p>Staff only. Category, priority and sentiment set here are final: the
+classifier never changes them again. Changing a value the AI had set
+is recorded as a correction.</p>
+
+<span id="example-requests-PATCHapi-v1-tickets--ticket_id--classification">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PATCH \
+    "http://localhost:8090/api/v1/tickets/architecto/classification" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"priority\": \"high\",
+    \"sentiment\": \"negative\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8090/api/v1/tickets/architecto/classification"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "priority": "high",
+    "sentiment": "negative"
+};
+
+fetch(url, {
+    method: "PATCH",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PATCHapi-v1-tickets--ticket_id--classification">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;01m512ty8cyd03gx5hy61cwk4z&quot;,
+        &quot;subject&quot;: &quot;Et animi quos velit et fugiat.&quot;,
+        &quot;description&quot;: &quot;Accusantium harum mollitia modi deserunt aut ab. Perspiciatis quo omnis nostrum aut adipisci quidem nostrum qui. Incidunt iure odit et et modi ipsum.&quot;,
+        &quot;status&quot;: &quot;open&quot;,
+        &quot;priority&quot;: &quot;normal&quot;,
+        &quot;category&quot;: {
+            &quot;id&quot;: &quot;01m512ty8btt3xf6xx5ty8gja7&quot;,
+            &quot;name&quot;: &quot;Neque Blanditiis&quot;,
+            &quot;slug&quot;: &quot;neque-blanditiis&quot;,
+            &quot;description&quot;: &quot;Veritatis excepturi doloribus delectus fugit.&quot;,
+            &quot;sla_targets&quot;: {
+                &quot;low&quot;: {
+                    &quot;first_response_minutes&quot;: 480,
+                    &quot;resolution_minutes&quot;: 4320,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;normal&quot;: {
+                    &quot;first_response_minutes&quot;: 240,
+                    &quot;resolution_minutes&quot;: 1440,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;high&quot;: {
+                    &quot;first_response_minutes&quot;: 60,
+                    &quot;resolution_minutes&quot;: 480,
+                    &quot;is_custom&quot;: false
+                },
+                &quot;urgent&quot;: {
+                    &quot;first_response_minutes&quot;: 15,
+                    &quot;resolution_minutes&quot;: 240,
+                    &quot;is_custom&quot;: false
+                }
+            }
+        },
+        &quot;requester&quot;: {
+            &quot;id&quot;: &quot;01m512ty8806xsytxc7ja6eyj8&quot;,
+            &quot;name&quot;: &quot;Mr. Carey Smitham&quot;,
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: &quot;wbatz@example.net&quot;
+        },
+        &quot;assignee&quot;: {
+            &quot;id&quot;: &quot;01m512ty8ahw64178f3d686wh5&quot;,
+            &quot;name&quot;: &quot;Cynthia Fahey&quot;,
+            &quot;role&quot;: &quot;customer&quot;,
+            &quot;email&quot;: &quot;balistreri.josiane@example.net&quot;
+        },
+        &quot;sentiment&quot;: null,
+        &quot;sources&quot;: {
+            &quot;category&quot;: null,
+            &quot;priority&quot;: null,
+            &quot;sentiment&quot;: null
+        },
+        &quot;classification&quot;: {
+            &quot;status&quot;: &quot;classified&quot;,
+            &quot;model&quot;: &quot;bertimbau-lora-v1&quot;,
+            &quot;category&quot;: {
+                &quot;label&quot;: &quot;entrega&quot;,
+                &quot;confidence&quot;: 0.93
+            },
+            &quot;priority&quot;: {
+                &quot;label&quot;: &quot;high&quot;,
+                &quot;confidence&quot;: 0.81
+            },
+            &quot;sentiment&quot;: {
+                &quot;label&quot;: &quot;negative&quot;,
+                &quot;confidence&quot;: 0.88
+            },
+            &quot;applied&quot;: [
+                &quot;category&quot;,
+                &quot;priority&quot;,
+                &quot;sentiment&quot;
+            ],
+            &quot;error_code&quot;: null,
+            &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
+        },
+        &quot;resolved_at&quot;: null,
+        &quot;closed_at&quot;: null,
+        &quot;sla&quot;: {
+            &quot;first_response_at&quot;: null,
+            &quot;first_response_due_at&quot;: &quot;2026-10-16T04:47:18+00:00&quot;,
+            &quot;resolution_due_at&quot;: &quot;2026-10-17T00:47:18+00:00&quot;,
+            &quot;is_overdue&quot;: false
+        },
+        &quot;created_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;,
+        &quot;updated_at&quot;: &quot;2026-10-16T00:47:18+00:00&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PATCHapi-v1-tickets--ticket_id--classification" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PATCHapi-v1-tickets--ticket_id--classification"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PATCHapi-v1-tickets--ticket_id--classification"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PATCHapi-v1-tickets--ticket_id--classification" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PATCHapi-v1-tickets--ticket_id--classification">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PATCHapi-v1-tickets--ticket_id--classification" data-method="PATCH"
+      data-path="api/v1/tickets/{ticket_id}/classification"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PATCHapi-v1-tickets--ticket_id--classification', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PATCHapi-v1-tickets--ticket_id--classification"
+                    onclick="tryItOut('PATCHapi-v1-tickets--ticket_id--classification');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PATCHapi-v1-tickets--ticket_id--classification"
+                    onclick="cancelTryOut('PATCHapi-v1-tickets--ticket_id--classification');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PATCHapi-v1-tickets--ticket_id--classification"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/v1/tickets/{ticket_id}/classification</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PATCHapi-v1-tickets--ticket_id--classification"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PATCHapi-v1-tickets--ticket_id--classification"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>ticket_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="ticket_id"                data-endpoint="PATCHapi-v1-tickets--ticket_id--classification"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The ID of the ticket. Example: <code>architecto</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>category_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="category_id"                data-endpoint="PATCHapi-v1-tickets--ticket_id--classification"
+               value=""
+               data-component="body">
+    <br>
+<p>Category ULID (null to clear). Must match an existing stored value.</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="priority"                data-endpoint="PATCHapi-v1-tickets--ticket_id--classification"
+               value="high"
+               data-component="body">
+    <br>
+<p>low, normal, high or urgent. Example: <code>high</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>low</code></li> <li><code>normal</code></li> <li><code>high</code></li> <li><code>urgent</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sentiment"                data-endpoint="PATCHapi-v1-tickets--ticket_id--classification"
+               value="negative"
+               data-component="body">
+    <br>
+<p>negative, neutral or positive (null to clear). Example: <code>negative</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>negative</code></li> <li><code>neutral</code></li> <li><code>positive</code></li></ul>
+        </div>
+        </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>open</code></li> <li><code>pending</code></li> <li><code>resolved</code></li> <li><code>closed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>low</code></li> <li><code>normal</code></li> <li><code>high</code></li> <li><code>urgent</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>tickets_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>assignee</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>requester</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Only shown to staff.</p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>last_message</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Latest public message, as an excerpt (ticket listing only).</p>
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>author_role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>customer</code></li> <li><code>agent</code></li> <li><code>admin</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Customer sentiment (staff only).</p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>negative</code></li> <li><code>neutral</code></li> <li><code>positive</code></li></ul>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sources</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Who set category, priority and sentiment: requester, ai or staff (staff only).</p>
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>requester</code></li> <li><code>ai</code></li> <li><code>staff</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>classification</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Latest automatic classification (staff, single-ticket responses).</p>
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>classified</code></li> <li><code>failed</code></li></ul>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>model</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+                    </div>
+                                                                <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Classifier category (closed set; mapped to the tenant category by slug).</p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>entrega</code></li> <li><code>pagamento</code></li> <li><code>troca_devolucao</code></li> <li><code>conta_acesso</code></li> <li><code>produto</code></li> <li><code>outro</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>priority</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>low</code></li> <li><code>normal</code></li> <li><code>high</code></li> <li><code>urgent</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style=" margin-left: 28px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sentiment</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 42px; clear: unset;">
+                        <b style="line-height: 2;"><code>label</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+Must be one of:
+<ul style="list-style-type: square;"><li><code>negative</code></li> <li><code>neutral</code></li> <li><code>positive</code></li></ul>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>error_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
                     </div>
                                     </details>
         </div>

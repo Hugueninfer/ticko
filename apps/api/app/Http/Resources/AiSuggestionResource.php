@@ -28,6 +28,7 @@ final class AiSuggestionResource extends JsonResource
     #[ResponseField('latency_ms', 'integer', nullable: true)]
     #[ResponseField('discard_reason', 'string', enum: DiscardReason::class, nullable: true)]
     #[ResponseField('reviewed_by', 'object', nullable: true)]
+    #[ResponseField('reviewed_by.email', 'string', 'Only shown to staff.', nullable: true)]
     #[ResponseField('reviewed_at', 'string', nullable: true)]
     #[ResponseField('message_id', 'string', nullable: true)]
     #[ResponseField('gap_reported_at', 'string', nullable: true)]

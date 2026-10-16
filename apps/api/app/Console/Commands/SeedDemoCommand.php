@@ -6,9 +6,11 @@ namespace App\Console\Commands;
 
 use App\Actions\Knowledge\PublishKnowledgeArticle;
 use App\Actions\Knowledge\SaveKnowledgeArticle;
+use App\Enums\FieldSource;
 use App\Enums\Role;
 use App\Enums\TicketPriority;
 use App\Enums\TicketStatus;
+use App\Jobs\ClassifyTicket;
 use App\Models\Category;
 use App\Models\KbArticle;
 use App\Models\Tenant;
@@ -34,7 +36,9 @@ final class SeedDemoCommand extends Command
     /**
      * Subject, description, category, priority, opened (hours ago), assigned to the demo agent, first staff reply.
      *
-     * @var list<array{string, string, string, TicketPriority, int, bool, string|null}>
+     * A null category leaves category and priority for the classifier (when it runs).
+     *
+     * @var list<array{string, string, string|null, TicketPriority, int, bool, string|null}>
      */
     private const array TICKETS = [
         ['Cobrança em duplicidade no cartão de crédito', 'Fui cobrado duas vezes pelo pedido #88190.', 'Pagamento', TicketPriority::Urgent, 2, true, null],
@@ -45,6 +49,8 @@ final class SeedDemoCommand extends Command
         ['Quero trocar o tênis por um número maior', 'O 41 ficou apertado, queria o 42.', 'Troca e devolução', TicketPriority::Normal, 20, true, 'Claro! Enviamos o código de postagem por e-mail.'],
         ['Cupom PRIMEIRA10 não é aplicado no carrinho', 'Aparece "cupom inválido".', 'Pagamento', TicketPriority::Low, 4, false, null],
         ['Caixa chegou amassada, mas o produto está perfeito', 'Só para avisar.', 'Entrega', TicketPriority::Low, 50, false, null],
+        ['Paguei o boleto e o pedido continua aguardando pagamento', 'Paguei anteontem e preciso do produto para sexta. Estou bem chateada.', null, TicketPriority::Normal, 1, false, null],
+        ['Adorei o atendimento, só queria trocar a cor', 'A blusa veio perfeita, mas prefiro a azul. Obrigada pela ajuda!', null, TicketPriority::Normal, 2, false, null],
     ];
 
     protected $signature = 'ticko:demo';
@@ -100,8 +106,11 @@ final class SeedDemoCommand extends Command
                         'subject' => $subject,
                         'description' => $description,
                         'priority' => $priority,
-                        'category_id' => $categories[$category]->id,
+                        'category_id' => $category === null ? null : $categories[$category]->id,
                     ]);
+                    // What the customer picked; the classifier never overwrites it.
+                    $ticket->category_source = $category === null ? null : FieldSource::Requester;
+                    $ticket->priority_source = $category === null ? null : FieldSource::Requester;
                     $ticket->requester_id = $users['customer']->id;
                     $ticket->assignee_id = $assigned ? $users['agent']->id : null;
                     $ticket->created_at = $opened;
@@ -125,6 +134,15 @@ final class SeedDemoCommand extends Command
 
         $tenant = Tenant::where('slug', 'acme')->firstOrFail();
         $tenants->run($tenant, fn (): int => $this->seedKnowledgeBase());
+
+        // With the classifier running (make up-ml), the demo tickets get classified by the queue.
+        if (config()->string('ticko.classifier.url') !== '') {
+            $tenants->run($tenant, function () use ($tenant): void {
+                foreach (Ticket::query()->get(['id']) as $ticket) {
+                    ClassifyTicket::dispatch($tenant->id, $ticket->id);
+                }
+            });
+        }
 
         $this->info('Demo tenant created. Send "X-Tenant: acme" when logging in.');
         $this->table(['Role', 'E-mail', 'Password'], $rows);

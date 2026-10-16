@@ -56,6 +56,7 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
         Route::get('tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
         Route::patch('tickets/{ticket}/status', [TicketController::class, 'updateStatus'])->name('tickets.status');
         Route::patch('tickets/{ticket}/assignee', [TicketController::class, 'assign'])->name('tickets.assign');
+        Route::patch('tickets/{ticket}/classification', [TicketController::class, 'updateClassification'])->name('tickets.classification');
 
         Route::get('tickets/{ticket}/messages', [TicketMessageController::class, 'index'])->name('tickets.messages.index');
         Route::post('tickets/{ticket}/messages', [TicketMessageController::class, 'store'])->name('tickets.messages.store');
