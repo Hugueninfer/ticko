@@ -7,7 +7,7 @@ GRAFANA_PORT = $(or $(shell grep -s '^GRAFANA_PORT=' .env | cut -d= -f2),3001)
 LAN_IP = $(or $(shell hostname -I 2>/dev/null | awk '{print $$1}'),$(shell ipconfig getifaddr en0 2>/dev/null),127.0.0.1)
 
 PHONY_CLASSIFIER := classifier-image classifier-model classifier-data classifier-train classifier-eval classifier-test classifier-lock
-.PHONY: $(PHONY_CLASSIFIER) help env up up-ml up-obs obs-dashboards e2e-obs up-lan down logs demo kb-reindex test coverage lint fix stan docs audit gitleaks ci web-install web-dev web-test e2e mobile-env mobile-dev mobile-test
+.PHONY: $(PHONY_CLASSIFIER) help env up up-ml up-obs demo-reset obs-dashboards e2e-obs up-lan down logs demo kb-reindex test coverage lint fix stan docs audit gitleaks ci web-install web-dev web-test e2e mobile-env mobile-dev mobile-test
 
 help: ## Show available targets
 	@grep -E '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-17s\033[0m %s\n", $$1, $$2}'
@@ -45,8 +45,11 @@ down: ## Stop the stack
 logs: ## Follow logs
 	$(COMPOSE) logs -f
 
-demo: ## Seed a demo tenant and print its credentials
+demo: ## Seed (or complete) the demo tenant "Loja Aurora" and print the credentials of new users
 	$(COMPOSE) exec api php artisan ticko:demo
+
+demo-reset: ## Delete the demo tenant and seed it again from scratch (prints new passwords)
+	$(COMPOSE) exec api php artisan ticko:demo --fresh
 
 kb-reindex: ## Index every published knowledge-base article again (after changing TICKO_AI_EMBEDDING_PROVIDER)
 	$(COMPOSE) exec api php artisan ticko:kb:reindex

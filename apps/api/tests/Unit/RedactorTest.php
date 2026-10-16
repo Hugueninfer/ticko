@@ -27,13 +27,13 @@ it('redacts values by key, recursively, and keeps numbers and flags', function (
         'password' => 'x', 'current_password' => 'y', 'X-XSRF-TOKEN' => 'z', 'cookie' => 'c', 'x-goog-api-key' => 'k',
         'description' => 'texto do cliente', 'email' => 'a@b.co', 'name' => 'Mariana',
         'nested' => ['body' => 'oi', 'count' => 2, 'ok' => true],
-        'route' => '/api/v1/tickets/{id}',
+        'route' => '/api/v1/tickets/{id}', 'input_tokens' => 1200, 'access_token' => 'abc',
         'user' => new stdClass,
     ]))->toBe([
         'password' => '[REDACTED]', 'current_password' => '[REDACTED]', 'X-XSRF-TOKEN' => '[REDACTED]', 'cookie' => '[REDACTED]', 'x-goog-api-key' => '[REDACTED]',
         'description' => '[REDACTED]', 'email' => '[REDACTED]', 'name' => '[REDACTED]',
         'nested' => ['body' => '[REDACTED]', 'count' => 2, 'ok' => true],
-        'route' => '/api/v1/tickets/{id}',
+        'route' => '/api/v1/tickets/{id}', 'input_tokens' => 1200, 'access_token' => '[REDACTED]',
         'user' => 'stdClass',
     ]);
 });

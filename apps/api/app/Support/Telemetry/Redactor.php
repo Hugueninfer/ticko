@@ -26,7 +26,7 @@ final class Redactor
     public const string REDACTED = '[REDACTED]';
 
     /** Key fragments of secrets (matched anywhere in the lower-cased key). */
-    private const array SECRET_KEY_PARTS = ['pass', 'secret', 'token', 'auth', 'cookie', 'apikey', 'api_key', 'api-key', 'credential', 'signature', 'session', 'csrf', 'xsrf'];
+    private const array SECRET_KEY_PARTS = ['pass', 'secret', 'auth', 'cookie', 'apikey', 'api_key', 'api-key', 'credential', 'signature', 'session', 'csrf', 'xsrf'];
 
     /** Keys whose value is customer content or personal data. */
     private const array CONTENT_KEYS = [
@@ -102,6 +102,11 @@ final class Redactor
         $key = strtolower($key);
 
         if (in_array($key, self::CONTENT_KEYS, true)) {
+            return true;
+        }
+
+        // "token", "access_token", "X-XSRF-TOKEN"; not counters such as "input_tokens".
+        if (str_ends_with($key, 'token')) {
             return true;
         }
 
