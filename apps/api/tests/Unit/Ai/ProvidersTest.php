@@ -83,7 +83,9 @@ describe('gemini', function (): void {
 
         app(TextGenerator::class)->generate(prompt());
 
-        Http::assertSent(fn (Request $request): bool => ($request['generationConfig']['thinkingConfig'] ?? null) === $thinking);
+        Http::assertSent(fn (Request $request): bool => ($request['generationConfig']['thinkingConfig'] ?? null) === $thinking
+            // Room for the reasoning on top of the answer's own limit.
+            && $request['generationConfig']['maxOutputTokens'] === ($thinking === null ? 900 : 900 + 1024));
         expect(app(AiUsage::class)->outputTokens())->toBe(120);
     })->with([
         'Gemini 3' => ['gemini-3.7-flash', ['thinkingLevel' => 'low']],

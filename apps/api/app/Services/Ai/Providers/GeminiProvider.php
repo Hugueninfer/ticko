@@ -20,6 +20,8 @@ final readonly class GeminiProvider implements Embedder, TextGenerator
 {
     private const int EMBED_BATCH = 100;
 
+    private const int REASONING_ALLOWANCE = 1024;
+
     public function __construct(
         private HttpJson $http,
         private string $url,
@@ -39,6 +41,9 @@ final readonly class GeminiProvider implements Embedder, TextGenerator
 
         if ($thinking !== null) {
             $config['thinkingConfig'] = $thinking;
+            // Even at the lowest level some models reason for hundreds of tokens, which
+            // count against the output limit: leave room for it (only used tokens are billed).
+            $config['maxOutputTokens'] = $prompt->maxOutputTokens + self::REASONING_ALLOWANCE;
         }
 
         if ($prompt->schema !== null) {
