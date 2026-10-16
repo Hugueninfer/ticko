@@ -42,12 +42,12 @@ final class Metrics
     public function job(string $job, string $outcome, float $seconds): void
     {
         $this->histogram('ticko.queue.job.duration', 's', 'Queued job duration by outcome (processed, failed, released)', self::SLOW_SECONDS)
-            ->record($seconds, ['job' => $job, 'outcome' => $outcome]);
+            ->record($seconds, ['job_name' => $job, 'outcome' => $outcome]);
     }
 
     public function loginFailure(): void
     {
-        $this->counter('ticko.auth.login.failures', 'Failed sign-in attempts')->add(1, $this->tenant());
+        $this->counter('ticko.auth.login.failures', 'Failed sign-in attempts', '{attempt}')->add(1, $this->tenant());
     }
 
     public function llmCall(string $provider, string $model, string $outcome, float $seconds): void
@@ -62,19 +62,19 @@ final class Metrics
         $tokens = $this->counter('ticko.ai.tokens', 'Model tokens by type (input, output)', '{token}');
         $tokens->add($inputTokens, $attributes + ['type' => 'input']);
         $tokens->add($outputTokens, $attributes + ['type' => 'output']);
-        $this->counter('ticko.ai.cost', 'Estimated model cost', 'USD')->add($costUsd, $attributes);
+        $this->counter('ticko.ai.cost.usd', 'Estimated model cost in US dollars', '{USD}')->add($costUsd, $attributes);
     }
 
     /** One finished suggestion: ready, insufficient ("I don't know") or failed. */
     public function suggestion(string $outcome): void
     {
-        $this->counter('ticko.ai.suggestions', 'Reply suggestions by outcome')->add(1, ['outcome' => $outcome] + $this->tenant());
+        $this->counter('ticko.ai.suggestions', 'Reply suggestions by outcome', '{suggestion}')->add(1, ['outcome' => $outcome] + $this->tenant());
     }
 
     /** An agent's review of a draft: approved (as is or edited) or discarded (with the reason). */
     public function suggestionReview(string $result, string $reason = 'none'): void
     {
-        $this->counter('ticko.ai.suggestion.reviews', 'Agent reviews of AI drafts')->add(1, ['result' => $result, 'reason' => $reason] + $this->tenant());
+        $this->counter('ticko.ai.suggestion.reviews', 'Agent reviews of AI drafts', '{review}')->add(1, ['result' => $result, 'reason' => $reason] + $this->tenant());
     }
 
     public function classifierCall(string $outcome, float $seconds): void
@@ -91,16 +91,17 @@ final class Metrics
 
     public function classificationCorrection(string $field, string $setBy): void
     {
-        $this->counter('ticko.classifier.corrections', 'Agent changes to classified fields (set_by: who had set the value)')
+        $this->counter('ticko.classifier.corrections', 'Agent changes to classified fields (set_by: who had set the value)', '{correction}')
             ->add(1, ['field' => $field, 'set_by' => $setBy] + $this->tenant());
     }
 
     /**
      * @param  array<non-empty-string, string>  $attributes
+     * @param  string  $unit  e.g. {ticket}, {job}, s
      */
-    public function gauge(string $name, string $description, int|float $value, array $attributes): void
+    public function gauge(string $name, string $description, int|float $value, array $attributes, string $unit = '1'): void
     {
-        $instrument = $this->instruments[$name] ??= $this->telemetry->meter()->createGauge($name, '1', $description);
+        $instrument = $this->instruments[$name] ??= $this->telemetry->meter()->createGauge($name, $unit, $description);
 
         if ($instrument instanceof GaugeInterface) {
             $instrument->record($value, $attributes);
@@ -117,7 +118,7 @@ final class Metrics
         return $slug === null ? [] : ['tenant' => $slug];
     }
 
-    private function counter(string $name, string $description, string $unit = '1'): CounterInterface
+    private function counter(string $name, string $description, string $unit): CounterInterface
     {
         $instrument = $this->instruments[$name] ??= $this->telemetry->meter()->createCounter($name, $unit, $description);
 

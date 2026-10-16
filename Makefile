@@ -2,11 +2,12 @@
 COMPOSE := docker compose
 DEV := $(COMPOSE) --profile tools run --rm dev
 WEB_PORT = $(or $(shell grep -s '^WEB_PORT=' .env | cut -d= -f2),8080)
+GRAFANA_PORT = $(or $(shell grep -s '^GRAFANA_PORT=' .env | cut -d= -f2),3001)
 # This computer's address on the local network (Linux, then macOS).
 LAN_IP = $(or $(shell hostname -I 2>/dev/null | awk '{print $$1}'),$(shell ipconfig getifaddr en0 2>/dev/null),127.0.0.1)
 
 PHONY_CLASSIFIER := classifier-image classifier-model classifier-data classifier-train classifier-eval classifier-test classifier-lock
-.PHONY: $(PHONY_CLASSIFIER) help env up up-ml up-lan down logs demo kb-reindex test coverage lint fix stan docs audit gitleaks ci web-install web-dev web-test e2e mobile-env mobile-dev mobile-test
+.PHONY: $(PHONY_CLASSIFIER) help env up up-ml up-obs up-lan down logs demo kb-reindex test coverage lint fix stan docs audit gitleaks ci web-install web-dev web-test e2e mobile-env mobile-dev mobile-test
 
 help: ## Show available targets
 	@grep -E '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-17s\033[0m %s\n", $$1, $$2}'
@@ -27,8 +28,12 @@ up-ml: env ## Like up, plus the ticket classifier (first build downloads ~1 GB: 
 	CLASSIFIER_URL=http://classifier:8000 $(COMPOSE) --profile ml up -d --build --wait
 	@echo "Classifier on (internal network only). New tickets get category, priority and sentiment."
 
+up-obs: env ## Like up, plus observability: Grafana on http://localhost:3001 (admin password in .env)
+	TICKO_TELEMETRY=true $(COMPOSE) --profile obs up -d --build --wait
+	@echo "Grafana: http://localhost:$(GRAFANA_PORT)  user: admin  password: GRAFANA_ADMIN_PASSWORD in .env"
+
 down: ## Stop the stack
-	$(COMPOSE) --profile ml down
+	$(COMPOSE) --profile ml --profile obs down
 
 logs: ## Follow logs
 	$(COMPOSE) logs -f

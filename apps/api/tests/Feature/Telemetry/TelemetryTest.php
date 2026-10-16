@@ -85,7 +85,7 @@ it('continues the request trace in queued jobs and only to our own classifier', 
         ->and($job->getKind())->toBe(SpanKind::KIND_CONSUMER)
         ->and($call->getParentSpanId())->toBe($job->getSpanId())
         ->and($call->getAttributes()->toArray())->toMatchArray(['server.address' => 'classifier', 'http.response.status_code' => 200])
-        ->and($this->telemetry->total('ticko.queue.job.duration', ['job' => 'ClassifyTicket', 'outcome' => 'processed']))->toBe(1)
+        ->and($this->telemetry->total('ticko.queue.job.duration', ['job_name' => 'ClassifyTicket', 'outcome' => 'processed']))->toBe(1)
         ->and($this->telemetry->total('ticko.classifier.duration', ['outcome' => 'ok']))->toBe(1)
         ->and($this->telemetry->total('ticko.classifier.confidence', ['task' => 'priority', 'label' => 'high', 'applied' => 'yes']))->toBe(1)
         ->and($this->telemetry->dump())->not->toContain('123.456.789-09')->not->toContain('Pedido atrasado');
@@ -120,7 +120,7 @@ it('never sends the trace context to third parties', function (): void {
         ])
         ->and($this->telemetry->total('ticko.ai.tokens', ['tenant' => 'aurora', 'type' => 'input', 'provider' => 'gemini']))->toBe(1200)
         // 1200 × 0.30 + 80 × 2.50 per million tokens.
-        ->and(round($this->telemetry->total('ticko.ai.cost', ['tenant' => 'aurora']), 6))->toBe(0.00056)
+        ->and(round($this->telemetry->total('ticko.ai.cost.usd', ['tenant' => 'aurora']), 6))->toBe(0.00056)
         ->and($this->telemetry->dump())->not->toContain('AIza')->not->toContain('regras')->not->toContain('tarefa');
 });
 
@@ -167,7 +167,7 @@ it('keeps metric cardinality bounded: no user, ticket or free-text attributes', 
     $this->withHeaders([...$this->spa, 'X-Tenant' => 'aurora'])->postJson('/api/v1/auth/login', ['email' => 'x@example.com', 'password' => 'nope-nope-nope'])->assertUnprocessable();
     $this->artisan('ticko:telemetry:snapshot')->assertSuccessful();
 
-    $allowed = ['http.request.method', 'http.route', 'http.response.status_code', 'tenant', 'job', 'outcome', 'provider', 'model', 'type',
+    $allowed = ['http.request.method', 'http.route', 'http.response.status_code', 'tenant', 'job_name', 'outcome', 'provider', 'model', 'type',
         'result', 'reason', 'task', 'label', 'applied', 'field', 'set_by', 'priority', 'deadline', 'queue'];
 
     foreach ($this->telemetry->points() as $point) {

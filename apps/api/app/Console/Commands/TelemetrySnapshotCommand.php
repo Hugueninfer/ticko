@@ -52,16 +52,16 @@ final class TelemetrySnapshotCommand extends Command
 
         foreach (TicketPriority::cases() as $priority) {
             $count = $open[$priority->value] ?? 0;
-            $metrics->gauge('ticko.tickets.open', 'Open and pending tickets', is_numeric($count) ? (int) $count : 0, ['tenant' => $tenant, 'priority' => $priority->value]);
+            $metrics->gauge('ticko.tickets.open', 'Open and pending tickets', is_numeric($count) ? (int) $count : 0, ['tenant' => $tenant, 'priority' => $priority->value], '{ticket}');
         }
 
         $now = now();
         $firstResponse = Ticket::query()->whereIn('status', $active)->whereNull('first_response_at')->where('first_response_due_at', '<', $now)->count();
         $resolution = Ticket::query()->whereIn('status', $active)->where('resolution_due_at', '<', $now)->count();
 
-        $metrics->gauge('ticko.tickets.overdue', 'Tickets past an SLA deadline', $firstResponse, ['tenant' => $tenant, 'deadline' => 'first_response']);
-        $metrics->gauge('ticko.tickets.overdue', 'Tickets past an SLA deadline', $resolution, ['tenant' => $tenant, 'deadline' => 'resolution']);
-        $metrics->gauge('ticko.tickets.unassigned', 'Open tickets without an assignee', Ticket::query()->where('status', TicketStatus::Open->value)->whereNull('assignee_id')->count(), ['tenant' => $tenant]);
+        $metrics->gauge('ticko.tickets.overdue', 'Tickets past an SLA deadline', $firstResponse, ['tenant' => $tenant, 'deadline' => 'first_response'], '{ticket}');
+        $metrics->gauge('ticko.tickets.overdue', 'Tickets past an SLA deadline', $resolution, ['tenant' => $tenant, 'deadline' => 'resolution'], '{ticket}');
+        $metrics->gauge('ticko.tickets.unassigned', 'Open tickets without an assignee', Ticket::query()->where('status', TicketStatus::Open->value)->whereNull('assignee_id')->count(), ['tenant' => $tenant], '{ticket}');
     }
 
     private function queues(Metrics $metrics): void
@@ -69,7 +69,7 @@ final class TelemetrySnapshotCommand extends Command
         try {
             foreach (config()->array('horizon.defaults.supervisor-1.queue') as $queue) {
                 if (is_string($queue)) {
-                    $metrics->gauge('ticko.queue.pending', 'Jobs waiting in the queue', Queue::connection('redis')->size($queue), ['queue' => $queue]);
+                    $metrics->gauge('ticko.queue.pending', 'Jobs waiting in the queue', Queue::connection('redis')->size($queue), ['queue' => $queue], '{job}');
                 }
             }
 
@@ -77,10 +77,10 @@ final class TelemetrySnapshotCommand extends Command
             $waits = app(WaitTimeCalculator::class)->calculate();
 
             foreach ($waits as $queue => $seconds) {
-                $metrics->gauge('ticko.queue.wait', 'Estimated wait for a new job (Horizon), in seconds', $seconds, ['queue' => $queue]);
+                $metrics->gauge('ticko.queue.wait', 'Estimated wait for a new job (Horizon)', $seconds, ['queue' => $queue], 's');
             }
 
-            $metrics->gauge('ticko.queue.failed_recent', 'Jobs failed in the last 7 days (Horizon)', app(JobRepository::class)->countRecentlyFailed(), []);
+            $metrics->gauge('ticko.queue.failed_recent', 'Jobs failed in the last 7 days (Horizon)', app(JobRepository::class)->countRecentlyFailed(), [], '{job}');
         } catch (Throwable) {
             // Redis unavailable: the queue panels show a gap.
         }
