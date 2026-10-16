@@ -21,7 +21,7 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      testIgnore: /observability\.spec\.ts/,
+      testIgnore: /(observability|screenshots)\.spec\.ts/,
       use: { ...devices['Desktop Chrome'], ...(process.env.E2E_CHANNEL ? { channel: process.env.E2E_CHANNEL } : {}) },
     },
     // Grafana (`make up-obs`), after the app suite has produced traffic:
@@ -29,6 +29,12 @@ export default defineConfig({
     {
       name: 'observability',
       testMatch: /observability\.spec\.ts/,
+      use: { ...devices['Desktop Chrome'], ...(process.env.E2E_CHANNEL ? { channel: process.env.E2E_CHANNEL } : {}) },
+    },
+    // Screenshots for docs/ (make screenshots), against the demo stack.
+    {
+      name: 'docs',
+      testMatch: /screenshots\.spec\.ts/,
       use: { ...devices['Desktop Chrome'], ...(process.env.E2E_CHANNEL ? { channel: process.env.E2E_CHANNEL } : {}) },
     },
   ],

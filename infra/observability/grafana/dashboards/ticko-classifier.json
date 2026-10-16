@@ -182,7 +182,7 @@
     },
     {
       "type": "stat",
-      "title": "Corrections (range)",
+      "title": "Corrections (total)",
       "description": "Agent changes to values the AI had set.",
       "datasource": {
         "type": "prometheus",
@@ -196,7 +196,7 @@
       },
       "targets": [
         {
-          "expr": "sum(increase(ticko_classifier_corrections_total{tenant=~\"$tenant\",set_by=\"ai\"}[$__range]))",
+          "expr": "sum(ticko_classifier_corrections_total{tenant=~\"$tenant\",set_by=\"ai\"}) or vector(0)",
           "legendFormat": "",
           "range": true,
           "instant": false,
@@ -397,7 +397,7 @@
     },
     {
       "type": "bargauge",
-      "title": "Labels predicted (range)",
+      "title": "Labels predicted (total)",
       "description": "",
       "datasource": {
         "type": "prometheus",
@@ -411,7 +411,7 @@
       },
       "targets": [
         {
-          "expr": "sum by (task, label) (increase(ticko_classifier_confidence_count[$__range]))",
+          "expr": "sum by (task, label) (ticko_classifier_confidence_count)",
           "legendFormat": "{{task}} · {{label}}",
           "range": false,
           "instant": true,

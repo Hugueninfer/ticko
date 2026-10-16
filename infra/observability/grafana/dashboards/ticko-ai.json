@@ -59,7 +59,7 @@
     {
       "type": "stat",
       "title": "\"I don't know\" rate",
-      "description": "Suggestions where the knowledge base had no good answer.",
+      "description": "Suggestions where the knowledge base had no good answer (since the Collector started).",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -72,7 +72,7 @@
       },
       "targets": [
         {
-          "expr": "(sum(increase(ticko_ai_suggestions_total{tenant=~\"$tenant\",outcome=\"insufficient\"}[$__range])) or vector(0)) / clamp_min(sum(increase(ticko_ai_suggestions_total{tenant=~\"$tenant\"}[$__range])), 1e-9)",
+          "expr": "(sum(ticko_ai_suggestions_total{tenant=~\"$tenant\",outcome=\"insufficient\"}) or vector(0)) / clamp_min(sum(ticko_ai_suggestions_total{tenant=~\"$tenant\"}), 1e-9)",
           "legendFormat": "",
           "range": true,
           "instant": false,
@@ -108,7 +108,7 @@
       },
       "targets": [
         {
-          "expr": "(sum(increase(ticko_ai_suggestion_reviews_total{tenant=~\"$tenant\",result=\"approved\"}[$__range])) or vector(0)) / clamp_min(sum(increase(ticko_ai_suggestion_reviews_total{tenant=~\"$tenant\"}[$__range])), 1e-9)",
+          "expr": "(sum(ticko_ai_suggestion_reviews_total{tenant=~\"$tenant\",result=\"approved\"}) or vector(0)) / clamp_min(sum(ticko_ai_suggestion_reviews_total{tenant=~\"$tenant\"}), 1e-9)",
           "legendFormat": "",
           "range": true,
           "instant": false,
@@ -144,7 +144,7 @@
       },
       "targets": [
         {
-          "expr": "(sum(increase(ticko_ai_suggestion_reviews_total{tenant=~\"$tenant\",result=\"discarded\"}[$__range])) or vector(0)) / clamp_min(sum(increase(ticko_ai_suggestion_reviews_total{tenant=~\"$tenant\"}[$__range])), 1e-9)",
+          "expr": "(sum(ticko_ai_suggestion_reviews_total{tenant=~\"$tenant\",result=\"discarded\"}) or vector(0)) / clamp_min(sum(ticko_ai_suggestion_reviews_total{tenant=~\"$tenant\"}), 1e-9)",
           "legendFormat": "",
           "range": true,
           "instant": false,
@@ -166,7 +166,7 @@
     },
     {
       "type": "stat",
-      "title": "Estimated cost (range)",
+      "title": "Estimated cost (total)",
       "description": "",
       "datasource": {
         "type": "prometheus",
@@ -180,7 +180,7 @@
       },
       "targets": [
         {
-          "expr": "sum(increase(ticko_ai_cost_usd_total{tenant=~\"$tenant\"}[$__range]))",
+          "expr": "sum(ticko_ai_cost_usd_total{tenant=~\"$tenant\"})",
           "legendFormat": "",
           "range": true,
           "instant": false,
@@ -193,18 +193,12 @@
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "currencyUSD"
+          "unit": "currencyUSD",
+          "decimals": 4
         },
         "overrides": []
       },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        },
-        "text": {}
-      },
+      "options": {},
       "id": 5
     },
     {
@@ -453,7 +447,8 @@
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "currencyUSD"
+          "unit": "currencyUSD",
+          "decimals": 4
         },
         "overrides": []
       },

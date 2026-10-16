@@ -1,0 +1,19 @@
+# Accepted findings for `trivy image` (CI: .github/workflows/security.yml).
+# Every entry needs a reason and an expiry date; CI fails again after it.
+vulnerabilities:
+  # Caddy 2.11.7 (latest release) is built with Go 1.26.8 / x/net 0.59.0.
+  # Denial-of-service issues in HTTP/2 and TLS ECH handling, fixed in Go
+  # 1.26.9 / x/net 0.60.0, not yet in a Caddy release. Locally Caddy listens
+  # on 127.0.0.1 only; upgrade the image when Caddy ships the fix.
+  - id: CVE-2026-78667
+    paths: ["usr/bin/caddy"]
+    statement: Go stdlib DoS in the Caddy binary; waiting for a Caddy release built with Go 1.26.9+.
+    expired_at: 2026-12-15
+  - id: CVE-2026-78669
+    paths: ["usr/bin/caddy"]
+    statement: HTTP/2 SETTINGS flood DoS in the Caddy binary; waiting for a Caddy release with x/net 0.60.0.
+    expired_at: 2026-12-15
+  - id: CVE-2026-97031
+    paths: ["usr/bin/caddy"]
+    statement: crypto/tls ECH DoS in the Caddy binary (ECH is not configured); waiting for a Caddy release built with Go 1.26.9+.
+    expired_at: 2026-12-15

@@ -1,64 +1,144 @@
 # Ticko
 
 [![CI](https://github.com/Hugueninfer/ticko/actions/workflows/ci.yml/badge.svg)](https://github.com/Hugueninfer/ticko/actions/workflows/ci.yml)
+[![Security](https://github.com/Hugueninfer/ticko/actions/workflows/security.yml/badge.svg)](https://github.com/Hugueninfer/ticko/actions/workflows/security.yml)
 ![Coverage](https://raw.githubusercontent.com/Hugueninfer/ticko/badges/coverage.svg)
 
-AI-assisted, multi-tenant helpdesk. This repository is a monorepo: **phase 1** delivered the
-API, its infrastructure and quality gates; **phase 2** the web app for agents and admins and
-the typed API client; **phase 3** the customer mobile app (Expo), push notifications and
-realtime updates (Laravel Reverb); **phase 4** the knowledge base, retrieval (RAG) and AI reply
-suggestions that an agent always approves; **phase 5** the ticket classifier (category, priority
-and sentiment) — a BERTimbau + LoRA model trained on synthetic data, served on an internal network;
-**phase 6** observability: OpenTelemetry traces, metrics and logs into Prometheus, Tempo, Loki and
-Grafana, with dashboards and alerts as code.
+**AI-assisted, multi-tenant helpdesk** for small online stores: a web app for agents and admins,
+a mobile app for customers, reply suggestions grounded in the store's knowledge base (an agent
+always approves), automatic ticket classification by a fine-tuned model, and full observability.
+Everything runs locally with one command; the demo store, "Loja Aurora", is entirely fictional.
 
-> 🇧🇷 Leia em português: [README.pt-BR.md](README.pt-BR.md)
+> 🇧🇷 Leia em português: [README.pt-BR.md](README.pt-BR.md) · 🎬 Demo guide: [docs/DEMO.md](docs/DEMO.md)
+
+![The agent's ticket view: conversation, AI classification and a cited AI draft](docs/screenshots/03-ticket-ai-draft.png)
+
+## What it does
+
+| | |
+| --- | --- |
+| **Helpdesk** | Ticket queue with SLA deadlines, conversation with internal notes and images, assignment, categories with per-priority SLA targets, team management, admin dashboard. Multi-tenant with Postgres Row-Level Security. |
+| **Customer app** | React Native (Expo): open tickets with photos, follow the conversation, push notifications and live updates. |
+| **AI reply suggestions (RAG)** | Hybrid search (Portuguese full-text + pgvector) over the knowledge base; the model must cite its sources or say **"I don't know"**; **nothing reaches a customer without an agent's approval**. Gemini, Groq, Ollama or an offline fake. |
+| **Ticket classification** | BERTimbau + LoRA, fine-tuned on a laptop CPU, fills category, priority and sentiment when nobody chose them; agents correct it and corrections are audited. |
+| **Observability** | OpenTelemetry traces, metrics and logs (redacted) in Prometheus, Tempo, Loki and Grafana, with dashboards and alerts as code. |
+
+## Architecture
+
+```mermaid
+flowchart LR
+    browser["Agents and admins<br/>(browser)"] -->|HTTPS · same origin| web
+    phone["Customers<br/>(mobile app)"] -->|HTTPS · bearer token| web
+
+    subgraph edge["edge network"]
+        web["web · Caddy<br/>SPA, CSP, proxy"]
+    end
+    subgraph backend["backend · internal"]
+        api["api · Laravel 13<br/>PHP-FPM"]
+        queue["queue · Horizon"]
+        scheduler["scheduler"]
+        pg[("Postgres 17<br/>pgvector · RLS")]
+        redis[("Redis")]
+    end
+    subgraph realtime["realtime · internal"]
+        reverb["reverb<br/>WebSocket"]
+    end
+    subgraph ml["ml · internal"]
+        classifier["classifier<br/>FastAPI · BERTimbau+LoRA"]
+    end
+    subgraph obs["obs · internal (optional)"]
+        otel["OTel Collector"] --> prom[("Prometheus")] & tempo[("Tempo")] & loki[("Loki")]
+        grafana["Grafana<br/>127.0.0.1 only"]
+    end
+
+    web -->|FastCGI| api
+    web -->|/app| reverb
+    api --> pg & redis
+    queue --> pg & redis
+    queue -->|service token| classifier
+    queue -->|egress| llm["AI providers<br/>Gemini · Groq · Ollama"]
+    queue -->|egress| expo["Expo push"]
+    api & queue -->|events: ids only| reverb
+    api & queue & scheduler & classifier -.->|OTLP| otel
+    grafana --> prom & tempo & loki
+```
+
+Only Caddy publishes a port (and Grafana, on 127.0.0.1, when observability is on). Postgres,
+Redis, Reverb, the classifier and the observability backends live on internal networks.
+
+## Design decisions and trade-offs
+
+| Decision | Why | Trade-off |
+| --- | --- | --- |
+| Laravel monolith + queue, not microservices | One codebase for auth, tenancy and policies; Horizon for background work | The classifier is the only separate service, because it is Python and CPU-heavy |
+| Tenant isolation in the app **and** in Postgres (forced RLS, composite FKs) | A missing `where` cannot leak another tenant's data | Every query runs inside a tenant context; migrations and tests must set it |
+| One origin for the web app (Caddy proxies the API) | Session cookies with CSRF, no tokens in the browser, no CORS with credentials | The SPA and the API deploy together |
+| RAG with mandatory citations and "I don't know" | Answers must come from the store's own articles; low confidence is said, not invented | Fewer drafts than a free-writing model |
+| Human approval for every AI reply (enforced by an architecture test) | The AI never talks to customers by itself | Agents still click "approve" |
+| Offline `fake` AI provider by default | Demo, tests and CI work with no key and no data leaving the machine | Lexical relevance only; use a real provider to judge quality |
+| Fine-tuned BERTimbau + LoRA on CPU instead of an LLM prompt | Fast (~50 ms), cheap, private, measurable (F1 per class); 26 min to train on a laptop | Synthetic training data: real-world accuracy must be validated with agents' corrections |
+| Observability as an optional profile | Normal use stays light; telemetry is off unless asked for | PHP exports delta metrics per request; the Collector accumulates them |
+| Everything in Docker, pinned by digest | `make up` is the whole setup; reproducible builds | First build downloads a lot (PyTorch and the base model with `make up-ml`) |
 
 ## Quick start
 
 Requirements: Docker with Compose v2 and `make`. Nothing else (PHP, Composer and Node are
-not needed on the host).
+not needed on the host; Node 22 only for the web/mobile tooling).
 
 ```bash
-make up
+make up        # creates .env with generated secrets, builds, migrates and starts
+make demo      # seeds the demo store "Loja Aurora" and prints three passwords
 ```
-
-This creates `.env` with freshly generated secrets (only the first time), builds the images,
-runs the migrations and starts everything. Then:
 
 | URL | What |
 | --- | --- |
-| http://localhost:8080 | The web app (agents and admins) |
+| http://localhost:8080 | The web app (one-click **Agent** / **Admin** demo sign-in) |
 | http://localhost:8080/docs | Swagger UI for the API (OpenAPI 3) |
-| http://localhost:8080/docs/openapi.json | The OpenAPI document |
-| http://localhost:8080/api/v1 | The API |
 | http://localhost:8080/horizon | Queue dashboard (admins only) |
 
-Port 8080 taken? Set `WEB_PORT` (and `APP_URL`) in `.env`.
-
-Create a demo tenant (`acme`, "Loja Aurora") with one user per role, categories and tickets.
-Passwords are random and printed once:
+Optional parts, combinable:
 
 ```bash
-make demo
+make up-ml     # + the ticket classifier (first build downloads ~1 GB: PyTorch CPU + base model)
+make up-obs    # + observability: Grafana on http://localhost:3001 (user admin, password in .env)
+make demo-reset   # start the demo over
 ```
 
-With `TICKO_DEMO_LOGIN=true` (the default in `.env.example`; never honoured in production) the
-sign-in page offers one-click **Agent** and **Admin** demo buttons.
-
-Try it:
+**AI providers** (all keys only in your local `.env`, never in the repository):
 
 ```bash
-curl -s -X POST http://localhost:8080/api/v1/auth/tokens \
-  -H 'X-Tenant: acme' -H 'Content-Type: application/json' -H 'Accept: application/json' \
-  -d '{"email":"agent@acme.test","password":"<printed password>","device_name":"curl"}'
-
-curl -s http://localhost:8080/api/v1/tickets -H "Authorization: Bearer <token>" -H 'Accept: application/json'
+TICKO_AI_TEXT_PROVIDER=gemini        # fake (default) | gemini | groq | ollama
+TICKO_AI_EMBEDDING_PROVIDER=gemini   # fake (default) | gemini | ollama  → then: make kb-reindex
+GEMINI_API_KEY=...                   # or GROQ_API_KEY=..., or OLLAMA_URL=http://host.docker.internal:11434
 ```
 
-Real tenants: `docker compose exec api php artisan ticko:tenant:create <slug> "<Name>" --admin-email=<email>`.
+**Mobile app:** `make up-lan` (reachable on your Wi-Fi) and `make mobile-dev`, then scan the QR
+code with Expo Go — see [apps/mobile/README.md](apps/mobile/README.md). On an **Android emulator**
+(optional; needs Android Studio and an AVD), run `make mobile-dev` with
+`EXPO_PUBLIC_API_URL=http://10.0.2.2:8080` in `apps/mobile/.env` (the emulator's address for your
+computer) and press `a`.
 
-### Development commands
+Ports taken? Set `WEB_PORT` / `GRAFANA_PORT` (and `APP_URL`) in `.env`. Real tenants:
+`docker compose exec api php artisan ticko:tenant:create <slug> "<Name>" --admin-email=<email>`.
+
+## Classifier results
+
+On 500 held-out synthetic tickets written with phrasings the models never saw (macro-F1):
+
+| Task | TF-IDF + logistic regression | BERTimbau + LoRA |
+| --- | --- | --- |
+| Category | 0.879 | **0.941** |
+| Priority | 0.575 | **0.709** |
+| Sentiment | 0.350 | **0.991** |
+| Labels unchanged under 576 prompt-injection attempts | 100% | 100% |
+
+Training: 26 minutes on a laptop CPU (Intel Core 5 120U), 0.28% of the parameters trainable.
+Per-class F1, confusion matrices and an honest discussion of the limits (synthetic data) are in
+[services/classifier/README.md](services/classifier/README.md).
+
+## Development
+
+### Commands
 
 | Command | Does |
 | --- | --- |
@@ -69,7 +149,11 @@ Real tenants: `docker compose exec api php artisan ticko:tenant:create <slug> "<
 | `make audit` | `composer audit` |
 | `make gitleaks` | Secret scan of the git history |
 | `make docs` | Regenerate `apps/api/resources/openapi/openapi.json` with Scribe |
-| `make ci` | Everything CI runs for the API |
+| `make ci` | Everything CI runs without the Docker stack (API, web, mobile, classifier, Semgrep, gitleaks) |
+| `make trivy` | Scan the built images for fixable HIGH/CRITICAL vulnerabilities |
+| `make backup` / `make backup-verify` | Encrypted database backup / prove it restores (scratch database, row counts compared) |
+| `make demo-reset` | Delete the demo tenant and seed it again |
+| `make screenshots` | Regenerate the screenshots in `docs/screenshots` from the running demo |
 | `make web-dev` | Web app with hot reload on http://localhost:5173 (Node 22 + corepack) |
 | `make web-test` | ESLint, Prettier, `tsc`, Vitest with coverage (web + API client) |
 | `make up-lan` | The stack, reachable from phones on your Wi-Fi (only the web port) |
@@ -102,7 +186,11 @@ packages/
 infra/
   docker/php/         Multi-stage Dockerfile (dev, prod, web)
   docker/caddy/       Caddyfile
+  docker/postgres/    Postgres + pgvector with security updates, no root
   postgres/init/      Creates the non-superuser application role
+  observability/      Collector, Prometheus, Tempo, Loki, Grafana (dashboards and alerts as code)
+docs/                 Demo guide, threat model, screenshots
+scripts/              make env, encrypted backup and restore
 compose.yaml          Local stack
 Makefile              One-command workflows
 ```
@@ -226,29 +314,7 @@ it on your phone (Expo Go on the same Wi-Fi, or a tunnel): [apps/mobile/README.m
 - Grafana requires login (generated admin password, no anonymous access) and listens on
   127.0.0.1 only. Off by default. Details: [infra/observability/README.md](infra/observability/README.md).
 
-## Architecture
-
-```
-            127.0.0.1:8080
-                  │
-          ┌───────▼───────┐   edge network
-          │ web (Caddy)   │   web app (SPA), security headers, CSP
-          └───┬───────┬───┘
-              │       │ /app (WebSocket)   realtime network (internal)
-              │   ┌───▼──────────┐
-              │   │ reverb       │◄── api / queue publish events
-              │   └──────────────┘
-              │ FastCGI
-          ┌───────▼───────┐         ┌──────────────┐
-          │ api (PHP-FPM) │         │ queue        │  Horizon workers
-          └───┬───────┬───┘         └───┬──────┬───┘
-   backend    │       │                 │      │      (internal network,
-   network ┌──▼───┐ ┌─▼────┐            │      │       no published ports)
-           │ pg17 │ │redis │◄───────────┘      │
-           │+pgvec│ └──────┘                   │
-           └──▲───┘◄─────────────────────────────┘
-              └── migrate (one-shot, runs before api/queue start)
-```
+## Reference
 
 ### API layers (`apps/api`)
 
@@ -359,12 +425,20 @@ lifetime, rate limits, upload size, signed-URL lifetime, docs toggle, Horizon al
   unregistered devices, tenant isolation of devices) and channel authorization by tenant
   and ticket.
 - **CI** (GitHub Actions): lint, Larastan, tests + coverage, `composer audit`, gitleaks,
-  Docker image builds, web lint/types/tests/build/`pnpm audit`, the mobile job and the
-  end-to-end suite.
+  Docker image builds, web lint/types/tests/build/`pnpm audit`, the mobile job, the classifier
+  (tests, `pip-audit`, F1 and prompt-injection evals), the end-to-end suite with a backup
+  restore check, and the observability stack (Grafana login, every panel has data, no personal
+  data in stored logs).
+- **Security workflow** (every PR, `main` and weekly): CodeQL (JavaScript/TypeScript, Python,
+  Actions), Semgrep (PHP, secrets), Trivy on every image (fails on fixable HIGH/CRITICAL;
+  accepted findings with a reason and an expiry in `.trivyignore.yaml`), SPDX SBOMs of the
+  repository and the images. Dependabot opens weekly grouped updates.
 
 ## Security
 
-See [SECURITY.md](SECURITY.md) to report a vulnerability. Highlights:
+See [SECURITY.md](SECURITY.md) to report a vulnerability and
+[docs/THREAT-MODEL.md](docs/THREAT-MODEL.md) for the STRIDE threat model of sign-in, the
+customer's ticket and the AI suggestion. Highlights:
 
 - **Isolation:** global scope + forced RLS + composite foreign keys + non-privileged DB role.
 - **Auth:** Sanctum cookies for the SPA (CSRF-protected), expiring tenant-bound tokens
@@ -414,8 +488,18 @@ See [SECURITY.md](SECURITY.md) to report a vulnerability. Highlights:
   images pinned by digest and non-root. Details: [infra/observability/README.md](infra/observability/README.md#security).
 - **Containers:** non-root, read-only filesystems, all capabilities dropped,
   `no-new-privileges`; Postgres and Redis unreachable from the host; Redis password-protected.
-- **Supply chain:** `composer audit`, gitleaks, Actions pinned by SHA, least-privilege tokens.
+- **Supply chain:** `composer audit`, `pnpm audit`, `pip-audit`, gitleaks, CodeQL, Semgrep,
+  Trivy, SBOMs, Dependabot; every base image and Action pinned by digest/SHA; least-privilege
+  tokens.
+- **Backups:** `make backup` writes `pg_dump` encrypted with AES-256 (PBKDF2, 600k iterations)
+  and a passphrase generated by `make env`; the plain dump never touches the disk;
+  `make backup-verify` (also in CI) restores it into a scratch database and compares every
+  table. Restore: `scripts/restore.sh <file> --into <db>` or `--replace --yes`.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-Proprietary — all rights reserved.
+Proprietary — all rights reserved. See [LICENSE](LICENSE).

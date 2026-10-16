@@ -5,11 +5,15 @@ declare(strict_types=1);
 use App\Enums\Role;
 use App\Jobs\ClassifyTicket;
 use App\Jobs\IndexKnowledgeArticle;
+use App\Models\AiSuggestion;
+use App\Models\AuditEvent;
 use App\Models\Category;
+use App\Models\ClassificationCorrection;
 use App\Models\KbArticle;
-use App\Models\KbChunk;
 use App\Models\Tenant;
 use App\Models\Ticket;
+use App\Models\TicketClassification;
+use App\Models\TicketMessage;
 use App\Models\User;
 use Illuminate\Support\Facades\Queue;
 
@@ -33,44 +37,62 @@ it('validates tenant creation input', function (): void {
     $this->artisan('ticko:tenant:create', ['slug' => 'Bad Slug', 'name' => 'X', '--admin-email' => 'nope'])->assertFailed();
 });
 
-it('seeds a demo tenant once, with random passwords', function (): void {
-    $this->artisan('ticko:demo')->expectsOutputToContain('X-Tenant: acme')->assertSuccessful();
-    $this->artisan('ticko:demo')->expectsOutputToContain('already exists')->assertSuccessful();
+it('seeds a coherent demo tenant through the real actions', function (): void {
+    $this->artisan('ticko:demo')->expectsOutputToContain('X-Tenant: acme')->expectsOutputToContain('agent@acme.test')->assertSuccessful();
 
     $tenant = Tenant::where('slug', 'acme')->firstOrFail();
     $this->inTenant($tenant, function (): void {
-        expect(User::count())->toBe(3)
-            ->and(Category::count())->toBe(4)
-            ->and(Ticket::count())->toBe(10)
-            // What the customer chose is never overwritten by the classifier; two tickets are left to it.
-            ->and(Ticket::where('priority_source', 'requester')->count())->toBe(8)
-            ->and(Ticket::whereNull('category_id')->count())->toBe(2)
-            ->and(Ticket::whereNotNull('first_response_at')->count())->toBe(2)
+        expect(User::count())->toBe(9)
+            ->and(Category::count())->toBe(6)
+            ->and(Ticket::count())->toBe(25)
+            // Every state, overdue and on-time tickets, conversations and internal notes.
+            ->and(Ticket::query()->distinct()->pluck('status')->map->value->sort()->values()->all())->toBe(['closed', 'open', 'pending', 'resolved'])
             ->and(Ticket::overdue()->count())->toBeGreaterThan(0)
-            // Knowledge base: 7 published (indexed by the synchronous test queue) and 1 draft.
+            ->and(TicketMessage::where('is_internal', true)->count())->toBeGreaterThan(0)
+            // What the customer chose is never overwritten by the classifier.
+            ->and(Ticket::where('category_source', 'requester')->count())->toBe(17)
+            // Knowledge base: 7 published (indexed) and 1 draft.
             ->and(KbArticle::count())->toBe(8)
             ->and(KbArticle::where('index_status', 'indexed')->count())->toBe(7)
-            ->and(KbChunk::count())->toBeGreaterThan(7);
+            // AI suggestions in every outcome, reviewed through the real actions.
+            ->and(AiSuggestion::query()->distinct()->pluck('status')->map->value->sort()->values()->all())
+            ->toBe(['approved', 'discarded', 'failed', 'insufficient', 'ready'])
+            ->and(AiSuggestion::where('edited', true)->count())->toBeGreaterThan(0)
+            ->and(AiSuggestion::where('status', 'approved')->sum('input_tokens'))->toBeGreaterThan(0)
+            // Classified and corrected, with the audit trail.
+            ->and(TicketClassification::count())->toBe(25)
+            ->and(ClassificationCorrection::count())->toBeGreaterThan(0)
+            ->and(AuditEvent::where('action', 'ticket.classification_changed')->count())->toBe(3);
     });
 });
 
-it('queues the demo tickets for classification when the classifier is on', function (): void {
+it('is idempotent and can start over', function (): void {
+    $this->artisan('ticko:demo')->assertSuccessful();
+    $tenant = Tenant::where('slug', 'acme')->firstOrFail();
+    $before = $this->inTenant($tenant, fn () => [Ticket::count(), AiSuggestion::count(), TicketMessage::count(), AuditEvent::count()]);
+
+    $this->artisan('ticko:demo')->expectsOutputToContain('No new users')->assertSuccessful();
+    expect($this->inTenant($tenant, fn () => [Ticket::count(), AiSuggestion::count(), TicketMessage::count(), AuditEvent::count()]))->toBe($before);
+
+    // A missing ticket is added back on the next run.
+    $this->inTenant($tenant, fn () => Ticket::where('subject', 'Elogio para a equipe de atendimento')->delete());
+    $this->artisan('ticko:demo')->assertSuccessful();
+    expect($this->inTenant($tenant, fn () => Ticket::count()))->toBe(25);
+
+    $this->artisan('ticko:demo', ['--fresh' => true])->expectsOutputToContain('Deleted the demo tenant')->expectsOutputToContain('admin@acme.test')->assertSuccessful();
+    $fresh = Tenant::where('slug', 'acme')->firstOrFail();
+    expect($fresh->id)->not->toBe($tenant->id)
+        ->and(Tenant::where('slug', 'acme')->count())->toBe(1)
+        ->and($this->inTenant($fresh, fn () => Ticket::count()))->toBe(25);
+});
+
+it('queues the demo tickets for the real classifier when it is on', function (): void {
     config(['ticko.classifier.url' => 'http://classifier:8000']);
     Queue::fake([ClassifyTicket::class]);
 
     $this->artisan('ticko:demo')->assertSuccessful();
 
-    Queue::assertPushed(ClassifyTicket::class, 10);
-});
-
-it('adds the knowledge base to an existing demo tenant once', function (): void {
-    $tenant = Tenant::factory()->create(['slug' => 'acme']);
-    $this->userIn($tenant, Role::Admin);
-
-    $this->artisan('ticko:demo')->expectsOutputToContain('Added 8 knowledge-base articles')->assertSuccessful();
-    $this->artisan('ticko:demo')->expectsOutputToContain('Nothing to do')->assertSuccessful();
-
-    $this->inTenant($tenant, fn () => expect(KbArticle::count())->toBe(8));
+    Queue::assertPushed(ClassifyTicket::class, 25);
 });
 
 it('refuses to seed demo data in production', function (): void {

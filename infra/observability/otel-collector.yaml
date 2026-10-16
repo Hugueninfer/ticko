@@ -65,8 +65,9 @@ processors:
 
   # PHP processes are short-lived and export deltas; Prometheus needs
   # cumulative series.
+  # Keep idle series (bounded cardinality) so quiet periods show 0, not "No data".
   delta_to_cumulative:
-    max_stale: 15m
+    max_stale: 24h
 
   batch:
     timeout: 2s
@@ -74,6 +75,7 @@ processors:
 exporters:
   prometheus:
     endpoint: 0.0.0.0:8889
+    metric_expiration: 24h
     resource_to_telemetry_conversion:
       enabled: false
 

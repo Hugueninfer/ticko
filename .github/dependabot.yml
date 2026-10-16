@@ -1,0 +1,25 @@
+# Weekly dependency updates, grouped per ecosystem. Python dependencies are
+# hash-locked with uv (`make classifier-lock`); pip-audit runs on every CI.
+version: 2
+updates:
+  - package-ecosystem: composer
+    directory: /apps/api
+    schedule: { interval: weekly, day: monday }
+    groups:
+      php: { patterns: ["*"], update-types: [minor, patch] }
+  - package-ecosystem: npm
+    directory: /
+    schedule: { interval: weekly, day: monday }
+    groups:
+      javascript: { patterns: ["*"], update-types: [minor, patch] }
+  - package-ecosystem: docker
+    directories: [/infra/docker/php, /infra/docker/postgres, /services/classifier]
+    schedule: { interval: weekly, day: monday }
+  - package-ecosystem: docker-compose
+    directory: /
+    schedule: { interval: weekly, day: monday }
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: weekly, day: monday }
+    groups:
+      actions: { patterns: ["*"] }
