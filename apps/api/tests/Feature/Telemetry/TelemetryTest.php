@@ -115,7 +115,7 @@ it('never sends the trace context to third parties', function (): void {
     Http::assertSent(fn (Request $sent): bool => $sent->header('traceparent') === []);
     $call = $this->telemetry->span('POST generativelanguage.googleapis.com');
     expect($call->getAttributes()->toArray())->not->toHaveKey('url.full')
-        ->and($this->telemetry->span('chat gemini-2.5-flash')->getAttributes()->toArray())->toMatchArray([
+        ->and($this->telemetry->span('chat gemini-3.7-flash')->getAttributes()->toArray())->toMatchArray([
             'gen_ai.system' => 'gemini', 'gen_ai.usage.input_tokens' => 1200, 'gen_ai.usage.output_tokens' => 80,
         ])
         ->and($this->telemetry->total('ticko.ai.tokens', ['tenant' => 'aurora', 'type' => 'input', 'provider' => 'gemini']))->toBe(1200)
