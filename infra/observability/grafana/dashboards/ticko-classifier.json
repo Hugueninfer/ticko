@@ -196,7 +196,7 @@
       },
       "targets": [
         {
-          "expr": "sum(ticko_classifier_corrections_total{tenant=~\"$tenant\",set_by=\"ai\"})",
+          "expr": "sum(ticko_classifier_corrections_total{tenant=~\"$tenant\",set_by=\"ai\"}) or vector(0)",
           "legendFormat": "",
           "range": true,
           "instant": false,

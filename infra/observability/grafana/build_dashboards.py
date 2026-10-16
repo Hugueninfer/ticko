@@ -195,7 +195,7 @@ def classifier() -> Board:
     b.panel(STAT, "Failure ratio", [q('(sum(rate(ticko_classifier_duration_seconds_count{outcome!="ok"}[15m])) or vector(0)) / clamp_min(sum(rate(ticko_classifier_duration_seconds_count[15m])), 1e-9)')],
             w=6, h=4, unit="percentunit", thresholds=[{"color": "green", "value": None}, {"color": "red", "value": 0.05}])
     b.panel(STAT, "Inference p95 (service)", [q("histogram_quantile(0.95, sum by (le) (rate(ticko_classifier_inference_duration_seconds_bucket[15m])))")], w=6, h=4, unit="s")
-    b.panel(STAT, "Corrections (total)", [q('sum(ticko_classifier_corrections_total{tenant=~"$tenant",set_by="ai"})')], w=6, h=4,
+    b.panel(STAT, "Corrections (total)", [q('sum(ticko_classifier_corrections_total{tenant=~"$tenant",set_by="ai"}) or vector(0)')], w=6, h=4,
             description="Agent changes to values the AI had set.")
     b.panel(TS, "Latency p50 / p95 (API → classifier)", [
         q("histogram_quantile(0.50, sum by (le) (rate(ticko_classifier_duration_seconds_bucket[5m])))", "p50 call"),
