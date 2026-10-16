@@ -12,7 +12,7 @@ secret() { head -c 48 /dev/urandom | base64 | tr -d '/+=\n' | head -c 40; }
 value_for() {
   case "$1" in
     APP_KEY) echo "base64:$(head -c 32 /dev/urandom | base64)" ;;
-    DB_PASSWORD | POSTGRES_SUPERUSER_PASSWORD | REDIS_PASSWORD | REVERB_APP_SECRET) secret ;;
+    DB_PASSWORD | POSTGRES_SUPERUSER_PASSWORD | REDIS_PASSWORD | REVERB_APP_SECRET | CLASSIFIER_TOKEN) secret ;;
     REVERB_APP_KEY) secret | tr '[:upper:]' '[:lower:]' | head -c 20 ;;
     *) grep -m1 "^$1=" .env.example | cut -d= -f2- ;;
   esac
