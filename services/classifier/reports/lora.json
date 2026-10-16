@@ -1,0 +1,449 @@
+{
+  "model": "lora",
+  "version": "lora-v1",
+  "test": {
+    "examples": 500,
+    "ms_per_ticket": 49.61,
+    "tasks": {
+      "category": {
+        "accuracy": 0.944,
+        "macro_f1": 0.941,
+        "per_class": {
+          "entrega": {
+            "precision": 0.903,
+            "recall": 0.953,
+            "f1": 0.927,
+            "support": 127
+          },
+          "pagamento": {
+            "precision": 0.92,
+            "recall": 1.0,
+            "f1": 0.958,
+            "support": 103
+          },
+          "troca_devolucao": {
+            "precision": 1.0,
+            "recall": 0.862,
+            "f1": 0.926,
+            "support": 65
+          },
+          "conta_acesso": {
+            "precision": 0.967,
+            "recall": 1.0,
+            "f1": 0.983,
+            "support": 89
+          },
+          "produto": {
+            "precision": 0.949,
+            "recall": 1.0,
+            "f1": 0.974,
+            "support": 56
+          },
+          "outro": {
+            "precision": 1.0,
+            "recall": 0.783,
+            "f1": 0.879,
+            "support": 60
+          }
+        },
+        "confusion": {
+          "labels": [
+            "entrega",
+            "pagamento",
+            "troca_devolucao",
+            "conta_acesso",
+            "produto",
+            "outro"
+          ],
+          "matrix": [
+            [
+              121,
+              0,
+              0,
+              3,
+              3,
+              0
+            ],
+            [
+              0,
+              103,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              9,
+              56,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              89,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              56,
+              0
+            ],
+            [
+              13,
+              0,
+              0,
+              0,
+              0,
+              47
+            ]
+          ]
+        }
+      },
+      "priority": {
+        "accuracy": 0.698,
+        "macro_f1": 0.709,
+        "per_class": {
+          "low": {
+            "precision": 0.851,
+            "recall": 0.683,
+            "f1": 0.757,
+            "support": 167
+          },
+          "normal": {
+            "precision": 0.601,
+            "recall": 0.695,
+            "f1": 0.644,
+            "support": 167
+          },
+          "high": {
+            "precision": 0.634,
+            "recall": 0.746,
+            "f1": 0.685,
+            "support": 114
+          },
+          "urgent": {
+            "precision": 0.872,
+            "recall": 0.654,
+            "f1": 0.747,
+            "support": 52
+          }
+        },
+        "confusion": {
+          "labels": [
+            "low",
+            "normal",
+            "high",
+            "urgent"
+          ],
+          "matrix": [
+            [
+              114,
+              52,
+              1,
+              0
+            ],
+            [
+              20,
+              116,
+              31,
+              0
+            ],
+            [
+              0,
+              24,
+              85,
+              5
+            ],
+            [
+              0,
+              1,
+              17,
+              34
+            ]
+          ]
+        }
+      },
+      "sentiment": {
+        "accuracy": 0.99,
+        "macro_f1": 0.991,
+        "per_class": {
+          "negative": {
+            "precision": 0.978,
+            "recall": 0.994,
+            "f1": 0.986,
+            "support": 178
+          },
+          "neutral": {
+            "precision": 0.995,
+            "recall": 0.986,
+            "f1": 0.991,
+            "support": 212
+          },
+          "positive": {
+            "precision": 1.0,
+            "recall": 0.991,
+            "f1": 0.995,
+            "support": 110
+          }
+        },
+        "confusion": {
+          "labels": [
+            "negative",
+            "neutral",
+            "positive"
+          ],
+          "matrix": [
+            [
+              177,
+              1,
+              0
+            ],
+            [
+              3,
+              209,
+              0
+            ],
+            [
+              1,
+              0,
+              109
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "challenge": {
+    "examples": 48,
+    "ms_per_ticket": 46.3,
+    "tasks": {
+      "category": {
+        "accuracy": 0.896,
+        "macro_f1": 0.895,
+        "per_class": {
+          "entrega": {
+            "precision": 0.818,
+            "recall": 0.9,
+            "f1": 0.857,
+            "support": 10
+          },
+          "pagamento": {
+            "precision": 1.0,
+            "recall": 0.778,
+            "f1": 0.875,
+            "support": 9
+          },
+          "troca_devolucao": {
+            "precision": 0.857,
+            "recall": 1.0,
+            "f1": 0.923,
+            "support": 6
+          },
+          "conta_acesso": {
+            "precision": 0.875,
+            "recall": 1.0,
+            "f1": 0.933,
+            "support": 7
+          },
+          "produto": {
+            "precision": 0.9,
+            "recall": 1.0,
+            "f1": 0.947,
+            "support": 9
+          },
+          "outro": {
+            "precision": 1.0,
+            "recall": 0.714,
+            "f1": 0.833,
+            "support": 7
+          }
+        },
+        "confusion": {
+          "labels": [
+            "entrega",
+            "pagamento",
+            "troca_devolucao",
+            "conta_acesso",
+            "produto",
+            "outro"
+          ],
+          "matrix": [
+            [
+              9,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              7,
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              7,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              9,
+              0
+            ],
+            [
+              1,
+              0,
+              0,
+              0,
+              1,
+              5
+            ]
+          ]
+        }
+      },
+      "priority": {
+        "accuracy": 0.75,
+        "macro_f1": 0.713,
+        "per_class": {
+          "low": {
+            "precision": 0.933,
+            "recall": 0.875,
+            "f1": 0.903,
+            "support": 16
+          },
+          "normal": {
+            "precision": 0.824,
+            "recall": 0.7,
+            "f1": 0.757,
+            "support": 20
+          },
+          "high": {
+            "precision": 0.417,
+            "recall": 0.714,
+            "f1": 0.526,
+            "support": 7
+          },
+          "urgent": {
+            "precision": 0.75,
+            "recall": 0.6,
+            "f1": 0.667,
+            "support": 5
+          }
+        },
+        "confusion": {
+          "labels": [
+            "low",
+            "normal",
+            "high",
+            "urgent"
+          ],
+          "matrix": [
+            [
+              14,
+              2,
+              0,
+              0
+            ],
+            [
+              1,
+              14,
+              5,
+              0
+            ],
+            [
+              0,
+              1,
+              5,
+              1
+            ],
+            [
+              0,
+              0,
+              2,
+              3
+            ]
+          ]
+        }
+      },
+      "sentiment": {
+        "accuracy": 0.771,
+        "macro_f1": 0.767,
+        "per_class": {
+          "negative": {
+            "precision": 1.0,
+            "recall": 0.438,
+            "f1": 0.609,
+            "support": 16
+          },
+          "neutral": {
+            "precision": 0.645,
+            "recall": 1.0,
+            "f1": 0.784,
+            "support": 20
+          },
+          "positive": {
+            "precision": 1.0,
+            "recall": 0.833,
+            "f1": 0.909,
+            "support": 12
+          }
+        },
+        "confusion": {
+          "labels": [
+            "negative",
+            "neutral",
+            "positive"
+          ],
+          "matrix": [
+            [
+              7,
+              9,
+              0
+            ],
+            [
+              0,
+              20,
+              0
+            ],
+            [
+              0,
+              2,
+              10
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "injection": {
+    "pairs": 576,
+    "stable_rate": 1.0,
+    "closed_label_set": true
+  }
+}
