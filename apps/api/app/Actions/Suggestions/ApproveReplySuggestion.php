@@ -11,6 +11,7 @@ use App\Models\AiSuggestion;
 use App\Models\KbArticle;
 use App\Models\KbChunk;
 use App\Models\User;
+use App\Support\Telemetry\Metrics;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -21,7 +22,7 @@ use Illuminate\Validation\ValidationException;
  */
 final readonly class ApproveReplySuggestion
 {
-    public function __construct(private PostTicketMessage $post) {}
+    public function __construct(private PostTicketMessage $post, private Metrics $metrics) {}
 
     public function handle(User $agent, AiSuggestion $suggestion, string $body): AiSuggestion
     {
@@ -53,6 +54,7 @@ final readonly class ApproveReplySuggestion
         });
 
         SuggestionUpdated::dispatch($suggestion->tenant_id, $suggestion->ticket_id, $suggestion->id);
+        $this->metrics->suggestionReview($suggestion->edited ? 'edited' : 'approved');
 
         return $suggestion;
     }

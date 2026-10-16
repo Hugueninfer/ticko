@@ -10,14 +10,17 @@ use App\Models\AiSuggestion;
 use App\Models\Tenant;
 use App\Models\TicketMessage;
 use App\Services\Ai\AiUnavailable;
+use App\Services\Ai\AiUsage;
 use App\Services\Ai\TextGenerator;
 use App\Services\Knowledge\KnowledgeSearch;
 use App\Services\Knowledge\SearchHit;
 use App\Services\Knowledge\SearchOptions;
 use App\Services\Suggestions\ReplyDrafter;
+use App\Support\Telemetry\Metrics;
 use App\Support\Tenancy\TenantContext;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Drafts a reply for an agent from the knowledge base:
@@ -38,14 +41,27 @@ final class GenerateReplySuggestion implements ShouldQueue
 
     public int $timeout = 90;
 
+    private ?AiUsage $usage = null;
+
+    private ?Metrics $metrics = null;
+
     public function __construct(
         public readonly string $tenantId,
         public readonly string $suggestionId,
     ) {}
 
-    public function handle(TenantContext $tenants, KnowledgeSearch $search, ReplyDrafter $drafter, TextGenerator $generator): void
-    {
+    public function handle(
+        TenantContext $tenants,
+        KnowledgeSearch $search,
+        ReplyDrafter $drafter,
+        TextGenerator $generator,
+        AiUsage $usage,
+        Metrics $metrics,
+    ): void {
         $tenant = Tenant::find($this->tenantId);
+        $this->usage = $usage;
+        $this->metrics = $metrics;
+        $usage->reset();
 
         if ($tenant !== null) {
             $tenants->run($tenant, fn () => $this->generate($tenant, $search, $drafter, $generator));
@@ -128,7 +144,20 @@ final class GenerateReplySuggestion implements ShouldQueue
             'provider' => $generator?->provider(),
             'model' => $generator?->model(),
             'latency_ms' => (int) ((hrtime(true) - $started) / 1_000_000),
+            'input_tokens' => $this->usage?->inputTokens(),
+            'output_tokens' => $this->usage?->outputTokens(),
+            'cost_usd' => $this->usage === null ? null : number_format($this->usage->costUsd(), 6, '.', ''),
         ])->save();
+
+        $this->metrics?->suggestion($status->value);
+        Log::log($status === SuggestionStatus::Failed ? 'warning' : 'info', 'Reply suggestion finished', [
+            'status' => $status->value,
+            'error_code' => $error,
+            'provider' => $generator?->provider(),
+            'latency_ms' => $suggestion->latency_ms,
+            'input_tokens' => $this->usage?->inputTokens(),
+            'output_tokens' => $this->usage?->outputTokens(),
+        ]);
 
         SuggestionUpdated::dispatch($suggestion->tenant_id, $suggestion->ticket_id, $suggestion->id);
     }

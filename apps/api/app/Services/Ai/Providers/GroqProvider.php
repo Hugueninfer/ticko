@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Ai\Providers;
 
 use App\Services\Ai\AiUnavailable;
+use App\Services\Ai\AiUsage;
 use App\Services\Ai\TextGenerator;
 use App\Services\Ai\TextPrompt;
 
@@ -19,6 +20,7 @@ final readonly class GroqProvider implements TextGenerator
         private string $url,
         private ?string $key,
         private string $textModel,
+        private ?AiUsage $usage = null,
     ) {}
 
     public function generate(TextPrompt $prompt): string
@@ -47,6 +49,10 @@ final readonly class GroqProvider implements TextGenerator
         if (! is_string($text) || $text === '') {
             throw AiUnavailable::invalidResponse('Groq returned no text.');
         }
+
+        $input = data_get($json, 'usage.prompt_tokens');
+        $output = data_get($json, 'usage.completion_tokens');
+        $this->usage?->record(is_int($input) ? $input : 0, is_int($output) ? $output : 0);
 
         return $text;
     }

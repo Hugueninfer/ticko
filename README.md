@@ -8,7 +8,9 @@ API, its infrastructure and quality gates; **phase 2** the web app for agents an
 the typed API client; **phase 3** the customer mobile app (Expo), push notifications and
 realtime updates (Laravel Reverb); **phase 4** the knowledge base, retrieval (RAG) and AI reply
 suggestions that an agent always approves; **phase 5** the ticket classifier (category, priority
-and sentiment) — a BERTimbau + LoRA model trained on synthetic data, served on an internal network.
+and sentiment) — a BERTimbau + LoRA model trained on synthetic data, served on an internal network;
+**phase 6** observability: OpenTelemetry traces, metrics and logs into Prometheus, Tempo, Loki and
+Grafana, with dashboards and alerts as code.
 
 > 🇧🇷 Leia em português: [README.pt-BR.md](README.pt-BR.md)
 
@@ -78,6 +80,9 @@ Real tenants: `docker compose exec api php artisan ticko:tenant:create <slug> "<
 | `make up-ml` | The stack plus the ticket classifier (first build downloads ~1 GB) |
 | `make classifier-test` / `classifier-eval` | Classifier: lint, tests, pip-audit / F1 and prompt-injection evals |
 | `make classifier-train` | Retrain the baseline and the LoRA model on the CPU (~26 min) |
+| `make up-obs` | The stack plus observability: Grafana on http://localhost:3001 (admin password in `.env`) |
+| `make e2e-obs` | Check Grafana: login required and every dashboard panel has data |
+| `make obs-dashboards` | Regenerate the Grafana dashboards from code |
 | `make down` / `make logs` | Stop / follow logs |
 
 All PHP tooling runs inside the `dev` container (`docker compose --profile tools run --rm dev …`).
@@ -208,6 +213,18 @@ it on your phone (Expo Go on the same Wi-Fi, or a tunnel): [apps/mobile/README.m
 - Off by default: `make up-ml` starts the classifier and points the API at it. The service
   lives on an internal network reachable only by the queue, with a service token; the API
   masks personal data before sending and validates the answer against closed enums.
+
+### Observability (`infra/observability`)
+
+- `make up-obs` adds an OpenTelemetry Collector, Prometheus, Tempo, Loki and Grafana. The API,
+  the queue, a new `scheduler` service and the classifier send traces, metrics and logs over
+  OTLP; one trace follows a ticket from the API request through the queue to the classifier.
+- Five provisioned dashboards (API health, queue, tickets and SLA, AI suggestions, classifier)
+  and alert rules (failed sign-in spike, 403/404 bursts, AI errors and cost, SLA breaches).
+- Telemetry is redacted twice (Laravel and the Collector): no passwords, tokens, cookies, keys,
+  ticket text or personal data; metric labels are bounded (no user or ticket ids).
+- Grafana requires login (generated admin password, no anonymous access) and listens on
+  127.0.0.1 only. Off by default. Details: [infra/observability/README.md](infra/observability/README.md).
 
 ## Architecture
 
@@ -391,6 +408,10 @@ See [SECURITY.md](SECURITY.md) to report a vulnerability. Highlights:
   as text; base model pinned by revision and SHA-256, safetensors only (no pickle); hash-locked
   Python dependencies with `pip-audit`; F1 and prompt-injection evals in CI; minimal non-root
   image pinned by digest. Details: [services/classifier/README.md](services/classifier/README.md#security).
+- **Observability:** Grafana with mandatory login (generated admin password, no anonymous or
+  basic auth), on 127.0.0.1 only; Collector and backends on an internal network; telemetry
+  redacted in Laravel and again in the Collector, tested and checked in CI; bounded metric labels;
+  images pinned by digest and non-root. Details: [infra/observability/README.md](infra/observability/README.md#security).
 - **Containers:** non-root, read-only filesystems, all capabilities dropped,
   `no-new-privileges`; Postgres and Redis unreachable from the host; Redis password-protected.
 - **Supply chain:** `composer audit`, gitleaks, Actions pinned by SHA, least-privilege tokens.

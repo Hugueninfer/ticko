@@ -5,9 +5,9 @@ declare(strict_types=1);
 use App\Services\Ai\AiUnavailable;
 use App\Services\Ai\Embedder;
 use App\Services\Ai\EmbeddingTask;
+use App\Services\Ai\MeasuredTextGenerator;
 use App\Services\Ai\Providers\FakeProvider;
 use App\Services\Ai\Providers\GeminiProvider;
-use App\Services\Ai\Providers\GroqProvider;
 use App\Services\Ai\Providers\OllamaProvider;
 use App\Services\Ai\TextGenerator;
 use App\Services\Ai\TextPrompt;
@@ -27,19 +27,21 @@ function vector(int $size = Embedder::DIMENSIONS, float $value = 2.0): array
 
 describe('selection', function (): void {
     it('uses the offline fake by default', function (): void {
-        expect(app(TextGenerator::class))->toBeInstanceOf(FakeProvider::class)
+        // The text provider is wrapped to meter latency, tokens and cost.
+        expect(app(TextGenerator::class))->toBeInstanceOf(MeasuredTextGenerator::class)
+            ->and(app(TextGenerator::class)->provider())->toBe('fake')
             ->and(app(Embedder::class))->toBeInstanceOf(FakeProvider::class);
     });
 
-    it('picks providers from config', function (string $text, string $embedding, string $textClass, string $embeddingClass): void {
+    it('picks providers from config', function (string $text, string $embedding, string $embeddingClass): void {
         config(['ticko.ai.text_provider' => $text, 'ticko.ai.embedding_provider' => $embedding]);
 
-        expect(app(TextGenerator::class))->toBeInstanceOf($textClass)
+        expect(app(TextGenerator::class)->provider())->toBe($text)
             ->and(app(Embedder::class))->toBeInstanceOf($embeddingClass);
     })->with([
-        'gemini' => ['gemini', 'gemini', GeminiProvider::class, GeminiProvider::class],
-        'groq + ollama embeddings' => ['groq', 'ollama', GroqProvider::class, OllamaProvider::class],
-        'ollama' => ['ollama', 'ollama', OllamaProvider::class, OllamaProvider::class],
+        'gemini' => ['gemini', 'gemini', GeminiProvider::class],
+        'groq + ollama embeddings' => ['groq', 'ollama', OllamaProvider::class],
+        'ollama' => ['ollama', 'ollama', OllamaProvider::class],
     ]);
 
     it('rejects unknown providers', function (): void {

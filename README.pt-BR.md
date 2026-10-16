@@ -9,7 +9,8 @@ e o cliente tipado da API; a **fase 3**, o app mobile do cliente (Expo), as noti
 e as atualizações em tempo real (Laravel Reverb); a **fase 4**, a base de conhecimento, a busca
 (RAG) e as sugestões de resposta da IA que o atendente sempre aprova; a **fase 5**, o
 classificador de tickets (categoria, prioridade e sentimento) — um BERTimbau + LoRA treinado
-em dados sintéticos, servido numa rede interna.
+em dados sintéticos, servido numa rede interna; a **fase 6**, observabilidade: traces, métricas e logs OpenTelemetry
+no Prometheus, Tempo, Loki e Grafana, com dashboards e alertas como código.
 
 > 🇺🇸 English version: [README.md](README.md) (referência completa de arquitetura e endpoints)
 
@@ -69,6 +70,9 @@ Tenant real: `docker compose exec api php artisan ticko:tenant:create <slug> "<N
 | `make up-ml` | A stack mais o classificador de tickets (o primeiro build baixa ~1 GB) |
 | `make classifier-test` / `classifier-eval` | Classificador: lint, testes, pip-audit / avaliações de F1 e de prompt injection |
 | `make classifier-train` | Retreina o baseline e o LoRA na CPU (~26 min) |
+| `make up-obs` | A stack mais a observabilidade: Grafana em http://localhost:3001 (senha de admin no `.env`) |
+| `make e2e-obs` | Confere o Grafana: login obrigatório e todos os painéis com dados |
+| `make obs-dashboards` | Regera os dashboards do Grafana a partir do código |
 
 ## Estrutura
 
@@ -152,6 +156,13 @@ infra/               Dockerfile, Caddy, init do Postgres
   `classification_corrections` e tudo fica em `audit_events` (somente inserção). Desligado por
   padrão: `make up-ml` liga. Relatório completo (dataset, baseline × LoRA, F1 por classe, tempo
   de treino na CPU) em [services/classifier/README.pt-BR.md](services/classifier/README.pt-BR.md).
+- **Observabilidade:** `make up-obs` adiciona OpenTelemetry Collector, Prometheus, Tempo, Loki e
+  Grafana. API, fila, um novo serviço `scheduler` e o classificador enviam traces, métricas e
+  logs por OTLP; um único trace acompanha o ticket da requisição até o classificador. Cinco
+  dashboards provisionados (saúde da API, fila, tickets e SLA, IA, classificador) e alertas
+  (falhas de login, rajadas de 403/404, erros e custo de IA, SLA estourado). Telemetria redigida
+  duas vezes (Laravel e Collector) e Grafana com login obrigatório só em 127.0.0.1. Detalhes em
+  [infra/observability/README.pt-BR.md](infra/observability/README.pt-BR.md).
 - **SLA:** cada ticket recebe prazos de 1ª resposta e de resolução ao ser aberto (metas da
   categoria ou padrão por prioridade em `config/ticko.php`, em horário corrido). `?overdue=1`
   lista os atrasados; `GET /api/v1/metrics` (só admin) alimenta o dashboard.
@@ -227,6 +238,10 @@ Detalhes em [README.md#security](README.md#security) e como reportar falhas em
   enums fechados e exibida só como texto; modelo base fixado por revisão e SHA-256, só
   safetensors (sem pickle); dependências Python com hash e `pip-audit`; avaliações de F1 e de
   prompt injection na CI; imagem mínima, não-root, fixada por digest.
+- Observabilidade: Grafana com login obrigatório (senha de admin gerada, sem anônimo nem basic
+  auth), só em 127.0.0.1; Collector e backends em rede interna; telemetria redigida no Laravel e
+  de novo no Collector, com testes e checagem na CI; rótulos de métricas limitados; imagens fixadas
+  por digest e sem root.
 - Containers não-root, somente leitura, sem capabilities; nada de segredos no repositório
   (chaves de IA só no `.env` local).
 

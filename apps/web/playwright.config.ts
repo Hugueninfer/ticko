@@ -21,6 +21,14 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
+      testIgnore: /observability\.spec\.ts/,
+      use: { ...devices['Desktop Chrome'], ...(process.env.E2E_CHANNEL ? { channel: process.env.E2E_CHANNEL } : {}) },
+    },
+    // Grafana (`make up-obs`), after the app suite has produced traffic:
+    // GRAFANA_URL=http://localhost:3001 GRAFANA_PASSWORD=... pnpm e2e --project observability
+    {
+      name: 'observability',
+      testMatch: /observability\.spec\.ts/,
       use: { ...devices['Desktop Chrome'], ...(process.env.E2E_CHANNEL ? { channel: process.env.E2E_CHANNEL } : {}) },
     },
   ],

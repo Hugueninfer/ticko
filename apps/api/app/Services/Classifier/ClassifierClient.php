@@ -7,6 +7,7 @@ namespace App\Services\Classifier;
 use App\Enums\Sentiment;
 use App\Enums\TicketPriority;
 use App\Support\Privacy\PiiMasker;
+use App\Support\Telemetry\Metrics;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Factory as Http;
 
@@ -30,9 +31,27 @@ final readonly class ClassifierClient
         private string $url,
         private string $token,
         private int $timeoutSeconds,
+        private ?Metrics $metrics = null,
     ) {}
 
     public function classify(string $text): Classification
+    {
+        $started = hrtime(true);
+
+        try {
+            $result = $this->call($text);
+        } catch (ClassifierUnavailable $exception) {
+            $this->metrics?->classifierCall(strtolower($exception->errorCode), (hrtime(true) - $started) / 1e9);
+
+            throw $exception;
+        }
+
+        $this->metrics?->classifierCall('ok', (hrtime(true) - $started) / 1e9);
+
+        return $result;
+    }
+
+    private function call(string $text): Classification
     {
         if ($this->url === '' || $this->token === '') {
             throw new ClassifierUnavailable('NOT_CONFIGURED');

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Logging\ConfigureLogging;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -62,6 +63,8 @@ return [
 
         'single' => [
             'driver' => 'single',
+            // Redaction on every line, and OTLP export with telemetry on.
+            'tap' => [ConfigureLogging::class],
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'replace_placeholders' => true,
@@ -69,6 +72,8 @@ return [
 
         'daily' => [
             'driver' => 'daily',
+            // Redaction on every line, and OTLP export with telemetry on.
+            'tap' => [ConfigureLogging::class],
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'max_files' => env('LOG_DAILY_DAYS', 14),
@@ -106,6 +111,8 @@ return [
 
         'stderr' => [
             'driver' => 'monolog',
+            // Redaction on every line, and OTLP export with telemetry on.
+            'tap' => [ConfigureLogging::class],
             'level' => env('LOG_LEVEL', 'debug'),
             'handler' => StreamHandler::class,
             'handler_with' => [

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Ai\Providers;
 
+use App\Services\Ai\AiUsage;
 use App\Services\Ai\Embedder;
 use App\Services\Ai\EmbeddingTask;
 use App\Services\Ai\TextGenerator;
@@ -30,6 +31,8 @@ final class FakeProvider implements Embedder, TextGenerator
         'it', 'my', 'nao', 'mais', 'ja', 'faz', 'eu', 'voce', 'ou',
     ];
 
+    public function __construct(private readonly ?AiUsage $usage = null) {}
+
     public function generate(TextPrompt $prompt): string
     {
         $sentences = [];
@@ -42,13 +45,18 @@ final class FakeProvider implements Embedder, TextGenerator
             }
         }
 
-        return (string) json_encode($sentences === []
+        $answer = (string) json_encode($sentences === []
             ? ['answerable' => false, 'answer' => '', 'citations' => []]
             : [
                 'answerable' => true,
                 'answer' => 'Olá! '.implode(' ', $sentences),
                 'citations' => array_keys(array_fill(1, count($sentences), true)),
             ], JSON_UNESCAPED_UNICODE);
+
+        // No real model: report an estimate so usage and cost dashboards work offline.
+        $this->usage?->record(AiUsage::estimate($prompt->system.$prompt->user), AiUsage::estimate($answer));
+
+        return $answer;
     }
 
     public function embed(array $texts, EmbeddingTask $task): array

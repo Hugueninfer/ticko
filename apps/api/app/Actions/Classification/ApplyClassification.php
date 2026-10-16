@@ -12,7 +12,9 @@ use App\Models\Category;
 use App\Models\Ticket;
 use App\Models\TicketClassification;
 use App\Services\Classifier\Classification;
+use App\Support\Telemetry\Metrics;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Stores a classifier answer and fills the ticket fields nobody set yet,
@@ -21,6 +23,8 @@ use Illuminate\Support\Facades\DB;
  */
 final readonly class ApplyClassification
 {
+    public function __construct(private Metrics $metrics) {}
+
     public function handle(Ticket $ticket, Classification $result): TicketClassification
     {
         $minimum = config()->float('ticko.classifier.min_confidence');
@@ -80,6 +84,11 @@ final readonly class ApplyClassification
             ]);
 
             TicketClassified::dispatch($ticket->tenant_id, $ticket->id);
+
+            Log::info('Ticket classified', ['model' => $result->model, 'applied' => implode(',', $applied), 'flags' => implode(',', $result->flags)]);
+            $this->metrics->classifierLabel('category', $result->category, $result->categoryConfidence, in_array('category', $applied, true));
+            $this->metrics->classifierLabel('priority', $result->priority->value, $result->priorityConfidence, in_array('priority', $applied, true));
+            $this->metrics->classifierLabel('sentiment', $result->sentiment->value, $result->sentimentConfidence, in_array('sentiment', $applied, true));
 
             return $classification;
         });

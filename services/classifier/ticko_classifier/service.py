@@ -6,7 +6,8 @@ Security:
 * request bodies are capped (16 KB) and the text bounded (8,000 chars);
 * the ticket text is never logged, echoed in errors or stored;
 * responses carry only labels from closed sets and confidences;
-* no interactive docs or OpenAPI page.
+* no interactive docs or OpenAPI page;
+* telemetry (when on) records routes, statuses, latency and labels only.
 """
 
 from __future__ import annotations
@@ -24,8 +25,10 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field
 
+from . import telemetry
 from .labels import TASKS
 from .sanitize import prepare
+from .telemetry import Instruments
 
 MAX_BODY_BYTES = 16 * 1024
 MAX_TEXT_CHARS = 8000
@@ -121,8 +124,10 @@ def load_predictor(name: str) -> Predictor:
     raise RuntimeError("CLASSIFIER_MODEL must be 'lora' or 'baseline'.")
 
 
-def create_app(predictor: Predictor | None = None, token: str | None = None) -> FastAPI:
+def create_app(predictor: Predictor | None = None, token: str | None = None, instruments: Instruments | None = None) -> FastAPI:
     secret = token if token is not None else os.environ.get("CLASSIFIER_TOKEN", "")
+    if instruments is None and telemetry.enabled():
+        instruments = telemetry.setup()
     if len(secret) < 32:
         raise RuntimeError("CLASSIFIER_TOKEN must be set (at least 32 characters).")
 
@@ -137,6 +142,8 @@ def create_app(predictor: Predictor | None = None, token: str | None = None) -> 
     app = FastAPI(title="Ticko classifier", docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
 
     app.add_middleware(BodyLimit, limit=MAX_BODY_BYTES)
+    if instruments is not None:
+        telemetry.instrument(app)
 
     @app.exception_handler(RequestValidationError)
     async def validation_error(_: Request, exc: RequestValidationError) -> JSONResponse:
@@ -163,7 +170,12 @@ def create_app(predictor: Predictor | None = None, token: str | None = None) -> 
         if prepared.pii_masked:
             flags.append("pii_masked")
 
-        [prediction] = state["model"].predict([payload.text])
+        model = state["model"]
+        if instruments is None:
+            [prediction] = model.predict([payload.text])
+        else:
+            with instruments.inference(model.version):
+                [prediction] = model.predict([payload.text])
         labels = {}
         for task, classes in TASKS.items():
             label, confidence = prediction[task]
@@ -171,6 +183,9 @@ def create_app(predictor: Predictor | None = None, token: str | None = None) -> 
                 raise HTTPException(status_code=500, detail="Invalid model output.")
             labels[task] = Label(label=label, confidence=round(float(confidence), 4))
 
-        return ClassifyResponse(model=state["model"].version, flags=flags, **labels)
+        if instruments is not None:
+            instruments.labels({task: (value.label, value.confidence) for task, value in labels.items()}, flags)
+
+        return ClassifyResponse(model=model.version, flags=flags, **labels)
 
     return app

@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Actions\Auth;
 
 use App\Models\User;
+use App\Support\Telemetry\Metrics;
 use App\Support\Tenancy\TenantContext;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 /**
@@ -22,7 +24,7 @@ final readonly class AuthenticateUser
      */
     private const string DUMMY_HASH = '$argon2id$v=19$m=65536,t=4,p=1$dkx4bkw5SGJVLmh2SWViMw$C70+JUxKAYex37wgWM40w0lUUmeDPQHIQROScdeiAdY';
 
-    public function __construct(private TenantContext $tenants) {}
+    public function __construct(private TenantContext $tenants, private Metrics $metrics) {}
 
     public function handle(string $email, string $password): User
     {
@@ -35,6 +37,10 @@ final readonly class AuthenticateUser
             : Hash::check($password, self::DUMMY_HASH);
 
         if ($user === null || ! $valid || ! $user->is_active) {
+            $this->metrics->loginFailure();
+            // Never the e-mail or the password; the tenant comes from the context.
+            Log::warning('Failed sign-in', ['tenant' => $this->tenants->tenant()?->slug]);
+
             throw ValidationException::withMessages([
                 'email' => __('auth.failed'),
             ]);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Ai\Providers;
 
 use App\Services\Ai\AiUnavailable;
+use App\Services\Ai\AiUsage;
 use App\Services\Ai\Embedder;
 use App\Services\Ai\EmbeddingTask;
 use App\Services\Ai\TextGenerator;
@@ -22,6 +23,7 @@ final readonly class OllamaProvider implements Embedder, TextGenerator
         private string $url,
         private string $textModel,
         private string $embeddingModel,
+        private ?AiUsage $usage = null,
     ) {}
 
     public function generate(TextPrompt $prompt): string
@@ -47,6 +49,10 @@ final readonly class OllamaProvider implements Embedder, TextGenerator
         if (! is_string($text) || $text === '') {
             throw AiUnavailable::invalidResponse('Ollama returned no text.');
         }
+
+        $input = data_get($json, 'prompt_eval_count');
+        $output = data_get($json, 'eval_count');
+        $this->usage?->record(is_int($input) ? $input : 0, is_int($output) ? $output : 0);
 
         return $text;
     }

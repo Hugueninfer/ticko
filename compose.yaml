@@ -7,17 +7,13 @@
 #              it only through Caddy (/app/*), never on a port of its own.
 #   ml       — internal: the ticket classifier, reachable only by the queue
 #              (with a service token). Optional: `make up-ml`.
+#   obs      — internal: OpenTelemetry Collector, Prometheus, Tempo, Loki and
+#              Grafana. Optional: `make up-obs`. Only Grafana publishes a port
+#              (127.0.0.1, login required) through `obs-edge`.
 
 name: ticko
 
-x-api-common: &api-common
-  build:
-    context: .
-    dockerfile: infra/docker/php/Dockerfile
-    target: prod
-  image: ticko-api:local
-  env_file: .env
-  environment:
+x-api-env: &api-env
     DB_CONNECTION: pgsql
     DB_HOST: postgres
     DB_PORT: "5432"
@@ -31,6 +27,19 @@ x-api-common: &api-common
     REVERB_SCHEME: http
     # Empty = classification off. `make up-ml` sets it to http://classifier:8000.
     CLASSIFIER_URL: ${CLASSIFIER_URL:-}
+    # Off = no telemetry sent anywhere. `make up-obs` turns it on.
+    TICKO_TELEMETRY: ${TICKO_TELEMETRY:-false}
+    OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+    OTEL_SERVICE_NAME: ticko-api
+
+x-api-common: &api-common
+  build:
+    context: .
+    dockerfile: infra/docker/php/Dockerfile
+    target: prod
+  image: ticko-api:local
+  env_file: .env
+  environment: *api-env
   read_only: true
   tmpfs:
     - /tmp
@@ -77,13 +86,16 @@ services:
         condition: service_completed_successfully
       redis:
         condition: service_healthy
-    networks: [edge, backend, realtime]
+    networks: [edge, backend, realtime, obs]
     # The search playground embeds the query in the request (Ollama on this computer).
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
   queue:
     <<: *api-common
+    environment:
+      <<: *api-env
+      OTEL_SERVICE_NAME: ticko-queue
     command: ["php", "artisan", "horizon"]
     healthcheck:
       test: ["CMD", "php", "artisan", "horizon:status"]
@@ -97,7 +109,7 @@ services:
         condition: service_healthy
     # egress: AI providers (Gemini, Groq) are called from queued jobs.
     # ml: the classifier, called from the ClassifyTicket job.
-    networks: [backend, realtime, egress, ml]
+    networks: [backend, realtime, egress, ml, obs]
     # Lets jobs reach an Ollama server running on this computer (OLLAMA_URL).
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -114,6 +126,27 @@ services:
       retries: 5
     networks: [realtime]
 
+  # Runs scheduled commands: Horizon snapshots, token pruning and, with
+  # telemetry on, the SLA and queue gauges every minute.
+  scheduler:
+    <<: *api-common
+    environment:
+      <<: *api-env
+      OTEL_SERVICE_NAME: ticko-scheduler
+    command: ["php", "artisan", "schedule:work"]
+    # `docker compose up --wait` needs a healthcheck on every service.
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "schedule:work"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    networks: [backend, obs]
+
   # Ticket classifier (services/classifier): category, priority and sentiment.
   # No published port, no outbound network, non-root, read-only filesystem.
   classifier:
@@ -125,7 +158,129 @@ services:
     environment:
       CLASSIFIER_TOKEN: ${CLASSIFIER_TOKEN:?run make env first}
       CLASSIFIER_MODEL: ${CLASSIFIER_MODEL:-lora}
-    networks: [ml]
+      TICKO_TELEMETRY: ${TICKO_TELEMETRY:-false}
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+    networks: [ml, obs]
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    restart: unless-stopped
+
+  # --- Observability (`make up-obs`) ---------------------------------------
+  # Everything on the internal `obs` network; only Grafana has a host port.
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.162.0@sha256:39923a8e431bd1f57be82411999d389fcfe40857492e4365456d97a4c1f74be6
+    profiles: [obs]
+    command: ["--config=/etc/otelcol/config.yaml"]
+    volumes:
+      - ./infra/observability/otel-collector.yaml:/etc/otelcol/config.yaml:ro
+    networks: [obs]
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v3.15.0@sha256:efd719c99d83b060d9daefdcf00360461adf279f45ef5391f8d111892118753e
+    profiles: [obs]
+    command:
+      - --config.file=/etc/prometheus/prometheus.yaml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=7d
+    volumes:
+      - ./infra/observability/prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
+      - prometheus-data:/prometheus
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:9090/-/ready"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    networks: [obs]
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    restart: unless-stopped
+
+  tempo:
+    image: grafana/tempo:3.1.0@sha256:3076b8dcdfb32fd6bc5ccef85e7b7313e6199b9cb84366257fc17ecb696db5fd
+    profiles: [obs]
+    command: ["-config.file=/etc/tempo/tempo.yaml"]
+    volumes:
+      - ./infra/observability/tempo.yaml:/etc/tempo/tempo.yaml:ro
+      - tempo-data:/var/tempo
+    networks: [obs]
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    restart: unless-stopped
+
+  loki:
+    image: grafana/loki:3.7.8@sha256:1107dd5274e0ada47e42472b7a7e71f3b2a2fe878878108f3e2f9e51528f0193
+    profiles: [obs]
+    command: ["-config.file=/etc/loki/loki.yaml"]
+    volumes:
+      - ./infra/observability/loki.yaml:/etc/loki/loki.yaml:ro
+      - loki-data:/loki
+    networks: [obs]
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:13.2.4@sha256:dbbc38ea21103cefb50396340cd88afec779c7e070b0a7bf5a75b4ce46651d3f
+    profiles: [obs]
+    depends_on:
+      prometheus:
+        condition: service_healthy
+      loki:
+        condition: service_started
+      tempo:
+        condition: service_started
+    environment:
+      # Login required: no anonymous access, no sign-up, no basic auth on the
+      # API; the admin password is generated by `make env` (never a default).
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:?run make env first}
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+      GF_AUTH_BASIC_ENABLED: "false"
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_USERS_ALLOW_ORG_CREATE: "false"
+      GF_SECURITY_DISABLE_GRAVATAR: "true"
+      GF_SECURITY_COOKIE_SAMESITE: strict
+      GF_SECURITY_CONTENT_SECURITY_POLICY: "true"
+      GF_SECURITY_ANGULAR_SUPPORT_ENABLED: "false"
+      GF_SNAPSHOTS_EXTERNAL_ENABLED: "false"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+      GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES: "false"
+      GF_NEWS_NEWS_FEED_ENABLED: "false"
+      GF_PLUGINS_PREINSTALL_DISABLED: "true"
+      GF_SERVER_ROOT_URL: http://localhost:${GRAFANA_PORT:-3001}
+    volumes:
+      - ./infra/observability/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./infra/observability/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "127.0.0.1:${GRAFANA_PORT:-3001}:3000"
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:3000/api/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 20
+    networks: [obs, obs-edge]
     read_only: true
     tmpfs:
       - /tmp
@@ -232,8 +387,16 @@ networks:
     internal: true
   ml:
     internal: true
+  obs:
+    internal: true
+  # Only for Grafana's loopback port.
+  obs-edge: {}
 
 volumes:
+  prometheus-data:
+  tempo-data:
+  loki-data:
+  grafana-data:
   postgres-data:
   redis-data:
   api-storage:
