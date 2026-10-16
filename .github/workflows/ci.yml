@@ -276,7 +276,7 @@ jobs:
       - name: Run the end-to-end tests
         env:
           E2E_BASE_URL: http://localhost:8080
-        run: pnpm --filter @ticko/web e2e
+        run: pnpm --filter @ticko/web e2e --project chromium
       - name: Stack logs
         if: failure()
         run: docker compose logs --no-color --tail 200 api web
@@ -328,6 +328,75 @@ jobs:
         run: python -m ticko_classifier.fetch_model --dir "$TICKO_BASE_MODEL_DIR"
       - name: Eval LoRA model on the CPU (F1 thresholds + prompt-injection eval)
         run: python -m ticko_classifier.evaluate --model lora --check
+
+  observability:
+    name: Observability (Grafana, dashboards, redaction)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Dashboards are generated from code (no drift)
+        run: python3 infra/observability/grafana/build_dashboards.py && git diff --exit-code infra/observability/grafana/dashboards
+      - name: Start the stack with the classifier and observability
+        env:
+          TICKO_TELEMETRY: "true"
+          CLASSIFIER_URL: http://classifier:8000
+          TICKO_DEMO_LOGIN: "true"
+        run: |
+          ./scripts/make-env.sh
+          echo "TICKO_RATE_LIMIT_DEMO=120" >> .env
+          echo "TICKO_RATE_LIMIT_API=600" >> .env
+          echo "::add-mask::$(grep '^GRAFANA_ADMIN_PASSWORD=' .env | cut -d= -f2-)"
+          docker compose --profile ml --profile obs up -d --build --wait
+          docker compose exec -T api php artisan ticko:demo > /dev/null
+      - name: Install Chromium for Playwright
+        run: pnpm --filter @ticko/web exec playwright install --with-deps chromium
+      - name: Produce traffic (the app's end-to-end suite)
+        env:
+          E2E_BASE_URL: http://localhost:8080
+        run: pnpm --filter @ticko/web e2e --project chromium
+      - name: Grafana requires login and every panel has data
+        env:
+          GRAFANA_URL: http://localhost:3001
+        run: GRAFANA_PASSWORD="$(grep '^GRAFANA_ADMIN_PASSWORD=' .env | cut -d= -f2-)" pnpm --filter @ticko/web e2e --project observability
+      - name: Stored logs and traces carry no personal data or credentials
+        run: |
+          # Demo e-mails, CPF-like numbers and bearer tokens must not appear in Loki.
+          query='{service_name=~"ticko-.*"} |~ "@acme\\.test|[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}|Bearer [A-Za-z0-9]{8}"'
+          found=$(docker compose exec -T grafana wget -qO- "http://loki:3100/loki/api/v1/query_range?limit=5&since=1h&query=$(python3 -c 'import sys,urllib.parse;print(urllib.parse.quote(sys.argv[1]))' "$query")" \
+            | python3 -c 'import sys,json;print(sum(len(r["values"]) for r in json.load(sys.stdin)["data"]["result"]))')
+          echo "matches: $found"
+          test "$found" = 0
+          total=$(docker compose exec -T grafana wget -qO- "http://loki:3100/loki/api/v1/query_range?limit=5&since=1h&query=$(python3 -c 'import urllib.parse;print(urllib.parse.quote("{service_name=~\"ticko-.*\"}"))')" \
+            | python3 -c 'import sys,json;print(sum(len(r["values"]) for r in json.load(sys.stdin)["data"]["result"]))')
+          echo "log lines checked: $total"
+          test "$total" -gt 0
+      - name: Grafana is only on the loopback interface
+        run: |
+          docker compose port grafana 3000 | grep -q '^127.0.0.1:'
+          for service in otel-collector prometheus tempo loki; do
+            test -z "$(docker compose port "$service" 4318 2>/dev/null; docker compose port "$service" 9090 2>/dev/null; docker compose port "$service" 3100 2>/dev/null; docker compose port "$service" 3200 2>/dev/null)"
+          done
+      - name: Stack logs
+        if: failure()
+        run: docker compose --profile ml --profile obs logs --no-color --tail 100 api queue otel-collector grafana
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: failure()
+        with:
+          name: playwright-report-observability
+          path: apps/web/playwright-report
+          retention-days: 7
 
   docker:
     name: Build Docker images
