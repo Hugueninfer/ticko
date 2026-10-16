@@ -1,13 +1,32 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { unwrap } from '@ticko/api-client';
 import Echo from 'laravel-echo';
-import Pusher, { type ChannelAuthorizationCallback } from 'pusher-js/react-native';
+import type PusherClient from 'pusher-js/react-native';
+import * as PusherModule from 'pusher-js/react-native';
+import type { ChannelAuthorizationCallback } from 'pusher-js/react-native';
 import { useEffect, useSyncExternalStore } from 'react';
 
 import { api } from './api';
 import { getConfig, ConfigError } from './config';
 import { queryKeys } from './query';
 import { currentToken } from './session';
+
+/**
+ * pusher-js's React Native build is CommonJS and exports the class as `Pusher`
+ * (`module.exports.Pusher`), not as `default`: a default import gets the module
+ * object and `new` throws on the device. Accept both shapes.
+ */
+export function pusherClass(module: unknown = PusherModule): typeof PusherClient {
+  const candidate = module as { Pusher?: unknown; default?: unknown };
+
+  for (const value of [candidate.Pusher, candidate.default, module]) {
+    if (typeof value === 'function') {
+      return value as typeof PusherClient;
+    }
+  }
+
+  throw new TypeError('pusher-js did not export a constructor.');
+}
 
 /**
  * Realtime updates over Laravel Reverb (Pusher protocol), on the API's own
@@ -95,6 +114,7 @@ export function connectRealtime(key: string): Echo<'reverb'> | null {
   disconnectRealtime();
 
   const target = socketTarget(config.apiUrl);
+  const Pusher = pusherClass();
   const client = new Pusher(key, {
     cluster: '',
     wsHost: target.host,
