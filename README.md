@@ -112,6 +112,12 @@ TICKO_AI_EMBEDDING_PROVIDER=gemini   # fake (default) | gemini | ollama  → the
 GEMINI_API_KEY=...                   # or GROQ_API_KEY=..., or OLLAMA_URL=http://host.docker.internal:11434
 ```
 
+Tested with the Gemini free tier: the default `gemini-3.7-flash` drafts cited, natural pt-BR
+replies (~600 input / 60–230 output tokens, ~US$ 0.0005 per draft). The free tier allows only
+about **20 requests per day per model** and refuses bursts; `make demo` paces its calls
+(`TICKO_DEMO_AI_PAUSE`) and retries once, and `GEMINI_TEXT_MODEL=gemini-3.1-flash-lite` has its
+own quota. Rotate a key after sharing it.
+
 **Mobile app:** `make up-lan` (reachable on your Wi-Fi) and `make mobile-dev`, then scan the QR
 code with Expo Go — see [apps/mobile/README.md](apps/mobile/README.md). On an **Android emulator**
 (optional; needs Android Studio and an AVD), run `make mobile-dev` with

@@ -41,6 +41,9 @@ return [
     'demo' => [
         'enabled' => (bool) env('TICKO_DEMO_LOGIN', false),
         'tenant' => env('TICKO_DEMO_TENANT', 'acme'),
+        // `make demo` with a real AI provider: seconds between suggestion requests
+        // (free tiers refuse bursts), and one retry after a temporary failure.
+        'ai_pause_seconds' => (int) env('TICKO_DEMO_AI_PAUSE', 6),
     ],
 
     // AI: knowledge-base retrieval and reply suggestions. "fake" works offline
@@ -57,7 +60,7 @@ return [
         'gemini' => [
             'url' => env('GEMINI_API_URL', 'https://generativelanguage.googleapis.com/v1beta'),
             'key' => env('GEMINI_API_KEY'),
-            'text_model' => env('GEMINI_TEXT_MODEL', 'gemini-2.5-flash'),
+            'text_model' => env('GEMINI_TEXT_MODEL', 'gemini-3.7-flash'),
             'embedding_model' => env('GEMINI_EMBEDDING_MODEL', 'gemini-embedding-001'),
         ],
         'groq' => [

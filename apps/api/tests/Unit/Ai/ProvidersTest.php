@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Services\Ai\AiUnavailable;
+use App\Services\Ai\AiUsage;
 use App\Services\Ai\Embedder;
 use App\Services\Ai\EmbeddingTask;
 use App\Services\Ai\MeasuredTextGenerator;
@@ -61,7 +62,7 @@ describe('gemini', function (): void {
         expect(app(TextGenerator::class)->generate(prompt()))->toBe('{"answer":"ok"}');
 
         Http::assertSent(function (Request $request): bool {
-            expect($request->url())->toBe('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent')
+            expect($request->url())->toBe('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent')
                 ->and($request->url())->not->toContain('g-key')
                 ->and($request->header('x-goog-api-key'))->toBe(['g-key'])
                 ->and($request['systemInstruction']['parts'][0]['text'])->toBe('rules')
@@ -72,6 +73,25 @@ describe('gemini', function (): void {
             return true;
         });
     });
+
+    it('keeps reasoning low so JSON answers are not cut off, and bills reasoning tokens as output', function (string $model, ?array $thinking): void {
+        config(['ticko.ai.gemini.text_model' => $model]);
+        Http::fake(['generativelanguage.googleapis.com/*' => Http::response([
+            'candidates' => [['content' => ['parts' => [['text' => '{"answer":"ok"}']]]]],
+            'usageMetadata' => ['promptTokenCount' => 600, 'candidatesTokenCount' => 80, 'thoughtsTokenCount' => 40],
+        ])]);
+
+        app(TextGenerator::class)->generate(prompt());
+
+        Http::assertSent(fn (Request $request): bool => ($request['generationConfig']['thinkingConfig'] ?? null) === $thinking
+            // Room for the reasoning on top of the answer's own limit.
+            && $request['generationConfig']['maxOutputTokens'] === ($thinking === null ? 900 : 900 + 1024));
+        expect(app(AiUsage::class)->outputTokens())->toBe(120);
+    })->with([
+        'Gemini 3' => ['gemini-3.7-flash', ['thinkingLevel' => 'low']],
+        'Gemini 2.5 Flash' => ['gemini-2.5-flash', ['thinkingBudget' => 0]],
+        'Gemini 2.5 Pro (cannot turn it off)' => ['gemini-2.5-pro', null],
+    ]);
 
     it('embeds in batches at 768 dimensions and normalizes', function (): void {
         Http::fake(['*batchEmbedContents' => fn (Request $request) => Http::response([

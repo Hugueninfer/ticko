@@ -20,6 +20,8 @@ final readonly class GeminiProvider implements Embedder, TextGenerator
 {
     private const int EMBED_BATCH = 100;
 
+    private const int REASONING_ALLOWANCE = 1024;
+
     public function __construct(
         private HttpJson $http,
         private string $url,
@@ -32,6 +34,17 @@ final readonly class GeminiProvider implements Embedder, TextGenerator
     public function generate(TextPrompt $prompt): string
     {
         $config = ['temperature' => $prompt->temperature, 'maxOutputTokens' => $prompt->maxOutputTokens];
+
+        // "Thinking" models spend output tokens on reasoning first; with the default
+        // budget a short JSON answer can be cut off (MAX_TOKENS) and gets slow.
+        $thinking = self::thinking($this->textModel);
+
+        if ($thinking !== null) {
+            $config['thinkingConfig'] = $thinking;
+            // Even at the lowest level some models reason for hundreds of tokens, which
+            // count against the output limit: leave room for it (only used tokens are billed).
+            $config['maxOutputTokens'] = $prompt->maxOutputTokens + self::REASONING_ALLOWANCE;
+        }
 
         if ($prompt->schema !== null) {
             $config['responseMimeType'] = 'application/json';
@@ -52,7 +65,11 @@ final readonly class GeminiProvider implements Embedder, TextGenerator
             throw AiUnavailable::invalidResponse('Gemini returned no text ('.(is_string($reason) ? $reason : 'unknown').').');
         }
 
-        $this->usage?->record(self::int(data_get($json, 'usageMetadata.promptTokenCount')), self::int(data_get($json, 'usageMetadata.candidatesTokenCount')));
+        // Reasoning tokens are billed as output.
+        $this->usage?->record(
+            self::int(data_get($json, 'usageMetadata.promptTokenCount')),
+            self::int(data_get($json, 'usageMetadata.candidatesTokenCount')) + self::int(data_get($json, 'usageMetadata.thoughtsTokenCount')),
+        );
 
         return $text;
     }
@@ -119,6 +136,21 @@ final readonly class GeminiProvider implements Embedder, TextGenerator
         }
 
         return $converted;
+    }
+
+    /**
+     * Least reasoning each model family accepts: Gemini 3+ takes a level, 2.5 Flash a
+     * zero budget (2.5 Pro cannot turn it off); older models have no such setting.
+     *
+     * @return array<string, int|string>|null
+     */
+    private static function thinking(string $model): ?array
+    {
+        return match (true) {
+            preg_match('/^gemini-([3-9]|\d{2,})/', $model) === 1 => ['thinkingLevel' => 'low'],
+            str_starts_with($model, 'gemini-2.5-flash') => ['thinkingBudget' => 0],
+            default => null,
+        };
     }
 
     private static function int(mixed $value): int

@@ -32,6 +32,7 @@ use App\Support\Demo\DemoTickets;
 use App\Support\Tenancy\TenantContext;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
+use LogicException;
 
 /**
  * Seeds the demo tenant "acme" (Loja Aurora): staff and customers, categories,
@@ -147,7 +148,11 @@ final class SeedDemoCommand extends Command
                 $added['corrections']++;
             }
 
-            if ($spec['suggestion'] !== null && AiSuggestion::query()->where('ticket_id', $ticket->id)->doesntExist()) {
+            // A suggestion that failed for a temporary reason (rate limit, overload) is tried again.
+            $done = AiSuggestion::query()->where('ticket_id', $ticket->id)
+                ->when($spec['suggestion'] !== 'failed', fn ($q) => $q->where('status', '!=', SuggestionStatus::Failed->value));
+
+            if ($spec['suggestion'] !== null && $done->doesntExist()) {
                 $this->suggestion($ticket->refresh(), $spec['suggestion']);
                 $added['suggestions']++;
             }
@@ -339,6 +344,30 @@ final class SeedDemoCommand extends Command
         app(CorrectClassification::class)->handle($this->people['agent'], $ticket, $input);
     }
 
+    /**
+     * Real providers' free tiers refuse bursts: pause between requests and try
+     * once more after a temporary failure. The offline fake needs neither.
+     */
+    private function requestSuggestion(User $agent, Ticket $ticket): AiSuggestion
+    {
+        $pause = config()->string('ticko.ai.text_provider') === 'fake' ? 0 : config()->integer('ticko.demo.ai_pause_seconds');
+        $suggestion = null;
+
+        foreach ([1, 2] as $attempt) {
+            if ($pause > 0) {
+                sleep($attempt === 1 ? $pause : 4 * $pause);
+            }
+
+            $suggestion = app(RequestReplySuggestion::class)->handle($agent, $ticket)->refresh();
+
+            if ($suggestion->status !== SuggestionStatus::Failed) {
+                break;
+            }
+        }
+
+        return $suggestion ?? throw new LogicException('No suggestion requested.');
+    }
+
     private function suggestion(Ticket $ticket, string $outcome): void
     {
         $agent = $ticket->assignee_id !== null ? User::query()->findOrFail($ticket->assignee_id) : $this->people['agent'];
@@ -354,7 +383,7 @@ final class SeedDemoCommand extends Command
         }
 
         // The real job, with the configured provider (the offline fake by default).
-        $suggestion = app(RequestReplySuggestion::class)->handle($agent, $ticket)->refresh();
+        $suggestion = $this->requestSuggestion($agent, $ticket);
 
         if ($suggestion->status !== SuggestionStatus::Ready) {
             return;
