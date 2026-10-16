@@ -1,0 +1,12 @@
+# Runtime of the classification service (CPU only). Locked with hashes in
+# requirements.lock (`make classifier-lock`); never install from this file.
+fastapi
+uvicorn
+pydantic
+numpy
+safetensors
+# CPU-only build for Linux x86_64 / Python 3.12 (the image and CI), from PyTorch's
+# official index; every other package comes from PyPI.
+torch @ https://download.pytorch.org/whl/cpu/torch-2.14.1%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl
+transformers
+peft

@@ -1,0 +1,29 @@
+[project]
+name = "ticko-classifier"
+version = "1.0.0"
+description = "Ticket classifier (category, priority, sentiment) for Ticko"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.coverage.run]
+source = ["ticko_classifier"]
+# Training entry points and the transformer model run in the eval job (make classifier-eval).
+omit = ["ticko_classifier/lora.py", "ticko_classifier/fetch_model.py"]
+
+[tool.coverage.report]
+fail_under = 85
+show_missing = true
+
+[tool.ruff]
+line-length = 140
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "SIM", "PL", "RUF"]
+ignore = ["PLR2004", "PLR0913", "S101", "RUF001", "RUF002", "RUF003", "PLC0415"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S106", "PLR0912"]
