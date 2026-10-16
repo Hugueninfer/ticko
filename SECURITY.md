@@ -59,4 +59,4 @@ threat model of sign-in, the customer's ticket and the AI suggestion is in
   manager and off-site backups.
 - The ticket classifier is trained on synthetic data; validate it with real (anonymized)
   tickets before relying on it.
-- Push notifications on Android (FCM) and the mobile app on real devices were not tested in CI.
+- The mobile app was tested on an Android 15 emulator (Expo Go); push notifications on Android (FCM, development build) and physical phones were not.

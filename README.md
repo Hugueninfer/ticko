@@ -119,10 +119,20 @@ about **20 requests per day per model** and refuses bursts; `make demo` paces it
 own quota. Rotate a key after sharing it.
 
 **Mobile app:** `make up-lan` (reachable on your Wi-Fi) and `make mobile-dev`, then scan the QR
-code with Expo Go — see [apps/mobile/README.md](apps/mobile/README.md). On an **Android emulator**
-(optional; needs Android Studio and an AVD), run `make mobile-dev` with
-`EXPO_PUBLIC_API_URL=http://10.0.2.2:8080` in `apps/mobile/.env` (the emulator's address for your
-computer) and press `a`.
+code with Expo Go — see [apps/mobile/README.md](apps/mobile/README.md). Or on an **Android
+emulator** on this computer, without Android Studio or sudo (needs KVM, Java 17+ and the Android
+command-line tools in `~/Android/Sdk/cmdline-tools/latest`; ~3 GB, and ~8 GB free while it runs):
+
+```bash
+make android-setup     # SDK packages + the "ticko" AVD (Android 15); you accept Google's SDK licenses
+make mobile-emulator   # boots it and opens the app in Expo Go, API on http://10.0.2.2:$WEB_PORT
+```
+
+<p>
+  <img src="docs/screenshots/mobile-2-tickets.png" width="200" alt="The customer's tickets">
+  <img src="docs/screenshots/mobile-4-conversation.png" width="200" alt="A new ticket's conversation">
+  <img src="docs/screenshots/mobile-5-reply-live.png" width="200" alt="The agent's reply, live">
+</p>
 
 Ports taken? Set `WEB_PORT` / `GRAFANA_PORT` (and `APP_URL`) in `.env`. Real tenants:
 `docker compose exec api php artisan ticko:tenant:create <slug> "<Name>" --admin-email=<email>`.

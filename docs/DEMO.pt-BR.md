@@ -69,9 +69,18 @@ até o classificador em Python, passando pela fila.
 ![Dashboard da IA](screenshots/10-grafana-ai.png)
 ![Dashboard de SLA](screenshots/11-grafana-sla.png)
 
-**8. O lado do cliente (opcional, 2 min).** `make up-lan`, depois `make mobile-dev` e leia o QR
-code com o Expo Go (ou use um emulador Android, veja o README). Entre como a cliente demo
-(Mariana Costa): os tickets dela, um ticket novo com foto, respostas ao vivo e notificações push.
+**8. O lado do cliente (opcional, 2 min).** Uma vez `make android-setup`, depois
+`make mobile-emulator` (emulador Android neste computador) — ou `make up-lan` + `make mobile-dev`
+e o Expo Go no celular. Entre como a cliente demo (Mariana Costa) e abra um ticket sem tópico: o
+classificador preenche categoria e prioridade, o atendente aprova o rascunho da IA no web e a
+resposta aparece no app **ao vivo**, com o status indo para *Em andamento*.
+
+<p>
+  <img src="screenshots/mobile-2-tickets.png" width="220" alt="Os tickets da cliente">
+  <img src="screenshots/mobile-3-new-ticket.png" width="220" alt="Ticket novo">
+  <img src="screenshots/mobile-5-reply-live.png" width="220" alt="A resposta do atendente, ao vivo">
+</p>
+
 
 ## Gerando os screenshots de novo
 
@@ -79,4 +88,5 @@ code com o Expo Go (ou use um emulador Android, veja o README). Entre como a cli
 make up-obs && make demo && make screenshots
 ```
 
-O app mobile não é capturado automaticamente (precisa de um aparelho ou emulador).
+Os screenshots do mobile (`docs/screenshots/mobile-*.png`) foram tirados no emulador Android
+(`make mobile-emulator`, `adb exec-out screencap`).
