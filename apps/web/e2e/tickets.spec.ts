@@ -57,13 +57,17 @@ test('agent corrects the classification of a ticket', async ({ page }) => {
   const card = page.getByRole('region', { name: 'Classificação da IA' });
   await expect(card).toBeVisible();
   await card.getByRole('button', { name: 'Corrigir' }).click();
-  await card.getByLabel('Categoria').selectOption({ label: 'Pagamento' });
+  // Always a real change, so the test can run again on the same data.
+  const category = card.getByLabel('Categoria');
+  const current = await category.locator('option:checked').innerText();
+  const target = current === 'Pagamento' ? 'Entrega' : 'Pagamento';
+  await category.selectOption({ label: target });
   await card.getByLabel('Sentimento').selectOption('positive');
   await card.getByRole('button', { name: 'Salvar correção' }).click();
 
   await expect(page.getByText('Classificação corrigida.')).toBeVisible();
   const details = page.getByRole('complementary', { name: 'Cliente' });
-  await expect(details.getByText('Pagamento', { exact: true })).toBeVisible();
+  await expect(details.getByText(target, { exact: true })).toBeVisible();
   await expect(details.getByText('Positivo', { exact: true })).toBeVisible();
   // A person's choice: no AI badge.
   await expect(page.getByTestId('ai-badge-category')).toHaveCount(0);
