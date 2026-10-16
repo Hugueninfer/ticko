@@ -7,7 +7,7 @@ GRAFANA_PORT = $(or $(shell grep -s '^GRAFANA_PORT=' .env | cut -d= -f2),3001)
 LAN_IP = $(or $(shell hostname -I 2>/dev/null | awk '{print $$1}'),$(shell ipconfig getifaddr en0 2>/dev/null),127.0.0.1)
 
 PHONY_CLASSIFIER := classifier-image classifier-model classifier-data classifier-train classifier-eval classifier-test classifier-lock
-.PHONY: $(PHONY_CLASSIFIER) help env up up-ml up-obs screenshots demo-reset backup backup-verify semgrep trivy obs-dashboards e2e-obs up-lan down logs demo kb-reindex test coverage lint fix stan docs audit gitleaks ci web-install web-dev web-test e2e mobile-env mobile-dev mobile-test
+.PHONY: $(PHONY_CLASSIFIER) help env android-setup mobile-emulator up up-ml up-obs screenshots demo-reset backup backup-verify semgrep trivy obs-dashboards e2e-obs up-lan down logs demo kb-reindex test coverage lint fix stan docs audit gitleaks ci web-install web-dev web-test e2e mobile-env mobile-dev mobile-test
 
 help: ## Show available targets
 	@grep -E '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-17s\033[0m %s\n", $$1, $$2}'
@@ -151,6 +151,13 @@ mobile-env: ## Create apps/mobile/.env pointing the app at this computer (once)
 
 mobile-dev: web-install mobile-env ## Start Expo for the mobile app (scan the QR code with Expo Go; needs make up-lan)
 	corepack pnpm --filter @ticko/mobile start
+
+android-setup: ## Install the Android SDK packages and create the emulator (accepts Google's SDK licenses interactively)
+	./scripts/android-emulator.sh setup
+
+mobile-emulator: web-install ## Boot the Android emulator and open the customer app in Expo Go (API on http://10.0.2.2:WEB_PORT)
+	./scripts/android-emulator.sh start
+	EXPO_PUBLIC_API_URL=http://10.0.2.2:$(WEB_PORT) corepack pnpm --filter @ticko/mobile android
 
 mobile-test: web-install ## Lint, type-check and test the mobile app (coverage gate)
 	corepack pnpm exec eslint apps/mobile && corepack pnpm exec prettier --check apps/mobile
