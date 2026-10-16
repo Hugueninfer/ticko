@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Ai\Providers;
 
 use App\Services\Ai\AiUnavailable;
+use App\Services\Ai\AiUsage;
 use App\Services\Ai\Embedder;
 use App\Services\Ai\EmbeddingTask;
 use App\Services\Ai\TextGenerator;
@@ -25,6 +26,7 @@ final readonly class GeminiProvider implements Embedder, TextGenerator
         private ?string $key,
         private string $textModel,
         private string $embeddingModel,
+        private ?AiUsage $usage = null,
     ) {}
 
     public function generate(TextPrompt $prompt): string
@@ -49,6 +51,8 @@ final readonly class GeminiProvider implements Embedder, TextGenerator
 
             throw AiUnavailable::invalidResponse('Gemini returned no text ('.(is_string($reason) ? $reason : 'unknown').').');
         }
+
+        $this->usage?->record(self::int(data_get($json, 'usageMetadata.promptTokenCount')), self::int(data_get($json, 'usageMetadata.candidatesTokenCount')));
 
         return $text;
     }
@@ -115,6 +119,11 @@ final readonly class GeminiProvider implements Embedder, TextGenerator
         }
 
         return $converted;
+    }
+
+    private static function int(mixed $value): int
+    {
+        return is_int($value) ? $value : 0;
     }
 
     /**

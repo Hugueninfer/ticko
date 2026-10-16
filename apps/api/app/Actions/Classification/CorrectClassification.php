@@ -12,6 +12,7 @@ use App\Models\AuditEvent;
 use App\Models\ClassificationCorrection;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Support\Telemetry\Metrics;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -22,6 +23,8 @@ use Illuminate\Support\Facades\DB;
  */
 final readonly class CorrectClassification
 {
+    public function __construct(private Metrics $metrics) {}
+
     /**
      * @param  array{category_id?: string|null, priority?: string, sentiment?: string|null}  $changes
      */
@@ -61,6 +64,8 @@ final readonly class CorrectClassification
             $ticket->save();
 
             foreach ($diff as $field => [$from, $to, $source]) {
+                $this->metrics->classificationCorrection($field, $source->value ?? 'nobody');
+
                 if ($source !== FieldSource::Ai) {
                     continue;
                 }

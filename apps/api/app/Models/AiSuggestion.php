@@ -34,6 +34,9 @@ use Illuminate\Support\Carbon;
  * @property string|null $model
  * @property string|null $error_code
  * @property int|null $latency_ms
+ * @property int|null $input_tokens
+ * @property int|null $output_tokens
+ * @property string|null $cost_usd Estimated, in US dollars
  * @property string|null $reviewed_by_id
  * @property Carbon|null $reviewed_at
  * @property string|null $message_id

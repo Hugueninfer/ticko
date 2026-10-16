@@ -6,6 +6,7 @@ use App\Exceptions\ProblemDetailsRenderer;
 use App\Http\Middleware\EnsureDocsAreEnabled;
 use App\Http\Middleware\EnsureUserIsActive;
 use App\Http\Middleware\ResolveTenant;
+use App\Support\Telemetry\TraceRequests;
 use Illuminate\Contracts\Auth\Middleware\AuthenticatesRequests;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -27,6 +28,9 @@ return Application::configure(basePath: dirname(__DIR__))
         ['prefix' => 'api', 'middleware' => ['api', 'auth:sanctum', 'active', 'throttle:api']],
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // First: one trace span and latency sample per request (no-op unless telemetry is on).
+        $middleware->prepend(TraceRequests::class);
+
         // Sanctum SPA cookie authentication for first-party frontends.
         $middleware->statefulApi();
 

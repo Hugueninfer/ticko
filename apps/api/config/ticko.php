@@ -70,6 +70,24 @@ return [
             'text_model' => env('OLLAMA_TEXT_MODEL', 'llama3.1:8b'),
             'embedding_model' => env('OLLAMA_EMBEDDING_MODEL', 'nomic-embed-text'),
         ],
+        // Estimated cost, in US dollars per million tokens [input, output], for
+        // the dashboards. Check your provider's price list; these are estimates.
+        // The offline fake is priced like Gemini Flash so the demo shows a cost.
+        'prices' => [
+            'gemini' => [(float) env('TICKO_AI_PRICE_GEMINI_INPUT', 0.30), (float) env('TICKO_AI_PRICE_GEMINI_OUTPUT', 2.50)],
+            'groq' => [(float) env('TICKO_AI_PRICE_GROQ_INPUT', 0.59), (float) env('TICKO_AI_PRICE_GROQ_OUTPUT', 0.79)],
+            'ollama' => [0.0, 0.0],
+            'fake' => [0.30, 2.50],
+        ],
+    ],
+
+    // Observability (`make up-obs`): traces, metrics and logs over OTLP to the
+    // OpenTelemetry Collector. Off by default; nothing is sent anywhere.
+    'telemetry' => [
+        'enabled' => (bool) env('TICKO_TELEMETRY', false),
+        'endpoint' => env('OTEL_EXPORTER_OTLP_ENDPOINT', 'http://otel-collector:4318'),
+        'service' => env('OTEL_SERVICE_NAME', 'ticko-api'),
+        'timeout_seconds' => (float) env('OTEL_EXPORTER_OTLP_TIMEOUT_SECONDS', 1.0),
     ],
 
     // Ticket classifier (services/classifier), reached on an internal network
