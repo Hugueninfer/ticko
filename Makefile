@@ -7,7 +7,7 @@ GRAFANA_PORT = $(or $(shell grep -s '^GRAFANA_PORT=' .env | cut -d= -f2),3001)
 LAN_IP = $(or $(shell hostname -I 2>/dev/null | awk '{print $$1}'),$(shell ipconfig getifaddr en0 2>/dev/null),127.0.0.1)
 
 PHONY_CLASSIFIER := classifier-image classifier-model classifier-data classifier-train classifier-eval classifier-test classifier-lock
-.PHONY: $(PHONY_CLASSIFIER) help env up up-ml up-obs up-lan down logs demo kb-reindex test coverage lint fix stan docs audit gitleaks ci web-install web-dev web-test e2e mobile-env mobile-dev mobile-test
+.PHONY: $(PHONY_CLASSIFIER) help env up up-ml up-obs obs-dashboards e2e-obs up-lan down logs demo kb-reindex test coverage lint fix stan docs audit gitleaks ci web-install web-dev web-test e2e mobile-env mobile-dev mobile-test
 
 help: ## Show available targets
 	@grep -E '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-17s\033[0m %s\n", $$1, $$2}'
@@ -31,6 +31,13 @@ up-ml: env ## Like up, plus the ticket classifier (first build downloads ~1 GB: 
 up-obs: env ## Like up, plus observability: Grafana on http://localhost:3001 (admin password in .env)
 	TICKO_TELEMETRY=true $(COMPOSE) --profile obs up -d --build --wait
 	@echo "Grafana: http://localhost:$(GRAFANA_PORT)  user: admin  password: GRAFANA_ADMIN_PASSWORD in .env"
+
+obs-dashboards: ## Regenerate the Grafana dashboards (JSON) from infra/observability/grafana/build_dashboards.py
+	python3 infra/observability/grafana/build_dashboards.py
+
+e2e-obs: web-install ## Check Grafana (login required, every panel has data); run after make up-obs, make demo and make e2e
+	GRAFANA_URL=http://localhost:$(GRAFANA_PORT) GRAFANA_PASSWORD=$$(grep '^GRAFANA_ADMIN_PASSWORD=' .env | cut -d= -f2-) \
+		corepack pnpm --filter @ticko/web e2e --project observability
 
 down: ## Stop the stack
 	$(COMPOSE) --profile ml --profile obs down
@@ -107,7 +114,7 @@ web-test: web-install ## Lint, type-check and test the web app and API client
 	corepack pnpm lint && corepack pnpm --filter '!@ticko/mobile' -r typecheck && corepack pnpm --filter '!@ticko/mobile' -r test:coverage
 
 e2e: web-install ## End-to-end tests against the running stack (make up && make demo first)
-	E2E_BASE_URL=http://localhost:$(WEB_PORT) corepack pnpm --filter @ticko/web e2e
+	E2E_BASE_URL=http://localhost:$(WEB_PORT) corepack pnpm --filter @ticko/web e2e --project chromium
 
 mobile-env: ## Create apps/mobile/.env pointing the app at this computer (once)
 	@test -f apps/mobile/.env && echo "apps/mobile/.env already exists; leaving it untouched." || \

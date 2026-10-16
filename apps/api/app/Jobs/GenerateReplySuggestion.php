@@ -20,6 +20,7 @@ use App\Support\Telemetry\Metrics;
 use App\Support\Tenancy\TenantContext;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Drafts a reply for an agent from the knowledge base:
@@ -149,6 +150,14 @@ final class GenerateReplySuggestion implements ShouldQueue
         ])->save();
 
         $this->metrics?->suggestion($status->value);
+        Log::log($status === SuggestionStatus::Failed ? 'warning' : 'info', 'Reply suggestion finished', [
+            'status' => $status->value,
+            'error_code' => $error,
+            'provider' => $generator?->provider(),
+            'latency_ms' => $suggestion->latency_ms,
+            'input_tokens' => $this->usage?->inputTokens(),
+            'output_tokens' => $this->usage?->outputTokens(),
+        ]);
 
         SuggestionUpdated::dispatch($suggestion->tenant_id, $suggestion->ticket_id, $suggestion->id);
     }

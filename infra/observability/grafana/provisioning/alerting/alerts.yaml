@@ -1,0 +1,223 @@
+# Provisioned alert rules (Grafana unified alerting). Edit here, not in the UI.
+apiVersion: 1
+groups:
+- orgId: 1
+  name: ticko
+  folder: Ticko
+  interval: 1m
+  rules:
+  - uid: ticko-login-failures
+    title: Spike of failed sign-ins
+    condition: C
+    for: 0s
+    noDataState: OK
+    execErrState: Error
+    labels:
+      severity: warning
+      team: support
+    annotations:
+      summary: 'More than 20 failed sign-ins in 5 minutes: possible password guessing.'
+    data:
+    - refId: A
+      datasourceUid: prometheus
+      relativeTimeRange:
+        from: 600
+        to: 0
+      model:
+        refId: A
+        expr: sum(increase(ticko_auth_login_failures_total[5m]))
+        instant: true
+        range: false
+    - refId: B
+      datasourceUid: __expr__
+      model:
+        refId: B
+        type: reduce
+        expression: A
+        reducer: last
+        settings:
+          mode: dropNN
+    - refId: C
+      datasourceUid: __expr__
+      model:
+        refId: C
+        type: threshold
+        expression: B
+        conditions:
+        - evaluator:
+            type: gt
+            params:
+            - 20
+  - uid: ticko-cross-tenant-probing
+    title: Burst of 403/404 answers
+    condition: C
+    for: 0s
+    noDataState: OK
+    execErrState: Error
+    labels:
+      severity: warning
+      team: support
+    annotations:
+      summary: 'More than 50 denied or not-found answers in 5 minutes: someone may
+        be probing ids of another tenant.'
+    data:
+    - refId: A
+      datasourceUid: prometheus
+      relativeTimeRange:
+        from: 600
+        to: 0
+      model:
+        refId: A
+        expr: sum(increase(ticko_http_server_duration_seconds_count{job="ticko/ticko-api",http_response_status_code=~"403|404"}[5m]))
+        instant: true
+        range: false
+    - refId: B
+      datasourceUid: __expr__
+      model:
+        refId: B
+        type: reduce
+        expression: A
+        reducer: last
+        settings:
+          mode: dropNN
+    - refId: C
+      datasourceUid: __expr__
+      model:
+        refId: C
+        type: threshold
+        expression: B
+        conditions:
+        - evaluator:
+            type: gt
+            params:
+            - 50
+  - uid: ticko-ai-errors
+    title: AI model errors above 20%
+    condition: C
+    for: 5m
+    noDataState: OK
+    execErrState: Error
+    labels:
+      severity: warning
+      team: support
+    annotations:
+      summary: More than 20% of model calls failed in the last 10 minutes (timeouts,
+        rate limits or invalid answers).
+    data:
+    - refId: A
+      datasourceUid: prometheus
+      relativeTimeRange:
+        from: 600
+        to: 0
+      model:
+        refId: A
+        expr: sum(rate(ticko_ai_llm_duration_seconds_count{outcome!="ok"}[10m])) /
+          clamp_min(sum(rate(ticko_ai_llm_duration_seconds_count[10m])), 1e-9)
+        instant: true
+        range: false
+    - refId: B
+      datasourceUid: __expr__
+      model:
+        refId: B
+        type: reduce
+        expression: A
+        reducer: last
+        settings:
+          mode: dropNN
+    - refId: C
+      datasourceUid: __expr__
+      model:
+        refId: C
+        type: threshold
+        expression: B
+        conditions:
+        - evaluator:
+            type: gt
+            params:
+            - 0.2
+  - uid: ticko-ai-cost
+    title: AI cost above 5 USD per hour
+    condition: C
+    for: 10m
+    noDataState: OK
+    execErrState: Error
+    labels:
+      severity: warning
+      team: support
+    annotations:
+      summary: Estimated model cost is above 5 USD/hour for 10 minutes. Check usage
+        per tenant on the AI dashboard.
+    data:
+    - refId: A
+      datasourceUid: prometheus
+      relativeTimeRange:
+        from: 600
+        to: 0
+      model:
+        refId: A
+        expr: sum(rate(ticko_ai_cost_usd_total[15m])) * 3600
+        instant: true
+        range: false
+    - refId: B
+      datasourceUid: __expr__
+      model:
+        refId: B
+        type: reduce
+        expression: A
+        reducer: last
+        settings:
+          mode: dropNN
+    - refId: C
+      datasourceUid: __expr__
+      model:
+        refId: C
+        type: threshold
+        expression: B
+        conditions:
+        - evaluator:
+            type: gt
+            params:
+            - 5
+  - uid: ticko-sla-breached
+    title: Tickets past their SLA deadline
+    condition: C
+    for: 5m
+    noDataState: OK
+    execErrState: Error
+    labels:
+      severity: critical
+      team: support
+    annotations:
+      summary: Open tickets are past their first-response or resolution deadline.
+        See the Tickets and SLA dashboard.
+    data:
+    - refId: A
+      datasourceUid: prometheus
+      relativeTimeRange:
+        from: 600
+        to: 0
+      model:
+        refId: A
+        expr: sum(ticko_tickets_overdue)
+        instant: true
+        range: false
+    - refId: B
+      datasourceUid: __expr__
+      model:
+        refId: B
+        type: reduce
+        expression: A
+        reducer: last
+        settings:
+          mode: dropNN
+    - refId: C
+      datasourceUid: __expr__
+      model:
+        refId: C
+        type: threshold
+        expression: B
+        conditions:
+        - evaluator:
+            type: gt
+            params:
+            - 0

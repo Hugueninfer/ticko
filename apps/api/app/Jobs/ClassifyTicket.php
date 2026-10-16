@@ -14,6 +14,7 @@ use App\Services\Classifier\ClassifierUnavailable;
 use App\Support\Tenancy\TenantContext;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Classifies a new ticket in the background. The helpdesk never waits for
@@ -52,6 +53,8 @@ final class ClassifyTicket implements ShouldQueue
             try {
                 $result = $client->classify($ticket->subject."\n".$ticket->description);
             } catch (ClassifierUnavailable $exception) {
+                Log::warning('Classifier unavailable', ['error_code' => $exception->errorCode, 'attempt' => $this->attempts()]);
+
                 if ($exception->errorCode === 'NOT_CONFIGURED' || $this->attempts() >= $this->tries) {
                     $this->fail($ticket, $exception->errorCode);
 

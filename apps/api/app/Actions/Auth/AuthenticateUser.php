@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Support\Telemetry\Metrics;
 use App\Support\Tenancy\TenantContext;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 /**
@@ -37,6 +38,8 @@ final readonly class AuthenticateUser
 
         if ($user === null || ! $valid || ! $user->is_active) {
             $this->metrics->loginFailure();
+            // Never the e-mail or the password; the tenant comes from the context.
+            Log::warning('Failed sign-in', ['tenant' => $this->tenants->tenant()?->slug]);
 
             throw ValidationException::withMessages([
                 'email' => __('auth.failed'),
