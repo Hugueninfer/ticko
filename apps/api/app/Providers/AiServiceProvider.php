@@ -11,6 +11,7 @@ use App\Services\Ai\Providers\GroqProvider;
 use App\Services\Ai\Providers\HttpJson;
 use App\Services\Ai\Providers\OllamaProvider;
 use App\Services\Ai\TextGenerator;
+use App\Services\Classifier\ClassifierClient;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Support\ServiceProvider;
@@ -38,12 +39,24 @@ final class AiServiceProvider extends ServiceProvider
             default => throw new InvalidArgumentException('TICKO_AI_TEXT_PROVIDER must be fake, gemini, groq or ollama.'),
         });
 
+        $this->app->bind(ClassifierClient::class, fn (Application $app): ClassifierClient => $this->classifier($app));
+
         $this->app->bind(Embedder::class, fn (Application $app): Embedder => match ($this->setting('embedding_provider')) {
             'gemini' => $this->gemini($app),
             'ollama' => $this->ollama($app),
             'fake' => new FakeProvider,
             default => throw new InvalidArgumentException('TICKO_AI_EMBEDDING_PROVIDER must be fake, gemini or ollama.'),
         });
+    }
+
+    private function classifier(Application $app): ClassifierClient
+    {
+        return new ClassifierClient(
+            $app->make(HttpFactory::class),
+            config()->string('ticko.classifier.url'),
+            config()->string('ticko.classifier.token'),
+            config()->integer('ticko.classifier.timeout_seconds'),
+        );
     }
 
     private function gemini(Application $app): GeminiProvider
