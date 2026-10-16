@@ -301,7 +301,11 @@ services:
     networks: [backend]
 
   postgres:
-    image: pgvector/pgvector:0.8.7-pg17
+    # pgvector/pgvector pinned by digest, with Debian security updates and
+    # without gosu (infra/docker/postgres); runs as the postgres user.
+    build:
+      context: infra/docker/postgres
+    image: ticko-postgres:local
     environment:
       POSTGRES_USER: ${POSTGRES_SUPERUSER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_SUPERUSER_PASSWORD:?run make env first}
@@ -320,10 +324,11 @@ services:
     networks: [backend]
     security_opt:
       - no-new-privileges:true
+    cap_drop: [ALL]
     restart: unless-stopped
 
   redis:
-    image: redis:8.6-alpine
+    image: redis:8.6.7-alpine@sha256:ac2da09bc822f325a9f68f533120b86fa39c1b8db46b3aa7c1bbea7fdfd4fcba
     command: ["redis-server", "--requirepass", "${REDIS_PASSWORD:?run make env first}", "--appendonly", "yes", "--protected-mode", "yes"]
     environment:
       REDISCLI_AUTH: ${REDIS_PASSWORD}
@@ -371,7 +376,7 @@ services:
   # Optional: publish Postgres on the loopback interface for local GUI tools.
   #   docker compose --profile db-port up -d postgres-port
   postgres-port:
-    image: alpine/socat:1.8.0.3
+    image: alpine/socat:1.8.0.3@sha256:beb4a68d9e4fe6b0f21ea774a0fde6c31f580dde6368939ed70100c5385b015e
     profiles: [db-port]
     command: ["TCP-LISTEN:5432,fork,reuseaddr", "TCP:postgres:5432"]
     ports:

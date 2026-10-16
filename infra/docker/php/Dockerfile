@@ -9,10 +9,10 @@
 #   spa   -> builds the web app (apps/web) with the generated API client
 #   web   -> Caddy serving the web app, public/ and proxying PHP to the api service
 
-ARG PHP_IMAGE=php:8.4-fpm-alpine3.24
-ARG CADDY_IMAGE=caddy:2.11-alpine
-ARG COMPOSER_IMAGE=composer:2.10
-ARG NODE_IMAGE=node:22.22-alpine3.23
+ARG PHP_IMAGE=php:8.4-fpm-alpine3.24@sha256:78cd8de9970a9cd6ff4d98860a94eb5bf37dd2d5776b4785562dbfad01c29d5a
+ARG CADDY_IMAGE=caddy:2.11.7-alpine@sha256:d8542f48d34a9cf4e4c11a478865229840e87e4c96ea3f439101f31a5d35f75f
+ARG COMPOSER_IMAGE=composer:2.10@sha256:af98f42dfff7c68ba8d53c2164fd9fde1087b7d449514baa38c418b1f6bc4bac
+ARG NODE_IMAGE=node:22.22-alpine3.23@sha256:968df39aedcea65eeb078fb336ed7191baf48f972b4479711397108be0966920
 
 FROM ${COMPOSER_IMAGE} AS composer
 
