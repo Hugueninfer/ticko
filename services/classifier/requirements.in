@@ -10,3 +10,7 @@ safetensors
 torch @ https://download.pytorch.org/whl/cpu/torch-2.14.1%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl
 transformers
 peft
+# Observability (`make up-obs`): traces and metrics over OTLP/HTTP.
+opentelemetry-sdk
+opentelemetry-exporter-otlp-proto-http
+opentelemetry-instrumentation-fastapi
