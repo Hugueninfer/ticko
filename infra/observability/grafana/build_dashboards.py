@@ -43,8 +43,10 @@ class Board:
 
     def panel(self, kind: str, title: str, targets: list[dict], w: int = 12, h: int = 8, unit: str = "short",
               description: str = "", options: dict | None = None, ds: dict = PROM, overrides: list | None = None,
-              thresholds: list | None = None) -> None:
+              thresholds: list | None = None, decimals: int | None = None) -> None:
         defaults: dict = {"unit": unit}
+        if decimals is not None:
+            defaults["decimals"] = decimals
         if thresholds:
             defaults["thresholds"] = {"mode": "absolute", "steps": thresholds}
             defaults["color"] = {"mode": "thresholds"}
@@ -165,14 +167,13 @@ def ai() -> Board:
               tenant_var=True)
     sel = 'tenant=~"$tenant"'
     b.row("Quality")
-    b.panel(STAT, "\"I don't know\" rate", [q(f'(sum(increase(ticko_ai_suggestions_total{{{sel},outcome="insufficient"}}[$__range])) or vector(0)) / clamp_min(sum(increase(ticko_ai_suggestions_total{{{sel}}}[$__range])), 1e-9)')],
-            w=6, h=4, unit="percentunit", description="Suggestions where the knowledge base had no good answer.")
-    b.panel(STAT, "Approved without edits", [q(f'(sum(increase(ticko_ai_suggestion_reviews_total{{{sel},result="approved"}}[$__range])) or vector(0)) / clamp_min(sum(increase(ticko_ai_suggestion_reviews_total{{{sel}}}[$__range])), 1e-9)')],
+    b.panel(STAT, "\"I don't know\" rate", [q(f'(sum(ticko_ai_suggestions_total{{{sel},outcome="insufficient"}}) or vector(0)) / clamp_min(sum(ticko_ai_suggestions_total{{{sel}}}), 1e-9)')],
+            w=6, h=4, unit="percentunit", description="Suggestions where the knowledge base had no good answer (since the Collector started).")
+    b.panel(STAT, "Approved without edits", [q(f'(sum(ticko_ai_suggestion_reviews_total{{{sel},result="approved"}}) or vector(0)) / clamp_min(sum(ticko_ai_suggestion_reviews_total{{{sel}}}), 1e-9)')],
             w=6, h=4, unit="percentunit")
-    b.panel(STAT, "Discarded", [q(f'(sum(increase(ticko_ai_suggestion_reviews_total{{{sel},result="discarded"}}[$__range])) or vector(0)) / clamp_min(sum(increase(ticko_ai_suggestion_reviews_total{{{sel}}}[$__range])), 1e-9)')],
+    b.panel(STAT, "Discarded", [q(f'(sum(ticko_ai_suggestion_reviews_total{{{sel},result="discarded"}}) or vector(0)) / clamp_min(sum(ticko_ai_suggestion_reviews_total{{{sel}}}), 1e-9)')],
             w=6, h=4, unit="percentunit")
-    b.panel(STAT, "Estimated cost (range)", [q(f"sum(increase(ticko_ai_cost_usd_total{{{sel}}}[$__range]))")], w=6, h=4, unit="currencyUSD",
-            options={"reduceOptions": {"calcs": ["lastNotNull"]}, "text": {}}, overrides=[], thresholds=None)
+    b.panel(STAT, "Estimated cost (total)", [q(f"sum(ticko_ai_cost_usd_total{{{sel}}})")], w=6, h=4, unit="currencyUSD", decimals=4)
     b.panel(TS, "Suggestions by outcome", [q(f"sum by (outcome) (increase(ticko_ai_suggestions_total{{{sel}}}[5m]))", "{{outcome}}")])
     b.panel(TS, "Reviews by result and discard reason", [q(f"sum by (result, reason) (increase(ticko_ai_suggestion_reviews_total{{{sel}}}[5m]))", "{{result}} · {{reason}}")])
     b.row("Model calls")
@@ -183,7 +184,7 @@ def ai() -> Board:
     b.panel(TS, "Model errors by type", [q('sum by (provider, outcome) (increase(ticko_ai_llm_duration_seconds_count{outcome!="ok"}[5m])) or vector(0)', "{{provider}} {{outcome}}")])
     b.row("Usage and cost")
     b.panel(TS, "Tokens / min by tenant and type", [q(f"sum by (tenant, type) (rate(ticko_ai_tokens_total{{{sel}}}[5m])) * 60", "{{tenant}} · {{type}}")])
-    b.panel(TS, "Estimated cost per tenant (USD / hour)", [q(f"sum by (tenant) (rate(ticko_ai_cost_usd_total{{{sel}}}[15m])) * 3600", "{{tenant}}")], unit="currencyUSD")
+    b.panel(TS, "Estimated cost per tenant (USD / hour)", [q(f"sum by (tenant) (rate(ticko_ai_cost_usd_total{{{sel}}}[15m])) * 3600", "{{tenant}}")], unit="currencyUSD", decimals=4)
     return b
 
 
@@ -194,7 +195,7 @@ def classifier() -> Board:
     b.panel(STAT, "Failure ratio", [q('(sum(rate(ticko_classifier_duration_seconds_count{outcome!="ok"}[15m])) or vector(0)) / clamp_min(sum(rate(ticko_classifier_duration_seconds_count[15m])), 1e-9)')],
             w=6, h=4, unit="percentunit", thresholds=[{"color": "green", "value": None}, {"color": "red", "value": 0.05}])
     b.panel(STAT, "Inference p95 (service)", [q("histogram_quantile(0.95, sum by (le) (rate(ticko_classifier_inference_duration_seconds_bucket[15m])))")], w=6, h=4, unit="s")
-    b.panel(STAT, "Corrections (range)", [q('sum(increase(ticko_classifier_corrections_total{tenant=~"$tenant",set_by="ai"}[$__range]))')], w=6, h=4,
+    b.panel(STAT, "Corrections (total)", [q('sum(ticko_classifier_corrections_total{tenant=~"$tenant",set_by="ai"})')], w=6, h=4,
             description="Agent changes to values the AI had set.")
     b.panel(TS, "Latency p50 / p95 (API → classifier)", [
         q("histogram_quantile(0.50, sum by (le) (rate(ticko_classifier_duration_seconds_bucket[5m])))", "p50 call"),
@@ -206,7 +207,7 @@ def classifier() -> Board:
     b.panel(TS, "Average confidence by task", [q("sum by (task) (rate(ticko_classifier_confidence_sum[15m])) / clamp_min(sum by (task) (rate(ticko_classifier_confidence_count[15m])), 1e-9)", "{{task}}")],
             unit="percentunit")
     b.panel(TS, "Applied vs kept as suggestion", [q("sum by (task, applied) (increase(ticko_classifier_confidence_count[15m]))", "{{task}} · applied={{applied}}")])
-    b.panel("bargauge", "Labels predicted (range)", [q("sum by (task, label) (increase(ticko_classifier_confidence_count[$__range]))", "{{task}} · {{label}}", instant=True)],
+    b.panel("bargauge", "Labels predicted (total)", [q("sum by (task, label) (ticko_classifier_confidence_count)", "{{task}} · {{label}}", instant=True)],
             options={"orientation": "horizontal", "displayMode": "gradient"})
     b.panel(TS, "Corrections by field and who had set it", [q('sum by (field, set_by) (increase(ticko_classifier_corrections_total{tenant=~"$tenant"}[15m]))', "{{field}} · {{set_by}}")])
     return b
