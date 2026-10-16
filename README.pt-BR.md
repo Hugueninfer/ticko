@@ -113,6 +113,12 @@ TICKO_AI_EMBEDDING_PROVIDER=gemini   # fake (padrão) | gemini | ollama  → dep
 GEMINI_API_KEY=...                   # ou GROQ_API_KEY=..., ou OLLAMA_URL=http://host.docker.internal:11434
 ```
 
+Testado com o plano gratuito do Gemini: o padrão `gemini-3.7-flash` escreve respostas citadas em
+pt-BR natural (~600 tokens de entrada / 60–230 de saída, ~US$ 0,0005 por rascunho). O plano
+gratuito permite só cerca de **20 requisições por dia por modelo** e recusa rajadas; o `make demo`
+espaça as chamadas (`TICKO_DEMO_AI_PAUSE`) e tenta de novo uma vez, e
+`GEMINI_TEXT_MODEL=gemini-3.1-flash-lite` tem cota própria. Troque a chave depois de compartilhá-la.
+
 **App mobile:** `make up-lan` (acessível no seu Wi-Fi) e `make mobile-dev`; leia o QR code com o
 Expo Go — veja [apps/mobile/README.md](apps/mobile/README.md). Num **emulador Android** (opcional;
 precisa do Android Studio e de um AVD), rode `make mobile-dev` com
