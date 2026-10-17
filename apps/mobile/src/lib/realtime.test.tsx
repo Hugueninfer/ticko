@@ -17,6 +17,7 @@ import {
   useEcho,
   useRealtimeConnection,
   useTicketUpdates,
+  pusherClass,
 } from './realtime';
 import { saveSession } from './session';
 
@@ -42,6 +43,17 @@ describe('realtime', () => {
   afterEach(() => {
     disconnectRealtime();
     mockListeners.clear();
+  });
+
+  it('finds the Pusher class in the React Native build (a named CommonJS export)', () => {
+    const Named = jest.fn();
+    const Default = jest.fn();
+
+    // pusher-js/react-native: module.exports.Pusher = class (a default import gets the object).
+    expect(pusherClass({ Pusher: Named })).toBe(Named);
+    expect(pusherClass({ default: Default })).toBe(Default);
+    expect(pusherClass(Default)).toBe(Default);
+    expect(() => pusherClass({})).toThrow(TypeError);
   });
 
   it('connects to the API origin', () => {

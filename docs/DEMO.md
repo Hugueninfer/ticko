@@ -70,9 +70,18 @@ API request through the queue to the Python classifier.
 ![AI dashboard](screenshots/10-grafana-ai.png)
 ![SLA dashboard](screenshots/11-grafana-sla.png)
 
-**8. The customer's side (optional, 2 min).** `make up-lan`, then `make mobile-dev` and scan the
-QR code with Expo Go (or use an Android emulator, see the README). Sign in as the demo customer
-(Mariana Costa): her tickets, a new ticket with a photo, live replies and push notifications.
+**8. The customer's side (optional, 2 min).** `make android-setup` once, then
+`make mobile-emulator` (Android emulator on this computer) — or `make up-lan` + `make mobile-dev`
+and Expo Go on your phone. Sign in as the demo customer (Mariana Costa) and open a ticket without
+a topic: the classifier fills category and priority, the agent approves the AI draft in the web
+app, and the reply appears in the app **live**, with the status moving to *In progress*.
+
+<p>
+  <img src="screenshots/mobile-2-tickets.png" width="220" alt="The customer's tickets">
+  <img src="screenshots/mobile-3-new-ticket.png" width="220" alt="A new ticket">
+  <img src="screenshots/mobile-5-reply-live.png" width="220" alt="The agent's reply, live">
+</p>
+
 
 ## Regenerating the screenshots
 
@@ -80,4 +89,5 @@ QR code with Expo Go (or use an Android emulator, see the README). Sign in as th
 make up-obs && make demo && make screenshots
 ```
 
-The mobile app is not captured automatically (it needs a device or an emulator).
+The mobile screenshots (`docs/screenshots/mobile-*.png`) were taken on the Android emulator
+(`make mobile-emulator`, `adb exec-out screencap`).

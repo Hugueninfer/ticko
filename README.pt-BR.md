@@ -120,10 +120,20 @@ espaça as chamadas (`TICKO_DEMO_AI_PAUSE`) e tenta de novo uma vez, e
 `GEMINI_TEXT_MODEL=gemini-3.1-flash-lite` tem cota própria. Troque a chave depois de compartilhá-la.
 
 **App mobile:** `make up-lan` (acessível no seu Wi-Fi) e `make mobile-dev`; leia o QR code com o
-Expo Go — veja [apps/mobile/README.md](apps/mobile/README.md). Num **emulador Android** (opcional;
-precisa do Android Studio e de um AVD), rode `make mobile-dev` com
-`EXPO_PUBLIC_API_URL=http://10.0.2.2:8080` em `apps/mobile/.env` (o endereço do seu computador
-visto pelo emulador) e aperte `a`.
+Expo Go — veja [apps/mobile/README.md](apps/mobile/README.md). Ou num **emulador Android** neste
+computador, sem Android Studio e sem sudo (precisa de KVM, Java 17+ e das command-line tools do
+Android em `~/Android/Sdk/cmdline-tools/latest`; ~3 GB, e ~8 GB livres enquanto roda):
+
+```bash
+make android-setup     # pacotes do SDK + o AVD "ticko" (Android 15); você aceita as licenças do SDK do Google
+make mobile-emulator   # sobe o emulador e abre o app no Expo Go, API em http://10.0.2.2:$WEB_PORT
+```
+
+<p>
+  <img src="docs/screenshots/mobile-2-tickets.png" width="200" alt="Os tickets da cliente">
+  <img src="docs/screenshots/mobile-4-conversation.png" width="200" alt="A conversa de um ticket novo">
+  <img src="docs/screenshots/mobile-5-reply-live.png" width="200" alt="A resposta do atendente, ao vivo">
+</p>
 
 Portas ocupadas? Ajuste `WEB_PORT` / `GRAFANA_PORT` (e `APP_URL`) no `.env`. Tenant real:
 `docker compose exec api php artisan ticko:tenant:create <slug> "<Nome>" --admin-email=<email>`.
